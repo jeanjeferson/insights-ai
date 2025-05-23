@@ -1,0 +1,31 @@
+[project]
+name = "insights"
+version = "0.1.0"
+description = "insights using crewAI"
+authors = [{ name = "Your Name", email = "you@example.com" }]
+requires-python = ">=3.10,<3.13"
+dependencies = [
+    "crewai[tools]>=0.119.0,<1.0.0",
+    "duckduckgo-search>=8.0.1",
+    "langchain-community>=0.3.21",
+    "psycopg2-binary",
+    "pyodbc>=5.2.0",
+    "prophet>=1.1.6",
+    "matplotlib>=3.10.3",
+    "scikit-learn>=1.6.1",
+    "pyarrow>=15.0.0"
+]
+
+[project.scripts]
+insights = "insights.main:run"
+run_crew = "insights.main:run"
+train = "insights.main:train"
+replay = "insights.main:replay"
+test = "insights.main:test"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.crewai]
+type = "crew"

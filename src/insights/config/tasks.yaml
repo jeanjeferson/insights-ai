@@ -1,0 +1,66 @@
+engenheiro_dados_task:
+  description: >
+    Leia o arquivo de vendas na pasta data/vendas.csv
+    Prepare os dados para análise, removendo outliers e normalizando os formatos conforme necessário.
+  expected_output: >
+    DataFrame completo de vendas dos últimos limpo e pronto para análises posteriores.
+  agent: engenheiro_dados
+
+analista_tendencias_task:
+  description: >
+    Analisar os dados de vendas para identificar padrões e tendências significativas.
+    Identifique tendências de crescimento e declínio por produto, metal e coleção.
+    Encontre correlações relevantes entre variáveis e detecte mudanças recentes em tendências.
+  expected_output: >
+    Relatório detalhado de tendências de venda com gráficos de evolução e identificação de produtos em ascensão ou declínio.
+  agent: analista_tendencias
+
+especialista_sazonalidade_task:
+  description: >
+    Realizar análise aprofundada de sazonalidade nas vendas de joias. 
+    Identifique padrões sazonais diários, semanais, mensais e anuais.
+    Determine o impacto de feriados e datas especiais nas vendas por categoria.
+    Quantifique a força da sazonalidade em cada segmento de produto.
+  expected_output: >
+    Mapeamento completo de padrões sazonais com gráficos de decomposição e índices de sazonalidade.
+  agent: especialista_sazonalidade
+
+especialista_projecoes_task:
+  description: >
+    Desenvolver projeções precisas de vendas para os próximos 15 dias. 
+    1. Analise o dataframe recebido e prepare os dados para previsão
+    2. Teste diferentes modelos (Prophet, ARIMA, etc.) e escolha o que apresenta melhor desempenho
+    3. Para o Prophet, você pode usar a ferramenta dedicada ou implementar diretamente em código
+    4. Compare os resultados entre diferentes abordagens
+    5. Considere a sazonalidade histórica identificada pelo analista de sazonalidade
+    6. Forneça intervalos de confiança para suas previsões
+    7. Visualize os resultados com gráficos claros
+    8. Explique suas escolhas metodológicas
+    9. Forneça as previsões em formato de tabela
+  expected_output: >
+    Um relatório detalhado contendo:
+    1. Previsões diárias para os próximos 15 dias com intervalos de confiança
+    2. Gráficos de tendência e componentes (tendência, sazonalidade, etc.)
+    3. Avaliação de performance do modelo
+    4. Justificativa metodológica para as técnicas escolhidas
+  agent: especialista_projecoes
+
+analista_categorias_task:
+  description: >
+    Realizar análise comparativa detalhada entre diferentes grupos de produtos (Brincos, Anéis, 
+    Pulseiras, Colares, etc). Identifique desempenho relativo, margens, tendências específicas 
+    por categoria, e oportunidades de crescimento. Analise padrões de compra cruzada entre categorias.
+  expected_output: >
+    Relatório comparativo do desempenho de cada categoria de produtos com recomendações específicas por segmento.
+  agent: analista_segmentos
+
+relatorio_final_task:
+  description: >
+    Consolidar todas as análises anteriores em um relatório executivo abrangente e estratégico.
+    O relatório deve apresentar uma visão holística do desempenho de vendas, destacar insights-chave 
+    de todas as análises, e fornecer recomendações acionáveis. Inclua visualizações eficazes e 
+    organize o conteúdo de forma que permita tanto uma leitura rápida quanto um aprofundamento nos detalhes técnicos.
+  expected_output: >
+    Relatório executivo completo em formato markdown, com todas as análises consolidadas, insights estratégicos destacados 
+    e recomendações claras para ação, organizado em seções lógicas com gráficos e tabelas de suporte.
+  agent: especialista_relatorios
