@@ -1,66 +1,379 @@
+# =============== TASKS OTIMIZADAS PARA NOVAS FERRAMENTAS ===============
+
 engenheiro_dados_task:
   description: >
-    Leia o arquivo de vendas na pasta data/vendas.csv
-    Prepare os dados para análise, removendo outliers e normalizando os formatos conforme necessário.
+    🔧 ENGENHARIA DE DADOS AVANÇADA:
+    
+    1. **Extração Multi-Source**:
+       - Usar SQL Server Query Tool para dados primários do ERP
+       - Usar File Read Tool para dados complementares
+       - Validar integridade referencial entre fontes
+    
+    2. **Análise Estatística de Qualidade**:
+       - Usar Statistical Analysis Tool para detectar outliers
+       - Aplicar testes de normalidade e consistência
+       - Identificar gaps temporais e dados faltantes
+    
+    3. **ETL Avançado**:
+       - Usar Advanced Analytics Engine para limpeza automatizada
+       - Aplicar transformações inteligentes baseadas em padrões
+       - Criar features derivadas (Preco_Unitario, Margem_Estimada, etc.)
+    
+    4. **Validação Final**:
+       - Gerar relatório de qualidade de dados
+       - Documentar transformações aplicadas
+       - Validar estatísticas descritivas por segmento
+  
   expected_output: >
-    DataFrame completo de vendas dos últimos limpo e pronto para análises posteriores.
+    📋 DATASET EMPRESARIAL VALIDADO contendo:
+    
+    1. **Dados Limpos e Validados**:
+       - DataFrame principal com outliers tratados
+       - Campos derivados calculados
+       - Metadados de qualidade de dados
+    
+    2. **Relatório de Qualidade**:
+       - Estatísticas descritivas por dimensão
+       - Detecção de anomalias e tratativas aplicadas
+       - Gaps identificados e estratégias de preenchimento
+       - Recomendações para coleta futura
+    
+    3. **Features Engineered**:
+       - Campos calculados otimizados para análise
+       - Segmentações automáticas (preço, frequência, etc.)
+       - Índices temporais e sazonais
+  
   agent: engenheiro_dados
 
 analista_tendencias_task:
   description: >
-    Analisar os dados de vendas para identificar padrões e tendências significativas.
-    Identifique tendências de crescimento e declínio por produto, metal e coleção.
-    Encontre correlações relevantes entre variáveis e detecte mudanças recentes em tendências.
+    📈 ANÁLISE DE TENDÊNCIAS COM IA:
+    
+    1. **Análise Estatística Avançada**:
+       - Usar Statistical Analysis Tool para análise de correlação
+       - Aplicar testes de significância estatística
+       - Detectar mudanças de tendência (change point detection)
+       - Calcular elasticidades e sensibilidades
+    
+    2. **Contexto Externo**:
+       - Usar DuckDuckGo Search Tool para pesquisar tendências do setor
+       - Correlacionar com eventos econômicos e sociais
+       - Identificar influências externas nas vendas
+    
+    3. **Visualizações Inteligentes**:
+       - Usar Advanced Visualization Tool para gráficos de tendência
+       - Criar dashboards interativos de análise temporal
+       - Gerar mapas de calor de correlação
+    
+    4. **Modelagem Preditiva de Tendências**:
+       - Identificar tendências emergentes vs. estabelecidas
+       - Quantificar velocidade e aceleração de mudanças
+       - Prever pontos de inflexão baseado em padrões históricos
+  
   expected_output: >
-    Relatório detalhado de tendências de venda com gráficos de evolução e identificação de produtos em ascensão ou declínio.
+    📊 ANÁLISE COMPLETA DE TENDÊNCIAS contendo:
+    
+    1. **Trends Report Executivo**:
+       - Top 5 tendências mais significativas
+       - Quantificação de impacto por tendência
+       - Timeline de evolução das tendências
+       - Correlações estatisticamente significativas
+    
+    2. **Dashboards Interativos**:
+       - Gráficos de evolução temporal por categoria
+       - Mapas de calor de correlação entre variáveis
+       - Análise de velocidade de mudança
+    
+    3. **Insights Estratégicos**:
+       - Produtos em ascensão vs declínio
+       - Oportunidades de timing de mercado
+       - Riscos de tendências negativas
+       - Recomendações de adaptação de portfólio
+  
   agent: analista_tendencias
 
 especialista_sazonalidade_task:
   description: >
-    Realizar análise aprofundada de sazonalidade nas vendas de joias. 
-    Identifique padrões sazonais diários, semanais, mensais e anuais.
-    Determine o impacto de feriados e datas especiais nas vendas por categoria.
-    Quantifique a força da sazonalidade em cada segmento de produto.
+    🌊 MODELAGEM SAZONAL AVANÇADA:
+    
+    1. **Decomposição Estatística STL**:
+       - Usar Statistical Analysis Tool para decomposição sazonal
+       - Separar tendência, sazonalidade e ruído
+       - Quantificar força sazonal por categoria
+       - Detectar mudanças nos padrões sazonais
+    
+    2. **Modelagem Multi-Nível**:
+       - Usar Advanced Analytics Engine para modelos hierárquicos
+       - Modelar sazonalidade anual, mensal, semanal e diária
+       - Incorporar efeitos de feriados e eventos especiais
+       - Criar índices sazonais por categoria de produto
+    
+    3. **Visualizações Sazonais**:
+       - Usar Advanced Visualization Tool para calendários de calor
+       - Criar dashboards de ciclos sazonais
+       - Gerar gráficos polares de sazonalidade
+    
+    4. **Análise de Eventos Especiais**:
+       - Quantificar impacto do Dia das Mães, Natal, Black Friday
+       - Modelar efeitos de campanhas promocionais
+       - Identificar oportunidades sazonais não exploradas
+  
   expected_output: >
-    Mapeamento completo de padrões sazonais com gráficos de decomposição e índices de sazonalidade.
+    📅 MAPEAMENTO COMPLETO DE SAZONALIDADE:
+    
+    1. **Calendário Sazonal Estratégico**:
+       - Índices sazonais mensais por categoria
+       - Quantificação de picos e vales sazonais
+       - Impacto de eventos especiais e feriados
+       - Previsão de comportamento sazonal futuro
+    
+    2. **Dashboards Interativos**:
+       - Calendário de calor de vendas por período
+       - Gráficos de decomposição sazonal
+       - Análise comparativa ano sobre ano
+    
+    3. **Insights de Planejamento**:
+       - Oportunidades de estoque sazonal
+       - Timing ótimo para campanhas promocionais
+       - Produtos mais e menos sazonais
+       - Estratégias de anti-sazonalidade
+  
   agent: especialista_sazonalidade
 
 especialista_projecoes_task:
   description: >
-    Desenvolver projeções precisas de vendas para os próximos 15 dias. 
-    1. Analise o dataframe recebido e prepare os dados para previsão
-    2. Teste diferentes modelos (Prophet, ARIMA, etc.) e escolha o que apresenta melhor desempenho
-    3. Para o Prophet, você pode usar a ferramenta dedicada ou implementar diretamente em código
-    4. Compare os resultados entre diferentes abordagens
-    5. Considere a sazonalidade histórica identificada pelo analista de sazonalidade
-    6. Forneça intervalos de confiança para suas previsões
-    7. Visualize os resultados com gráficos claros
-    8. Explique suas escolhas metodológicas
-    9. Forneça as previsões em formato de tabela
+    🔮 FORECASTING PROFISSIONAL COM PROPHET:
+    
+    1. **Modelagem Prophet Avançada**:
+       - Usar Prophet Forecast Tool para modelagem profissional
+       - Configurar sazonalidades múltiplas (anual, mensal, semanal)
+       - Incorporar feriados brasileiros e eventos especiais
+       - Ajustar capacidade de mercado e pontos de saturação
+    
+    2. **Validação Estatística**:
+       - Usar Statistical Analysis Tool para validação de modelos
+       - Calcular métricas de precisão (MAE, MAPE, RMSE)
+       - Aplicar testes de resíduos e autocorrelação
+       - Cross-validation temporal para robustez
+    
+    3. **Cenários Múltiplos**:
+       - Criar projeções conservadora, realista e otimista
+       - Modelar impacto de campanhas futuras
+       - Simular efeitos de mudanças econômicas
+       - Incorporar insights de sazonalidade identificados
+    
+    4. **Visualizações Profissionais**:
+       - Usar Advanced Visualization Tool para gráficos de projeção
+       - Criar dashboards interativos de forecast
+       - Gerar intervalos de confiança visuais
+       - Mostrar decomposição de componentes (trend, seasonality)
+  
   expected_output: >
-    Um relatório detalhado contendo:
-    1. Previsões diárias para os próximos 15 dias com intervalos de confiança
-    2. Gráficos de tendência e componentes (tendência, sazonalidade, etc.)
-    3. Avaliação de performance do modelo
-    4. Justificativa metodológica para as técnicas escolhidas
+    🎯 SISTEMA DE PROJEÇÕES EMPRESARIAL:
+    
+    1. **Projeções Detalhadas (15 dias)**:
+       - Forecast diário com intervalos de confiança
+       - Projeções por categoria de produto
+       - Cenários múltiplos com probabilidades
+       - Métricas de precisão e confiabilidade
+    
+    2. **Dashboards de Forecast**:
+       - Gráficos interativos de projeção
+       - Visualização de componentes do modelo
+       - Comparação de diferentes cenários
+       - Monitoramento de performance em tempo real
+    
+    3. **Business Impact Analysis**:
+       - Impacto financeiro das projeções
+       - Necessidades de estoque baseadas em forecast
+       - Identificação de oportunidades e riscos
+       - Planos de contingência para diferentes cenários
+    
+    4. **Modelo Validado e Documentado**:
+       - Parâmetros ótimos do modelo Prophet
+       - Metodologia de validação aplicada
+       - Limitações e premissas documentadas
+       - Processo de atualização e monitoramento
+  
   agent: especialista_projecoes
 
 analista_categorias_task:
   description: >
-    Realizar análise comparativa detalhada entre diferentes grupos de produtos (Brincos, Anéis, 
-    Pulseiras, Colares, etc). Identifique desempenho relativo, margens, tendências específicas 
-    por categoria, e oportunidades de crescimento. Analise padrões de compra cruzada entre categorias.
+    👥 SEGMENTAÇÃO INTELIGENTE COM IA:
+    
+    1. **Análise de Performance por Categoria**:
+       - Usar KPI Calculator Tool para métricas detalhadas por categoria
+       - Calcular ROI, margem, giro e velocidade por segmento
+       - Análise ABC avançada de produtos
+       - Benchmarking entre categorias
+    
+    2. **Segmentação Automática de Clientes**:
+       - Usar Customer Insights Engine para segmentação RFM automática
+       - Aplicar clustering ML para identificar perfis
+       - Mapear preferências por categoria de produto
+       - Análise de cross-selling entre categorias
+    
+    3. **Visualizações Comparativas**:
+       - Usar Advanced Visualization Tool para dashboards comparativos
+       - Criar matriz de performance categoria vs segmento
+       - Gerar mapas estratégicos de portfólio
+    
+    4. **Inteligência Competitiva**:
+       - Analisar posicionamento relativo por categoria
+       - Identificar gaps e oportunidades de mercado
+       - Mapear elasticidade de preço por segmento
+  
   expected_output: >
-    Relatório comparativo do desempenho de cada categoria de produtos com recomendações específicas por segmento.
+    🎯 INTELIGÊNCIA DE CATEGORIAS E SEGMENTOS:
+    
+    1. **Performance Matrix**:
+       - Dashboard comparativo de todas as categorias
+       - KPIs especializados por segmento
+       - Análise de contribuição marginal
+       - Identificação de categorias estrela vs problemáticas
+    
+    2. **Segmentação Automática**:
+       - Perfis detalhados de clientes por categoria
+       - Mapas de afinidade entre produtos
+       - Oportunidades de cross-sell quantificadas
+       - Estratégias personalizadas por segmento
+    
+    3. **Insights Estratégicos**:
+       - Categorias com maior potencial de crescimento
+       - Oportunidades de premium pricing
+       - Produtos para descontinuação ou potencialização
+       - Roadmap de desenvolvimento de portfólio
+  
   agent: analista_segmentos
 
-relatorio_final_task:
+analise_inventario_task:
   description: >
-    Consolidar todas as análises anteriores em um relatório executivo abrangente e estratégico.
-    O relatório deve apresentar uma visão holística do desempenho de vendas, destacar insights-chave 
-    de todas as análises, e fornecer recomendações acionáveis. Inclua visualizações eficazes e 
-    organize o conteúdo de forma que permita tanto uma leitura rápida quanto um aprofundamento nos detalhes técnicos.
+    📦 OTIMIZAÇÃO INTELIGENTE DE ESTOQUE:
+    
+    1. **KPIs Avançados de Inventário**:
+       - Usar KPI Calculator Tool para métricas especializadas
+       - Calcular inventory turnover, DSO, fill rate por categoria
+       - Análise ABC dinâmica com machine learning
+       - Métricas de obsolescência e slow-moving
+    
+    2. **Sistema de Recomendações ML**:
+       - Usar Recommendation Engine para otimização automática
+       - Identificar produtos para restock, liquidação ou redução
+       - Calcular níveis ótimos de estoque por categoria
+       - Recomendar timing de reposição baseado em sazonalidade
+    
+    3. **Avaliação de Riscos**:
+       - Usar Risk Assessment Tool para análise de riscos de inventário
+       - Quantificar riscos de obsolescência por categoria
+       - Avaliar exposição a mudanças de demanda
+       - Identificar pontos de ruptura críticos
+    
+    4. **Dashboards Operacionais**:
+       - Usar Advanced Visualization Tool para dashboards de estoque
+       - Criar alertas visuais de reposição
+       - Mapas de calor de performance de inventário
+       - Dashboards de liquidação e oportunidades
+  
   expected_output: >
-    Relatório executivo completo em formato markdown, com todas as análises consolidadas, insights estratégicos destacados 
-    e recomendações claras para ação, organizado em seções lógicas com gráficos e tabelas de suporte.
-  agent: especialista_relatorios
+    🎯 SISTEMA INTELIGENTE DE INVENTÁRIO:
+    
+    1. **Recomendações Automáticas**:
+       - Lista priorizada de produtos para restock
+       - Produtos candidatos à liquidação com preços sugeridos
+       - Níveis ótimos de estoque por categoria
+       - Timeline de ações de inventário
+    
+    2. **Dashboard Operacional**:
+       - Visão em tempo real de KPIs de estoque
+       - Alertas de ruptura e excesso
+       - Mapas de performance por categoria
+       - Projeções de necessidades futuras
+    
+    3. **Análise de Riscos e Oportunidades**:
+       - Quantificação de capital parado
+       - Oportunidades de liberação de caixa
+       - Riscos de ruptura por categoria
+       - ROI de otimizações propostas
+    
+    4. **Plano de Ação Executável**:
+       - Roadmap de otimização de inventário
+       - Cronograma de liquidações
+       - Plano de reposição sazonal
+       - Métricas de acompanhamento
+  
+  agent: analista_inventario
+
+relatorio_executivo_completo_task:
+  description: >
+    🎯 SÍNTESE ESTRATÉGICA COM INTELIGÊNCIA EXECUTIVA:
+    
+    A) **CONSOLIDAÇÃO INTELIGENTE COM BI**:
+    1. Usar Business Intelligence Dashboard para relatório executivo completo
+    2. Integrar KPI Calculator Tool para dashboard de métricas críticas  
+    3. Aplicar todas as análises anteriores em síntese estratégica coesa
+    
+    B) **RECOMENDAÇÕES ESTRATÉGICAS COM ML**:
+    4. Usar Recommendation Engine para ações estratégicas priorizadas
+    5. Quantificar ROI e timeline para cada recomendação
+    6. Criar roadmap de implementação com interdependências
+    
+    C) **INTELIGÊNCIA COMPETITIVA**:
+    7. Usar Competitive Intelligence Tool para benchmarking
+    8. Posicionar achados no contexto do mercado de joalherias
+    9. Identificar vantagens competitivas e gaps estratégicos
+    
+    D) **VISUALIZAÇÕES EXECUTIVAS**:
+    10. Usar Advanced Visualization Tool para dashboards C-level
+    11. Criar apresentação visual de insights estratégicos
+    12. Gerar gráficos de impacto vs esforço para priorização
+    
+    E) **RELATÓRIO FINAL INTEGRADO**:
+    13. Sintetizar tudo em relatório executivo estruturado
+    14. Incluir cenários de negócio e análise de sensibilidade  
+    15. Documentar metodologia e limitações
+    16. Criar sistema de acompanhamento de KPIs
+  
+  expected_output: >
+    📋 RELATÓRIO EXECUTIVO ESTRATÉGICO COMPLETO:
+    
+    1. **EXECUTIVE SUMMARY (1 página)**:
+       - Top 3 insights críticos com impacto quantificado
+       - ROI total estimado: R$ XXX de oportunidade
+       - Urgência e prioridades com timeline definido
+       - Dashboard de KPIs críticos em semáforo
+    
+    2. **ANÁLISE ESTRATÉGICA INTEGRADA**:
+       - Síntese de tendências com implicações de negócio
+       - Oportunidades sazonais com ROI estimado
+       - Performance de categorias com ações específicas  
+       - Otimização de inventário com liberação de caixa
+       - Projeções com cenários e probabilidades
+    
+    3. **RECOMENDAÇÕES ACIONÁVEIS PRIORIZADAS**:
+       - Cada recomendação com: investimento, ROI, timeline, responsável
+       - Quick wins (30-60 dias) vs estratégicas (6-12 meses)
+       - Matriz de impacto vs esforço para priorização
+       - Interdependências e sequenciamento de ações
+    
+    4. **DASHBOARDS EXECUTIVOS INTERATIVOS**:
+       - BI Dashboard completo para monitoramento
+       - Scorecard de KPIs com benchmarks
+       - Visualizações estratégicas principais
+       - Sistema de alertas e acompanhamento
+    
+    5. **ROADMAP ESTRATÉGICO**:
+       - Timeline detalhado com marcos e entregas
+       - Recursos necessários e budget estimado
+       - Análise de riscos e planos de contingência
+       - Sistema de governança e acompanhamento
+    
+    6. **ANEXOS TÉCNICOS**:
+       - Metodologia detalhada e validações
+       - Visualizações interativas completas
+       - Dados de suporte e evidências
+       - Limitações e premissas documentadas
+    
+    **FORMATO**: Relatório em markdown empresarial com estruturação executiva,
+    dashboards integrados, linguagem C-level e foco total em ações e resultados.
+  
+  agent: diretor_insights

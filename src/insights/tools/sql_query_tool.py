@@ -1,9 +1,10 @@
 from crewai.tools import BaseTool
 from typing import Type, Optional, ClassVar
 from pydantic import BaseModel, Field
+from datetime import datetime, timedelta
 import pyodbc
 import pandas as pd
-from datetime import datetime, timedelta
+import os
 
 class SQLServerQueryInput(BaseModel):
     """Schema de entrada para a ferramenta SQL Server Query."""
@@ -20,13 +21,13 @@ class SQLServerQueryTool(BaseTool):
     )
     args_schema: Type[BaseModel] = SQLServerQueryInput
     
-    # Parâmetros de conexão com o banco de dados
-    DB_DRIVER: ClassVar[str] = "ODBC Driver 17 for SQL Server"
-    DB_SERVER: ClassVar[str] = "192.168.28.196"
-    DB_PORT: ClassVar[str] = "1433"
-    DB_DATABASE: ClassVar[str] = "005RG_ERP_BI"
-    DB_UID: ClassVar[str] = "captabi"
-    DB_PWD: ClassVar[str] = "Sox@25bi"
+    # Parâmetros de conexão com o banco de dados lidos do .env
+    DB_DRIVER: str = os.getenv("DB_DRIVER", "ODBC Driver 17 for SQL Server")
+    DB_SERVER: str = os.getenv("DB_SERVER", "localhost")
+    DB_PORT: str = os.getenv("DB_PORT", "1433")
+    DB_DATABASE: str = os.getenv("DB_DATABASE", "default_db")
+    DB_UID: str = os.getenv("DB_UID", "default_user")
+    DB_PWD: str = os.getenv("DB_PWD", "default_password")
     
     # Template da consulta SQL
     SQL_QUERY: ClassVar[str] = """
@@ -34,16 +35,33 @@ class SQLServerQueryTool(BaseTool):
         CAST(vendas.datas AS DATE) AS Data,
         YEAR(vendas.datas) AS Ano,
         MONTH(vendas.datas) AS Mes,
+        RTRIM(vendas.iclis) AS Codigo_Cliente,
+        RTRIM(vendas.rclis) AS Nome_Cliente,
+        RTRIM(clientes.sexos) AS Sexo,
+        RTRIM(clientes.estcivils) AS Estado_Civil,
+        CAST(clientes.nascs AS DATE) AS Data_Nascimento,
+        DATEDIFF(YEAR, clientes.nascs, GETDATE()) AS Idade,
+        RTRIM(clientes.cidas) AS Cidade,
+        RTRIM(clientes.estas) AS Estado,
+        RTRIM(vendas.vends) AS Codigo_Vendedor,
+        RTRIM(consultora.rclis) AS Nome_Vendedor,
         RTRIM(vendas.cpros) AS Codigo_Produto,
         RTRIM(prod.dpros) AS Descricao_Produto,
+        CAST(SUM(estoque.sqtds) AS INTEGER) AS Estoque_Atual,
         RTRIM(prod.colecoes) AS Colecao,
         RTRIM(grp.dgrus) AS Grupo_Produto,
         RTRIM(subgrp.descricaos) AS Subgrupo_Produto,
         RTRIM(prod.metals) AS Metal,
         SUM(CAST(vendas.qtds AS BIGINT)) AS Quantidade,
+        CAST(SUM(vendas.custos) AS DECIMAL(10, 3)) AS Custo_Produto,
+        CAST(SUM(vendas.totbrts) AS DECIMAL(10, 3)) AS Preco_Tabela,
+        SUM(vendas.VALDESCS - vendas.VALRATS) AS Desconto_Aplicado,
         SUM(CAST(vendas.totas AS DECIMAL(10,3))) AS Total_Liquido
     FROM sljgdmi AS vendas WITH (NOLOCK)
+        LEFT JOIN SLJCLI AS clientes ON clientes.ICLIS = vendas.VENDS
+        LEFT JOIN SLJCLI AS consultora ON consultora.ICLIS = vendas.VENDS
         LEFT JOIN sljpro AS prod WITH (NOLOCK) ON vendas.cpros = prod.cpros
+        LEFT JOIN sljest AS estoque WITH (NOLOCK) ON estoque.cpros = vendas.cpros
         LEFT JOIN sljgru AS grp WITH (NOLOCK) ON prod.cgrus = grp.cgrus
         LEFT JOIN sljsgru AS subgrp WITH (NOLOCK) ON prod.cgrus + prod.sgrus = subgrp.cgrucods
     WHERE vendas.ggrus IN (
@@ -57,12 +75,22 @@ class SQLServerQueryTool(BaseTool):
         CAST(vendas.datas AS DATE),
         YEAR(vendas.datas),
         MONTH(vendas.datas),
+        RTRIM(vendas.iclis),
+        RTRIM(vendas.rclis),
+        RTRIM(clientes.sexos),
+        RTRIM(clientes.estcivils),
+        CAST(clientes.nascs AS DATE),
+        DATEDIFF(YEAR, clientes.nascs, GETDATE()),
+        RTRIM(clientes.cidas),
+        RTRIM(clientes.estas),
         RTRIM(vendas.cpros),
         RTRIM(prod.dpros),
         RTRIM(prod.colecoes),
         RTRIM(grp.dgrus),
         RTRIM(subgrp.descricaos),
-        RTRIM(prod.metals)
+        RTRIM(prod.metals),
+        RTRIM(vendas.vends),
+        RTRIM(consultora.rclis)
     ORDER BY RTRIM(grp.dgrus), YEAR(vendas.datas) DESC, MONTH(vendas.datas) DESC, CAST(vendas.datas AS DATE) DESC 
     """
 
