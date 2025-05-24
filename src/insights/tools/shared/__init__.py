@@ -1,0 +1,1 @@
+# Módulos compartilhados para análises de joalherias 

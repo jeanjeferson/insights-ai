@@ -11,13 +11,12 @@ import os
 
 # Ferramentas principais
 from insights.tools.sql_query_tool import SQLServerQueryTool
-from insights.tools.kpi_calculator_tool import KPICalculatorTool
-from insights.tools.advanced_visualization_tool import AdvancedVisualizationTool
+from insights.tools.kpi_calculator_tool_v3 import KPICalculatorToolV3
 from insights.tools.prophet_tool import ProphetForecastTool
-from insights.tools.statistical_analysis_tool import StatisticalAnalysisTool
+from insights.tools.statistical_analysis_tool_v3 import StatisticalAnalysisToolV3
+from insights.tools.unified_business_intelligence import UnifiedBusinessIntelligence
 
 # Ferramentas avançadas
-from insights.tools.advanced.business_intelligence_dashboard import BusinessIntelligenceDashboard
 from insights.tools.advanced.customer_insights_engine import CustomerInsightsEngine
 from insights.tools.advanced.recommendation_engine import RecommendationEngine
 from insights.tools.advanced.advanced_analytics_engine import AdvancedAnalyticsEngine
@@ -41,13 +40,12 @@ file_tool = FileReadTool()
 sql_tool = SQLServerQueryTool()
 
 # Ferramentas de análise
-kpi_tool = KPICalculatorTool()
-viz_tool = AdvancedVisualizationTool()
+kpi_tool = KPICalculatorToolV3()
 prophet_tool = ProphetForecastTool()
-stats_tool = StatisticalAnalysisTool()
+stats_tool = StatisticalAnalysisToolV3()
 
 # Ferramentas avançadas de IA/ML
-bi_dashboard = BusinessIntelligenceDashboard()
+bi_dashboard = UnifiedBusinessIntelligence()
 customer_engine = CustomerInsightsEngine()
 recommendation_engine = RecommendationEngine()
 analytics_engine = AdvancedAnalyticsEngine()
@@ -112,7 +110,9 @@ class Insights():
                 stats_tool,               # ✅ NOVO: Validação estatística
                 analytics_engine          # ✅ NOVO: ETL avançado
             ],
-            allow_code_execution=True
+            allow_code_execution=True,
+            reasoning=True,
+            max_reasoning_attempts=3
         )
 
     @agent
@@ -130,10 +130,12 @@ class Insights():
             tools=[
                 file_tool,                # ✅ Leitura de dados
                 stats_tool,               # ✅ NOVO: Análise estatística
-                viz_tool,                 # ✅ Visualizações
+                bi_dashboard,                 # ✅ Visualizações
             ],
             respect_context_window=True,
-            allow_code_execution=True
+            allow_code_execution=True,
+            reasoning=True,
+            max_reasoning_attempts=3
         )
 
     @agent
@@ -152,10 +154,12 @@ class Insights():
                 file_tool,                # ✅ Leitura de dados
                 stats_tool,               # ✅ NOVO: Decomposição sazonal
                 analytics_engine,         # ✅ NOVO: Modelagem avançada
-                viz_tool                  # ✅ Visualizações sazonais
+                bi_dashboard                  # ✅ Visualizações sazonais
             ],
             respect_context_window=True,
-            allow_code_execution=True
+            allow_code_execution=True,
+            reasoning=True,
+            max_reasoning_attempts=3
         )
         
     @agent
@@ -174,10 +178,12 @@ class Insights():
                 file_tool,                # ✅ Leitura de dados
                 prophet_tool,             # ✅ CRÍTICO: Prophet forecasting
                 stats_tool,               # ✅ NOVO: Validação de modelos
-                viz_tool                  # ✅ Gráficos de projeção
+                bi_dashboard                  # ✅ Gráficos de projeção
             ],
             respect_context_window=True,
-            allow_code_execution=True
+            allow_code_execution=True,
+            reasoning=True,
+            max_reasoning_attempts=3
         )
         
     @agent
@@ -196,10 +202,12 @@ class Insights():
                 file_tool,                # ✅ Leitura de dados
                 kpi_tool,                 # ✅ KPIs por categoria
                 customer_engine,          # ✅ NOVO: Segmentação IA
-                viz_tool                  # ✅ Visualizações comparativas
+                bi_dashboard                  # ✅ Visualizações comparativas
             ],
             respect_context_window=True,
-            allow_code_execution=True
+            allow_code_execution=True,
+            reasoning=True,
+            max_reasoning_attempts=3
         )
 
     @agent
@@ -220,9 +228,11 @@ class Insights():
                 kpi_tool,                 # ✅ KPIs de estoque
                 recommendation_engine,    # ✅ NOVO: Recomendações ML
                 risk_tool,                # ✅ NOVO: Avaliação de riscos
-                viz_tool                  # ✅ Dashboards de estoque
+                bi_dashboard                  # ✅ Dashboards de estoque
             ],
-            allow_code_execution=True
+            allow_code_execution=True,
+            reasoning=True,
+            max_reasoning_attempts=3
         )
 
     @agent  
@@ -244,9 +254,10 @@ class Insights():
                 bi_dashboard,                   # ✅ NOVO: Dashboard BI
                 recommendation_engine,          # ✅ NOVO: Recomendações estratégicas
                 competitive_tool,               # ✅ NOVO: Análise competitiva
-                viz_tool                        # ✅ Visualizações executivas
             ],
-            allow_code_execution=True
+            allow_code_execution=True,
+            reasoning=True,
+            max_reasoning_attempts=3
         )
 
     # =============== TASKS ===============
