@@ -1,319 +1,403 @@
 """
-📊 TESTE: KPI CALCULATOR TOOL
-=============================
+🧪 TESTE SIMPLIFICADO PARA KPI CALCULATOR TOOL V3.0
+====================================================
 
-Testa a ferramenta de cálculo de KPIs do projeto Insights-AI.
+Suite de testes simplificada que funciona sem dependências externas como psutil.
+Focada em validar a funcionalidade core do KPI Calculator Tool V3.0.
 """
 
-import sys
-import os
-from pathlib import Path
+import pytest
 import pandas as pd
 import numpy as np
-from datetime import datetime, timedelta
+import time
+import os
 import json
+from datetime import datetime, timedelta
+from pathlib import Path
+import tracemalloc
 
-# Adicionar path do projeto
-sys.path.append(str(Path(__file__).parent.parent))
+# Importar ferramenta a ser testada
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
+from src.insights.tools.kpi_calculator_tool import KPICalculatorTool
 
-try:
-    from insights.tools.kpi_calculator_tool import KPICalculatorTool
-except ImportError as e:
-    print(f"⚠️ Erro ao importar KPICalculatorTool: {e}")
-    KPICalculatorTool = None
 
-def create_test_data():
-    """Criar dados de teste para os KPIs"""
-    np.random.seed(42)
-    
-    # Gerar dados de vendas realistas
-    start_date = datetime(2024, 1, 1)
-    end_date = datetime(2024, 12, 31)
-    date_range = pd.date_range(start=start_date, end=end_date, freq='D')
-    
-    data = []
-    for i, date in enumerate(date_range[:90]):  # 3 meses de dados
-        # Número de transações por dia
-        daily_transactions = np.random.randint(5, 20)
-        
-        for _ in range(daily_transactions):
-            data.append({
-                'Data': date.strftime('%Y-%m-%d'),
-                'Ano': date.year,
-                'Mes': date.month,
-                'Codigo_Cliente': f"CLI_{np.random.randint(1, 100):03d}",
-                'Nome_Cliente': f"Cliente {np.random.randint(1, 100):03d}",
-                'Codigo_Produto': f"PROD_{np.random.randint(1, 50):03d}",
-                'Descricao_Produto': f"Produto {np.random.randint(1, 50):03d}",
-                'Grupo_Produto': np.random.choice(['Anéis', 'Brincos', 'Colares', 'Pulseiras']),
-                'Metal': np.random.choice(['Ouro', 'Prata', 'Ouro Branco']),
-                'Quantidade': np.random.randint(1, 3),
-                'Total_Liquido': np.random.uniform(500, 5000),
-                'Custo_Produto': np.random.uniform(200, 2000),
-                'Preco_Tabela': np.random.uniform(600, 6000),
-                'Desconto_Aplicado': np.random.uniform(0, 500),
-                'Estoque_Atual': np.random.randint(0, 100)
-            })
-    
-    return pd.DataFrame(data)
-
-def test_kpi_calculator_tool(verbose=False, quick=False):
+class TestKPICalculatorToolSimple:
     """
-    Teste da ferramenta KPI Calculator Tool
-    """
-    result = {
-        'success': False,
-        'details': {},
-        'warnings': [],
-        'errors': []
-    }
+    Suite simplificada de testes para KPI Calculator Tool v3.0
     
-    try:
-        if verbose:
-            print("📊 Testando KPI Calculator Tool...")
+    Focada em validação funcional sem dependências externas.
+    """
+    
+    @pytest.fixture(autouse=True)
+    def setup(self, real_vendas_data):
+        """Setup automático para cada teste."""
+        self.kpi_tool = KPICalculatorTool()
+        self.real_data_path = real_vendas_data
+        self.test_logs = []
+        self.start_time = time.time()
         
-        # 1. Verificar se a classe foi importada
-        if KPICalculatorTool is None:
-            result['errors'].append("Não foi possível importar KPICalculatorTool")
-            return result
+        print(f"🚀 Iniciando teste com dados: {self.real_data_path}")
+    
+    def setup_standalone(self, data_path):
+        """Setup para execução standalone."""
+        self.kpi_tool = KPICalculatorTool()
+        self.real_data_path = data_path
+        self.test_logs = []
+        self.start_time = time.time()
         
-        # 2. Instanciar a ferramenta
-        try:
-            kpi_tool = KPICalculatorTool()
-            if verbose:
-                print("✅ KPICalculatorTool instanciada com sucesso")
-        except Exception as e:
-            result['errors'].append(f"Erro ao instanciar KPICalculatorTool: {str(e)}")
-            return result
-        
-        # 3. Verificar atributos da ferramenta
-        tool_info = {
-            'name': getattr(kpi_tool, 'name', 'N/A'),
-            'description': getattr(kpi_tool, 'description', 'N/A')[:200] + "..." if len(getattr(kpi_tool, 'description', '')) > 200 else getattr(kpi_tool, 'description', 'N/A')
+        print(f"🚀 Iniciando teste com dados: {self.real_data_path}")
+    
+    def log_test(self, level: str, message: str, **kwargs):
+        """Logging simplificado para testes."""
+        elapsed = time.time() - self.start_time
+        log_entry = {
+            'elapsed': round(elapsed, 2),
+            'level': level,
+            'message': message,
+            **kwargs
         }
+        self.test_logs.append(log_entry)
+        print(f"[{elapsed:6.2f}s] [{level}] {message}")
+        if kwargs:
+            print(f"    {kwargs}")
+    
+    def test_financial_kpis_basic(self):
+        """
+        Teste básico dos KPIs financeiros.
+        """
+        self.log_test("INFO", "Iniciando teste de KPIs financeiros")
         
-        # 4. Criar dados de teste
-        try:
-            test_df = create_test_data()
-            if verbose:
-                print(f"✅ Dados de teste criados: {len(test_df)} registros")
-        except Exception as e:
-            result['errors'].append(f"Erro ao criar dados de teste: {str(e)}")
-            return result
+        # Medir performance básica
+        start_time = time.time()
+        tracemalloc.start()
         
-        # 5. Salvar dados de teste temporariamente
-        test_csv_path = "temp_test_data.csv"
-        try:
-            test_df.to_csv(test_csv_path, sep=';', index=False, encoding='utf-8')
-            test_file_created = True
-        except Exception as e:
-            result['warnings'].append(f"Não foi possível criar arquivo de teste: {str(e)}")
-            test_file_created = False
+        result = self.kpi_tool._run(
+            data_csv=self.real_data_path,
+            categoria="revenue",
+            periodo="monthly",
+            benchmark_mode=True,
+            cache_data=True
+        )
         
-        # 6. Testar diferentes categorias de KPI
-        kpi_categories = ['revenue', 'operational', 'inventory', 'customer', 'all']
-        category_results = {}
+        execution_time = time.time() - start_time
+        current, peak = tracemalloc.get_traced_memory()
+        tracemalloc.stop()
         
-        for category in kpi_categories:
-            if quick and category != 'revenue':  # No modo rápido, só testar revenue
-                continue
-                
+        # Validações básicas
+        assert isinstance(result, str), "Resultado deve ser string"
+        assert len(result) > 100, "Resultado muito curto"
+        assert "erro" not in result.lower(), f"Erro detectado: {result[:200]}..."
+        
+        # Validações de conteúdo (aceita termos em português e inglês)
+        financial_terms = [
+            "receita", "revenue", "aov", "margem", "margin", 
+            "crescimento", "growth", "kpi", "total", "vendas"
+        ]
+        found_terms = [term for term in financial_terms if term in result.lower()]
+        assert len(found_terms) >= 3, f"Poucos termos financeiros encontrados: {found_terms}"
+        
+        # Validações de formato
+        assert "R$" in result or "real" in result.lower(), "Deve incluir valores monetários"
+        
+        self.log_test("SUCCESS", "KPIs financeiros validados", 
+                     execution_time=f"{execution_time:.2f}s",
+                     memory_peak=f"{peak/1024/1024:.1f}MB",
+                     terms_found=len(found_terms),
+                     result_length=len(result))
+        
+        return result
+    
+    def test_all_categories_basic(self):
+        """
+        Teste básico de todas as categorias de KPI.
+        """
+        categories = ["revenue", "operational", "inventory", "customer", "products"]
+        results = {}
+        
+        self.log_test("INFO", f"Testando {len(categories)} categorias")
+        
+        for category in categories:
+            start_time = time.time()
+            
             try:
-                if verbose:
-                    print(f"🔍 Testando categoria: {category}")
-                
-                # Usar dados de teste se arquivo foi criado, senão usar dados reais se existirem
-                data_source = test_csv_path if test_file_created else "data/vendas.csv"
-                
-                kpi_result = kpi_tool._run(
-                    data_csv=data_source,
+                result = self.kpi_tool._run(
+                    data_csv=self.real_data_path,
                     categoria=category,
                     periodo="monthly",
-                    benchmark_mode=True
+                    benchmark_mode=False,  # Acelerar
+                    cache_data=True
                 )
                 
-                # Verificar se o resultado é válido
-                if isinstance(kpi_result, str) and len(kpi_result) > 0:
-                    category_results[category] = {
-                        'status': 'SUCCESS',
-                        'output_length': len(kpi_result),
-                        'has_kpis': 'KPI' in kpi_result.upper(),
-                        'has_insights': 'INSIGHT' in kpi_result.upper(),
-                        'sample_output': kpi_result[:300] + "..." if len(kpi_result) > 300 else kpi_result
-                    }
-                else:
-                    category_results[category] = {
-                        'status': 'EMPTY_RESULT',
-                        'output': str(kpi_result)
-                    }
-                    result['warnings'].append(f"Categoria {category} retornou resultado vazio")
+                execution_time = time.time() - start_time
+                success = "erro" not in result.lower() and len(result) > 50
+                
+                results[category] = {
+                    'success': success,
+                    'execution_time': round(execution_time, 2),
+                    'output_length': len(result)
+                }
+                
+                self.log_test("SUCCESS" if success else "ERROR", 
+                             f"Categoria {category}",
+                             **results[category])
                 
             except Exception as e:
-                category_results[category] = {
-                    'status': 'ERROR',
-                    'error': str(e)
+                results[category] = {
+                    'success': False,
+                    'error': str(e),
+                    'execution_time': time.time() - start_time
                 }
-                result['warnings'].append(f"Erro na categoria {category}: {str(e)}")
+                self.log_test("ERROR", f"Erro em {category}: {str(e)}")
         
-        # 7. Testar métodos auxiliares
-        auxiliary_methods = {}
+        # Validações
+        successful = [cat for cat, res in results.items() if res['success']]
+        success_rate = len(successful) / len(categories)
         
-        # Testar _validate_and_clean_data
-        if hasattr(kpi_tool, '_validate_and_clean_data'):
-            try:
-                cleaned_df = kpi_tool._validate_and_clean_data(test_df)
-                auxiliary_methods['validate_and_clean_data'] = {
-                    'status': 'OK' if cleaned_df is not None else 'NULL_RESULT',
-                    'input_rows': len(test_df),
-                    'output_rows': len(cleaned_df) if cleaned_df is not None else 0
-                }
-            except Exception as e:
-                auxiliary_methods['validate_and_clean_data'] = {
-                    'status': 'ERROR',
-                    'error': str(e)
-                }
+        assert success_rate >= 0.8, f"Taxa de sucesso baixa: {success_rate:.1%}"
         
-        # Testar _calculate_financial_kpis
-        if hasattr(kpi_tool, '_calculate_financial_kpis'):
-            try:
-                financial_kpis = kpi_tool._calculate_financial_kpis(test_df, "monthly")
-                auxiliary_methods['calculate_financial_kpis'] = {
-                    'status': 'OK' if isinstance(financial_kpis, dict) else 'INVALID_TYPE',
-                    'kpi_count': len(financial_kpis) if isinstance(financial_kpis, dict) else 0,
-                    'has_revenue': 'total_revenue' in financial_kpis if isinstance(financial_kpis, dict) else False
-                }
-            except Exception as e:
-                auxiliary_methods['calculate_financial_kpis'] = {
-                    'status': 'ERROR',
-                    'error': str(e)
-                }
+        self.log_test("SUCCESS", "Teste de categorias concluído",
+                     success_rate=f"{success_rate:.1%}",
+                     successful_categories=successful)
         
-        # 8. Testar com dados inválidos
-        error_handling = {}
+        return results
+    
+    def test_cache_functionality(self):
+        """
+        Teste básico da funcionalidade de cache.
+        """
+        self.log_test("INFO", "Testando funcionalidade de cache")
         
-        # Teste com arquivo inexistente
+        # Limpar cache
+        self.kpi_tool._data_cache.clear()
+        
+        # Primeira execução
+        start_time = time.time()
+        result1 = self.kpi_tool._run(
+            data_csv=self.real_data_path,
+            categoria="revenue",
+            cache_data=True
+        )
+        first_time = time.time() - start_time
+        
+        # Verificar se cache foi populado
+        cache_populated = len(self.kpi_tool._data_cache) > 0
+        assert cache_populated, "Cache não foi populado"
+        
+        # Segunda execução (com cache)
+        start_time = time.time()
+        result2 = self.kpi_tool._run(
+            data_csv=self.real_data_path,
+            categoria="revenue",
+            cache_data=True
+        )
+        second_time = time.time() - start_time
+        
+        # Validações
+        assert result1 == result2, "Resultados com cache diferem"
+        cache_benefit = first_time > second_time
+        
+        self.log_test("SUCCESS", "Cache funcionando",
+                     first_time=f"{first_time:.2f}s",
+                     second_time=f"{second_time:.2f}s",
+                     cache_benefit=cache_benefit)
+        
+        return {
+            'first_execution': first_time,
+            'cached_execution': second_time,
+            'cache_benefit': cache_benefit
+        }
+    
+    def test_benchmark_functionality(self):
+        """
+        Teste da funcionalidade de benchmarks.
+        """
+        self.log_test("INFO", "Testando funcionalidade de benchmarks")
+        
+        result = self.kpi_tool._run(
+            data_csv=self.real_data_path,
+            categoria="all",
+            benchmark_mode=True
+        )
+        
+        # Verificar elementos de benchmark (aceita termos em português e inglês)
+        benchmark_terms = [
+            "benchmark", "setor", "sector", "comparação", "comparison", 
+            "média", "average", "padrão", "standard"
+        ]
+        found_terms = [term for term in benchmark_terms if term in result.lower()]
+        
+        assert len(found_terms) >= 2, f"Poucos termos de benchmark: {found_terms}"
+        
+        self.log_test("SUCCESS", "Benchmarks validados",
+                     terms_found=len(found_terms))
+    
+    def test_error_handling_basic(self):
+        """
+        Teste básico de tratamento de erros.
+        """
+        self.log_test("INFO", "Testando tratamento de erros")
+        
+        error_tests = []
+        
+        # Arquivo inexistente
         try:
-            error_result = kpi_tool._run(data_csv="arquivo_inexistente.csv")
-            error_handling['missing_file'] = 'NO_ERROR' if 'Erro' not in error_result else 'ERROR_HANDLED'
-        except Exception as e:
-            error_handling['missing_file'] = 'EXCEPTION'
+            result = self.kpi_tool._run(data_csv="arquivo_inexistente.csv")
+            handled = "erro" in result.lower() or "error" in result.lower()
+            error_tests.append(('arquivo_inexistente', handled))
+        except Exception:
+            error_tests.append(('arquivo_inexistente', False))
         
-        # Teste com categoria inválida
+        # Categoria inválida (deve funcionar com fallback)
         try:
-            if test_file_created:
-                invalid_result = kpi_tool._run(
-                    data_csv=test_csv_path,
-                    categoria="categoria_inexistente"
-                )
-                error_handling['invalid_category'] = 'NO_ERROR' if 'Erro' not in invalid_result else 'ERROR_HANDLED'
+            result = self.kpi_tool._run(
+                data_csv=self.real_data_path,
+                categoria="categoria_invalida"
+            )
+            handled = len(result) > 50  # Deve gerar algum resultado
+            error_tests.append(('categoria_invalida', handled))
+        except Exception:
+            error_tests.append(('categoria_invalida', False))
+        
+        # Pelo menos metade dos testes de erro deve passar
+        passed = sum(1 for _, handled in error_tests if handled)
+        assert passed >= len(error_tests) // 2, f"Poucos erros tratados: {error_tests}"
+        
+        self.log_test("SUCCESS", "Tratamento de erros validado",
+                     tests_passed=f"{passed}/{len(error_tests)}")
+    
+    def test_data_quality_basic(self):
+        """
+        Teste básico de qualidade dos dados.
+        """
+        self.log_test("INFO", "Validando qualidade básica dos dados")
+        
+        # Verificar se arquivo existe e não está vazio
+        assert os.path.exists(self.real_data_path), "Arquivo de dados não encontrado"
+        
+        file_size = os.path.getsize(self.real_data_path)
+        assert file_size > 1000, f"Arquivo muito pequeno: {file_size} bytes"
+        
+        # Tentar carregar dados
+        try:
+            df = pd.read_csv(self.real_data_path, sep=';', encoding='utf-8', nrows=100)
+            assert len(df) > 0, "DataFrame vazio"
+            assert len(df.columns) >= 5, f"Poucas colunas: {len(df.columns)}"
+            
+            # Verificar colunas essenciais
+            essential_cols = ['Data', 'Total_Liquido']
+            missing = [col for col in essential_cols if col not in df.columns]
+            assert len(missing) == 0, f"Colunas essenciais faltando: {missing}"
+            
         except Exception as e:
-            error_handling['invalid_category'] = 'EXCEPTION'
+            pytest.fail(f"Erro ao validar dados: {str(e)}")
         
-        # 9. Verificar benchmarks do setor
-        benchmark_test = {}
-        if hasattr(kpi_tool, '_calculate_benchmark_comparison'):
-            try:
-                benchmark_result = kpi_tool._calculate_benchmark_comparison(test_df)
-                benchmark_test = {
-                    'status': 'OK' if isinstance(benchmark_result, dict) else 'INVALID',
-                    'has_benchmarks': len(benchmark_result) > 0 if isinstance(benchmark_result, dict) else False
-                }
-            except Exception as e:
-                benchmark_test = {
-                    'status': 'ERROR',
-                    'error': str(e)
-                }
+        self.log_test("SUCCESS", "Qualidade básica dos dados validada",
+                     file_size_mb=f"{file_size/1024/1024:.1f}MB",
+                     sample_rows=len(df),
+                     columns=len(df.columns))
+    
+    def test_performance_basic(self):
+        """
+        Teste básico de performance.
+        """
+        self.log_test("INFO", "Testando performance básica")
         
-        # 10. Limpeza
-        if test_file_created:
-            try:
-                os.remove(test_csv_path)
-            except:
-                pass
+        # Medir execução de categoria revenue
+        start_time = time.time()
+        tracemalloc.start()
         
-        # 11. Compilar resultados
-        result['details'] = {
-            'tool_info': tool_info,
-            'test_data_stats': {
-                'rows': len(test_df),
-                'columns': len(test_df.columns),
-                'date_range': f"{test_df['Data'].min()} até {test_df['Data'].max()}"
-            },
-            'category_results': category_results,
-            'auxiliary_methods': auxiliary_methods,
-            'error_handling': error_handling,
-            'benchmark_test': benchmark_test
+        result = self.kpi_tool._run(
+            data_csv=self.real_data_path,
+            categoria="revenue",
+            periodo="monthly",
+            benchmark_mode=False
+        )
+        
+        execution_time = time.time() - start_time
+        current, peak = tracemalloc.get_traced_memory()
+        tracemalloc.stop()
+        
+        # Validações de performance
+        assert execution_time < 30, f"Execução muito lenta: {execution_time:.2f}s"
+        assert peak < 500 * 1024 * 1024, f"Uso de memória excessivo: {peak/1024/1024:.1f}MB"
+        assert len(result) > 1000, "Resultado muito curto"
+        
+        self.log_test("SUCCESS", "Performance validada",
+                     execution_time=f"{execution_time:.2f}s",
+                     memory_peak=f"{peak/1024/1024:.1f}MB",
+                     result_length=len(result))
+    
+    def teardown_method(self, method):
+        """Limpeza após cada teste."""
+        test_name = method.__name__
+        duration = time.time() - self.start_time
+        
+        # Salvar logs do teste
+        log_dir = Path("test_logs")
+        log_dir.mkdir(exist_ok=True)
+        
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        log_file = log_dir / f"{test_name}_{timestamp}_simple.json"
+        
+        log_data = {
+            'test_name': test_name,
+            'timestamp': timestamp,
+            'duration': round(duration, 2),
+            'logs': self.test_logs
         }
         
-        # 12. Determinar sucesso
-        successful_categories = len([r for r in category_results.values() if r.get('status') == 'SUCCESS'])
-        total_categories = len(category_results)
+        with open(log_file, 'w', encoding='utf-8') as f:
+            json.dump(log_data, f, indent=2, ensure_ascii=False)
         
-        if successful_categories > 0:
-            result['success'] = True
-            if verbose:
-                print(f"✅ KPI Calculator Tool: {successful_categories}/{total_categories} categorias funcionando")
-        else:
-            if verbose:
-                print("❌ KPI Calculator Tool: nenhuma categoria funcionando")
+        print(f"📁 Log salvo: {log_file}")
         
-        return result
-        
-    except Exception as e:
-        result['errors'].append(f"Erro inesperado no teste KPI: {str(e)}")
-        result['success'] = False
-        return result
+        # Limpar cache
+        if hasattr(self, 'kpi_tool'):
+            self.kpi_tool._data_cache.clear()
 
-def test_kpi_calculations():
-    """Teste específico dos cálculos de KPI"""
-    if KPICalculatorTool is None:
-        return False, "Ferramenta não disponível"
-    
-    try:
-        kpi_tool = KPICalculatorTool()
-        test_df = create_test_data()
-        
-        # Testar cálculos específicos
-        tests = {}
-        
-        # Revenue Growth
-        monthly_revenue = test_df.groupby(['Ano', 'Mes'])['Total_Liquido'].sum()
-        if len(monthly_revenue) >= 2:
-            growth_rate = ((monthly_revenue.iloc[-1] - monthly_revenue.iloc[-2]) / monthly_revenue.iloc[-2] * 100)
-            tests['revenue_growth'] = not np.isnan(growth_rate)
-        
-        # AOV
-        aov = test_df['Total_Liquido'].mean()
-        tests['aov'] = aov > 0
-        
-        # Unique customers
-        unique_customers = test_df['Codigo_Cliente'].nunique()
-        tests['unique_customers'] = unique_customers > 0
-        
-        return all(tests.values()), f"Testes: {tests}"
-        
-    except Exception as e:
-        return False, f"Erro: {str(e)}"
 
 if __name__ == "__main__":
-    # Teste standalone
-    result = test_kpi_calculator_tool(verbose=True, quick=False)
-    print("\n📊 RESULTADO DO TESTE KPI:")
-    print(f"✅ Sucesso: {result['success']}")
-    print(f"⚠️ Warnings: {len(result['warnings'])}")
-    print(f"❌ Erros: {len(result['errors'])}")
+    # Executar teste standalone
+    import sys
+    import os
+    sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
     
-    if result['warnings']:
-        print("\nWarnings:")
-        for warning in result['warnings']:
-            print(f"  - {warning}")
+    test_instance = TestKPICalculatorToolSimple()
     
-    if result['errors']:
-        print("\nErros:")
-        for error in result['errors']:
-            print(f"  - {error}")
+    # Setup standalone
+    test_instance.setup_standalone("data/vendas.csv")
     
-    # Teste adicional de cálculos
-    print("\n🧮 TESTE DE CÁLCULOS:")
-    success, message = test_kpi_calculations()
-    print(f"{'✅' if success else '❌'} {message}")
+    print("🧪 Executando testes simplificados...")
+    
+    tests = [
+        test_instance.test_data_quality_basic,
+        test_instance.test_financial_kpis_basic,
+        test_instance.test_cache_functionality,
+        test_instance.test_error_handling_basic,
+        test_instance.test_performance_basic
+    ]
+    
+    passed = 0
+    total = len(tests)
+    
+    for test_func in tests:
+        try:
+            print(f"\n{'='*50}")
+            print(f"🔄 Executando: {test_func.__name__}")
+            test_func()
+            print(f"✅ {test_func.__name__} - PASSOU")
+            passed += 1
+        except Exception as e:
+            print(f"❌ {test_func.__name__} - FALHOU: {str(e)}")
+        finally:
+            test_instance.teardown_method(test_func)
+    
+    print(f"\n{'='*50}")
+    print(f"🎯 RESULTADO FINAL: {passed}/{total} testes passaram")
+    
+    if passed == total:
+        print("🎉 TODOS OS TESTES PASSARAM!")
+    else:
+        print(f"⚠️ {total - passed} teste(s) falharam") 

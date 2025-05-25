@@ -39,16 +39,26 @@ class JewelryRFMAnalysisMixin:
             if current_date is None:
                 current_date = df['Data'].max()
             
-            # RFM por produto
-            rfm_products = df.groupby('Codigo_Produto').agg({
+            # RFM por produto - construir agregação dinamicamente
+            agg_dict = {
                 'Data': lambda x: (current_date - x.max()).days,  # Recency
                 'Total_Liquido': ['count', 'sum'],  # Frequency, Monetary
                 'Descricao_Produto': 'first',
-                'Grupo_Produto': 'first',
-                'Margem_Real': 'sum' if 'Margem_Real' in df.columns else 'count'
-            })
+                'Grupo_Produto': 'first'
+            }
             
-            rfm_products.columns = ['Recency', 'Frequency', 'Monetary', 'Description', 'Group', 'Margin']
+            # Adicionar Margem_Real apenas se existir
+            if 'Margem_Real' in df.columns:
+                agg_dict['Margem_Real'] = 'sum'
+            
+            rfm_products = df.groupby('Codigo_Produto').agg(agg_dict)
+            
+            # Definir colunas baseado no que foi agregado
+            base_columns = ['Recency', 'Frequency', 'Monetary', 'Description', 'Group']
+            if 'Margem_Real' in df.columns:
+                base_columns.append('Margin')
+            
+            rfm_products.columns = base_columns
             
             # Scores RFM com ajustes para joalherias
             rfm_products['R_Score'] = pd.qcut(rfm_products['Recency'], 5, labels=[5,4,3,2,1], duplicates='drop').astype(int)

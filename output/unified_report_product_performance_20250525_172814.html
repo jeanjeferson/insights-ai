@@ -1,0 +1,546 @@
+
+            <!DOCTYPE html>
+            <html lang="pt-BR">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>📊 Product Performance - Insights AI</title>
+                <style>
+                    * {
+                        margin: 0;
+                        padding: 0;
+                        box-sizing: border-box;
+                    }
+                    
+                    body {
+                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+                        min-height: 100vh;
+                        padding: 20px;
+                        line-height: 1.6;
+                    }
+                    
+                    .container {
+                        max-width: 1200px;
+                        margin: 0 auto;
+                        background: white;
+                        border-radius: 20px;
+                        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+                        overflow: hidden;
+                    }
+                    
+                    .header {
+                        background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+                        color: white;
+                        padding: 40px;
+                        text-align: center;
+                    }
+                    
+                    .header h1 {
+                        font-size: 2.5em;
+                        margin-bottom: 10px;
+                        font-weight: 300;
+                    }
+                    
+                    .header p {
+                        font-size: 1.2em;
+                        opacity: 0.9;
+                    }
+                    
+                    .content {
+                        padding: 40px;
+                    }
+                    
+                    .kpi-grid {
+                        display: grid;
+                        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                        gap: 20px;
+                        margin-bottom: 30px;
+                    }
+                    
+                    .kpi-card {
+                        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+                        padding: 25px;
+                        border-radius: 15px;
+                        border: 1px solid #e2e8f0;
+                        text-align: center;
+                        transition: transform 0.3s ease;
+                    }
+                    
+                    .kpi-card:hover {
+                        transform: translateY(-5px);
+                        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+                    }
+                    
+                    .kpi-value {
+                        font-size: 2.5em;
+                        font-weight: bold;
+                        color: #1e293b;
+                        margin-bottom: 10px;
+                    }
+                    
+                    .kpi-icon {
+                        font-size: 2.5em;
+                        margin-bottom: 15px;
+                        opacity: 0.8;
+                    }
+                    
+                    .kpi-label {
+                        color: #374151;
+                        font-size: 1.1em;
+                        font-weight: 600;
+                        margin-bottom: 5px;
+                    }
+                    
+                    .kpi-meta {
+                        color: #6b7280;
+                        font-size: 0.9em;
+                        font-style: italic;
+                        margin-top: 5px;
+                    }
+                    
+                    .kpi-change {
+                        font-size: 0.9em;
+                        margin-top: 5px;
+                        padding: 5px 10px;
+                        border-radius: 20px;
+                        display: inline-block;
+                    }
+                    
+                    .kpi-change.positive {
+                        background: #dcfce7;
+                        color: #166534;
+                    }
+                    
+                    .kpi-change.negative {
+                        background: #fef2f2;
+                        color: #dc2626;
+                    }
+                    
+                    .section {
+                        margin-bottom: 40px;
+                    }
+                    
+                    .section-title {
+                        font-size: 1.8em;
+                        color: #1e293b;
+                        margin-bottom: 20px;
+                        padding-bottom: 10px;
+                        border-bottom: 3px solid #3b82f6;
+                    }
+                    
+                    .alert {
+                        background: #fef2f2;
+                        border-left: 4px solid #ef4444;
+                        padding: 15px 20px;
+                        margin: 15px 0;
+                        border-radius: 0 8px 8px 0;
+                    }
+                    
+                    .alert-title {
+                        font-weight: bold;
+                        color: #dc2626;
+                        margin-bottom: 5px;
+                    }
+                    
+                    .insight {
+                        background: #f0f9ff;
+                        border-left: 4px solid #3b82f6;
+                        padding: 15px 20px;
+                        margin: 15px 0;
+                        border-radius: 0 8px 8px 0;
+                    }
+                    
+                    .insight-title {
+                        font-weight: bold;
+                        color: #1e40af;
+                        margin-bottom: 5px;
+                    }
+                    
+                    .recommendation {
+                        background: #f0fdf4;
+                        border-left: 4px solid #22c55e;
+                        padding: 15px 20px;
+                        margin: 15px 0;
+                        border-radius: 0 8px 8px 0;
+                    }
+                    
+                    .recommendation-title {
+                        font-weight: bold;
+                        color: #166534;
+                        margin-bottom: 5px;
+                    }
+                    
+                    .health-score {
+                        background: linear-gradient(135deg, #fef3c7 0%, #fbbf24 100%);
+                        padding: 30px;
+                        border-radius: 15px;
+                        text-align: center;
+                        margin: 30px 0;
+                    }
+                    
+                    .health-score-value {
+                        font-size: 4em;
+                        font-weight: bold;
+                        color: #92400e;
+                    }
+                    
+                    .health-score-label {
+                        font-size: 1.5em;
+                        color: #92400e;
+                        margin-top: 10px;
+                    }
+                    
+                    .data-table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin: 20px 0;
+                        background: white;
+                        border-radius: 10px;
+                        overflow: hidden;
+                        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                    }
+                    
+                    .data-table th {
+                        background: #f8fafc;
+                        padding: 15px;
+                        text-align: left;
+                        font-weight: 600;
+                        color: #374151;
+                        border-bottom: 1px solid #e5e7eb;
+                    }
+                    
+                    .data-table td {
+                        padding: 12px 15px;
+                        border-bottom: 1px solid #f3f4f6;
+                    }
+                    
+                    .data-table tr:hover {
+                        background: #f9fafb;
+                    }
+                    
+                    .footer {
+                        background: #f8fafc;
+                        padding: 30px;
+                        text-align: center;
+                        color: #64748b;
+                        border-top: 1px solid #e2e8f0;
+                    }
+                    
+                    .footer-logo {
+                        font-size: 1.5em;
+                        margin-bottom: 10px;
+                    }
+                    
+                    @media (max-width: 768px) {
+                        .container {
+                            margin: 10px;
+                            border-radius: 10px;
+                        }
+                        
+                        .header {
+                            padding: 20px;
+                        }
+                        
+                        .header h1 {
+                            font-size: 2em;
+                        }
+                        
+                        .content {
+                            padding: 20px;
+                        }
+                        
+                        .kpi-grid {
+                            grid-template-columns: 1fr;
+                        }
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                    <div class="header">
+                        <h1>📊 Product Performance</h1>
+                        <p>Relatório Executivo de Business Intelligence</p>
+                        <p>Gerado em: 25/05/2025 às 17:28</p>
+                    </div>
+                    
+                    <div class="content">
+                        
+        <!-- KPIs de Produtos -->
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-icon">📦</div>
+                <div class="kpi-value">11,485</div>
+                <div class="kpi-label">Total de Produtos</div>
+                <div class="kpi-meta">Itens únicos no catálogo</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-icon">🥇</div>
+                <div class="kpi-value">3271</div>
+                <div class="kpi-label">Produtos Classe A</div>
+                <div class="kpi-meta">80.0% da receita</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-icon">⚠️</div>
+                <div class="kpi-value">7,583</div>
+                <div class="kpi-label">Slow Movers</div>
+                <div class="kpi-meta">Sem venda há 60+ dias</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-icon">💀</div>
+                <div class="kpi-value">6,093</div>
+                <div class="kpi-label">Dead Stock</div>
+                <div class="kpi-meta">Sem venda há 120+ dias</div>
+            </div>
+        </div>
+        
+        <!-- Análise ABC -->
+        <div class="section">
+            <h2 class="section-title">🏆 Análise ABC de Produtos</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px;">
+                <div style="background: linear-gradient(135deg, #fef3c7 0%, #fbbf24 100%); padding: 20px; border-radius: 15px; text-align: center;">
+                    <div style="font-size: 2em; font-weight: bold; color: #92400e;">🥇</div>
+                    <div style="font-size: 1.8em; font-weight: bold; color: #92400e;">3271</div>
+                    <div style="color: #92400e; font-weight: 600;">Classe A</div>
+                    <div style="color: #92400e; font-size: 0.9em;">80.0% receita</div>
+                </div>
+                <div style="background: linear-gradient(135deg, #e5e7eb 0%, #9ca3af 100%); padding: 20px; border-radius: 15px; text-align: center;">
+                    <div style="font-size: 2em; font-weight: bold; color: #374151;">🥈</div>
+                    <div style="font-size: 1.8em; font-weight: bold; color: #374151;">3867</div>
+                    <div style="color: #374151; font-weight: 600;">Classe B</div>
+                    <div style="color: #374151; font-size: 0.9em;">Produtos intermediários</div>
+                </div>
+                <div style="background: linear-gradient(135deg, #fecaca 0%, #ef4444 100%); padding: 20px; border-radius: 15px; text-align: center;">
+                    <div style="font-size: 2em; font-weight: bold; color: #7f1d1d;">🥉</div>
+                    <div style="font-size: 1.8em; font-weight: bold; color: #7f1d1d;">4347</div>
+                    <div style="color: #7f1d1d; font-weight: 600;">Classe C</div>
+                    <div style="color: #7f1d1d; font-size: 0.9em;">Baixo giro</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Top Produtos por Receita -->
+        <div class="section">
+            <h2 class="section-title">💰 Top 10 Produtos por Receita</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Posição</th>
+                        <th>Código do Produto</th>
+                        <th>Receita Total</th>
+                        <th>Transações</th>
+                        <th>Receita por Transação</th>
+                    </tr>
+                </thead>
+                <tbody>
+        
+                    <tr>
+                        <td><strong>#1</strong></td>
+                        <td><code>TXR-0004</code></td>
+                        <td><strong>R$ 3,245,889.69</strong></td>
+                        <td>31</td>
+                        <td>R$ 104,706.12</td>
+                    </tr>
+            
+                    <tr>
+                        <td><strong>#2</strong></td>
+                        <td><code>TXR-0015</code></td>
+                        <td><strong>R$ 1,901,187.61</strong></td>
+                        <td>20</td>
+                        <td>R$ 95,059.38</td>
+                    </tr>
+            
+                    <tr>
+                        <td><strong>#3</strong></td>
+                        <td><code>TXR-0030</code></td>
+                        <td><strong>R$ 1,381,089.12</strong></td>
+                        <td>7</td>
+                        <td>R$ 197,298.45</td>
+                    </tr>
+            
+                    <tr>
+                        <td><strong>#4</strong></td>
+                        <td><code>TXR-0012</code></td>
+                        <td><strong>R$ 817,121.66</strong></td>
+                        <td>12</td>
+                        <td>R$ 68,093.47</td>
+                    </tr>
+            
+                    <tr>
+                        <td><strong>#5</strong></td>
+                        <td><code>GLM8694/1933</code></td>
+                        <td><strong>R$ 593,736.63</strong></td>
+                        <td>6</td>
+                        <td>R$ 98,956.10</td>
+                    </tr>
+            
+                    <tr>
+                        <td><strong>#6</strong></td>
+                        <td><code>GFNJ324/0001</code></td>
+                        <td><strong>R$ 480,227.50</strong></td>
+                        <td>19</td>
+                        <td>R$ 25,275.13</td>
+                    </tr>
+            
+                    <tr>
+                        <td><strong>#7</strong></td>
+                        <td><code>TXR-0028</code></td>
+                        <td><strong>R$ 436,492.63</strong></td>
+                        <td>5</td>
+                        <td>R$ 87,298.53</td>
+                    </tr>
+            
+                    <tr>
+                        <td><strong>#8</strong></td>
+                        <td><code>BLMI334/0001</code></td>
+                        <td><strong>R$ 435,312.24</strong></td>
+                        <td>53</td>
+                        <td>R$ 8,213.44</td>
+                    </tr>
+            
+                    <tr>
+                        <td><strong>#9</strong></td>
+                        <td><code>GFNT807/0003</code></td>
+                        <td><strong>R$ 360,584.03</strong></td>
+                        <td>9</td>
+                        <td>R$ 40,064.89</td>
+                    </tr>
+            
+                    <tr>
+                        <td><strong>#10</strong></td>
+                        <td><code>BLMI335/0001</code></td>
+                        <td><strong>R$ 353,900.78</strong></td>
+                        <td>74</td>
+                        <td>R$ 4,782.44</td>
+                    </tr>
+            
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Top Produtos por Volume -->
+        <div class="section">
+            <h2 class="section-title">📊 Top 10 Produtos por Volume</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Posição</th>
+                        <th>Código do Produto</th>
+                        <th>Quantidade Total</th>
+                        <th>Receita Total</th>
+                        <th>Preço Médio</th>
+                    </tr>
+                </thead>
+                <tbody>
+        
+                    <tr>
+                        <td><strong>#1</strong></td>
+                        <td><code>TXR-0004</code></td>
+                        <td><strong>104,791</strong></td>
+                        <td>R$ 3,245,889.69</td>
+                        <td>R$ 30.97</td>
+                    </tr>
+            
+                    <tr>
+                        <td><strong>#2</strong></td>
+                        <td><code>TXR-0030</code></td>
+                        <td><strong>36,100</strong></td>
+                        <td>R$ 1,381,089.12</td>
+                        <td>R$ 38.26</td>
+                    </tr>
+            
+                    <tr>
+                        <td><strong>#3</strong></td>
+                        <td><code>TXR-0015</code></td>
+                        <td><strong>21,831</strong></td>
+                        <td>R$ 1,901,187.61</td>
+                        <td>R$ 87.09</td>
+                    </tr>
+            
+                    <tr>
+                        <td><strong>#4</strong></td>
+                        <td><code>TXR-0012</code></td>
+                        <td><strong>7,100</strong></td>
+                        <td>R$ 817,121.66</td>
+                        <td>R$ 115.09</td>
+                    </tr>
+            
+                    <tr>
+                        <td><strong>#5</strong></td>
+                        <td><code>TXR-0006</code></td>
+                        <td><strong>2,694</strong></td>
+                        <td>R$ 130,071.17</td>
+                        <td>R$ 48.28</td>
+                    </tr>
+            
+                    <tr>
+                        <td><strong>#6</strong></td>
+                        <td><code>TXR-0016</code></td>
+                        <td><strong>2,369</strong></td>
+                        <td>R$ 336,976.06</td>
+                        <td>R$ 142.24</td>
+                    </tr>
+            
+                    <tr>
+                        <td><strong>#7</strong></td>
+                        <td><code>TXR-0028</code></td>
+                        <td><strong>1,915</strong></td>
+                        <td>R$ 436,492.63</td>
+                        <td>R$ 227.93</td>
+                    </tr>
+            
+                    <tr>
+                        <td><strong>#8</strong></td>
+                        <td><code>TXR-0001</code></td>
+                        <td><strong>1,470</strong></td>
+                        <td>R$ 70,397.15</td>
+                        <td>R$ 47.89</td>
+                    </tr>
+            
+                    <tr>
+                        <td><strong>#9</strong></td>
+                        <td><code>GLM8694/1933</code></td>
+                        <td><strong>902</strong></td>
+                        <td>R$ 593,736.63</td>
+                        <td>R$ 658.24</td>
+                    </tr>
+            
+                    <tr>
+                        <td><strong>#10</strong></td>
+                        <td><code>YPE8696/1926</code></td>
+                        <td><strong>630</strong></td>
+                        <td>R$ 9,436.80</td>
+                        <td>R$ 14.98</td>
+                    </tr>
+            
+                </tbody>
+            </table>
+        </div>
+        
+            <div class="section">
+                <h2 class="section-title">⚠️ Alertas de Inventário</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                    <div class="alert">
+                        <div class="alert-title">📉 Slow Movers (60+ dias)</div>
+                        <div><strong>7,583 produtos</strong> sem vendas há mais de 60 dias</div>
+                        <div style="margin-top: 10px; font-size: 0.9em;">Recomendação: Revisar preços ou promoções</div>
+                    </div>
+                    <div class="alert">
+                        <div class="alert-title">💀 Dead Stock (120+ dias)</div>
+                        <div><strong>6,093 produtos</strong> sem vendas há mais de 120 dias</div>
+                        <div style="margin-top: 10px; font-size: 0.9em;">Recomendação: Considerar liquidação</div>
+                    </div>
+                </div>
+            </div>
+            
+                    </div>
+                    
+                    <div class="footer">
+                        <div class="footer-logo">🚀 Insights AI</div>
+                        <p>Business Intelligence Platform</p>
+                        <p>Relatório gerado automaticamente com dados em tempo real</p>
+                    </div>
+                </div>
+            </body>
+            </html>
+            

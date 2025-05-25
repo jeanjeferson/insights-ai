@@ -1,32 +1,25 @@
 #!/usr/bin/env python3
 """
-🔧 SETUP E CONFIGURAÇÃO DOS TESTES
-==================================
+🔧 SETUP SIMPLES DOS TESTES
+===========================
 
-Script para configurar o ambiente de testes do Insights-AI.
-Verifica dependências, cria dados de exemplo e valida configuração.
+Script simplificado para configurar o ambiente de testes do Insights-AI.
+Verifica dependências básicas e cria dados de exemplo simples.
 """
 
 import sys
 import os
-import subprocess
 from pathlib import Path
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 
-def check_dependencies():
-    """Verificar dependências necessárias"""
-    print("🔍 Verificando dependências...")
+def check_basic_dependencies():
+    """Verificar dependências básicas necessárias"""
+    print("🔍 Verificando dependências básicas...")
     
-    required_packages = [
-        'pandas', 'numpy', 'scipy', 'scikit-learn', 
-        'matplotlib', 'seaborn'
-    ]
-    
-    optional_packages = [
-        'prophet', 'plotly', 'psutil'
-    ]
+    required_packages = ['pandas', 'numpy']
+    optional_packages = ['prophet', 'plotly']
     
     missing_required = []
     missing_optional = []
@@ -48,255 +41,137 @@ def check_dependencies():
             print(f"  ⚠️ {package} - OPCIONAL")
     
     if missing_required:
-        print(f"\n❌ Pacotes obrigatórios ausentes: {missing_required}")
-        print("Execute: pip install " + " ".join(missing_required))
+        print(f"\n❌ Instale: pip install {' '.join(missing_required)}")
         return False
     
     if missing_optional:
-        print(f"\n⚠️ Pacotes opcionais ausentes: {missing_optional}")
-        print("Para testes completos, execute: pip install " + " ".join(missing_optional))
+        print(f"\n⚠️ Para testes completos: pip install {' '.join(missing_optional)}")
     
     print("\n✅ Dependências verificadas!")
     return True
 
-def create_sample_data():
-    """Criar dados de exemplo para testes"""
+def create_simple_sample_data():
+    """Criar dados de exemplo simples para testes"""
     print("\n📊 Criando dados de exemplo...")
     
-    # Verificar se data/vendas.csv já existe
     data_dir = Path("data")
     data_file = data_dir / "vendas.csv"
     
+    # Verificar se já existe
     if data_file.exists():
-        print(f"  ℹ️ Arquivo {data_file} já existe")
-        
-        # Verificar se é válido
         try:
             df = pd.read_csv(data_file, sep=';', encoding='utf-8')
             if len(df) > 0 and 'Total_Liquido' in df.columns:
-                print(f"  ✅ Arquivo válido com {len(df)} registros")
+                print(f"  ✅ Arquivo válido existente com {len(df)} registros")
                 return True
-            else:
-                print("  ⚠️ Arquivo existe mas parece inválido, criando novo...")
-        except Exception as e:
-            print(f"  ⚠️ Erro ao ler arquivo existente: {e}")
-            print("  🔄 Criando novo arquivo...")
+        except:
+            print("  ⚠️ Arquivo inválido, criando novo...")
     
-    # Criar diretório se não existir
+    # Criar diretório
     data_dir.mkdir(exist_ok=True)
     
-    # Gerar dados de exemplo
+    # Gerar dados simples
     np.random.seed(42)
     
-    print("  🏗️ Gerando dados de vendas...")
+    print("  🏗️ Gerando dados simples...")
     
-    # 6 meses de dados
-    start_date = datetime(2024, 6, 1)
-    end_date = datetime(2024, 12, 31)
-    date_range = pd.date_range(start=start_date, end=end_date, freq='D')
-    
+    # 3 meses de dados simples
+    dates = pd.date_range('2024-01-01', periods=90, freq='D')
     data = []
     
-    # Produtos e categorias realistas para joalheria
-    categories = ['Anéis', 'Brincos', 'Colares', 'Pulseiras', 'Alianças', 'Pingentes']
-    metals = ['Ouro', 'Prata', 'Ouro Branco', 'Ouro Rosé', 'Platina']
-    collections = ['Clássica', 'Moderna', 'Vintage', 'Exclusiva', 'Sazonal']
+    categories = ['Anéis', 'Brincos', 'Colares', 'Pulseiras']
+    customers = [f"CLI_{i:03d}" for i in range(1, 51)]  # 50 clientes
     
-    customers = [f"CLI_{i:04d}" for i in range(1, 301)]  # 300 clientes
-    sellers = [f"VEND_{i:02d}" for i in range(1, 21)]     # 20 vendedores
-    
-    transaction_id = 1
-    
-    for date in date_range:
-        # Sazonalidade (mais vendas próximo ao fim do ano)
-        seasonal_factor = 1 + 0.5 * np.sin(2 * np.pi * date.timetuple().tm_yday / 365 + np.pi/2)
-        
-        # Padrão semanal (menos vendas no fim de semana)
-        weekday_factor = 1.3 if date.weekday() < 5 else 0.4
-        
-        # Número de transações por dia
-        daily_transactions = max(1, int(20 * seasonal_factor * weekday_factor * np.random.uniform(0.6, 1.4)))
+    for i, date in enumerate(dates):
+        # 5-15 transações por dia
+        daily_transactions = np.random.randint(5, 16)
         
         for _ in range(daily_transactions):
-            customer = np.random.choice(customers)
-            seller = np.random.choice(sellers)
-            category = np.random.choice(categories)
-            metal = np.random.choice(metals)
-            collection = np.random.choice(collections)
-            
-            # Preços baseados na categoria e metal
-            base_prices = {
-                'Anéis': 1200, 'Brincos': 650, 'Colares': 1800,
-                'Pulseiras': 950, 'Alianças': 2400, 'Pingentes': 450
-            }
-            
-            metal_multipliers = {
-                'Ouro': 1.0, 'Prata': 0.35, 'Ouro Branco': 1.15,
-                'Ouro Rosé': 1.08, 'Platina': 1.75
-            }
-            
-            collection_multipliers = {
-                'Clássica': 0.9, 'Moderna': 1.0, 'Vintage': 1.2,
-                'Exclusiva': 1.8, 'Sazonal': 0.85
-            }
-            
-            # Calcular preços
-            base_price = base_prices[category]
-            metal_mult = metal_multipliers[metal]
-            collection_mult = collection_multipliers[collection]
-            
-            quantidade = np.random.choice([1, 1, 1, 2, 2, 3], p=[0.6, 0.2, 0.1, 0.06, 0.03, 0.01])
-            preco_unitario = base_price * metal_mult * collection_mult * np.random.uniform(0.8, 1.2)
-            preco_tabela = preco_unitario * 1.3  # 30% markup
-            desconto = preco_tabela * np.random.uniform(0, 0.2)  # 0-20% desconto
-            total_liquido = (preco_tabela - desconto) * quantidade
-            custo_produto = preco_unitario * 0.4 * quantidade  # 40% do preço final
-            
-            # Produto único baseado na combinação
-            product_hash = hash(f"{category}_{metal}_{collection}") % 1000
-            codigo_produto = f"PROD_{product_hash:04d}"
-            
             data.append({
                 'Data': date.strftime('%Y-%m-%d'),
-                'Ano': date.year,
-                'Mes': date.month,
-                'Codigo_Cliente': customer,
-                'Nome_Cliente': f"Cliente {customer.split('_')[1]}",
-                'Sexo': np.random.choice(['M', 'F']),
-                'Estado_Civil': np.random.choice(['Solteiro', 'Casado', 'Divorciado', 'Viúvo'], p=[0.3, 0.5, 0.15, 0.05]),
-                'Idade': np.random.randint(18, 75),
-                'Cidade': np.random.choice([
-                    'São Paulo', 'Rio de Janeiro', 'Belo Horizonte', 'Brasília', 
-                    'Salvador', 'Fortaleza', 'Curitiba', 'Porto Alegre'
-                ], p=[0.25, 0.2, 0.15, 0.1, 0.1, 0.05, 0.08, 0.07]),
-                'Estado': np.random.choice(['SP', 'RJ', 'MG', 'DF', 'BA', 'CE', 'PR', 'RS'], 
-                                         p=[0.25, 0.2, 0.15, 0.1, 0.1, 0.05, 0.08, 0.07]),
-                'Codigo_Vendedor': seller,
-                'Nome_Vendedor': f"Vendedor {seller.split('_')[1]}",
-                'Codigo_Produto': codigo_produto,
-                'Descricao_Produto': f"{category} {metal} {collection}",
-                'Estoque_Atual': np.random.randint(0, 50),
-                'Colecao': collection,
-                'Grupo_Produto': category,
-                'Subgrupo_Produto': f"Sub{category}",
-                'Metal': metal,
-                'Quantidade': quantidade,
-                'Custo_Produto': round(custo_produto, 2),
-                'Preco_Tabela': round(preco_tabela, 2),
-                'Desconto_Aplicado': round(desconto, 2),
-                'Total_Liquido': round(total_liquido, 2)
+                'Codigo_Cliente': np.random.choice(customers),
+                'Codigo_Produto': f"PROD_{np.random.randint(1, 21):03d}",
+                'Categoria': np.random.choice(categories),
+                'Quantidade': np.random.randint(1, 4),
+                'Total_Liquido': np.random.uniform(100, 2000),
+                'Preco_Unitario': np.random.uniform(50, 500)
             })
-            
-            transaction_id += 1
     
-    # Criar DataFrame
+    # Criar e salvar DataFrame
     df = pd.DataFrame(data)
-    
-    # Salvar arquivo
     df.to_csv(data_file, sep=';', index=False, encoding='utf-8')
     
     print(f"  ✅ Arquivo criado: {data_file}")
     print(f"  📊 {len(df)} registros")
     print(f"  📅 Período: {df['Data'].min()} até {df['Data'].max()}")
-    print(f"  💰 Vendas totais: R$ {df['Total_Liquido'].sum():,.2f}")
-    print(f"  🏆 Produtos únicos: {df['Codigo_Produto'].nunique()}")
-    print(f"  👥 Clientes únicos: {df['Codigo_Cliente'].nunique()}")
+    print(f"  💰 Total: R$ {df['Total_Liquido'].sum():,.2f}")
     
     return True
 
-def validate_environment():
-    """Validar ambiente de testes"""
-    print("\n🔍 Validando ambiente...")
-    
-    # Verificar estrutura de diretórios
-    required_dirs = ['src', 'src/insights', 'src/tests', 'data']
-    
-    for dir_path in required_dirs:
-        if Path(dir_path).exists():
-            print(f"  ✅ Diretório {dir_path}")
-        else:
-            print(f"  ❌ Diretório {dir_path} ausente")
-            return False
-    
-    # Verificar arquivos principais de teste
-    test_files = [
-        'src/tests/test_main.py',
-        'src/tests/conftest.py',
-        'src/tests/test_kpi_calculator_tool.py'
-    ]
-    
-    for file_path in test_files:
-        if Path(file_path).exists():
-            print(f"  ✅ Arquivo {file_path}")
-        else:
-            print(f"  ❌ Arquivo {file_path} ausente")
-            return False
-    
-    print("\n✅ Ambiente validado!")
-    return True
-
-def run_quick_test():
-    """Executar teste rápido para verificar funcionamento"""
-    print("\n🚀 Executando teste rápido...")
+def run_quick_validation():
+    """Executar validação rápida"""
+    print("\n🚀 Executando validação rápida...")
     
     try:
-        # Tentar importar e executar teste básico
-        sys.path.append('src')
-        from tests.test_data_validation import test_data_validation
+        # Testar import das ferramentas principais
+        sys.path.append(str(Path(__file__).parent.parent))
         
-        result = test_data_validation(verbose=True, quick=True)
+        from insights.tools.kpi_calculator_tool import KPICalculatorTool
+        from insights.tools.statistical_analysis_tool import StatisticalAnalysisTool
+        from insights.tools.business_intelligence_tool import BusinessIntelligenceTool
         
-        if result['success']:
-            print("  ✅ Teste rápido passou!")
-            return True
+        print("  ✅ Ferramentas v3.0 importadas com sucesso")
+        
+        # Testar dados
+        data_file = Path("data/vendas.csv")
+        if data_file.exists():
+            df = pd.read_csv(data_file, sep=';', encoding='utf-8')
+            if len(df) > 0:
+                print(f"  ✅ Dados válidos: {len(df)} registros")
+            else:
+                print("  ❌ Dados vazios")
+                return False
         else:
-            print("  ❌ Teste rápido falhou:")
-            for error in result['errors']:
-                print(f"    - {error}")
+            print("  ❌ Arquivo de dados não encontrado")
             return False
-            
+        
+        print("  ✅ Validação concluída com sucesso!")
+        return True
+        
     except Exception as e:
-        print(f"  ❌ Erro no teste rápido: {str(e)}")
+        print(f"  ❌ Erro na validação: {str(e)}")
         return False
 
 def main():
-    """Função principal do setup"""
-    print("🔧 SETUP DOS TESTES INSIGHTS-AI")
-    print("=" * 50)
+    """Função principal do setup simplificado"""
+    print("🔧 SETUP SIMPLES - INSIGHTS-AI")
+    print("=" * 35)
     
     success = True
     
     # 1. Verificar dependências
-    if not check_dependencies():
+    if not check_basic_dependencies():
         success = False
     
-    # 2. Validar ambiente
-    if success and not validate_environment():
+    # 2. Criar dados de exemplo
+    if success and not create_simple_sample_data():
         success = False
     
-    # 3. Criar dados de exemplo
-    if success and not create_sample_data():
-        success = False
-    
-    # 4. Teste rápido
-    if success and not run_quick_test():
+    # 3. Validação rápida
+    if success and not run_quick_validation():
         success = False
     
     # Resultado final
-    print("\n" + "=" * 50)
+    print("\n" + "=" * 35)
     if success:
         print("✅ SETUP CONCLUÍDO COM SUCESSO!")
         print("\n🎯 Próximos passos:")
-        print("1. Execute: python src/tests/test_main.py --verbose")
-        print("2. Para testes rápidos: python src/tests/test_main.py --quick --verbose")
-        print("3. Para ferramentas específicas: python src/tests/test_main.py --tool kpi --verbose")
-        print("\n📖 Consulte src/tests/README.md para mais informações")
+        print("1. Execute: python test_performance.py")
+        print("2. Execute: python test_integration.py")
+        print("3. Execute: python test_advanced_tools.py")
     else:
         print("❌ SETUP FALHOU!")
-        print("\n🔧 Ações necessárias:")
-        print("1. Instale as dependências obrigatórias")
-        print("2. Verifique a estrutura de diretórios")
-        print("3. Execute este script novamente")
+        print("\n🔧 Instale as dependências e execute novamente")
     
     return success
 

@@ -194,6 +194,16 @@ def sample_csv_file(tmp_path, sample_vendas_data):
     return str(csv_file)
 
 @pytest.fixture
+def real_vendas_data():
+    """Fixture com dados reais de vendas para testes completos"""
+    real_data_path = "data/vendas.csv"
+    if os.path.exists(real_data_path):
+        return real_data_path
+    else:
+        # Fallback para dados simulados se arquivo real não existir
+        pytest.skip(f"Arquivo de dados reais não encontrado: {real_data_path}")
+
+@pytest.fixture
 def empty_csv_file(tmp_path):
     """Fixture com arquivo CSV vazio para testes de erro"""
     csv_file = tmp_path / "empty.csv"

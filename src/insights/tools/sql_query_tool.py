@@ -1,23 +1,94 @@
 from crewai.tools import BaseTool
 from typing import Type, Optional, ClassVar
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, validator
 from datetime import datetime, timedelta
 import pyodbc
 import pandas as pd
 import os
 
 class SQLServerQueryInput(BaseModel):
-    """Schema de entrada para a ferramenta SQL Server Query."""
-    date_start: str = Field(..., description="Data inicial para o filtro no formato 'YYYY-MM-DD'.")
-    date_end: Optional[str] = Field(None, description="Data final para o filtro no formato 'YYYY-MM-DD'. Se não for fornecida, apenas a data inicial será usada.")
-    output_format: Optional[str] = Field("summary", description="Formato da saída: 'summary' para um resumo, 'raw' para os dados brutos, 'json' ou 'csv' para exportação."
+    """Schema otimizado para consultas SQL Server com validações robustas."""
+    
+    date_start: str = Field(
+        ..., 
+        description="Data inicial para filtro no formato 'YYYY-MM-DD'. Use data_inicio fornecida pelo sistema.",
+        example="2024-01-01",
+        pattern=r"^\d{4}-\d{2}-\d{2}$"
     )
+    
+    date_end: Optional[str] = Field(
+        None, 
+        description="Data final para filtro no formato 'YYYY-MM-DD'. Se não fornecida, usa apenas data inicial. Use data_fim fornecida pelo sistema.",
+        example="2024-12-31",
+        pattern=r"^\d{4}-\d{2}-\d{2}$"
+    )
+    
+    output_format: Optional[str] = Field(
+        "csv", 
+        description="Formato de saída: 'csv' (dados estruturados), 'summary' (resumo), 'json' (JSON), 'raw' (dados brutos).",
+        pattern="^(csv|summary|json|raw)$"
+    )
+    
+    @validator('date_start')
+    def validate_date_start(cls, v):
+        try:
+            datetime.strptime(v, '%Y-%m-%d')
+            return v
+        except ValueError:
+            raise ValueError("date_start deve estar no formato YYYY-MM-DD")
+    
+    @validator('date_end')
+    def validate_date_end(cls, v, values):
+        if v is not None:
+            try:
+                end_date = datetime.strptime(v, '%Y-%m-%d')
+                if 'date_start' in values:
+                    start_date = datetime.strptime(values['date_start'], '%Y-%m-%d')
+                    if end_date < start_date:
+                        raise ValueError("date_end deve ser posterior a date_start")
+                return v
+            except ValueError as e:
+                if "date_end deve ser posterior" in str(e):
+                    raise e
+                raise ValueError("date_end deve estar no formato YYYY-MM-DD")
+        return v
 
 class SQLServerQueryTool(BaseTool):
+    """
+    🗄️ FERRAMENTA DE CONSULTA SQL SERVER PARA DADOS DE VENDAS
+    
+    QUANDO USAR:
+    - Extrair dados de vendas do banco SQL Server
+    - Aplicar filtros de data específicos nos dados
+    - Obter dados estruturados para análises posteriores
+    - Gerar relatórios baseados em períodos específicos
+    - Alimentar outras ferramentas com dados filtrados
+    
+    CASOS DE USO ESPECÍFICOS:
+    - Extrair vendas de um período específico para análise
+    - Obter dados para alimentar ferramentas de KPI/BI
+    - Gerar datasets para análises estatísticas
+    - Criar extratos de vendas para relatórios executivos
+    - Filtrar dados por data para análises temporais
+    
+    RESULTADOS ENTREGUES:
+    - Dados de vendas estruturados em CSV/JSON
+    - Informações completas de clientes, produtos e vendedores
+    - Dados de margem, estoque e performance
+    - Métricas agregadas por período
+    - Dados prontos para análises avançadas
+    
+    IMPORTANTE:
+    - SEMPRE use os inputs data_inicio e data_fim fornecidos pelo sistema
+    - O filtro de data é aplicado automaticamente na consulta SQL
+    - Dados incluem informações completas de vendas, clientes e produtos
+    """
+    
     name: str = "SQL Server Query Tool"
     description: str = (
-        "Executa uma consulta SQL no SQL Server com um filtro de data dinâmico. "
-        "Forneça uma data inicial e, opcionalmente, uma data final para obter vendas nesse período."
+        "Ferramenta especializada para extrair dados de vendas do SQL Server com filtros de data dinâmicos. "
+        "Executa consultas otimizadas e retorna dados estruturados prontos para análises. "
+        "OBRIGATÓRIO: Use sempre os inputs data_inicio e data_fim fornecidos pelo sistema."
     )
     args_schema: Type[BaseModel] = SQLServerQueryInput
     
@@ -95,21 +166,29 @@ class SQLServerQueryTool(BaseTool):
     """
 
     def _run(self, date_start: str, date_end: Optional[str] = None, output_format: str = "csv") -> str:
+        print(f"🔍 SQL Query Tool executando com parâmetros:")
+        print(f"   📅 Data início: {date_start}")
+        print(f"   📅 Data fim: {date_end}")
+        print(f"   📋 Formato: {output_format}")
+        
         # Validar datas
         try:
             start_date = datetime.strptime(date_start, '%Y-%m-%d')
             if date_end:
                 end_date = datetime.strptime(date_end, '%Y-%m-%d')
                 if end_date < start_date:
-                    return "Erro: Data final deve ser posterior à data inicial."
+                    return "❌ Erro: Data final deve ser posterior à data inicial."
+            print("✅ Formato de datas validado")
         except ValueError:
-            return "Erro: As datas devem estar no formato 'YYYY-MM-DD'."
+            return "❌ Erro: As datas devem estar no formato 'YYYY-MM-DD'."
             
         # Construir a cláusula de filtro de data
         if date_end:
             date_filter = f"AND vendas.datas BETWEEN '{date_start}' AND '{date_end}'"
+            print(f"🔍 Filtro SQL criado: BETWEEN {date_start} AND {date_end}")
         else:
             date_filter = f"AND vendas.datas = '{date_start}'"
+            print(f"🔍 Filtro SQL criado: = {date_start}")
             
         # Detalhes da conexão com o SQL Server
         conn_str = (
@@ -122,6 +201,7 @@ class SQLServerQueryTool(BaseTool):
         
         # Substituir o placeholder pelo filtro de data real
         sql_query = self.SQL_QUERY.replace('-- <<FILTRO_DATA>>', date_filter)
+        print(f"✅ Placeholder -- <<FILTRO_DATA>> substituído por: {date_filter}")
         
         try:
             # Conectar ao SQL Server

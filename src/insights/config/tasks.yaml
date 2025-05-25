@@ -2,46 +2,59 @@
 
 engenheiro_dados_task:
   description: >
-    🔧 ENGENHARIA DE DADOS AVANÇADA:
+    🔧 ENGENHARIA DE DADOS AVANÇADA COM FILTROS TEMPORAIS:
     
-    1. **Extração Multi-Source**:
-       - Usar SQL Server Query Tool para dados primários do ERP
-       - Usar File Read Tool para dados complementares
+    **IMPORTANTE: Use os inputs {data_inicio} e {data_fim} fornecidos para filtrar os dados!**
+    
+    1. **Extração Multi-Source com Filtro Temporal**:
+       - **OBRIGATÓRIO**: Usar SQL Server Query Tool com os parâmetros:
+         * date_start: {data_inicio} 
+         * date_end: {data_fim}
+         * output_format: "csv"
+       - Exemplo de chamada: SQL Server Query Tool com date_start="{data_inicio}", date_end="{data_fim}", output_format="csv"
+       - Usar File Read Tool para dados complementares se necessário
        - Validar integridade referencial entre fontes
     
     2. **Análise Estatística de Qualidade**:
-       - Usar Statistical Analysis Tool para detectar outliers
-       - Aplicar testes de normalidade e consistência
-       - Identificar gaps temporais e dados faltantes
+       - Usar Statistical Analysis Tool para detectar outliers nos dados filtrados
+       - Aplicar testes de normalidade e consistência no período especificado
+       - Identificar gaps temporais entre {data_inicio} e {data_fim}
     
     3. **ETL Avançado**:
        - Usar Advanced Analytics Engine para limpeza automatizada
        - Aplicar transformações inteligentes baseadas em padrões
        - Criar features derivadas (Preco_Unitario, Margem_Estimada, etc.)
+       - Calcular métricas temporais para o período analisado
     
     4. **Validação Final**:
-       - Gerar relatório de qualidade de dados
+       - Gerar relatório de qualidade de dados para o período {data_inicio} a {data_fim}
        - Documentar transformações aplicadas
-       - Validar estatísticas descritivas por segmento
+       - Validar estatísticas descritivas por segmento no período
+       - Confirmar que os dados estão dentro do range temporal solicitado
   
   expected_output: >
-    📋 DATASET EMPRESARIAL VALIDADO contendo:
+    📋 DATASET EMPRESARIAL VALIDADO PARA O PERÍODO {data_inicio} A {data_fim}:
     
     1. **Dados Limpos e Validados**:
-       - DataFrame principal com outliers tratados
+       - DataFrame principal com dados filtrados entre {data_inicio} e {data_fim}
+       - Outliers tratados no período especificado
        - Campos derivados calculados
-       - Metadados de qualidade de dados
+       - Metadados de qualidade de dados temporais
     
-    2. **Relatório de Qualidade**:
-       - Estatísticas descritivas por dimensão
+    2. **Relatório de Qualidade Temporal**:
+       - Estatísticas descritivas por dimensão no período
        - Detecção de anomalias e tratativas aplicadas
-       - Gaps identificados e estratégias de preenchimento
+       - Gaps identificados entre {data_inicio} e {data_fim}
        - Recomendações para coleta futura
+       - Confirmação do range temporal dos dados extraídos
     
-    3. **Features Engineered**:
-       - Campos calculados otimizados para análise
-       - Segmentações automáticas (preço, frequência, etc.)
-       - Índices temporais e sazonais
+    3. **Features Engineered Temporais**:
+       - Campos calculados otimizados para análise temporal
+       - Segmentações automáticas (preço, frequência, etc.) no período
+       - Índices temporais e sazonais para o range especificado
+       - Métricas de evolução temporal quando aplicável
+    
+    **VALIDAÇÃO CRÍTICA**: Confirmar que todos os dados estão dentro do período {data_inicio} a {data_fim}
   
   agent: engenheiro_dados
 
@@ -197,7 +210,7 @@ especialista_projecoes_task:
   
   agent: especialista_projecoes
 
-analista_categorias_task:
+analista_segmentos_task:
   description: >
     👥 SEGMENTAÇÃO INTELIGENTE COM IA:
     

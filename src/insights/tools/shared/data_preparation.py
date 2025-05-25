@@ -190,12 +190,24 @@ class DataPreparationMixin:
             
             # Preço unitário
             if 'Quantidade' in df.columns:
-                df['Preco_Unitario'] = (
-                    (df['Total_Liquido'] / df['Quantidade'])
-                    .replace([np.inf, -np.inf], df['Total_Liquido'])
-                    .fillna(df['Total_Liquido'])
-                )
-                print("✅ Preço unitário calculado")
+                # Calcular preço unitário com tratamento seguro de divisão por zero
+                zero_quantities = (df['Quantidade'] == 0).sum()
+                if zero_quantities > 0:
+                    print(f"🔧 Ajustando {zero_quantities} registros com quantidade zero")
+                
+                preco_unitario = df['Total_Liquido'] / df['Quantidade'].replace(0, 1)
+                
+                # Verificar e tratar valores infinitos
+                infinite_values = np.isinf(preco_unitario).sum()
+                if infinite_values > 0:
+                    print(f"🔧 Tratando {infinite_values} valores infinitos no preço unitário")
+                
+                # Substituir valores infinitos pela média ou pelo próprio valor total
+                preco_unitario = preco_unitario.replace([np.inf, -np.inf], np.nan)
+                
+                # Para valores NaN/infinitos, usar o próprio Total_Liquido (assumindo quantidade = 1)
+                df['Preco_Unitario'] = preco_unitario.fillna(df['Total_Liquido'])
+                print("✅ Preço unitário calculado com tratamento robusto")
             
             # ROI se houver custo
             if 'Margem_Real' in df.columns and 'Custo_Produto' in df.columns:

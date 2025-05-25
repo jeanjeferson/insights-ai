@@ -1,0 +1,492 @@
+
+            <!DOCTYPE html>
+            <html lang="pt-BR">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>📊 Customer Intelligence - Insights AI</title>
+                <style>
+                    * {
+                        margin: 0;
+                        padding: 0;
+                        box-sizing: border-box;
+                    }
+                    
+                    body {
+                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+                        min-height: 100vh;
+                        padding: 20px;
+                        line-height: 1.6;
+                    }
+                    
+                    .container {
+                        max-width: 1200px;
+                        margin: 0 auto;
+                        background: white;
+                        border-radius: 20px;
+                        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+                        overflow: hidden;
+                    }
+                    
+                    .header {
+                        background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+                        color: white;
+                        padding: 40px;
+                        text-align: center;
+                    }
+                    
+                    .header h1 {
+                        font-size: 2.5em;
+                        margin-bottom: 10px;
+                        font-weight: 300;
+                    }
+                    
+                    .header p {
+                        font-size: 1.2em;
+                        opacity: 0.9;
+                    }
+                    
+                    .content {
+                        padding: 40px;
+                    }
+                    
+                    .kpi-grid {
+                        display: grid;
+                        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                        gap: 20px;
+                        margin-bottom: 30px;
+                    }
+                    
+                    .kpi-card {
+                        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+                        padding: 25px;
+                        border-radius: 15px;
+                        border: 1px solid #e2e8f0;
+                        text-align: center;
+                        transition: transform 0.3s ease;
+                    }
+                    
+                    .kpi-card:hover {
+                        transform: translateY(-5px);
+                        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+                    }
+                    
+                    .kpi-value {
+                        font-size: 2.5em;
+                        font-weight: bold;
+                        color: #1e293b;
+                        margin-bottom: 10px;
+                    }
+                    
+                    .kpi-icon {
+                        font-size: 2.5em;
+                        margin-bottom: 15px;
+                        opacity: 0.8;
+                    }
+                    
+                    .kpi-label {
+                        color: #374151;
+                        font-size: 1.1em;
+                        font-weight: 600;
+                        margin-bottom: 5px;
+                    }
+                    
+                    .kpi-meta {
+                        color: #6b7280;
+                        font-size: 0.9em;
+                        font-style: italic;
+                        margin-top: 5px;
+                    }
+                    
+                    .kpi-change {
+                        font-size: 0.9em;
+                        margin-top: 5px;
+                        padding: 5px 10px;
+                        border-radius: 20px;
+                        display: inline-block;
+                    }
+                    
+                    .kpi-change.positive {
+                        background: #dcfce7;
+                        color: #166534;
+                    }
+                    
+                    .kpi-change.negative {
+                        background: #fef2f2;
+                        color: #dc2626;
+                    }
+                    
+                    .section {
+                        margin-bottom: 40px;
+                    }
+                    
+                    .section-title {
+                        font-size: 1.8em;
+                        color: #1e293b;
+                        margin-bottom: 20px;
+                        padding-bottom: 10px;
+                        border-bottom: 3px solid #3b82f6;
+                    }
+                    
+                    .alert {
+                        background: #fef2f2;
+                        border-left: 4px solid #ef4444;
+                        padding: 15px 20px;
+                        margin: 15px 0;
+                        border-radius: 0 8px 8px 0;
+                    }
+                    
+                    .alert-title {
+                        font-weight: bold;
+                        color: #dc2626;
+                        margin-bottom: 5px;
+                    }
+                    
+                    .insight {
+                        background: #f0f9ff;
+                        border-left: 4px solid #3b82f6;
+                        padding: 15px 20px;
+                        margin: 15px 0;
+                        border-radius: 0 8px 8px 0;
+                    }
+                    
+                    .insight-title {
+                        font-weight: bold;
+                        color: #1e40af;
+                        margin-bottom: 5px;
+                    }
+                    
+                    .recommendation {
+                        background: #f0fdf4;
+                        border-left: 4px solid #22c55e;
+                        padding: 15px 20px;
+                        margin: 15px 0;
+                        border-radius: 0 8px 8px 0;
+                    }
+                    
+                    .recommendation-title {
+                        font-weight: bold;
+                        color: #166534;
+                        margin-bottom: 5px;
+                    }
+                    
+                    .health-score {
+                        background: linear-gradient(135deg, #fef3c7 0%, #fbbf24 100%);
+                        padding: 30px;
+                        border-radius: 15px;
+                        text-align: center;
+                        margin: 30px 0;
+                    }
+                    
+                    .health-score-value {
+                        font-size: 4em;
+                        font-weight: bold;
+                        color: #92400e;
+                    }
+                    
+                    .health-score-label {
+                        font-size: 1.5em;
+                        color: #92400e;
+                        margin-top: 10px;
+                    }
+                    
+                    .data-table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin: 20px 0;
+                        background: white;
+                        border-radius: 10px;
+                        overflow: hidden;
+                        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                    }
+                    
+                    .data-table th {
+                        background: #f8fafc;
+                        padding: 15px;
+                        text-align: left;
+                        font-weight: 600;
+                        color: #374151;
+                        border-bottom: 1px solid #e5e7eb;
+                    }
+                    
+                    .data-table td {
+                        padding: 12px 15px;
+                        border-bottom: 1px solid #f3f4f6;
+                    }
+                    
+                    .data-table tr:hover {
+                        background: #f9fafb;
+                    }
+                    
+                    .footer {
+                        background: #f8fafc;
+                        padding: 30px;
+                        text-align: center;
+                        color: #64748b;
+                        border-top: 1px solid #e2e8f0;
+                    }
+                    
+                    .footer-logo {
+                        font-size: 1.5em;
+                        margin-bottom: 10px;
+                    }
+                    
+                    @media (max-width: 768px) {
+                        .container {
+                            margin: 10px;
+                            border-radius: 10px;
+                        }
+                        
+                        .header {
+                            padding: 20px;
+                        }
+                        
+                        .header h1 {
+                            font-size: 2em;
+                        }
+                        
+                        .content {
+                            padding: 20px;
+                        }
+                        
+                        .kpi-grid {
+                            grid-template-columns: 1fr;
+                        }
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                    <div class="header">
+                        <h1>📊 Customer Intelligence</h1>
+                        <p>Relatório Executivo de Business Intelligence</p>
+                        <p>Gerado em: 25/05/2025 às 17:28</p>
+                    </div>
+                    
+                    <div class="content">
+                        
+        <!-- KPIs de Clientes -->
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-icon">👥</div>
+                <div class="kpi-value">8,622</div>
+                <div class="kpi-label">Total de Clientes</div>
+                <div class="kpi-meta">Base ativa no período</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-icon">💎</div>
+                <div class="kpi-value">1,725</div>
+                <div class="kpi-label">Clientes VIP</div>
+                <div class="kpi-meta">20.0% da base</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-icon">💰</div>
+                <div class="kpi-value">R$ 65,811</div>
+                <div class="kpi-label">CLV Médio</div>
+                <div class="kpi-meta">Customer Lifetime Value</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-icon">🔄</div>
+                <div class="kpi-value">4.1</div>
+                <div class="kpi-label">Frequência Média</div>
+                <div class="kpi-meta">Compras por cliente</div>
+            </div>
+        </div>
+        
+        <!-- Segmentação RFM -->
+        <div class="section">
+            <h2 class="section-title">🎯 Segmentação RFM de Clientes</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px;">
+        
+                <div style="background: linear-gradient(135deg, #dcfce7 0%, #22c55e 100%); padding: 20px; border-radius: 15px; text-align: center;">
+                    <div style="font-size: 2em; margin-bottom: 10px;">💚</div>
+                    <div style="font-size: 1.8em; font-weight: bold; color: #1f2937;">3,646</div>
+                    <div style="color: #374151; font-weight: 600; margin-bottom: 5px;">Leal</div>
+                    <div style="color: #6b7280; font-size: 0.9em;">42.3% da base</div>
+                </div>
+            
+                <div style="background: linear-gradient(135deg, #fecaca 0%, #ef4444 100%); padding: 20px; border-radius: 15px; text-align: center;">
+                    <div style="font-size: 2em; margin-bottom: 10px;">🔴</div>
+                    <div style="font-size: 1.8em; font-weight: bold; color: #1f2937;">2,636</div>
+                    <div style="color: #374151; font-weight: 600; margin-bottom: 5px;">Perdido</div>
+                    <div style="color: #6b7280; font-size: 0.9em;">30.6% da base</div>
+                </div>
+            
+                <div style="background: linear-gradient(135deg, #fef3c7 0%, #fbbf24 100%); padding: 20px; border-radius: 15px; text-align: center;">
+                    <div style="font-size: 2em; margin-bottom: 10px;">💎</div>
+                    <div style="font-size: 1.8em; font-weight: bold; color: #1f2937;">1,725</div>
+                    <div style="color: #374151; font-weight: 600; margin-bottom: 5px;">VIP</div>
+                    <div style="color: #6b7280; font-size: 0.9em;">20.0% da base</div>
+                </div>
+            
+                <div style="background: linear-gradient(135deg, #fed7aa 0%, #f97316 100%); padding: 20px; border-radius: 15px; text-align: center;">
+                    <div style="font-size: 2em; margin-bottom: 10px;">⚠️</div>
+                    <div style="font-size: 1.8em; font-weight: bold; color: #1f2937;">559</div>
+                    <div style="color: #374151; font-weight: 600; margin-bottom: 5px;">Em Risco</div>
+                    <div style="color: #6b7280; font-size: 0.9em;">6.5% da base</div>
+                </div>
+            
+                <div style="background: linear-gradient(135deg, #dbeafe 0%, #3b82f6 100%); padding: 20px; border-radius: 15px; text-align: center;">
+                    <div style="font-size: 2em; margin-bottom: 10px;">🟢</div>
+                    <div style="font-size: 1.8em; font-weight: bold; color: #1f2937;">56</div>
+                    <div style="color: #374151; font-weight: 600; margin-bottom: 5px;">Ativo</div>
+                    <div style="color: #6b7280; font-size: 0.9em;">0.6% da base</div>
+                </div>
+            
+            </div>
+        </div>
+        
+        <!-- Top Clientes por Valor -->
+        <div class="section">
+            <h2 class="section-title">🏆 Top 10 Clientes por Valor</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Posição</th>
+                        <th>Código do Cliente</th>
+                        <th>Valor Total Gasto</th>
+                        <th>Número de Compras</th>
+                        <th>Ticket Médio</th>
+                    </tr>
+                </thead>
+                <tbody>
+        
+                    <tr>
+                        <td><strong>#1</strong></td>
+                        <td><code>CUST_4262</code></td>
+                        <td><strong>R$ 515,723.98</strong></td>
+                        <td>7</td>
+                        <td>R$ 73,674.85</td>
+                    </tr>
+            
+                    <tr>
+                        <td><strong>#2</strong></td>
+                        <td><code>CUST_8712</code></td>
+                        <td><strong>R$ 414,992.98</strong></td>
+                        <td>5</td>
+                        <td>R$ 82,998.60</td>
+                    </tr>
+            
+                    <tr>
+                        <td><strong>#3</strong></td>
+                        <td><code>CUST_1897</code></td>
+                        <td><strong>R$ 378,738.75</strong></td>
+                        <td>7</td>
+                        <td>R$ 54,105.54</td>
+                    </tr>
+            
+                    <tr>
+                        <td><strong>#4</strong></td>
+                        <td><code>CUST_842</code></td>
+                        <td><strong>R$ 370,458.31</strong></td>
+                        <td>7</td>
+                        <td>R$ 52,922.62</td>
+                    </tr>
+            
+                    <tr>
+                        <td><strong>#5</strong></td>
+                        <td><code>CUST_1770</code></td>
+                        <td><strong>R$ 342,294.43</strong></td>
+                        <td>3</td>
+                        <td>R$ 114,098.14</td>
+                    </tr>
+            
+                    <tr>
+                        <td><strong>#6</strong></td>
+                        <td><code>CUST_2817</code></td>
+                        <td><strong>R$ 338,338.71</strong></td>
+                        <td>4</td>
+                        <td>R$ 84,584.68</td>
+                    </tr>
+            
+                    <tr>
+                        <td><strong>#7</strong></td>
+                        <td><code>CUST_4822</code></td>
+                        <td><strong>R$ 331,126.93</strong></td>
+                        <td>6</td>
+                        <td>R$ 55,187.82</td>
+                    </tr>
+            
+                    <tr>
+                        <td><strong>#8</strong></td>
+                        <td><code>CUST_4427</code></td>
+                        <td><strong>R$ 312,102.72</strong></td>
+                        <td>8</td>
+                        <td>R$ 39,012.84</td>
+                    </tr>
+            
+                    <tr>
+                        <td><strong>#9</strong></td>
+                        <td><code>CUST_2405</code></td>
+                        <td><strong>R$ 292,866.15</strong></td>
+                        <td>3</td>
+                        <td>R$ 97,622.05</td>
+                    </tr>
+            
+                    <tr>
+                        <td><strong>#10</strong></td>
+                        <td><code>CUST_7052</code></td>
+                        <td><strong>R$ 285,429.85</strong></td>
+                        <td>7</td>
+                        <td>R$ 40,775.69</td>
+                    </tr>
+            
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Análise de Retenção -->
+        <div class="section">
+            <h2 class="section-title">📊 Análise de Retenção</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                <div style="background: linear-gradient(135deg, #dcfce7 0%, #22c55e 100%); padding: 25px; border-radius: 15px; text-align: center;">
+                    <div style="font-size: 2em; margin-bottom: 10px;">✅</div>
+                    <div style="font-size: 2em; font-weight: bold; color: #166534;">2,682</div>
+                    <div style="color: #166534; font-weight: 600; margin-bottom: 5px;">Ativos (30 dias)</div>
+                    <div style="color: #166534; font-size: 0.9em;">Compraram recentemente</div>
+                </div>
+                <div style="background: linear-gradient(135deg, #fed7aa 0%, #f97316 100%); padding: 25px; border-radius: 15px; text-align: center;">
+                    <div style="font-size: 2em; margin-bottom: 10px;">⚠️</div>
+                    <div style="font-size: 2em; font-weight: bold; color: #9a3412;">2,957</div>
+                    <div style="color: #9a3412; font-weight: 600; margin-bottom: 5px;">Em Risco (90+ dias)</div>
+                    <div style="color: #9a3412; font-size: 0.9em;">Precisam de reativação</div>
+                </div>
+                <div style="background: linear-gradient(135deg, #fecaca 0%, #ef4444 100%); padding: 25px; border-radius: 15px; text-align: center;">
+                    <div style="font-size: 2em; margin-bottom: 10px;">❌</div>
+                    <div style="font-size: 2em; font-weight: bold; color: #7f1d1d;">1,355</div>
+                    <div style="color: #7f1d1d; font-weight: 600; margin-bottom: 5px;">Perdidos (180+ dias)</div>
+                    <div style="color: #7f1d1d; font-size: 0.9em;">Sem compras há muito tempo</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Insights e Recomendações -->
+        <div class="section">
+            <h2 class="section-title">💡 Insights e Recomendações</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+        
+                <div class="alert">
+                    <div class="alert-title">⚠️ Alta Taxa de Perda</div>
+                    <div>30.6% dos clientes estão perdidos. Implemente campanhas de reativação urgentes.</div>
+                </div>
+            
+                <div class="insight">
+                    <div class="insight-title">✅ Base Ativa Saudável</div>
+                    <div>31.1% dos clientes compraram nos últimos 30 dias, indicando uma base ativa saudável.</div>
+                </div>
+            
+            </div>
+        </div>
+        
+                    </div>
+                    
+                    <div class="footer">
+                        <div class="footer-logo">🚀 Insights AI</div>
+                        <p>Business Intelligence Platform</p>
+                        <p>Relatório gerado automaticamente com dados em tempo real</p>
+                    </div>
+                </div>
+            </body>
+            </html>
+            

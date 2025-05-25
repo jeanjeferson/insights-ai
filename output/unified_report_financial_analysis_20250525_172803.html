@@ -1,0 +1,499 @@
+
+            <!DOCTYPE html>
+            <html lang="pt-BR">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>📊 Financial Analysis - Insights AI</title>
+                <style>
+                    * {
+                        margin: 0;
+                        padding: 0;
+                        box-sizing: border-box;
+                    }
+                    
+                    body {
+                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+                        min-height: 100vh;
+                        padding: 20px;
+                        line-height: 1.6;
+                    }
+                    
+                    .container {
+                        max-width: 1200px;
+                        margin: 0 auto;
+                        background: white;
+                        border-radius: 20px;
+                        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+                        overflow: hidden;
+                    }
+                    
+                    .header {
+                        background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+                        color: white;
+                        padding: 40px;
+                        text-align: center;
+                    }
+                    
+                    .header h1 {
+                        font-size: 2.5em;
+                        margin-bottom: 10px;
+                        font-weight: 300;
+                    }
+                    
+                    .header p {
+                        font-size: 1.2em;
+                        opacity: 0.9;
+                    }
+                    
+                    .content {
+                        padding: 40px;
+                    }
+                    
+                    .kpi-grid {
+                        display: grid;
+                        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                        gap: 20px;
+                        margin-bottom: 30px;
+                    }
+                    
+                    .kpi-card {
+                        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+                        padding: 25px;
+                        border-radius: 15px;
+                        border: 1px solid #e2e8f0;
+                        text-align: center;
+                        transition: transform 0.3s ease;
+                    }
+                    
+                    .kpi-card:hover {
+                        transform: translateY(-5px);
+                        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+                    }
+                    
+                    .kpi-value {
+                        font-size: 2.5em;
+                        font-weight: bold;
+                        color: #1e293b;
+                        margin-bottom: 10px;
+                    }
+                    
+                    .kpi-icon {
+                        font-size: 2.5em;
+                        margin-bottom: 15px;
+                        opacity: 0.8;
+                    }
+                    
+                    .kpi-label {
+                        color: #374151;
+                        font-size: 1.1em;
+                        font-weight: 600;
+                        margin-bottom: 5px;
+                    }
+                    
+                    .kpi-meta {
+                        color: #6b7280;
+                        font-size: 0.9em;
+                        font-style: italic;
+                        margin-top: 5px;
+                    }
+                    
+                    .kpi-change {
+                        font-size: 0.9em;
+                        margin-top: 5px;
+                        padding: 5px 10px;
+                        border-radius: 20px;
+                        display: inline-block;
+                    }
+                    
+                    .kpi-change.positive {
+                        background: #dcfce7;
+                        color: #166534;
+                    }
+                    
+                    .kpi-change.negative {
+                        background: #fef2f2;
+                        color: #dc2626;
+                    }
+                    
+                    .section {
+                        margin-bottom: 40px;
+                    }
+                    
+                    .section-title {
+                        font-size: 1.8em;
+                        color: #1e293b;
+                        margin-bottom: 20px;
+                        padding-bottom: 10px;
+                        border-bottom: 3px solid #3b82f6;
+                    }
+                    
+                    .alert {
+                        background: #fef2f2;
+                        border-left: 4px solid #ef4444;
+                        padding: 15px 20px;
+                        margin: 15px 0;
+                        border-radius: 0 8px 8px 0;
+                    }
+                    
+                    .alert-title {
+                        font-weight: bold;
+                        color: #dc2626;
+                        margin-bottom: 5px;
+                    }
+                    
+                    .insight {
+                        background: #f0f9ff;
+                        border-left: 4px solid #3b82f6;
+                        padding: 15px 20px;
+                        margin: 15px 0;
+                        border-radius: 0 8px 8px 0;
+                    }
+                    
+                    .insight-title {
+                        font-weight: bold;
+                        color: #1e40af;
+                        margin-bottom: 5px;
+                    }
+                    
+                    .recommendation {
+                        background: #f0fdf4;
+                        border-left: 4px solid #22c55e;
+                        padding: 15px 20px;
+                        margin: 15px 0;
+                        border-radius: 0 8px 8px 0;
+                    }
+                    
+                    .recommendation-title {
+                        font-weight: bold;
+                        color: #166534;
+                        margin-bottom: 5px;
+                    }
+                    
+                    .health-score {
+                        background: linear-gradient(135deg, #fef3c7 0%, #fbbf24 100%);
+                        padding: 30px;
+                        border-radius: 15px;
+                        text-align: center;
+                        margin: 30px 0;
+                    }
+                    
+                    .health-score-value {
+                        font-size: 4em;
+                        font-weight: bold;
+                        color: #92400e;
+                    }
+                    
+                    .health-score-label {
+                        font-size: 1.5em;
+                        color: #92400e;
+                        margin-top: 10px;
+                    }
+                    
+                    .data-table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin: 20px 0;
+                        background: white;
+                        border-radius: 10px;
+                        overflow: hidden;
+                        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                    }
+                    
+                    .data-table th {
+                        background: #f8fafc;
+                        padding: 15px;
+                        text-align: left;
+                        font-weight: 600;
+                        color: #374151;
+                        border-bottom: 1px solid #e5e7eb;
+                    }
+                    
+                    .data-table td {
+                        padding: 12px 15px;
+                        border-bottom: 1px solid #f3f4f6;
+                    }
+                    
+                    .data-table tr:hover {
+                        background: #f9fafb;
+                    }
+                    
+                    .footer {
+                        background: #f8fafc;
+                        padding: 30px;
+                        text-align: center;
+                        color: #64748b;
+                        border-top: 1px solid #e2e8f0;
+                    }
+                    
+                    .footer-logo {
+                        font-size: 1.5em;
+                        margin-bottom: 10px;
+                    }
+                    
+                    @media (max-width: 768px) {
+                        .container {
+                            margin: 10px;
+                            border-radius: 10px;
+                        }
+                        
+                        .header {
+                            padding: 20px;
+                        }
+                        
+                        .header h1 {
+                            font-size: 2em;
+                        }
+                        
+                        .content {
+                            padding: 20px;
+                        }
+                        
+                        .kpi-grid {
+                            grid-template-columns: 1fr;
+                        }
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                    <div class="header">
+                        <h1>📊 Financial Analysis</h1>
+                        <p>Relatório Executivo de Business Intelligence</p>
+                        <p>Gerado em: 25/05/2025 às 17:28</p>
+                    </div>
+                    
+                    <div class="content">
+                        
+        <!-- KPIs Financeiros -->
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-icon">💰</div>
+                <div class="kpi-value">R$ 97,980,121</div>
+                <div class="kpi-label">Receita Total</div>
+                <div class="kpi-meta">Período de 365 dias</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-icon">📈</div>
+                <div class="kpi-value">-80.3%</div>
+                <div class="kpi-label">Crescimento M/M</div>
+                <div class="kpi-meta">📉 Negativo</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-icon">📊</div>
+                <div class="kpi-value">R$ 268,439</div>
+                <div class="kpi-label">Receita Diária</div>
+                <div class="kpi-meta">Média do período</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-icon">🎫</div>
+                <div class="kpi-value">R$ 2,788</div>
+                <div class="kpi-label">Ticket Médio</div>
+                <div class="kpi-meta">Por transação</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-icon">🛒</div>
+                <div class="kpi-value">35,147</div>
+                <div class="kpi-label">Total Transações</div>
+                <div class="kpi-meta">96.3 por dia</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-icon">👥</div>
+                <div class="kpi-value">8,622</div>
+                <div class="kpi-label">Base de Clientes</div>
+                <div class="kpi-meta">23.6 novos/dia</div>
+            </div>
+        </div>
+        
+        <!-- Análise de Tendência -->
+        <div class="section">
+            <h2 class="section-title">📈 Análise de Tendência</h2>
+            <div style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+                <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+                    <div style="font-size: 3em; margin-right: 20px;">
+                        📉
+                    </div>
+                    <div>
+                        <div style="font-size: 2em; font-weight: bold; color: #1e40af;">Declínio</div>
+                        <div style="color: #3730a3; font-size: 1.2em;">Tendência geral do período</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Dados Mensais -->
+            <h3 style="color: #1e293b; margin-bottom: 15px;">📅 Performance Mensal</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Mês</th>
+                        <th>Receita</th>
+                        <th>% do Total</th>
+                        <th>Variação</th>
+                    </tr>
+                </thead>
+                <tbody>
+        
+                    <tr>
+                        <td><strong>2024-05</strong></td>
+                        <td>R$ 6,112,608.57</td>
+                        <td>6.2%</td>
+                        <td style="color: #6b7280;">-</td>
+                    </tr>
+            
+                    <tr>
+                        <td><strong>2024-06</strong></td>
+                        <td>R$ 6,388,236.61</td>
+                        <td>6.5%</td>
+                        <td style="color: #22c55e;">+4.5%</td>
+                    </tr>
+            
+                    <tr>
+                        <td><strong>2024-07</strong></td>
+                        <td>R$ 6,598,159.67</td>
+                        <td>6.7%</td>
+                        <td style="color: #22c55e;">+3.3%</td>
+                    </tr>
+            
+                    <tr>
+                        <td><strong>2024-08</strong></td>
+                        <td>R$ 8,463,046.18</td>
+                        <td>8.6%</td>
+                        <td style="color: #22c55e;">+28.3%</td>
+                    </tr>
+            
+                    <tr>
+                        <td><strong>2024-09</strong></td>
+                        <td>R$ 7,532,614.69</td>
+                        <td>7.7%</td>
+                        <td style="color: #ef4444;">-11.0%</td>
+                    </tr>
+            
+                    <tr>
+                        <td><strong>2024-10</strong></td>
+                        <td>R$ 11,714,318.75</td>
+                        <td>12.0%</td>
+                        <td style="color: #22c55e;">+55.5%</td>
+                    </tr>
+            
+                    <tr>
+                        <td><strong>2024-11</strong></td>
+                        <td>R$ 12,210,385.01</td>
+                        <td>12.5%</td>
+                        <td style="color: #22c55e;">+4.2%</td>
+                    </tr>
+            
+                    <tr>
+                        <td><strong>2024-12</strong></td>
+                        <td>R$ 7,577,687.95</td>
+                        <td>7.7%</td>
+                        <td style="color: #ef4444;">-37.9%</td>
+                    </tr>
+            
+                    <tr>
+                        <td><strong>2025-01</strong></td>
+                        <td>R$ 3,115,266.48</td>
+                        <td>3.2%</td>
+                        <td style="color: #ef4444;">-58.9%</td>
+                    </tr>
+            
+                    <tr>
+                        <td><strong>2025-02</strong></td>
+                        <td>R$ 4,532,806.83</td>
+                        <td>4.6%</td>
+                        <td style="color: #22c55e;">+45.5%</td>
+                    </tr>
+            
+                    <tr>
+                        <td><strong>2025-03</strong></td>
+                        <td>R$ 7,892,662.54</td>
+                        <td>8.1%</td>
+                        <td style="color: #22c55e;">+74.1%</td>
+                    </tr>
+            
+                    <tr>
+                        <td><strong>2025-04</strong></td>
+                        <td>R$ 13,236,961.12</td>
+                        <td>13.5%</td>
+                        <td style="color: #22c55e;">+67.7%</td>
+                    </tr>
+            
+                    <tr>
+                        <td><strong>2025-05</strong></td>
+                        <td>R$ 2,605,366.98</td>
+                        <td>2.7%</td>
+                        <td style="color: #ef4444;">-80.3%</td>
+                    </tr>
+            
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Análise Sazonal -->
+        <div class="section">
+            <h2 class="section-title">🌐 Análise de Sazonalidade</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px;">
+                <div style="background: linear-gradient(135deg, #dcfce7 0%, #22c55e 100%); padding: 25px; border-radius: 15px; text-align: center;">
+                    <div style="font-size: 2em; margin-bottom: 10px;">🏆</div>
+                    <div style="font-size: 1.8em; font-weight: bold; color: #166534;">Mês 11</div>
+                    <div style="color: #166534; font-weight: 600;">Melhor Performance</div>
+                    <div style="color: #166534; font-size: 0.9em;">Pico de vendas</div>
+                </div>
+                <div style="background: linear-gradient(135deg, #fecaca 0%, #ef4444 100%); padding: 25px; border-radius: 15px; text-align: center;">
+                    <div style="font-size: 2em; margin-bottom: 10px;">📉</div>
+                    <div style="font-size: 1.8em; font-weight: bold; color: #7f1d1d;">Mês 5</div>
+                    <div style="color: #7f1d1d; font-weight: 600;">Menor Performance</div>
+                    <div style="color: #7f1d1d; font-size: 0.9em;">Período mais fraco</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Métricas de Eficiência -->
+        <div class="section">
+            <h2 class="section-title">⚡ Métricas de Eficiência</h2>
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-icon">💰</div>
+                    <div class="kpi-value">R$ 11,364</div>
+                    <div class="kpi-label">Receita por Cliente</div>
+                    <div class="kpi-meta">Valor médio por cliente</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon">🎫</div>
+                    <div class="kpi-value">R$ 2,788</div>
+                    <div class="kpi-label">Receita por Transação</div>
+                    <div class="kpi-meta">Ticket médio</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon">🔄</div>
+                    <div class="kpi-value">4.1</div>
+                    <div class="kpi-label">Transações por Cliente</div>
+                    <div class="kpi-meta">Frequência de compra</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Insights Financeiros -->
+        <div class="section">
+            <h2 class="section-title">💡 Insights Financeiros</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+        
+                <div class="alert">
+                    <div class="alert-title">⚠️ Declínio Significativo</div>
+                    <div>Queda de -80.3% requer ação imediata. Revise estratégias de preço e promoções.</div>
+                </div>
+            
+            </div>
+        </div>
+        
+                    </div>
+                    
+                    <div class="footer">
+                        <div class="footer-logo">🚀 Insights AI</div>
+                        <p>Business Intelligence Platform</p>
+                        <p>Relatório gerado automaticamente com dados em tempo real</p>
+                    </div>
+                </div>
+            </body>
+            </html>
+            

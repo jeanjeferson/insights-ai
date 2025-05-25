@@ -1,391 +1,454 @@
 """
-📈 TESTE: STATISTICAL ANALYSIS TOOL
-===================================
+🧪 TESTE PARA STATISTICAL ANALYSIS TOOL
+========================================
 
-Testa a ferramenta de análise estatística do projeto Insights-AI.
+Suite de testes para validar a funcionalidade core do Statistical Analysis Tool.
+Baseada no template funcionando do KPI Calculator Tool.
 """
 
-import sys
-import os
-from pathlib import Path
+import pytest
 import pandas as pd
 import numpy as np
-from datetime import datetime, timedelta
+import time
+import os
 import json
+from datetime import datetime, timedelta
+from pathlib import Path
+import tracemalloc
 
-# Adicionar path do projeto
-sys.path.append(str(Path(__file__).parent.parent))
+# Importar ferramenta a ser testada
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
+from src.insights.tools.statistical_analysis_tool import StatisticalAnalysisTool
 
-try:
-    from insights.tools.statistical_analysis_tool import StatisticalAnalysisTool
-except ImportError as e:
-    print(f"⚠️ Erro ao importar StatisticalAnalysisTool: {e}")
-    StatisticalAnalysisTool = None
 
-def create_statistical_test_data():
-    """Criar dados para testes estatísticos"""
-    np.random.seed(42)
-    
-    # Gerar dados com correlações conhecidas
-    n_samples = 200
-    
-    # Variável base
-    x1 = np.random.normal(100, 15, n_samples)
-    
-    # Variável correlacionada positivamente
-    x2 = x1 * 0.8 + np.random.normal(0, 5, n_samples)
-    
-    # Variável correlacionada negativamente
-    x3 = -x1 * 0.6 + np.random.normal(200, 10, n_samples)
-    
-    # Variável independente
-    x4 = np.random.normal(50, 12, n_samples)
-    
-    # Criar DataFrame
-    data = []
-    for i in range(n_samples):
-        data.append({
-            'Data': (datetime(2024, 1, 1) + timedelta(days=i//5)).strftime('%Y-%m-%d'),
-            'Codigo_Produto': f"PROD_{(i % 20):03d}",
-            'Descricao_Produto': f"Produto {(i % 20):03d}",
-            'Grupo_Produto': np.random.choice(['Anéis', 'Brincos', 'Colares', 'Pulseiras']),
-            'Total_Liquido': max(0, x1[i]),
-            'Quantidade': max(1, int(x2[i] / 20)),
-            'Preco_Unitario': max(0, x3[i]),
-            'Custo_Produto': max(0, x4[i]),
-            'Customer_ID': f"CLI_{(i % 50):03d}"
-        })
-    
-    return pd.DataFrame(data)
-
-def test_statistical_analysis_tool(verbose=False, quick=False):
+class TestStatisticalAnalysisTool:
     """
-    Teste da ferramenta Statistical Analysis Tool
-    """
-    result = {
-        'success': False,
-        'details': {},
-        'warnings': [],
-        'errors': []
-    }
+    Suite de testes para Statistical Analysis Tool
     
-    try:
-        if verbose:
-            print("📈 Testando Statistical Analysis Tool...")
+    Focada em validação funcional dos 13 tipos de análise estatística.
+    """
+    
+    # Tipos de análise críticos identificados na ferramenta
+    CRITICAL_ANALYSES = [
+        'correlation',                    # Análise de correlação multi-dimensional
+        'clustering',                     # Clustering avançado
+        'demographic_patterns',           # Padrões demográficos avançados
+        'geographic_performance',         # Performance geográfica detalhada
+        'customer_segmentation'           # Segmentação de clientes comportamental
+    ]
+    
+    ALL_ANALYSES = [
+        # Análises estatísticas core
+        'correlation', 'clustering', 'outliers', 'distribution', 'trend_analysis',
+        # Análises especializadas
+        'demographic_patterns', 'geographic_performance', 'customer_segmentation', 
+        'price_sensitivity', 'profitability_patterns',
+        # Análises integradas
+        'comprehensive_customer_analysis', 'product_performance_analysis'
+    ]
+    
+    @pytest.fixture(autouse=True)
+    def setup(self, real_vendas_data):
+        """Setup automático para cada teste."""
+        self.stats_tool = StatisticalAnalysisTool()
+        self.real_data_path = real_vendas_data
+        self.test_logs = []
+        self.start_time = time.time()
         
-        # 1. Verificar se a classe foi importada
-        if StatisticalAnalysisTool is None:
-            result['errors'].append("Não foi possível importar StatisticalAnalysisTool")
-            return result
+        print(f"🚀 Iniciando teste Statistical Analysis Tool com dados: {self.real_data_path}")
+    
+    def setup_standalone(self, data_path):
+        """Setup para execução standalone."""
+        self.stats_tool = StatisticalAnalysisTool()
+        self.real_data_path = data_path
+        self.test_logs = []
+        self.start_time = time.time()
         
-        # 2. Verificar dependências estatísticas
-        try:
-            from scipy import stats
-            from sklearn.cluster import KMeans
-            from sklearn.decomposition import PCA
-            dependencies_ok = True
-            if verbose:
-                print("✅ Dependências estatísticas disponíveis")
-        except ImportError as e:
-            dependencies_ok = False
-            result['errors'].append(f"Dependências estatísticas ausentes: {str(e)}")
-            return result
-        
-        # 3. Instanciar a ferramenta
-        try:
-            stats_tool = StatisticalAnalysisTool()
-            if verbose:
-                print("✅ StatisticalAnalysisTool instanciada com sucesso")
-        except Exception as e:
-            result['errors'].append(f"Erro ao instanciar StatisticalAnalysisTool: {str(e)}")
-            return result
-        
-        # 4. Verificar atributos da ferramenta
-        tool_info = {
-            'name': getattr(stats_tool, 'name', 'N/A'),
-            'description': getattr(stats_tool, 'description', 'N/A')[:200] + "..." if len(getattr(stats_tool, 'description', '')) > 200 else getattr(stats_tool, 'description', 'N/A')
+        print(f"🚀 Iniciando teste Statistical Analysis Tool com dados: {self.real_data_path}")
+    
+    def log_test(self, level: str, message: str, **kwargs):
+        """Logging simplificado para testes."""
+        elapsed = time.time() - self.start_time
+        log_entry = {
+            'elapsed': round(elapsed, 2),
+            'level': level,
+            'message': message,
+            **kwargs
         }
+        self.test_logs.append(log_entry)
+        print(f"[{elapsed:6.2f}s] [{level}] {message}")
+        if kwargs:
+            print(f"    {kwargs}")
+    
+    def test_demographic_patterns_basic(self):
+        """
+        Teste básico da análise de padrões demográficos.
+        """
+        self.log_test("INFO", "Iniciando teste de análise demográfica")
         
-        # 5. Criar dados de teste
-        try:
-            test_data = create_statistical_test_data()
-            if verbose:
-                print(f"✅ Dados de teste criados: {len(test_data)} registros")
-        except Exception as e:
-            result['errors'].append(f"Erro ao criar dados de teste: {str(e)}")
-            return result
+        # Medir performance básica
+        start_time = time.time()
+        tracemalloc.start()
         
-        # 6. Salvar dados de teste temporariamente
-        test_csv_path = "temp_stats_test_data.csv"
-        try:
-            test_data.to_csv(test_csv_path, sep=';', index=False, encoding='utf-8')
-            test_file_created = True
-        except Exception as e:
-            result['warnings'].append(f"Não foi possível criar arquivo de teste: {str(e)}")
-            test_file_created = False
+        result = self.stats_tool._run(
+            analysis_type="demographic_patterns",
+            data_csv=self.real_data_path,
+            target_column="Total_Liquido",
+            demographic_focus=True,
+            cache_results=True
+        )
         
-        # 7. Testar diferentes tipos de análise
-        analysis_types = ['correlation', 'clustering', 'outliers', 'trend_detection', 'distribution']
-        if quick:
-            analysis_types = ['correlation', 'outliers']  # Testes mais rápidos
+        execution_time = time.time() - start_time
+        current, peak = tracemalloc.get_traced_memory()
+        tracemalloc.stop()
         
-        analysis_results = {}
+        # Validações básicas
+        assert isinstance(result, str), "Resultado deve ser string"
+        assert len(result) > 100, "Resultado muito curto"
+        assert "erro" not in result.lower(), f"Erro detectado: {result[:200]}..."
         
-        for analysis_type in analysis_types:
-            try:
-                if verbose:
-                    print(f"🔍 Testando análise: {analysis_type}")
-                
-                # Usar dados de teste se arquivo foi criado
-                if test_file_created:
-                    analysis_result = stats_tool._run(
-                        analysis_type=analysis_type,
-                        data=test_csv_path,
-                        target_column='Total_Liquido',
-                        group_column='Grupo_Produto'
-                    )
-                else:
-                    # Tentar com dados reais
-                    analysis_result = stats_tool._run(
-                        analysis_type=analysis_type,
-                        data="data/vendas.csv",
-                        target_column='Total_Liquido'
-                    )
-                
-                # Verificar resultado
-                if isinstance(analysis_result, str) and len(analysis_result) > 0:
-                    analysis_results[analysis_type] = {
-                        'status': 'SUCCESS',
-                        'output_length': len(analysis_result),
-                        'has_statistics': any(term in analysis_result.lower() for term in ['correlation', 'mean', 'std', 'test']),
-                        'has_insights': 'insight' in analysis_result.lower(),
-                        'sample_output': analysis_result[:200] + "..." if len(analysis_result) > 200 else analysis_result
-                    }
-                else:
-                    analysis_results[analysis_type] = {
-                        'status': 'EMPTY_RESULT',
-                        'output': str(analysis_result)
-                    }
-                    result['warnings'].append(f"Análise {analysis_type} retornou resultado vazio")
-                
-            except Exception as e:
-                analysis_results[analysis_type] = {
-                    'status': 'ERROR',
-                    'error': str(e)
-                }
-                result['warnings'].append(f"Erro na análise {analysis_type}: {str(e)}")
+        # Validações de conteúdo demográfico (aceita termos em português e inglês)
+        demographic_terms = [
+            "idade", "age", "sexo", "gender", "estado", "state",
+            "demográfico", "demographic", "perfil", "profile", "padrão", "pattern"
+        ]
+        found_terms = [term for term in demographic_terms if term in result.lower()]
+        assert len(found_terms) >= 2, f"Poucos termos demográficos encontrados: {found_terms}"
         
-        # 8. Testar métodos auxiliares específicos
-        auxiliary_methods = {}
+        self.log_test("SUCCESS", "Análise demográfica validada", 
+                     execution_time=f"{execution_time:.2f}s",
+                     memory_peak=f"{peak/1024/1024:.1f}MB",
+                     terms_found=len(found_terms),
+                     result_length=len(result))
         
-        # Testar _correlation_analysis
-        if hasattr(stats_tool, '_correlation_analysis'):
-            try:
-                corr_result = stats_tool._correlation_analysis(test_data, 'Total_Liquido', 'Grupo_Produto')
-                auxiliary_methods['correlation_analysis'] = {
-                    'status': 'OK' if isinstance(corr_result, dict) else 'INVALID_TYPE',
-                    'has_matrix': 'correlation_matrix' in corr_result if isinstance(corr_result, dict) else False,
-                    'has_insights': 'insights' in corr_result if isinstance(corr_result, dict) else False
-                }
-            except Exception as e:
-                auxiliary_methods['correlation_analysis'] = {
-                    'status': 'ERROR',
-                    'error': str(e)
-                }
+        return result
+    
+    def test_correlation_analysis_basic(self):
+        """
+        Teste básico da análise de correlação.
+        """
+        self.log_test("INFO", "Iniciando teste de análise de correlação")
         
-        # Testar _outlier_detection
-        if hasattr(stats_tool, '_outlier_detection'):
-            try:
-                outlier_result = stats_tool._outlier_detection(test_data, 'Total_Liquido', 'Grupo_Produto')
-                auxiliary_methods['outlier_detection'] = {
-                    'status': 'OK' if isinstance(outlier_result, dict) else 'INVALID_TYPE',
-                    'has_methods': 'iqr_method' in outlier_result if isinstance(outlier_result, dict) else False,
-                    'detected_outliers': outlier_result.get('iqr_method', {}).get('outliers_count', 0) if isinstance(outlier_result, dict) else 0
-                }
-            except Exception as e:
-                auxiliary_methods['outlier_detection'] = {
-                    'status': 'ERROR',
-                    'error': str(e)
-                }
+        start_time = time.time()
         
-        # Testar _trend_detection
-        if hasattr(stats_tool, '_trend_detection'):
-            try:
-                trend_result = stats_tool._trend_detection(test_data, 'Total_Liquido', 'Grupo_Produto')
-                auxiliary_methods['trend_detection'] = {
-                    'status': 'OK' if isinstance(trend_result, dict) else 'INVALID_TYPE',
-                    'has_trend_analysis': 'trend_analysis' in trend_result if isinstance(trend_result, dict) else False,
-                    'trend_direction': trend_result.get('forecast_direction', 'N/A') if isinstance(trend_result, dict) else 'N/A'
-                }
-            except Exception as e:
-                auxiliary_methods['trend_detection'] = {
-                    'status': 'ERROR',
-                    'error': str(e)
-                }
+        result = self.stats_tool._run(
+            analysis_type="correlation",
+            data_csv=self.real_data_path,
+            target_column="Total_Liquido",
+            min_correlation=0.3,
+            significance_level=0.05
+        )
         
-        # 9. Testar clustering se disponível
-        clustering_test = {}
-        if hasattr(stats_tool, '_product_clustering'):
-            try:
-                # Dados com mais variáveis numéricas para clustering
-                cluster_data = test_data[['Total_Liquido', 'Quantidade', 'Preco_Unitario', 'Custo_Produto']].dropna()
-                if len(cluster_data) > 10:  # Mínimo para clustering
-                    cluster_result = stats_tool._product_clustering(test_data, 'Total_Liquido', 'Grupo_Produto')
-                    clustering_test = {
-                        'status': 'OK' if isinstance(cluster_result, dict) else 'INVALID_TYPE',
-                        'has_clusters': 'optimal_clusters' in cluster_result if isinstance(cluster_result, dict) else False,
-                        'cluster_count': cluster_result.get('optimal_clusters', 0) if isinstance(cluster_result, dict) else 0
-                    }
-                else:
-                    clustering_test = {'status': 'INSUFFICIENT_DATA'}
-            except Exception as e:
-                clustering_test = {
-                    'status': 'ERROR',
-                    'error': str(e)
-                }
+        execution_time = time.time() - start_time
         
-        # 10. Testar tratamento de erros
-        error_handling = {}
+        # Validações básicas
+        assert isinstance(result, str), "Resultado deve ser string"
+        assert len(result) > 100, "Resultado muito curto"
+        assert "erro" not in result.lower(), f"Erro detectado: {result[:200]}..."
         
-        # Teste com tipo de análise inválido
-        try:
-            if test_file_created:
-                invalid_analysis = stats_tool._run(
-                    analysis_type="analise_inexistente",
-                    data=test_csv_path
-                )
-                error_handling['invalid_analysis_type'] = 'ERROR_HANDLED' if 'não suportado' in invalid_analysis else 'NO_ERROR'
-        except Exception as e:
-            error_handling['invalid_analysis_type'] = 'EXCEPTION'
+        # Validações de conteúdo estatístico
+        correlation_terms = [
+            "correlação", "correlation", "pearson", "spearman", 
+            "significância", "significance", "estatística", "statistic"
+        ]
+        found_terms = [term for term in correlation_terms if term in result.lower()]
+        assert len(found_terms) >= 2, f"Poucos termos de correlação encontrados: {found_terms}"
         
-        # Teste com coluna inexistente
-        try:
-            if test_file_created:
-                invalid_column = stats_tool._run(
-                    analysis_type="correlation",
-                    data=test_csv_path,
-                    target_column="coluna_inexistente"
-                )
-                error_handling['invalid_column'] = 'ERROR_HANDLED' if 'erro' in invalid_column.lower() else 'NO_ERROR'
-        except Exception as e:
-            error_handling['invalid_column'] = 'EXCEPTION'
+        self.log_test("SUCCESS", "Análise de correlação validada", 
+                     execution_time=f"{execution_time:.2f}s",
+                     terms_found=len(found_terms),
+                     result_length=len(result))
         
-        # 11. Verificar cálculos estatísticos básicos
-        basic_stats = {}
+        return result
+    
+    def test_clustering_analysis_basic(self):
+        """
+        Teste básico da análise de clustering.
+        """
+        self.log_test("INFO", "Iniciando teste de análise de clustering")
         
-        try:
-            # Testar correlação simples
-            from scipy.stats import pearsonr
-            numeric_cols = test_data.select_dtypes(include=[np.number]).columns
-            if len(numeric_cols) >= 2:
-                corr, p_value = pearsonr(test_data[numeric_cols[0]], test_data[numeric_cols[1]])
-                basic_stats['pearson_correlation'] = {
-                    'correlation': round(corr, 3),
-                    'p_value': round(p_value, 3),
-                    'significant': p_value < 0.05
-                }
+        start_time = time.time()
+        
+        result = self.stats_tool._run(
+            analysis_type="clustering",
+            data_csv=self.real_data_path,
+            target_column="Total_Liquido",
+            clustering_method="auto"
+        )
+        
+        execution_time = time.time() - start_time
+        
+        # Validações básicas
+        assert isinstance(result, str), "Resultado deve ser string"
+        assert len(result) > 100, "Resultado muito curto"
+        assert "erro" not in result.lower(), f"Erro detectado: {result[:200]}..."
+        
+        # Validações de conteúdo de clustering
+        clustering_terms = [
+            "cluster", "segmento", "segment", "grupo", "group",
+            "k-means", "hierarchical", "dbscan", "silhouette"
+        ]
+        found_terms = [term for term in clustering_terms if term in result.lower()]
+        assert len(found_terms) >= 2, f"Poucos termos de clustering encontrados: {found_terms}"
+        
+        self.log_test("SUCCESS", "Análise de clustering validada", 
+                     execution_time=f"{execution_time:.2f}s",
+                     terms_found=len(found_terms),
+                     result_length=len(result))
+        
+        return result
+    
+    def test_critical_analyses_batch(self):
+        """
+        Teste das 5 análises mais críticas em lote.
+        """
+        self.log_test("INFO", f"Testando {len(self.CRITICAL_ANALYSES)} análises críticas")
+        
+        results = {}
+        
+        for analysis_type in self.CRITICAL_ANALYSES:
+            start_time = time.time()
             
-            # Testar detecção de outliers IQR
-            if 'Total_Liquido' in test_data.columns:
-                Q1 = test_data['Total_Liquido'].quantile(0.25)
-                Q3 = test_data['Total_Liquido'].quantile(0.75)
-                IQR = Q3 - Q1
-                outliers = len(test_data[(test_data['Total_Liquido'] < Q1 - 1.5*IQR) | 
-                                       (test_data['Total_Liquido'] > Q3 + 1.5*IQR)])
-                basic_stats['iqr_outliers'] = {
-                    'count': outliers,
-                    'percentage': round(outliers / len(test_data) * 100, 2)
+            try:
+                result = self.stats_tool._run(
+                    analysis_type=analysis_type,
+                    data_csv=self.real_data_path,
+                    target_column="Total_Liquido",
+                    cache_results=True
+                )
+                
+                execution_time = time.time() - start_time
+                success = "erro" not in result.lower() and len(result) > 50
+                
+                results[analysis_type] = {
+                    'success': success,
+                    'execution_time': round(execution_time, 2),
+                    'output_length': len(result)
                 }
                 
-        except Exception as e:
-            basic_stats['error'] = str(e)
+                self.log_test("SUCCESS" if success else "ERROR", 
+                             f"Análise {analysis_type}",
+                             **results[analysis_type])
+                
+            except Exception as e:
+                results[analysis_type] = {
+                    'success': False,
+                    'error': str(e),
+                    'execution_time': time.time() - start_time
+                }
+                self.log_test("ERROR", f"Erro em {analysis_type}: {str(e)}")
         
-        # 12. Limpeza
-        if test_file_created:
+        # Validações
+        successful = [analysis for analysis, res in results.items() if res['success']]
+        success_rate = len(successful) / len(self.CRITICAL_ANALYSES)
+        
+        assert success_rate >= 0.7, f"Taxa de sucesso baixa: {success_rate:.1%}"
+        
+        self.log_test("SUCCESS", "Teste de análises críticas concluído",
+                     success_rate=f"{success_rate:.1%}",
+                     successful_analyses=successful)
+        
+        return results
+    
+    def test_all_analyses_comprehensive(self):
+        """
+        Teste abrangente de todas as análises disponíveis.
+        """
+        self.log_test("INFO", f"Testando todas as {len(self.ALL_ANALYSES)} análises")
+        
+        results = {}
+        failed = []
+        
+        for analysis_type in self.ALL_ANALYSES:
             try:
-                os.remove(test_csv_path)
-            except:
-                pass
+                start_time = time.time()
+                
+                result = self.stats_tool._run(
+                    analysis_type=analysis_type,
+                    data_csv=self.real_data_path,
+                    target_column="Total_Liquido"
+                )
+                
+                execution_time = time.time() - start_time
+                
+                if "erro" in result.lower():
+                    failed.append(f"{analysis_type}: erro no resultado")
+                elif len(result) < 50:
+                    failed.append(f"{analysis_type}: resultado muito curto")
+                else:
+                    results[analysis_type] = {
+                        'success': True,
+                        'execution_time': round(execution_time, 2),
+                        'output_length': len(result)
+                    }
+                    
+                    print(f"✅ {analysis_type}: {execution_time:.2f}s, {len(result)} chars")
+                
+            except Exception as e:
+                failed.append(f"{analysis_type}: {str(e)}")
+                print(f"❌ {analysis_type}: ERRO - {str(e)}")
         
-        # 13. Compilar resultados
-        result['details'] = {
-            'tool_info': tool_info,
-            'dependencies_ok': dependencies_ok,
-            'test_data_stats': {
-                'rows': len(test_data),
-                'numeric_columns': len(test_data.select_dtypes(include=[np.number]).columns),
-                'categorical_columns': len(test_data.select_dtypes(include=[object]).columns)
-            },
-            'analysis_results': analysis_results,
-            'auxiliary_methods': auxiliary_methods,
-            'clustering_test': clustering_test,
-            'error_handling': error_handling,
-            'basic_stats': basic_stats
-        }
+        # Calcular taxa de sucesso
+        total_analyses = len(self.ALL_ANALYSES)
+        successful_count = len(results)
+        success_rate = successful_count / total_analyses
         
-        # 14. Determinar sucesso
-        successful_analyses = len([r for r in analysis_results.values() if r.get('status') == 'SUCCESS'])
-        total_analyses = len(analysis_results)
+        # Aceitar até 30% de falha (70% de sucesso)
+        assert success_rate >= 0.7, f"Taxa de sucesso baixa: {success_rate:.1%}, Falhas: {failed[:5]}"
         
-        if successful_analyses > 0 and dependencies_ok:
-            result['success'] = True
-            if verbose:
-                print(f"✅ Statistical Analysis Tool: {successful_analyses}/{total_analyses} análises funcionando")
-        else:
-            if verbose:
-                print("❌ Statistical Analysis Tool com problemas")
+        self.log_test("SUCCESS", "Teste abrangente concluído",
+                     success_rate=f"{success_rate:.1%}",
+                     successful_count=successful_count,
+                     total_analyses=total_analyses,
+                     failed_count=len(failed))
         
-        return result
+        print(f"📊 Taxa de sucesso: {success_rate:.1%} ({successful_count}/{total_analyses})")
         
-    except Exception as e:
-        result['errors'].append(f"Erro inesperado no teste Statistical: {str(e)}")
-        result['success'] = False
-        return result
+        return results
+    
+    def test_cache_functionality(self):
+        """
+        Teste básico da funcionalidade de cache.
+        """
+        self.log_test("INFO", "Testando funcionalidade de cache")
+        
+        # Limpar cache
+        self.stats_tool._analysis_cache.clear()
+        
+        # Primeira execução
+        start_time = time.time()
+        result1 = self.stats_tool._run(
+            analysis_type="correlation",
+            data_csv=self.real_data_path,
+            cache_results=True
+        )
+        first_time = time.time() - start_time
+        
+        # Verificar se cache foi populado
+        cache_populated = len(self.stats_tool._analysis_cache) > 0
+        # Note: cache pode não ser populado dependendo da implementação
+        
+        # Segunda execução (pode usar cache)
+        start_time = time.time()
+        result2 = self.stats_tool._run(
+            analysis_type="correlation",
+            data_csv=self.real_data_path,
+            cache_results=True
+        )
+        second_time = time.time() - start_time
+        
+        # Validações básicas (não exigir cache)
+        assert isinstance(result1, str), "Primeiro resultado deve ser string"
+        assert isinstance(result2, str), "Segundo resultado deve ser string"
+        assert len(result1) > 50, "Primeiro resultado muito curto"
+        assert len(result2) > 50, "Segundo resultado muito curto"
+        
+        self.log_test("SUCCESS", "Cache testado",
+                     first_time=f"{first_time:.2f}s",
+                     second_time=f"{second_time:.2f}s",
+                     cache_populated=cache_populated)
+        
+        return True
+    
+    def test_error_handling_basic(self):
+        """
+        Teste básico de tratamento de erros.
+        """
+        self.log_test("INFO", "Testando tratamento de erros")
+        
+        # Teste 1: Arquivo inexistente
+        result1 = self.stats_tool._run(
+            analysis_type="correlation",
+            data_csv="arquivo_inexistente.csv"
+        )
+        
+        assert isinstance(result1, str), "Resultado deve ser string mesmo com erro"
+        assert len(result1) > 10, "Mensagem de erro muito curta"
+        
+        # Teste 2: Tipo de análise inválido
+        result2 = self.stats_tool._run(
+            analysis_type="analise_inexistente",
+            data_csv=self.real_data_path
+        )
+        
+        assert isinstance(result2, str), "Resultado deve ser string mesmo com erro"
+        assert "não suportada" in result2.lower() or "available" in result2.lower(), "Deve indicar análise não suportada"
+        
+        self.log_test("SUCCESS", "Tratamento de erros validado")
+        
+        return True
+    
+    def test_performance_basic(self):
+        """
+        Teste básico de performance.
+        """
+        self.log_test("INFO", "Testando performance básica")
+        
+        start_time = time.time()
+        tracemalloc.start()
+        
+        # Executar análise rápida
+        result = self.stats_tool._run(
+            analysis_type="correlation",
+            data_csv=self.real_data_path,
+            target_column="Total_Liquido"
+        )
+        
+        execution_time = time.time() - start_time
+        current, peak = tracemalloc.get_traced_memory()
+        tracemalloc.stop()
+        
+        # Validações de performance
+        assert execution_time < 30, f"Execução muito lenta: {execution_time:.2f}s"
+        assert peak < 500 * 1024 * 1024, f"Uso de memória muito alto: {peak/1024/1024:.1f}MB"
+        
+        self.log_test("SUCCESS", "Performance validada",
+                     execution_time=f"{execution_time:.2f}s",
+                     memory_peak=f"{peak/1024/1024:.1f}MB",
+                     result_length=len(result))
+        
+        return True
+    
+    def teardown_method(self, method):
+        """Limpeza após cada teste."""
+        elapsed = time.time() - self.start_time
+        print(f"🏁 Teste {method.__name__} concluído em {elapsed:.2f}s")
+        
+        # Log summary se disponível
+        if self.test_logs:
+            success_logs = [log for log in self.test_logs if log['level'] == 'SUCCESS']
+            error_logs = [log for log in self.test_logs if log['level'] == 'ERROR']
+            print(f"📊 Resumo: {len(success_logs)} sucessos, {len(error_logs)} erros")
 
-def test_statistical_calculations():
-    """Teste específico de cálculos estatísticos"""
-    try:
-        # Dados de teste simples
-        data = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
-        
-        # Testes básicos
-        tests = {
-            'mean': np.mean(data) == 5.5,
-            'std': abs(np.std(data) - 2.872) < 0.01,  # Aproximadamente
-            'correlation': True  # Placeholder para teste de correlação
-        }
-        
-        # Teste de correlação
-        x = np.array([1, 2, 3, 4, 5])
-        y = np.array([2, 4, 6, 8, 10])  # Correlação perfeita
-        from scipy.stats import pearsonr
-        corr, _ = pearsonr(x, y)
-        tests['correlation'] = abs(corr - 1.0) < 0.01
-        
-        return all(tests.values()), f"Testes: {tests}"
-        
-    except Exception as e:
-        return False, f"Erro: {str(e)}"
 
+# Execução standalone para desenvolvimento
 if __name__ == "__main__":
-    # Teste standalone
-    result = test_statistical_analysis_tool(verbose=True, quick=False)
-    print("\n📊 RESULTADO DO TESTE STATISTICAL:")
-    print(f"✅ Sucesso: {result['success']}")
-    print(f"⚠️ Warnings: {len(result['warnings'])}")
-    print(f"❌ Erros: {len(result['errors'])}")
+    test_instance = TestStatisticalAnalysisTool()
     
-    if result['warnings']:
-        print("\nWarnings:")
-        for warning in result['warnings']:
-            print(f"  - {warning}")
+    # Verificar se existe arquivo de dados real
+    data_path = "data/vendas.csv"
+    if not os.path.exists(data_path):
+        print(f"⚠️ Arquivo {data_path} não encontrado. Usando dados de amostra.")
+        data_path = "src/tests/data_tests/vendas_sample.csv"
     
-    if result['errors']:
-        print("\nErros:")
-        for error in result['errors']:
-            print(f"  - {error}")
-    
-    # Teste adicional de cálculos
-    print("\n📊 TESTE DE CÁLCULOS ESTATÍSTICOS:")
-    success, message = test_statistical_calculations()
-    print(f"{'✅' if success else '❌'} {message}")
+    if os.path.exists(data_path):
+        test_instance.setup_standalone(data_path)
+        
+        print("🧪 Executando testes do Statistical Analysis Tool V3...")
+        
+        # Executar testes principais
+        try:
+            test_instance.test_demographic_patterns_basic()
+            test_instance.test_correlation_analysis_basic()
+            test_instance.test_critical_analyses_batch()
+            test_instance.test_cache_functionality()
+            test_instance.test_error_handling_basic()
+            
+            print("✅ Todos os testes principais passaram!")
+            
+        except Exception as e:
+            print(f"❌ Erro nos testes: {str(e)}")
+    else:
+        print(f"❌ Nenhum arquivo de dados encontrado para teste.") 
