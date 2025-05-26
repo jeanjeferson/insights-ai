@@ -1,52 +1,199 @@
 from crewai.tools import BaseTool
 from typing import Type, Optional, Dict, Any, List
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 import json
+import os
 import warnings
 warnings.filterwarnings('ignore')
 
 class CompetitiveIntelligenceInput(BaseModel):
-    """Schema de entrada para análise competitiva."""
-    analysis_type: str = Field(..., description="Tipo: 'market_position', 'pricing_analysis', 'trend_comparison', 'market_share_estimation', 'competitive_gaps'")
-    data_csv: str = Field(default="data/vendas.csv", description="Caminho para arquivo CSV")
-    market_segment: str = Field(default="joalherias", description="Segmento de mercado")
-    benchmark_period: str = Field(default="quarterly", description="Período de benchmark: monthly, quarterly, yearly")
+    """Schema otimizado para análise de inteligência competitiva com validações robustas."""
+    
+    analysis_type: str = Field(
+        ..., 
+        description="Tipo de análise competitiva: 'market_position' (posicionamento), 'pricing_analysis' (preços), 'trend_comparison' (tendências), 'market_share_estimation' (market share), 'competitive_gaps' (gaps e oportunidades)",
+        json_schema_extra={
+            "pattern": "^(market_position|pricing_analysis|trend_comparison|market_share_estimation|competitive_gaps)$"
+        }
+    )
+    
+    data_csv: str = Field(
+        default="data/vendas.csv", 
+        description="Caminho para arquivo CSV com dados de vendas atualizados (extraído via SQL Query Tool)"
+    )
+    
+    market_segment: str = Field(
+        default="joalherias", 
+        description="Segmento de mercado para benchmarks (qualquer valor aceito, fallback para 'joalherias')"
+    )
+    
+    benchmark_period: str = Field(
+        default="quarterly", 
+        description="Período de benchmark para análises temporais (aceita qualquer valor, fallback para 'quarterly')"
+    )
+    
+    include_recommendations: bool = Field(
+        default=True, 
+        description="Incluir recomendações estratégicas específicas baseadas na análise"
+    )
+    
+    risk_tolerance: str = Field(
+        default="medium", 
+        description="Tolerância a risco para recomendações (aceita qualquer valor, fallback para 'medium')"
+    )
+    
+    @field_validator('analysis_type')
+    @classmethod
+    def validate_analysis_type(cls, v):
+        valid_types = ['market_position', 'pricing_analysis', 'trend_comparison', 
+                      'market_share_estimation', 'competitive_gaps']
+        if v not in valid_types:
+            raise ValueError(f"analysis_type deve ser um de: {valid_types}")
+        return v
+    
+    @field_validator('data_csv')
+    @classmethod
+    def validate_csv_path(cls, v):
+        if not v.endswith('.csv'):
+            raise ValueError("data_csv deve ser um arquivo CSV válido")
+        return v
+    
+    @field_validator('market_segment')
+    @classmethod
+    def validate_market_segment(cls, v):
+        # Accept any value, fallback handled in _run() method
+        return v
+    
+    @field_validator('benchmark_period')
+    @classmethod
+    def validate_benchmark_period(cls, v):
+        # Accept any value, fallback handled in _run() method  
+        return v
+    
+    @field_validator('risk_tolerance')
+    @classmethod
+    def validate_risk_tolerance(cls, v):
+        # Accept any value, fallback handled in _run() method
+        return v
 
 class CompetitiveIntelligenceTool(BaseTool):
-    name: str = "Competitive Intelligence Tool"
-    description: str = """
-    Ferramenta de inteligência competitiva para joalherias:
-    
-    ANÁLISES DISPONÍVEIS:
-    - market_position: Posicionamento no mercado e análise competitiva
-    - pricing_analysis: Análise de estratégias de preço vs. concorrência
-    - trend_comparison: Comparação de tendências com mercado
-    - market_share_estimation: Estimativa de market share
-    - competitive_gaps: Identificação de gaps competitivos e oportunidades
-    
-    BENCHMARKS INCLUÍDOS:
-    - Padrões do setor de joalherias brasileiro
-    - Métricas de performance comparativas
-    - Análise de posicionamento de preços
-    - Identificação de oportunidades de mercado
     """
+    🏆 FERRAMENTA DE INTELIGÊNCIA COMPETITIVA PARA JOALHERIAS
+    
+    QUANDO USAR CADA ANÁLISE:
+    
+    📊 MARKET_POSITION:
+    - Use quando: Agente precisa entender posicionamento competitivo da empresa
+    - Casos de uso: "Como estamos posicionados vs. mercado?", "Qual nossa categoria de preço?", "Somos competitivos?"
+    - Entrega: Posicionamento (Economy/Mid/Premium/Luxury), comparação de ticket médio vs. mercado, 
+      market share estimado, análise de crescimento vs. benchmarks, insights de posicionamento
+    
+    💰 PRICING_ANALYSIS:
+    - Use quando: Agente analisa estratégias de preço vs. concorrência
+    - Casos de uso: "Nossos preços estão competitivos?", "Onde temos premium/desconto?", "Oportunidades de pricing?"
+    - Entrega: Análise por faixa de preço vs. benchmarks, identificação de premium/desconto por categoria,
+      elasticidade de preço, oportunidades de ajuste, mix de preços otimizado
+    
+    📈 TREND_COMPARISON:
+    - Use quando: Agente compara performance com tendências do mercado
+    - Casos de uso: "Estamos crescendo acima do mercado?", "Nossa sazonalidade está alinhada?", "Tendências por categoria?"
+    - Entrega: Crescimento empresa vs. mercado, análise sazonal comparativa, tendências por categoria,
+      performance relativa, insights de alinhamento com mercado
+    
+    🎯 MARKET_SHARE_ESTIMATION:
+    - Use quando: Agente precisa estimar participação de mercado
+    - Casos de uso: "Qual nosso market share?", "Quanto podemos crescer?", "Nossa posição competitiva?"
+    - Entrega: Market share estimado (nacional/regional), análise por segmento de preço,
+      potencial de crescimento, comparação com principais concorrentes, recomendações de expansão
+    
+    🔍 COMPETITIVE_GAPS:
+    - Use quando: Agente identifica oportunidades e gaps competitivos
+    - Casos de uso: "Onde temos oportunidades?", "Quais gaps vs. mercado?", "Prioridades estratégicas?"
+    - Entrega: Gaps por categoria vs. mercado, oportunidades operacionais, matriz de prioridades,
+      recomendações estratégicas específicas, plano de ação priorizado
+    
+    INTEGRAÇÃO COM OUTRAS FERRAMENTAS:
+    - 🗄️ Use SQL Query Tool ANTES para extrair dados atualizados do banco
+    - 📊 Use Statistical Analysis Tool APÓS para análises estatísticas detalhadas
+    - 📈 Use Business Intelligence Tool para dashboards executivos
+    - 🎯 Use KPI Calculator Tool para métricas complementares
+    - ⚠️ Use Risk Assessment Tool para avaliar riscos das recomendações
+    
+    REQUISITOS DE DADOS:
+    - CSV de vendas atualizado (recomendado: extraído via SQL Query Tool)
+    - Mínimo 30 registros para análises confiáveis
+    - Dados de pelo menos 3 meses para análises temporais
+    - Colunas obrigatórias: Data, Total_Liquido, Quantidade, informações de produto
+    """
+    
+    name: str = "Competitive Intelligence Tool"
+    description: str = (
+        "Ferramenta especializada em inteligência competitiva para joalherias. "
+        "Analisa posicionamento de mercado, estratégias de preço, tendências competitivas, "
+        "estimativa de market share e identificação de gaps/oportunidades. "
+        "Usa benchmarks do setor brasileiro e fornece recomendações estratégicas acionáveis."
+    )
     args_schema: Type[BaseModel] = CompetitiveIntelligenceInput
     
     def _run(self, analysis_type: str, data_csv: str = "data/vendas.csv", 
-             market_segment: str = "joalherias", benchmark_period: str = "quarterly") -> str:
+             market_segment: str = "joalherias", benchmark_period: str = "quarterly",
+             include_recommendations: bool = True, risk_tolerance: str = "medium") -> str:
+        
+        # Implement fallback logic for parameters
+        valid_segments = ['joalherias', 'relogios', 'acessorios']
+        if market_segment not in valid_segments:
+            print(f"⚠️ Segmento '{market_segment}' inválido, usando fallback 'joalherias'")
+            market_segment = "joalherias"
+            
+        valid_periods = ['monthly', 'quarterly', 'yearly']
+        if benchmark_period not in valid_periods:
+            print(f"⚠️ Período '{benchmark_period}' inválido, usando fallback 'quarterly'")
+            benchmark_period = "quarterly"
+            
+        valid_tolerance = ['low', 'medium', 'high']
+        if risk_tolerance not in valid_tolerance:
+            print(f"⚠️ Tolerância '{risk_tolerance}' inválida, usando fallback 'medium'")
+            risk_tolerance = "medium"
+        
+        print(f"🏆 Competitive Intelligence Tool executando:")
+        print(f"   📊 Análise: {analysis_type}")
+        print(f"   📁 Dados: {data_csv}")
+        print(f"   🏪 Segmento: {market_segment}")
+        print(f"   ⏱️ Período: {benchmark_period}")
+        print(f"   🎯 Tolerância Risco: {risk_tolerance}")
+        
         try:
-            # Carregar dados
+            # Validar existência do arquivo
+            if not os.path.exists(data_csv):
+                return f"❌ Erro: Arquivo {data_csv} não encontrado. Use SQL Query Tool para extrair dados atualizados."
+            
+            # Carregar e validar dados
             df = pd.read_csv(data_csv, sep=';', encoding='utf-8')
+            print(f"✅ Dados carregados: {len(df)} registros")
+            
+            # Preparar dados para análise competitiva
             df = self._prepare_competitive_data(df)
             
-            if df is None or len(df) < 30:
-                return "Erro: Dados insuficientes para análise competitiva (mínimo 30 registros)"
+            if df is None:
+                return "❌ Erro: Falha na preparação dos dados. Verifique formato do CSV."
+            
+            if len(df) < 30:
+                return f"❌ Erro: Dados insuficientes para análise competitiva (mínimo 30 registros, encontrados {len(df)})"
+            
+            # Validar colunas obrigatórias
+            required_columns = ['Data', 'Total_Liquido', 'Quantidade']
+            missing_columns = [col for col in required_columns if col not in df.columns]
+            if missing_columns:
+                return f"❌ Erro: Colunas obrigatórias ausentes: {missing_columns}"
+            
+            print(f"✅ Dados preparados e validados: {len(df)} registros")
             
             # Carregar benchmarks do setor
             market_benchmarks = self._load_market_benchmarks(market_segment)
+            print(f"✅ Benchmarks carregados para segmento: {market_segment}")
             
             # Dicionário de análises competitivas
             competitive_analyses = {
@@ -58,13 +205,18 @@ class CompetitiveIntelligenceTool(BaseTool):
             }
             
             if analysis_type not in competitive_analyses:
-                return f"Análise '{analysis_type}' não suportada. Opções: {list(competitive_analyses.keys())}"
+                return f"❌ Análise '{analysis_type}' não suportada. Opções: {list(competitive_analyses.keys())}"
             
-            result = competitive_analyses[analysis_type](df, market_benchmarks, benchmark_period)
-            return self._format_competitive_result(analysis_type, result, market_segment)
+            print(f"🔍 Executando análise: {analysis_type}")
+            result = competitive_analyses[analysis_type](
+                df, market_benchmarks, benchmark_period, include_recommendations, risk_tolerance
+            )
+            
+            return self._format_competitive_result(analysis_type, result, market_segment, 
+                                                 benchmark_period, include_recommendations)
             
         except Exception as e:
-            return f"Erro na análise competitiva: {str(e)}"
+            return f"❌ Erro na análise competitiva: {str(e)}\n\nDica: Verifique se o CSV foi gerado pelo SQL Query Tool com dados atualizados."
     
     def _prepare_competitive_data(self, df: pd.DataFrame) -> Optional[pd.DataFrame]:
         """Preparar dados para análise competitiva."""
@@ -156,7 +308,7 @@ class CompetitiveIntelligenceTool(BaseTool):
         return benchmarks.get(market_segment, benchmarks['joalherias'])
     
     def _analyze_market_position(self, df: pd.DataFrame, benchmarks: Dict[str, Any], 
-                                period: str) -> Dict[str, Any]:
+                                period: str, include_recommendations: bool, risk_tolerance: str) -> Dict[str, Any]:
         """Analisar posicionamento no mercado."""
         try:
             # Métricas da empresa
@@ -209,18 +361,91 @@ class CompetitiveIntelligenceTool(BaseTool):
             # Análise competitiva por categoria
             category_analysis = self._analyze_category_strength(df, benchmarks)
             
-            # Insights de posicionamento
+            # Insights de posicionamento expandidos
             positioning_insights = []
             
+            # Análise de posicionamento detalhada
             if positioning == 'Luxury':
-                positioning_insights.append("Posicionamento luxury - foco em exclusividade e experiência")
+                positioning_insights.append("Posicionamento luxury - empresa opera no segmento premium do mercado brasileiro")
+                positioning_insights.append("Estratégia de diferenciação pela exclusividade e experiência do cliente")
+                positioning_insights.append("Foco em qualidade, design e atendimento personalizado")
             elif positioning == 'Premium':
-                positioning_insights.append("Posicionamento premium - oportunidade de expandir para luxury")
+                positioning_insights.append("Posicionamento premium - oportunidade de expansão para segmento luxury")
+                positioning_insights.append("Competitivo no mid-high market com potencial de crescimento")
+                positioning_insights.append("Considerar estratégias de premium pricing e value proposition")
+            elif positioning == 'Mid-Market':
+                positioning_insights.append("Posicionamento mid-market - competindo no mainstream do setor")
+                positioning_insights.append("Foco em eficiência operacional e value for money")
+                positioning_insights.append("Oportunidade de migração seletiva para premium")
+            else:
+                positioning_insights.append("Posicionamento economy - estratégia de liderança em custo")
+                positioning_insights.append("Competitividade via preços acessíveis e volume")
+                positioning_insights.append("Considerar estratégias de up-selling e cross-selling")
             
+            # Análise competitiva detalhada
             if ticket_vs_market > 20:
-                positioning_insights.append("Ticket médio significativamente acima do mercado - posicionamento diferenciado")
+                positioning_insights.append("Ticket médio 20%+ acima do mercado - posicionamento diferenciado forte")
+                positioning_insights.append("Estratégia de premium pricing efetiva")
+            elif ticket_vs_market > 0:
+                positioning_insights.append("Ticket médio acima da média do mercado - posicionamento competitivo")
             elif ticket_vs_market < -20:
-                positioning_insights.append("Ticket médio abaixo do mercado - oportunidade de up-sell")
+                positioning_insights.append("Ticket médio 20%+ abaixo do mercado - oportunidade de up-sell significativa")
+                positioning_insights.append("Considerar revisão de estratégia de preços")
+            elif ticket_vs_market < 0:
+                positioning_insights.append("Ticket médio abaixo da média - espaço para melhoria de preços")
+            
+            # Análise de crescimento vs mercado
+            growth_vs_market = benchmark_comparison['growth_analysis']['growth_vs_market']
+            if growth_vs_market == 'Above':
+                positioning_insights.append("Crescimento acima do mercado - estratégias efetivas de expansão")
+                positioning_insights.append("Capturando market share dos concorrentes")
+            else:
+                positioning_insights.append("Crescimento abaixo do mercado - necessita revisão estratégica")
+                positioning_insights.append("Avaliar estratégias de aceleração de crescimento")
+            
+            # Análise de market share
+            market_share_pct = estimated_market_share.get('estimated_local_share', 0)
+            if market_share_pct > 5:
+                positioning_insights.append("Market share regional significativo - posição competitiva forte")
+            elif market_share_pct > 2:
+                positioning_insights.append("Market share regional moderado - oportunidade de consolidação")
+            else:
+                positioning_insights.append("Market share regional baixo - potencial de crescimento significativo")
+            
+            # Recomendações estratégicas expandidas
+            if include_recommendations:
+                # Use the correct key for market share
+                market_share_value = estimated_market_share.get('estimated_local_share', 
+                                   estimated_market_share.get('estimated_regional_market_share', 0))
+                base_recommendations = self._generate_expansion_recommendations(
+                    market_share_value, category_analysis
+                )
+                
+                # Adicionar recomendações específicas de posicionamento
+                strategic_recommendations = []
+                
+                if positioning in ['Economy', 'Mid-Market'] and ticket_vs_market < -10:
+                    strategic_recommendations.append("Implementar estratégia de premium pricing seletiva")
+                    strategic_recommendations.append("Desenvolver linha de produtos de maior valor agregado")
+                
+                if growth_vs_market == 'Below':
+                    strategic_recommendations.append("Acelerar estratégias de marketing e vendas")
+                    strategic_recommendations.append("Avaliar canais de distribuição e expansão geográfica")
+                
+                if market_share_pct < 3:
+                    strategic_recommendations.append("Focar em crescimento orgânico local antes de expansão")
+                    strategic_recommendations.append("Fortalecer posicionamento de marca e diferenciação")
+                
+                # Recomendações baseadas em tolerância a risco
+                if risk_tolerance == 'high':
+                    strategic_recommendations.append("Considerar estratégias agressivas de expansão de mercado")
+                    strategic_recommendations.append("Avaliar aquisições estratégicas ou parcerias")
+                elif risk_tolerance == 'low':
+                    strategic_recommendations.append("Manter estratégias conservadoras de crescimento orgânico")
+                    strategic_recommendations.append("Focar em otimização de operações existentes")
+                
+                positioning_insights.extend(base_recommendations)
+                positioning_insights.extend(strategic_recommendations)
             
             return {
                 'company_metrics': company_metrics,
@@ -234,7 +459,7 @@ class CompetitiveIntelligenceTool(BaseTool):
             return {'error': f"Erro na análise de posicionamento: {str(e)}"}
     
     def _analyze_competitive_pricing(self, df: pd.DataFrame, benchmarks: Dict[str, Any],
-                                   period: str) -> Dict[str, Any]:
+                                   period: str, include_recommendations: bool, risk_tolerance: str) -> Dict[str, Any]:
         """Analisar estratégia de preços vs. concorrência."""
         try:
             # Distribuição de preços da empresa
@@ -298,6 +523,13 @@ class CompetitiveIntelligenceTool(BaseTool):
                 }
             }
             
+            # Recomendações estratégicas
+            if include_recommendations:
+                recommendations = self._generate_pricing_recommendations(
+                    price_mix_analysis, risk_tolerance
+                )
+                pricing_opportunities.extend(recommendations)
+            
             return {
                 'pricing_analysis': pricing_analysis,
                 'price_elasticity': price_elasticity,
@@ -309,7 +541,7 @@ class CompetitiveIntelligenceTool(BaseTool):
             return {'error': f"Erro na análise de preços: {str(e)}"}
     
     def _compare_market_trends(self, df: pd.DataFrame, benchmarks: Dict[str, Any],
-                             period: str) -> Dict[str, Any]:
+                             period: str, include_recommendations: bool, risk_tolerance: str) -> Dict[str, Any]:
         """Comparar tendências com o mercado."""
         try:
             # Análise temporal da empresa
@@ -402,6 +634,13 @@ class CompetitiveIntelligenceTool(BaseTool):
             else:
                 trend_insights.append("Sazonalidade divergente do mercado - oportunidade ou risco a investigar")
             
+            # Recomendações estratégicas
+            if include_recommendations:
+                recommendations = self._generate_trend_recommendations(
+                    trend_comparison, seasonality_comparison, category_trends
+                )
+                trend_insights.extend(recommendations)
+            
             return {
                 'trend_comparison': trend_comparison,
                 'seasonality_comparison': seasonality_comparison,
@@ -413,7 +652,7 @@ class CompetitiveIntelligenceTool(BaseTool):
             return {'error': f"Erro na comparação de tendências: {str(e)}"}
     
     def _estimate_market_share(self, df: pd.DataFrame, benchmarks: Dict[str, Any],
-                             period: str) -> Dict[str, Any]:
+                             period: str, include_recommendations: bool, risk_tolerance: str) -> Dict[str, Any]:
         """Estimar market share."""
         try:
             # Receita da empresa
@@ -463,6 +702,13 @@ class CompetitiveIntelligenceTool(BaseTool):
                 'expansion_recommendations': self._generate_expansion_recommendations(regional_market_share, segment_analysis)
             }
             
+            # Recomendações estratégicas
+            if include_recommendations:
+                recommendations = self._generate_market_share_recommendations(
+                    growth_potential, segment_analysis, competitor_analysis
+                )
+                growth_potential['expansion_recommendations'].extend(recommendations)
+            
             return {
                 'market_share_estimation': {
                     'company_revenue': round(company_revenue, 2),
@@ -479,7 +725,7 @@ class CompetitiveIntelligenceTool(BaseTool):
             return {'error': f"Erro na estimativa de market share: {str(e)}"}
     
     def _identify_competitive_gaps(self, df: pd.DataFrame, benchmarks: Dict[str, Any],
-                                 period: str) -> Dict[str, Any]:
+                                 period: str, include_recommendations: bool, risk_tolerance: str) -> Dict[str, Any]:
         """Identificar gaps competitivos e oportunidades."""
         try:
             # Análise de gaps por categoria
@@ -531,6 +777,7 @@ class CompetitiveIntelligenceTool(BaseTool):
                 'company_avg': round(company_items_per_transaction, 2),
                 'market_benchmark': items_benchmark,
                 'gap_percentage': round(items_gap, 1),
+                'status': 'Above' if items_gap > 0 else 'Below',
                 'cross_sell_opportunity': 'High' if items_gap < -20 else 'Medium' if items_gap < 0 else 'Low'
             }
             
@@ -544,32 +791,18 @@ class CompetitiveIntelligenceTool(BaseTool):
             opportunity_matrix = self._create_opportunity_matrix(category_gaps, operational_gaps, pricing_gaps)
             
             # Recomendações estratégicas
-            strategic_recommendations = []
-            
-            # Top 3 category gaps
-            top_category_gaps = sorted(category_gaps.items(), 
-                                     key=lambda x: abs(x[1]['gap_percentage']), reverse=True)[:3]
-            
-            for categoria, gap_data in top_category_gaps:
-                if gap_data['gap_percentage'] > 5:
-                    strategic_recommendations.append(
-                        f"Expandir em {categoria}: Gap de {gap_data['gap_percentage']:.1f}% vs. mercado"
-                    )
-            
-            # Operational improvements
-            if operational_gaps['inventory_turnover']['gap_percentage'] < -20:
-                strategic_recommendations.append("Melhorar giro de estoque - 20%+ abaixo do mercado")
-            
-            if operational_gaps['items_per_transaction']['cross_sell_opportunity'] == 'High':
-                strategic_recommendations.append("Implementar estratégias de cross-sell - alta oportunidade")
+            if include_recommendations:
+                recommendations = self._generate_gaps_recommendations(
+                    category_gaps, operational_gaps, pricing_gaps, digital_gaps, opportunity_matrix
+                )
+                opportunity_matrix['strategic_recommendations'] = recommendations[:5]  # Top 5
             
             return {
                 'category_gaps': category_gaps,
                 'operational_gaps': operational_gaps,
                 'pricing_gaps': pricing_gaps,
                 'digital_gaps': digital_gaps,
-                'opportunity_matrix': opportunity_matrix,
-                'strategic_recommendations': strategic_recommendations[:5]  # Top 5
+                'opportunity_matrix': opportunity_matrix
             }
             
         except Exception as e:
@@ -754,11 +987,95 @@ class CompetitiveIntelligenceTool(BaseTool):
         else:
             recommendations.append("Avaliar aquisições ou parcerias estratégicas")
         
+        # Baseado na análise de segmentos (usando revenue_share ao invés de estimated_segment_market_share)
+        if segment_analysis and len(segment_analysis) > 0:
+            try:
+                # Usar revenue_share que existe no category_analysis
+                strongest_segment = max(segment_analysis.items(), 
+                                      key=lambda x: x[1].get('revenue_share', 0))
+                recommendations.append(f"Fortalecer posição em {strongest_segment[0]} - categoria com maior participação ({strongest_segment[1].get('revenue_share', 0):.1f}%)")
+            except (ValueError, KeyError) as e:
+                # Fallback caso haja problemas com os dados
+                recommendations.append("Fortalecer posição nas categorias principais da empresa")
+        
+        return recommendations
+    
+    def _generate_trend_recommendations(self, trend_comparison: Dict[str, Any], 
+                                      seasonality_comparison: Dict[str, Any], 
+                                      category_trends: Dict[str, Any]) -> List[str]:
+        """Gerar recomendações de tendências."""
+        recommendations = []
+        
+        # Performance vs. mercado
+        company_vs_market = trend_comparison['company_vs_market']
+        if company_vs_market['performance_vs_market'] == 'Underperforming':
+            recommendations.append("Revisar estratégias: crescimento abaixo do mercado")
+        elif company_vs_market['performance_vs_market'] == 'Outperforming':
+            recommendations.append("Manter estratégias atuais: crescimento acima do mercado")
+        
+        # Sazonalidade
+        if not seasonality_comparison['alignment_with_market']:
+            recommendations.append("Avaliar alinhamento sazonal com mercado")
+        
+        # Categorias em crescimento
+        strong_categories = [cat for cat, data in category_trends.items() 
+                           if data.get('trend_strength') == 'Strong']
+        if strong_categories:
+            recommendations.append(f"Focar em categorias crescentes: {', '.join(strong_categories[:2])}")
+        
+        return recommendations
+    
+    def _generate_pricing_recommendations(self, price_mix_analysis: Dict[str, Any], risk_tolerance: str) -> List[str]:
+        """Gerar recomendações de pricing."""
+        opportunities = []
+        
+        # Oportunidades baseadas no mix de preços
+        current_distribution = price_mix_analysis['current_distribution']
+        market_opportunity = price_mix_analysis['market_opportunity']
+        
+        if market_opportunity:
+            opportunities.append(f"Expandir produtos premium/luxury - baixa participação atual")
+        
+        economy_share = current_distribution.get('Economy', 0)
+        if economy_share > 0.4:
+            opportunities.append("Reduzir dependência de produtos economy - migrar para mid/premium")
+        
+        # Recomendações estratégicas
+        if risk_tolerance == 'high':
+            opportunities.append("Avaliar oportunidades de pricing agressivas")
+        
+        return opportunities
+    
+    def _generate_market_share_recommendations(self, growth_potential: Dict[str, Any], segment_analysis: Dict[str, Any], 
+                                              competitor_analysis: Dict[str, Any]) -> List[str]:
+        """Gerar recomendações de market share."""
+        recommendations = []
+        
+        if growth_potential['current_position'] == 'Niche Player':
+            recommendations.append("Considerar expansão para mercados adjacentes")
+        elif growth_potential['current_position'] == 'Regional Player':
+            recommendations.append("Avaliar aquisições ou parcerias estratégicas")
+        
         # Baseado na análise de segmentos
-        if segment_analysis:
-            strongest_segment = max(segment_analysis.items(), 
-                                  key=lambda x: x[1]['estimated_segment_market_share'])
-            recommendations.append(f"Fortalecer posição em {strongest_segment[0]} - segmento mais forte")
+        if segment_analysis and len(segment_analysis) > 0:
+            try:
+                # Usar revenue_share ou total_revenue que existem no segment_analysis
+                if any('estimated_segment_market_share' in data for data in segment_analysis.values()):
+                    # Caso seja segment_analysis do market share estimation
+                    strongest_segment = max(segment_analysis.items(), 
+                                          key=lambda x: x[1].get('estimated_segment_market_share', 0))
+                    recommendations.append(f"Fortalecer posição em {strongest_segment[0]} - segmento mais forte")
+                else:
+                    # Caso seja category_analysis do market position
+                    strongest_segment = max(segment_analysis.items(), 
+                                          key=lambda x: x[1].get('revenue_share', 0))
+                    recommendations.append(f"Fortalecer posição em {strongest_segment[0]} - categoria com maior participação")
+            except (ValueError, KeyError):
+                recommendations.append("Fortalecer posição nos segmentos principais da empresa")
+        
+        # Competitor analysis
+        if competitor_analysis['competitive_position'] != 'Independent':
+            recommendations.append(f"Avaliar concorrência: {competitor_analysis['competitive_position']}")
         
         return recommendations
     
@@ -833,22 +1150,104 @@ class CompetitiveIntelligenceTool(BaseTool):
             'total_opportunities': len(opportunities)
         }
     
+    def _generate_gaps_recommendations(self, category_gaps: Dict, operational_gaps: Dict, 
+                                      pricing_gaps: Dict, digital_gaps: Dict, opportunity_matrix: Dict) -> List[str]:
+        """Gerar recomendações abrangentes de gaps competitivos."""
+        recommendations = []
+        
+        # Análise detalhada de gaps por categoria
+        top_category_gaps = sorted(category_gaps.items(), 
+                                 key=lambda x: abs(x[1]['gap_percentage']), reverse=True)[:4]
+        
+        for categoria, gap_data in top_category_gaps:
+            gap_pct = gap_data['gap_percentage']
+            opportunity_size = gap_data['opportunity_size']
+            
+            if gap_pct > 5:  # Gap positivo = sub-representação
+                if opportunity_size == 'High':
+                    recommendations.append(f"PRIORIDADE ALTA: Expandir portfolio em {categoria} - gap de {gap_pct:.1f}% vs. mercado representa oportunidade significativa")
+                    recommendations.append(f"Desenvolver estratégia de entrada em {categoria} com foco em diferenciação competitiva")
+                else:
+                    recommendations.append(f"Considerar expansão seletiva em {categoria} - gap de {gap_pct:.1f}% vs. mercado")
+            elif gap_pct < -3:  # Gap negativo = sobre-representação
+                recommendations.append(f"Avaliar concentração em {categoria} - participação {abs(gap_pct):.1f}% acima do mercado")
+        
+        # Recomendações operacionais detalhadas
+        inventory_gap = operational_gaps.get('inventory_turnover', {})
+        if inventory_gap.get('gap_percentage', 0) < -20:
+            recommendations.append("CRÍTICO: Melhorar giro de estoque - 20%+ abaixo do mercado impacta cashflow")
+            recommendations.append("Implementar gestão de estoque just-in-time e análise ABC de produtos")
+        elif inventory_gap.get('gap_percentage', 0) < -10:
+            recommendations.append("Otimizar giro de estoque - oportunidade de melhoria operacional")
+        
+        items_gap = operational_gaps.get('items_per_transaction', {})
+        cross_sell_opp = items_gap.get('cross_sell_opportunity', 'Low')
+        if cross_sell_opp == 'High':
+            recommendations.append("ALTA OPORTUNIDADE: Implementar estratégias de cross-sell e up-sell")
+            recommendations.append("Desenvolver bundles de produtos e treinamento de vendas consultiva")
+        elif cross_sell_opp == 'Medium':
+            recommendations.append("Explorar oportunidades de cross-sell - potencial de aumento do ticket médio")
+        
+        # Recomendações de pricing gaps
+        for category, pricing_data in pricing_gaps.items():
+            opportunity = pricing_data.get('opportunity', 'Maintain')
+            gap_pct = pricing_data.get('gap_percentage', 0)
+            
+            if opportunity == 'Increase' and abs(gap_pct) > 15:
+                recommendations.append(f"PRICING: Ajustar preços em {category} - {abs(gap_pct):.1f}% abaixo do mercado")
+                recommendations.append(f"Implementar estratégia de premium pricing gradual em {category}")
+            elif opportunity == 'Reassess' and gap_pct > 25:
+                recommendations.append(f"RISCO: Reavaliar preços em {category} - {gap_pct:.1f}% acima do mercado pode afetar competitividade")
+        
+        # Oportunidades digitais
+        digital_opp = digital_gaps.get('digital_opportunity', 'Low')
+        if digital_opp == 'High':
+            recommendations.append("TRANSFORMAÇÃO DIGITAL: Desenvolver canal online - alta penetração digital no mercado")
+            recommendations.append("Investir em e-commerce, marketing digital e experiência omnichannel")
+        elif digital_opp == 'Medium':
+            recommendations.append("Avaliar presença digital - oportunidade de crescimento incremental")
+        
+        # Matriz de oportunidades prioritárias
+        high_priority_opps = opportunity_matrix.get('high_priority', [])
+        for opp in high_priority_opps[:3]:  # Top 3 high priority
+            opp_name = opp.get('opportunity', 'Unknown')
+            impact = opp.get('impact', 'Medium')
+            effort = opp.get('effort', 'Medium')
+            recommendations.append(f"MATRIZ ESTRATÉGICA: {opp_name} (Impacto: {impact}, Esforço: {effort})")
+        
+        # Recomendações estratégicas macro
+        total_opportunities = opportunity_matrix.get('total_opportunities', 0)
+        if total_opportunities > 5:
+            recommendations.append("ESTRATÉGIA: Priorizar 3-4 iniciativas principais para execução efetiva")
+            recommendations.append("Desenvolver roadmap de implementação com milestones trimestrais")
+        
+        # Recomendações de monitoramento
+        recommendations.append("MONITORAMENTO: Implementar KPIs competitivos para acompanhar progresso vs. benchmarks")
+        recommendations.append("Revisar análise competitiva trimestralmente para ajustes estratégicos")
+        
+        return recommendations[:12]  # Limite de 12 recomendações para foco
+    
     def _format_competitive_result(self, analysis_type: str, result: Dict[str, Any], 
-                                 market_segment: str) -> str:
+                                 market_segment: str, benchmark_period: str, include_recommendations: bool) -> str:
         """Formatar resultado da análise competitiva."""
         try:
             timestamp = datetime.now().strftime('%d/%m/%Y %H:%M')
             
             if 'error' in result:
-                return f"Erro na análise competitiva {analysis_type}: {result['error']}"
+                return f"❌ Erro na análise competitiva {analysis_type}: {result['error']}"
             
-            formatted = f"""# 🏆 ANÁLISE DE INTELIGÊNCIA COMPETITIVA
-                            ## Tipo: {analysis_type.upper().replace('_', ' ')}
-                            **Segmento**: {market_segment.title()} | **Data**: {timestamp}
+            # Header padronizado
+            analysis_name = analysis_type.upper().replace('_', ' ')
+            formatted = f"""
+# 🏆 INTELIGÊNCIA COMPETITIVA - {analysis_name}
 
-                            ---
+**📊 Análise**: {analysis_name}  
+**🏪 Segmento**: {market_segment.title()}  
+**⏱️ Período**: {benchmark_period.title()}  
+**📅 Gerado em**: {timestamp}
 
-                            """
+---
+"""
             
             # Formatação específica por tipo
             if analysis_type == 'market_position':
@@ -862,43 +1261,103 @@ class CompetitiveIntelligenceTool(BaseTool):
             elif analysis_type == 'competitive_gaps':
                 formatted += self._format_competitive_gaps(result)
             
+            # Seção de recomendações se incluída
+            if include_recommendations:
+                formatted += self._format_recommendations_section(result, analysis_type)
+            
+            # Footer padronizado
             formatted += f"""
+---
 
-                    ---
-                    ## 📋 DISCLAIMER
+## 📋 METADADOS DA ANÁLISE
 
-                    **Dados de Mercado**: Baseados em pesquisas setoriais e benchmarks públicos
-                    **Estimativas**: Market share e análises competitivas são aproximações
-                    **Período**: Análise baseada nos dados históricos disponíveis
+**🔍 Metodologia**: Benchmarks setoriais brasileiros + análise comparativa  
+**📊 Fonte de Dados**: CSV de vendas (extraído via SQL Query Tool)  
+**⚠️ Disclaimers**: Market share e análises competitivas são estimativas baseadas em benchmarks públicos  
+**🔄 Atualização**: Recomenda-se atualizar dados mensalmente via SQL Query Tool  
 
-                    *Relatório gerado pelo Competitive Intelligence Tool - Insights AI*
-                    """
+**🤖 Próximos Passos Sugeridos**:
+- Use Statistical Analysis Tool para análises estatísticas detalhadas
+- Use Business Intelligence Tool para dashboards executivos  
+- Use Risk Assessment Tool para avaliar riscos das recomendações
+
+*Relatório gerado por Competitive Intelligence Tool - Insights AI v2.0*
+"""
             
             return formatted
             
         except Exception as e:
-            return f"Erro na formatação: {str(e)}"
+                         return f"❌ Erro na formatação da análise competitiva: {str(e)}"
+    
+    def _format_recommendations_section(self, result: Dict[str, Any], analysis_type: str) -> str:
+        """Formatar seção de recomendações."""
+        formatted = "\n## 🎯 RECOMENDAÇÕES ESTRATÉGICAS\n\n"
+        
+        # Buscar recomendações em diferentes campos dependendo do tipo de análise
+        recommendations = []
+        
+        if analysis_type == 'market_position' and 'positioning_insights' in result:
+            recommendations = result['positioning_insights']
+        elif analysis_type == 'pricing_analysis' and 'pricing_opportunities' in result:
+            recommendations = result['pricing_opportunities']
+        elif analysis_type == 'trend_comparison' and 'trend_insights' in result:
+            recommendations = result['trend_insights']
+        elif analysis_type == 'market_share_estimation' and 'growth_potential' in result:
+            recommendations = result['growth_potential'].get('expansion_recommendations', [])
+        elif analysis_type == 'competitive_gaps' and 'opportunity_matrix' in result:
+            recommendations = result['opportunity_matrix'].get('strategic_recommendations', [])
+        
+        if recommendations:
+            for i, rec in enumerate(recommendations[:5], 1):  # Top 5 recomendações
+                formatted += f"**{i}.** {rec}\n\n"
+        else:
+            formatted += "Nenhuma recomendação específica gerada para esta análise.\n\n"
+        
+        return formatted
     
     def _format_market_position(self, result: Dict[str, Any]) -> str:
         """Formatar análise de posicionamento."""
-        formatted = "## 🎯 POSICIONAMENTO NO MERCADO\n\n"
+        formatted = "## 🎯 POSICIONAMENTO COMPETITIVO\n\n"
         
+        # Métricas principais
         if 'benchmark_comparison' in result:
             ticket = result['benchmark_comparison']['ticket_analysis']
-            formatted += f"**Posicionamento**: {ticket['positioning']}\n"
-            formatted += f"**Ticket Médio**: R$ {ticket['company_avg_ticket']:,.2f}\n"
-            formatted += f"**vs. Mercado**: {ticket['difference_percent']:+.1f}%\n\n"
+            growth = result['benchmark_comparison'].get('growth_analysis', {})
+            
+            formatted += "### 📊 Métricas vs. Mercado\n\n"
+            formatted += f"**🏷️ Categoria de Preço**: {ticket['positioning']}\n"
+            formatted += f"**💰 Ticket Médio**: R$ {ticket['company_avg_ticket']:,.2f}\n"
+            formatted += f"**📈 Diferença vs. Mercado**: {ticket['difference_percent']:+.1f}%\n"
+            
+            if growth:
+                company_growth = growth.get('company_growth', {})
+                if isinstance(company_growth, dict) and 'mom_avg' in company_growth:
+                    formatted += f"**📊 Crescimento Médio**: {company_growth['mom_avg']:+.1f}% mensal\n"
+            formatted += "\n"
         
+        # Market Share
         if 'estimated_market_share' in result:
             share = result['estimated_market_share']
-            formatted += f"**Market Share Estimado**: {share['estimated_regional_market_share']:.2f}%\n"
-            formatted += f"**Posição**: {share['market_position']}\n\n"
+            formatted += "### 🏆 Participação de Mercado\n\n"
+            
+            # Use a chave correta baseada na estrutura dos dados
+            if 'estimated_local_share' in share:
+                formatted += f"**📍 Market Share Local**: {share['estimated_local_share']:.2f}%\n"
+            elif 'estimated_regional_market_share' in share:
+                formatted += f"**📍 Market Share Regional**: {share['estimated_regional_market_share']:.2f}%\n"
+            
+            if 'market_position' in share:
+                formatted += f"**🎯 Posição Competitiva**: {share['market_position']}\n"
+            if 'confidence_level' in share:
+                formatted += f"**💼 Nível de Confiança**: {share['confidence_level']}\n"
+            formatted += "\n"
         
-        formatted += "## 💡 INSIGHTS DE POSICIONAMENTO\n\n"
-        
-        if 'positioning_insights' in result:
-            for insight in result['positioning_insights']:
-                formatted += f"- {insight}\n"
+        # Análise por categoria
+        if 'category_analysis' in result:
+            formatted += "### 📦 Performance por Categoria\n\n"
+            for categoria, data in list(result['category_analysis'].items())[:3]:
+                formatted += f"**{categoria}**: R$ {data['total_revenue']:,.0f} ({data['revenue_share']:.1f}% do total)\n"
+            formatted += "\n"
         
         return formatted
     
@@ -906,18 +1365,33 @@ class CompetitiveIntelligenceTool(BaseTool):
         """Formatar análise de preços."""
         formatted = "## 💰 ANÁLISE COMPETITIVA DE PREÇOS\n\n"
         
+        # Análise por categoria de preço
         if 'pricing_analysis' in result:
+            formatted += "### 📊 Comparação por Categoria\n\n"
             for category, data in result['pricing_analysis'].items():
-                formatted += f"### {category.title()}\n"
-                formatted += f"- **Preço Médio Empresa**: R$ {data['company_avg_price']:,.2f}\n"
-                formatted += f"- **Preço Médio Mercado**: R$ {data['market_avg_price']:,.2f}\n"
-                formatted += f"- **Premium/Desconto**: {data['price_premium_discount']:+.1f}%\n\n"
+                status_emoji = "🟢" if data['price_premium_discount'] > 0 else "🔴" if data['price_premium_discount'] < -10 else "🟡"
+                formatted += f"**{status_emoji} {category.title()}**\n"
+                formatted += f"- Preço Empresa: R$ {data['company_avg_price']:,.2f}\n"
+                formatted += f"- Benchmark Mercado: R$ {data['market_avg_price']:,.2f}\n"
+                formatted += f"- Diferencial: {data['price_premium_discount']:+.1f}%\n"
+                formatted += f"- Participação: {data['company_percentage']:.1f}% das vendas\n\n"
         
-        formatted += "## 🚀 OPORTUNIDADES DE PRICING\n\n"
+        # Mix de preços
+        if 'price_mix_analysis' in result:
+            mix_data = result['price_mix_analysis']
+            formatted += "### 🎯 Mix de Preços\n\n"
+            
+            revenue_conc = mix_data.get('revenue_concentration', {})
+            if revenue_conc:
+                formatted += f"**📈 Categoria Dominante**: {revenue_conc['dominant_category']}\n"
+                formatted += f"**📊 Concentração de Receita**: {revenue_conc['revenue_percentage']:.1f}%\n\n"
         
-        if 'pricing_opportunities' in result:
-            for opportunity in result['pricing_opportunities']:
-                formatted += f"- {opportunity}\n"
+        # Elasticidade de preços
+        if 'price_elasticity' in result:
+            elasticity = result['price_elasticity']
+            formatted += "### 📈 Elasticidade de Preços\n\n"
+            formatted += f"**🔄 Elasticidade**: {elasticity['elasticity']:.2f}\n"
+            formatted += f"**📊 Confiança**: {elasticity['confidence']}\n\n"
         
         return formatted
     
@@ -925,22 +1399,45 @@ class CompetitiveIntelligenceTool(BaseTool):
         """Formatar comparação de tendências."""
         formatted = "## 📈 COMPARAÇÃO DE TENDÊNCIAS\n\n"
         
+        # Performance vs. mercado
         if 'trend_comparison' in result:
             trend = result['trend_comparison']['company_vs_market']
-            formatted += f"**Crescimento Empresa**: {trend['company_revenue_growth']:+.2f}%\n"
-            formatted += f"**Crescimento Mercado**: {trend['market_growth_benchmark']:+.2f}%\n"
-            formatted += f"**Performance**: {trend['performance_vs_market']}\n\n"
+            performance_emoji = "🟢" if trend['performance_vs_market'] == 'Outperforming' else "🔴"
+            
+            formatted += "### 📊 Performance vs. Mercado\n\n"
+            formatted += f"**{performance_emoji} Status**: {trend['performance_vs_market']}\n"
+            formatted += f"**📈 Crescimento Empresa**: {trend['company_revenue_growth']:+.2f}%\n"
+            formatted += f"**📊 Benchmark Mercado**: {trend['market_growth_benchmark']:+.2f}%\n"
+            
+            # Calcular gap de performance
+            gap = trend['company_revenue_growth'] - trend['market_growth_benchmark']
+            formatted += f"**⚖️ Gap de Performance**: {gap:+.2f} pontos percentuais\n\n"
         
+        # Análise sazonal
         if 'seasonality_comparison' in result:
             season = result['seasonality_comparison']
-            formatted += f"**Alinhamento Sazonal**: {'Sim' if season['alignment_with_market'] else 'Não'}\n"
-            formatted += f"**Variação Sazonal**: {season['company_seasonal_variation']:.1%}\n\n"
+            alignment_emoji = "🟢" if season['alignment_with_market'] else "🟡"
+            
+            formatted += "### 🌊 Padrões Sazonais\n\n"
+            formatted += f"**{alignment_emoji} Alinhamento com Mercado**: {'Sim' if season['alignment_with_market'] else 'Não'}\n"
+            formatted += f"**📊 Variação Sazonal Empresa**: {season['company_seasonal_variation']:.1%}\n"
+            formatted += f"**📈 Variação Sazonal Mercado**: {season['market_seasonal_variation']:.1%}\n"
+            
+            if 'company_peak_months' in season:
+                months_names = {1:'Jan', 2:'Fev', 3:'Mar', 4:'Abr', 5:'Mai', 6:'Jun',
+                              7:'Jul', 8:'Ago', 9:'Set', 10:'Out', 11:'Nov', 12:'Dez'}
+                company_peaks = [months_names.get(m, str(m)) for m in season['company_peak_months']]
+                market_peaks = [months_names.get(m, str(m)) for m in season['market_peak_months']]
+                formatted += f"**🎯 Picos da Empresa**: {', '.join(company_peaks)}\n"
+                formatted += f"**🏪 Picos do Mercado**: {', '.join(market_peaks)}\n\n"
         
-        formatted += "## 💡 INSIGHTS DE TENDÊNCIAS\n\n"
-        
-        if 'trend_insights' in result:
-            for insight in result['trend_insights']:
-                formatted += f"- {insight}\n"
+        # Tendências por categoria
+        if 'category_trends' in result and result['category_trends']:
+            formatted += "### 📦 Tendências por Categoria\n\n"
+            for categoria, data in list(result['category_trends'].items())[:3]:
+                trend_emoji = "🟢" if data['trend_strength'] == 'Strong' else "🔴"
+                formatted += f"**{trend_emoji} {categoria}**: {data['growth_rate']:+.1f}% (Benchmark: {data['market_share_benchmark']:.1f}%)\n"
+            formatted += "\n"
         
         return formatted
     
@@ -948,45 +1445,138 @@ class CompetitiveIntelligenceTool(BaseTool):
         """Formatar estimativa de market share."""
         formatted = "## 📊 ESTIMATIVA DE MARKET SHARE\n\n"
         
+        # Métricas principais
         if 'market_share_estimation' in result:
             share = result['market_share_estimation']
-            formatted += f"**Receita da Empresa**: R$ {share['company_revenue']:,.2f}\n"
-            formatted += f"**Market Share Regional**: {share['estimated_regional_market_share']:.2f}%\n"
-            formatted += f"**Posição no Mercado**: {share['market_position']}\n\n"
+            position_emoji = "🏆" if share['market_position'] == 'Market Leader' else "🎯" if share['market_position'] == 'Regional Player' else "🌱"
+            
+            formatted += "### 📈 Posição Competitiva\n\n"
+            formatted += f"**💰 Receita da Empresa**: R$ {share['company_revenue']:,.2f}\n"
+            formatted += f"**📍 Market Share Regional**: {share['estimated_regional_market_share']:.2f}%\n"
+            formatted += f"**{position_emoji} Posição no Mercado**: {share['market_position']}\n"
+            
+            if 'estimated_national_market_share' in share:
+                formatted += f"**🇧🇷 Market Share Nacional**: {share['estimated_national_market_share']:.4f}%\n"
+            formatted += "\n"
         
-        if 'segment_analysis' in result:
-            formatted += "**Análise por Segmento**:\n"
-            for segment, data in list(result['segment_analysis'].items())[:3]:
-                formatted += f"- {segment}: {data['estimated_segment_market_share']:.1f}% do segmento\n"
+        # Análise por segmento
+        if 'segment_analysis' in result and result['segment_analysis']:
+            formatted += "### 🎯 Performance por Segmento\n\n"
+            for segment, data in list(result['segment_analysis'].items())[:4]:
+                share_pct = data['estimated_segment_market_share']
+                segment_emoji = "🟢" if share_pct > 5 else "🟡" if share_pct > 2 else "🔴"
+                formatted += f"**{segment_emoji} {segment}**\n"
+                formatted += f"- Receita: R$ {data['revenue']:,.0f}\n"
+                formatted += f"- Participação na Empresa: {data['percentage_of_company']:.1f}%\n"
+                formatted += f"- Market Share do Segmento: {share_pct:.1f}%\n\n"
         
-        formatted += "\n## 🚀 POTENCIAL DE CRESCIMENTO\n\n"
-        
+        # Potencial de crescimento
         if 'growth_potential' in result:
             growth = result['growth_potential']
-            formatted += f"**Posição Atual**: {growth['current_position']}\n"
-            formatted += f"**Oportunidade de Crescimento**: {growth['growth_opportunity']:.1f}%\n"
+            formatted += "### 🚀 Potencial de Crescimento\n\n"
+            formatted += f"**📊 Posição Atual**: {growth['current_position']}\n"
+            formatted += f"**📈 Oportunidade de Crescimento**: {growth['growth_opportunity']:.1f} pontos percentuais\n"
+            
+            if 'expansion_recommendations' in growth and growth['expansion_recommendations']:
+                formatted += f"**💡 Próximos Passos**: {growth['expansion_recommendations'][0]}\n"
+            formatted += "\n"
+        
+        # Análise competitiva
+        if 'competitor_analysis' in result:
+            comp = result['competitor_analysis']
+            formatted += "### 🏪 Cenário Competitivo\n\n"
+            formatted += f"**🎯 Posição Competitiva**: {comp['competitive_position']}\n"
+            
+            if 'market_leaders' in comp:
+                formatted += f"**👑 Líderes do Mercado**: {', '.join(comp['market_leaders'][:3])}\n"
+            
+            if 'estimated_gap_to_leader' in comp:
+                formatted += f"**📊 Gap vs. Líder**: R$ {comp['estimated_gap_to_leader']:.1f}M\n"
+            formatted += "\n"
         
         return formatted
     
     def _format_competitive_gaps(self, result: Dict[str, Any]) -> str:
         """Formatar gaps competitivos."""
-        formatted = "## 🔍 GAPS COMPETITIVOS IDENTIFICADOS\n\n"
+        formatted = "## 🔍 GAPS COMPETITIVOS E OPORTUNIDADES\n\n"
         
+        # Matrix de oportunidades
         if 'opportunity_matrix' in result:
             matrix = result['opportunity_matrix']
-            formatted += f"**Oportunidades de Alta Prioridade**: {len(matrix['high_priority'])}\n"
-            formatted += f"**Oportunidades de Média Prioridade**: {len(matrix['medium_priority'])}\n\n"
+            total_opp = matrix.get('total_opportunities', 0)
+            high_priority = len(matrix.get('high_priority', []))
+            medium_priority = len(matrix.get('medium_priority', []))
+            
+            formatted += "### 🎯 Matriz de Oportunidades\n\n"
+            formatted += f"**🔥 Alta Prioridade**: {high_priority} oportunidades\n"
+            formatted += f"**⚡ Média Prioridade**: {medium_priority} oportunidades\n"
+            formatted += f"**📊 Total Identificado**: {total_opp} oportunidades\n\n"
+            
+            # Listar oportunidades de alta prioridade
+            if matrix.get('high_priority'):
+                formatted += "#### 🔥 Oportunidades Prioritárias:\n"
+                for opp in matrix['high_priority'][:3]:
+                    formatted += f"- **{opp['opportunity']}** (Impacto: {opp['impact']}, Esforço: {opp['effort']})\n"
+                formatted += "\n"
         
-        formatted += "## 🎯 RECOMENDAÇÕES ESTRATÉGICAS\n\n"
+        # Gaps por categoria
+        if 'category_gaps' in result and result['category_gaps']:
+            formatted += "### 📦 Gaps por Categoria vs. Mercado\n\n"
+            for category, gap in list(result['category_gaps'].items())[:4]:
+                gap_pct = gap['gap_percentage']
+                opportunity_size = gap['opportunity_size']
+                
+                # Emoji baseado no tamanho da oportunidade
+                opp_emoji = "🔥" if opportunity_size == 'High' else "⚡" if opportunity_size == 'Medium' else "💡"
+                gap_emoji = "📈" if gap_pct > 0 else "📉"
+                
+                formatted += f"**{opp_emoji} {category}**\n"
+                formatted += f"- Participação Empresa: {gap['company_share']:.1f}%\n"
+                formatted += f"- Benchmark Mercado: {gap['market_share_benchmark']:.1f}%\n"
+                formatted += f"- {gap_emoji} Gap: {gap_pct:+.1f} pontos percentuais\n"
+                formatted += f"- Oportunidade: {opportunity_size}\n\n"
         
-        if 'strategic_recommendations' in result:
-            for i, rec in enumerate(result['strategic_recommendations'], 1):
-                formatted += f"{i}. {rec}\n"
+        # Gaps operacionais
+        if 'operational_gaps' in result:
+            formatted += "### ⚙️ Gaps Operacionais\n\n"
+            
+            op_gaps = result['operational_gaps']
+            for metric, data in op_gaps.items():
+                # Verificar se 'status' existe, caso contrário usar valor padrão baseado em gap_percentage
+                status = data.get('status', 'Above' if data.get('gap_percentage', 0) > 0 else 'Below')
+                status_emoji = "🟢" if status == 'Above' else "🔴"
+                gap_pct = abs(data.get('gap_percentage', 0))
+                
+                if gap_pct > 15:  # Mostrar apenas gaps significativos
+                    metric_name = metric.replace('_', ' ').title()
+                    formatted += f"**{status_emoji} {metric_name}**\n"
+                    
+                    # Usar chaves diferentes para diferentes tipos de dados
+                    if 'company_estimated' in data:
+                        formatted += f"- Empresa: {data['company_estimated']:.2f}\n"
+                    elif 'company_avg' in data:
+                        formatted += f"- Empresa: {data['company_avg']:.2f}\n"
+                    
+                    formatted += f"- Benchmark: {data['market_benchmark']:.2f}\n"
+                    formatted += f"- Gap: {data['gap_percentage']:+.1f}%\n\n"
         
-        if 'category_gaps' in result:
-            formatted += "\n## 📦 GAPS POR CATEGORIA\n\n"
-            for category, gap in list(result['category_gaps'].items())[:3]:
-                if gap['opportunity_size'] in ['High', 'Medium']:
-                    formatted += f"**{category}**: Gap de {gap['gap_percentage']:+.1f}% vs. mercado\n"
+        # Gaps de pricing
+        if 'pricing_gaps' in result and result['pricing_gaps']:
+            formatted += "### 💰 Gaps de Pricing\n\n"
+            for category, data in list(result['pricing_gaps'].items())[:3]:
+                opportunity = data['opportunity']
+                gap_pct = data['gap_percentage']
+                
+                opp_emoji = "🔥" if opportunity == 'Increase' else "⚠️" if opportunity == 'Reassess' else "✅"
+                formatted += f"**{opp_emoji} {category.title()}**: {gap_pct:+.1f}% vs. mercado ({opportunity})\n"
+            formatted += "\n"
+        
+        # Digital gaps
+        if 'digital_gaps' in result:
+            digital = result['digital_gaps']
+            if digital.get('digital_opportunity') in ['High', 'Medium']:
+                formatted += "### 💻 Gap Digital\n\n"
+                formatted += f"**📊 Penetração Digital Mercado**: {digital['market_digital_penetration']:.1f}%\n"
+                formatted += f"**🚀 Oportunidade Digital**: {digital['digital_opportunity']}\n\n"
         
         return formatted

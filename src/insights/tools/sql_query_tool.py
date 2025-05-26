@@ -1,6 +1,6 @@
 from crewai.tools import BaseTool
 from typing import Type, Optional, ClassVar
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 from datetime import datetime, timedelta
 import pyodbc
 import pandas as pd
@@ -12,24 +12,31 @@ class SQLServerQueryInput(BaseModel):
     date_start: str = Field(
         ..., 
         description="Data inicial para filtro no formato 'YYYY-MM-DD'. Use data_inicio fornecida pelo sistema.",
-        example="2024-01-01",
-        pattern=r"^\d{4}-\d{2}-\d{2}$"
+        json_schema_extra={
+            "example": "2024-01-01",
+            "pattern": r"^\d{4}-\d{2}-\d{2}$"
+        }
     )
     
     date_end: Optional[str] = Field(
         None, 
         description="Data final para filtro no formato 'YYYY-MM-DD'. Se não fornecida, usa apenas data inicial. Use data_fim fornecida pelo sistema.",
-        example="2024-12-31",
-        pattern=r"^\d{4}-\d{2}-\d{2}$"
+        json_schema_extra={
+            "example": "2024-12-31",
+            "pattern": r"^\d{4}-\d{2}-\d{2}$"
+        }
     )
     
     output_format: Optional[str] = Field(
         "csv", 
         description="Formato de saída: 'csv' (dados estruturados), 'summary' (resumo), 'json' (JSON), 'raw' (dados brutos).",
-        pattern="^(csv|summary|json|raw)$"
+        json_schema_extra={
+            "pattern": "^(csv|summary|json|raw)$"
+        }
     )
     
-    @validator('date_start')
+    @field_validator('date_start')
+    @classmethod
     def validate_date_start(cls, v):
         try:
             datetime.strptime(v, '%Y-%m-%d')
@@ -37,13 +44,15 @@ class SQLServerQueryInput(BaseModel):
         except ValueError:
             raise ValueError("date_start deve estar no formato YYYY-MM-DD")
     
-    @validator('date_end')
-    def validate_date_end(cls, v, values):
+    @field_validator('date_end')
+    @classmethod
+    def validate_date_end(cls, v, info):
         if v is not None:
             try:
                 end_date = datetime.strptime(v, '%Y-%m-%d')
-                if 'date_start' in values:
-                    start_date = datetime.strptime(values['date_start'], '%Y-%m-%d')
+                # Em Pydantic v2, usar info.data para acessar outros campos
+                if hasattr(info, 'data') and 'date_start' in info.data:
+                    start_date = datetime.strptime(info.data['date_start'], '%Y-%m-%d')
                     if end_date < start_date:
                         raise ValueError("date_end deve ser posterior a date_start")
                 return v
@@ -111,14 +120,14 @@ class SQLServerQueryTool(BaseTool):
         RTRIM(clientes.sexos) AS Sexo,
         RTRIM(clientes.estcivils) AS Estado_Civil,
         CAST(clientes.nascs AS DATE) AS Data_Nascimento,
-        DATEDIFF(YEAR, clientes.nascs, GETDATE()) AS Idade,
+        DATEDIFF(YEAR, ISNULL(clientes.nascs, GETDATE()), GETDATE()) AS Idade,
         RTRIM(clientes.cidas) AS Cidade,
         RTRIM(clientes.estas) AS Estado,
         RTRIM(vendas.vends) AS Codigo_Vendedor,
         RTRIM(consultora.rclis) AS Nome_Vendedor,
         RTRIM(vendas.cpros) AS Codigo_Produto,
         RTRIM(prod.dpros) AS Descricao_Produto,
-        CAST(SUM(estoque.sqtds) AS INTEGER) AS Estoque_Atual,
+        ISNULL(estoque_atual.Estoque_Total, 0) AS Estoque_Atual,
         RTRIM(prod.colecoes) AS Colecao,
         RTRIM(grp.dgrus) AS Grupo_Produto,
         RTRIM(subgrp.descricaos) AS Subgrupo_Produto,
@@ -129,17 +138,20 @@ class SQLServerQueryTool(BaseTool):
         SUM(vendas.VALDESCS - vendas.VALRATS) AS Desconto_Aplicado,
         SUM(CAST(vendas.totas AS DECIMAL(10,3))) AS Total_Liquido
     FROM sljgdmi AS vendas WITH (NOLOCK)
-        LEFT JOIN SLJCLI AS clientes ON clientes.ICLIS = vendas.VENDS
+        LEFT JOIN SLJCLI AS clientes ON clientes.ICLIS = vendas.ICLIS
         LEFT JOIN SLJCLI AS consultora ON consultora.ICLIS = vendas.VENDS
         LEFT JOIN sljpro AS prod WITH (NOLOCK) ON vendas.cpros = prod.cpros
-        LEFT JOIN sljest AS estoque WITH (NOLOCK) ON estoque.cpros = vendas.cpros
+        LEFT JOIN (
+            SELECT cpros, SUM(CAST(sqtds AS INTEGER)) AS Estoque_Total
+            FROM sljest WITH (NOLOCK)
+            GROUP BY cpros
+        ) AS estoque_atual ON estoque_atual.cpros = vendas.cpros
         LEFT JOIN sljgru AS grp WITH (NOLOCK) ON prod.cgrus = grp.cgrus
         LEFT JOIN sljsgru AS subgrp WITH (NOLOCK) ON prod.cgrus + prod.sgrus = subgrp.cgrucods
     WHERE vendas.ggrus IN (
         SELECT DISTINCT A.ggrus
         FROM SLJGDMI A
-        JOIN SLJGGRP B
-        ON A.ggrus = B.codigos AND B.relgers <> 2
+        JOIN SLJGGRP B ON A.ggrus = B.codigos AND B.relgers <> 2
     )
     -- <<FILTRO_DATA>>
     GROUP BY 
@@ -151,7 +163,6 @@ class SQLServerQueryTool(BaseTool):
         RTRIM(clientes.sexos),
         RTRIM(clientes.estcivils),
         CAST(clientes.nascs AS DATE),
-        DATEDIFF(YEAR, clientes.nascs, GETDATE()),
         RTRIM(clientes.cidas),
         RTRIM(clientes.estas),
         RTRIM(vendas.cpros),
@@ -161,7 +172,9 @@ class SQLServerQueryTool(BaseTool):
         RTRIM(subgrp.descricaos),
         RTRIM(prod.metals),
         RTRIM(vendas.vends),
-        RTRIM(consultora.rclis)
+        RTRIM(consultora.rclis),
+        estoque_atual.Estoque_Total,
+        clientes.nascs
     ORDER BY RTRIM(grp.dgrus), YEAR(vendas.datas) DESC, MONTH(vendas.datas) DESC, CAST(vendas.datas AS DATE) DESC 
     """
 

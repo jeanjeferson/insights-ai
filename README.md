@@ -47,6 +47,18 @@ insights-ai/
 
 ---
 
+## 📚 Documentação
+
+### 📋 **Documentação Completa das Ferramentas**
+Consulte [`docs/tools/`](./docs/tools/README.md) para documentação detalhada de todas as ferramentas, incluindo:
+- 🎯 Objetivos e casos de uso
+- 🔧 Parâmetros e configurações
+- 📊 Interpretação de resultados
+- ⚠️ Troubleshooting e soluções
+- 💡 Exemplos práticos
+
+---
+
 ## 🛠️ Ferramentas Disponíveis
 
 ### 🔧 Ferramentas Principais

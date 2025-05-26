@@ -1,6 +1,6 @@
 from crewai.tools import BaseTool
 from typing import Type, Optional, Dict, Any, List, Union
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
@@ -40,25 +40,29 @@ class BusinessIntelligenceToolInput(BaseModel):
         - 'sales_team_analysis': Performance individual e coletiva de vendedores
         - 'comprehensive_report': Relatório executivo integrado completo
         """,
-        example="executive_summary"
+        json_schema_extra={"example": "executive_summary"}
     )
     
     data_csv: str = Field(
         default="data/vendas.csv", 
         description="Caminho para arquivo CSV de vendas. Use 'data/vendas.csv' para dados principais.",
-        example="data/vendas.csv"
+        json_schema_extra={"example": "data/vendas.csv"}
     )
     
     time_period: str = Field(
         default="last_12_months", 
         description="Período de análise: 'last_month' (30 dias), 'last_quarter' (90 dias), 'last_12_months' (365 dias), 'ytd' (ano atual).",
-        pattern="^(last_month|last_quarter|last_12_months|ytd)$"
+        json_schema_extra={
+            "pattern": "^(last_month|last_quarter|last_12_months|ytd)$"
+        }
     )
     
     output_format: str = Field(
         default="interactive", 
         description="Formato de saída: 'text' (texto), 'interactive' (JSON estruturado), 'html' (relatório web).",
-        pattern="^(text|interactive|html)$"
+        json_schema_extra={
+            "pattern": "^(text|interactive|html)$"
+        }
     )
     
     include_forecasts: bool = Field(
@@ -69,7 +73,9 @@ class BusinessIntelligenceToolInput(BaseModel):
     detail_level: str = Field(
         default="summary", 
         description="Nível de detalhamento: 'summary' (resumido), 'detailed' (completo).",
-        pattern="^(summary|detailed)$"
+        json_schema_extra={
+            "pattern": "^(summary|detailed)$"
+        }
     )
     
     export_file: bool = Field(
@@ -77,7 +83,8 @@ class BusinessIntelligenceToolInput(BaseModel):
         description="Salvar arquivo de saída. Recomendado: True para relatórios executivos."
     )
     
-    @validator('analysis_type')
+    @field_validator('analysis_type')
+    @classmethod
     def validate_analysis_type(cls, v):
         valid_types = [
             'executive_summary', 'executive_dashboard', 'financial_analysis', 

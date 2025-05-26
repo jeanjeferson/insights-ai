@@ -85,6 +85,15 @@ class DataPreparationMixin:
             "strict": ['Data', 'Total_Liquido', 'Quantidade', 'Codigo_Produto']
         }
         
+        # Verificar se há campos de cliente (opcional mas útil para logs)
+        customer_fields = ['Codigo_Cliente', 'cliente_id', 'customer_id', 'id_cliente']
+        has_customer_field = any(col in df.columns for col in customer_fields)
+        if has_customer_field:
+            customer_col = next(col for col in customer_fields if col in df.columns)
+            print(f"✅ Campo de cliente encontrado: {customer_col}")
+        else:
+            print("⚠️ Nenhum campo de cliente identificado nos dados")
+        
         required_cols = essential_fields.get(validation_level, essential_fields["standard"])
         missing_cols = [col for col in required_cols if col not in df.columns]
         

@@ -1,6 +1,6 @@
 from crewai.tools import BaseTool
 from typing import Type, Optional, Dict, Any, List
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
@@ -20,19 +20,23 @@ class KPICalculatorToolInput(BaseModel):
     data_csv: str = Field(
         default="data/vendas.csv", 
         description="Caminho para arquivo CSV de vendas. Use 'data/vendas.csv' para dados principais.",
-        example="data/vendas.csv"
+        json_schema_extra={"example": "data/vendas.csv"}
     )
     
     categoria: str = Field(
         default="all", 
         description="Categoria de KPIs: 'all' (completo), 'revenue' (financeiros), 'operational' (operacionais), 'inventory' (estoque), 'customer' (clientes), 'products' (produtos).",
-        pattern="^(all|revenue|operational|inventory|customer|products)$"
+        json_schema_extra={
+            "pattern": "^(all|revenue|operational|inventory|customer|products)$"
+        }
     )
     
     periodo: str = Field(
         default="monthly", 
         description="Período de análise: 'daily' (diário), 'weekly' (semanal), 'monthly' (mensal).",
-        pattern="^(daily|weekly|monthly)$"
+        json_schema_extra={
+            "pattern": "^(daily|weekly|monthly)$"
+        }
     )
     
     benchmark_mode: bool = Field(
@@ -57,7 +61,8 @@ class KPICalculatorToolInput(BaseModel):
         le=0.10
     )
     
-    @validator('categoria')
+    @field_validator('categoria')
+    @classmethod
     def validate_categoria(cls, v):
         valid_categories = ['all', 'revenue', 'operational', 'inventory', 'customer', 'products']
         if v not in valid_categories:

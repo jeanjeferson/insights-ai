@@ -20,6 +20,7 @@ dependencies = [
     "scipy>=1.11.0",
     "streamlit>=1.45.0",
     "supabase>=2.15.0",
+    "psutil>=7.0.0",
 ]
 
 [project.scripts]

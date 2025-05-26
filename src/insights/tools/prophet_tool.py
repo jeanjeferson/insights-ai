@@ -1,6 +1,6 @@
 from crewai.tools import BaseTool
 from typing import Type, Optional, Dict, Any
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 import pandas as pd
 from prophet import Prophet
 import json
@@ -16,19 +16,19 @@ class ProphetForecastInput(BaseModel):
     data_path: str = Field(
         ...,
         description="Caminho para arquivo CSV com dados históricos de vendas. Use 'data/vendas.csv' para dados principais.",
-        example="data/vendas.csv"
+        json_schema_extra={"example": "data/vendas.csv"}
     )
     
     date_column: str = Field(
         "Data",
         description="Nome da coluna contendo datas. Padrão: 'Data' (formato YYYY-MM-DD).",
-        example="Data"
+        json_schema_extra={"example": "Data"}
     )
     
     target_column: str = Field(
         "Total_Liquido",
         description="Coluna a ser prevista. Use 'Total_Liquido' para receita, 'Quantidade' para volume de vendas.",
-        example="Total_Liquido"
+        json_schema_extra={"example": "Total_Liquido"}
     )
     
     periods: int = Field(
@@ -41,13 +41,17 @@ class ProphetForecastInput(BaseModel):
     aggregation: Optional[str] = Field(
         "daily",
         description="Agregação temporal: 'daily' (diário), 'weekly' (semanal), 'monthly' (mensal).",
-        pattern="^(daily|weekly|monthly)$"
+        json_schema_extra={
+            "pattern": "^(daily|weekly|monthly)$"
+        }
     )
     
     seasonality_mode: Optional[str] = Field(
         "multiplicative",
         description="Modo sazonalidade: 'multiplicative' (padrão joalherias), 'additive' (crescimento linear).",
-        pattern="^(multiplicative|additive)$"
+        json_schema_extra={
+            "pattern": "^(multiplicative|additive)$"
+        }
     )
     
     include_holidays: Optional[bool] = Field(
@@ -62,7 +66,8 @@ class ProphetForecastInput(BaseModel):
         le=0.95
     )
     
-    @validator('target_column')
+    @field_validator('target_column')
+    @classmethod
     def validate_target_column(cls, v):
         allowed_columns = ['Total_Liquido', 'Quantidade', 'Preco_Tabela', 'Custo_Produto']
         if v not in allowed_columns:

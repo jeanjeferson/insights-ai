@@ -1,6 +1,6 @@
 from crewai.tools import BaseTool
 from typing import Type, Optional
-from pydantic import BaseModel, Field, PrivateAttr, validator
+from pydantic import BaseModel, Field, PrivateAttr, field_validator
 from langchain_community.tools import DuckDuckGoSearchRun
 import time
 import json
@@ -13,13 +13,15 @@ class DuckSearchInput(BaseModel):
         description="Termo de busca específico. Use palavras-chave relevantes para joalherias, tendências de mercado, análise competitiva ou contexto econômico.",
         min_length=3,
         max_length=200,
-        example="tendências joalherias 2024 mercado brasileiro"
+        json_schema_extra={"example": "tendências joalherias 2024 mercado brasileiro"}
     )
     
     domain: Optional[str] = Field(
         "br", 
         description="Domínio para filtrar resultados (br=Brasil, com=Global). Use 'br' para contexto local, 'com' para tendências globais.",
-        pattern="^(br|com|org|net)$"
+        json_schema_extra={
+            "pattern": "^(br|com|org|net)$"
+        }
     )
     
     max_results: Optional[int] = Field(
@@ -29,7 +31,8 @@ class DuckSearchInput(BaseModel):
         le=10
     )
     
-    @validator('query')
+    @field_validator('query')
+    @classmethod
     def validate_query(cls, v):
         if not v.strip():
             raise ValueError("Query não pode estar vazia")

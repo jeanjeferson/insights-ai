@@ -1,6 +1,6 @@
 from crewai.tools import BaseTool
 from typing import Type, Optional, Dict, Any, List, Tuple
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator
 import pandas as pd
 import numpy as np
 from scipy import stats
@@ -51,19 +51,19 @@ class StatisticalAnalysisToolInput(BaseModel):
         - 'comprehensive_customer_analysis': Análise completa de clientes com estatísticas
         - 'product_performance_analysis': Performance de produtos com testes estatísticos
         """,
-        example="correlation"
+        json_schema_extra={"example": "correlation"}
     )
     
     data_csv: str = Field(
         default="data/vendas.csv", 
         description="Caminho para arquivo CSV com dados de vendas. Use 'data/vendas.csv' para dados principais.",
-        example="data/vendas.csv"
+        json_schema_extra={"example": "data/vendas.csv"}
     )
     
     target_column: str = Field(
         default="Total_Liquido", 
         description="Coluna alvo para análise. Use 'Total_Liquido' para receita, 'Quantidade' para volume.",
-        example="Total_Liquido"
+        json_schema_extra={"example": "Total_Liquido"}
     )
     
     significance_level: float = Field(
@@ -76,7 +76,7 @@ class StatisticalAnalysisToolInput(BaseModel):
     clustering_method: str = Field(
         default="auto", 
         description="Método de clustering: 'kmeans' (rápido), 'hierarchical' (interpretável), 'dbscan' (outliers), 'auto' (otimizado).",
-        pattern="^(kmeans|hierarchical|dbscan|auto)$"
+        json_schema_extra={"pattern": "^(kmeans|hierarchical|dbscan|auto)$"}
     )
     
     min_correlation: float = Field(
@@ -108,7 +108,8 @@ class StatisticalAnalysisToolInput(BaseModel):
         le=100000
     )
     
-    @validator('analysis_type')
+    @field_validator('analysis_type')
+    @classmethod
     def validate_analysis_type(cls, v):
         valid_types = [
             'correlation', 'clustering', 'outliers', 'distribution', 'trend_analysis',
