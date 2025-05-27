@@ -1,0 +1,14 @@
+{
+  "timestamp": "2025-05-27T16:50:00.452889",
+  "alert_id": "flow_20250527_164458_memory_usage_1748375400",
+  "level": "warning",
+  "title": "Threshold Warning: memory_usage",
+  "message": "memory_usage atingiu nível de atenção: 86.7percent",
+  "flow_id": "flow_20250527_164458",
+  "metric_name": "memory_usage",
+  "threshold_value": 80.0,
+  "current_value": 86.7,
+  "context": {},
+  "resolved": false,
+  "resolved_timestamp": ""
+}

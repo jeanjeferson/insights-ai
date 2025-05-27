@@ -7,4 +7,3 @@ uv.lock
 test_logs/
 test_results/
 pytest.ini
-cache/

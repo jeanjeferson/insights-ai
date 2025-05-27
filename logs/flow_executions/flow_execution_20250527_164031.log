@@ -1,0 +1,25 @@
+2025-05-27 16:40:31 |     INFO | FLOW | setup_flow_logging:70 | 🚀 INSIGHTS-AI FLOW - LOGGING INICIADO
+2025-05-27 16:40:31 |     INFO | FLOW | setup_flow_logging:71 | 📁 Arquivo de log: logs\flow_executions\flow_execution_20250527_164031.log
+2025-05-27 16:40:31 |     INFO | FLOW | test_logging_setup:216 | Teste de logging
+2025-05-27 16:40:31 |     INFO | FLOW | __init__:198 | 🔧 Inicializando InsightsFlow...
+2025-05-27 16:40:31 |     INFO | FLOW | criar_flow_com_parametros:2208 | 🏗️ Flow criado: 2025-05-20 a 2025-05-27 (modo: completo)
+2025-05-27 16:40:31 |     INFO | FLOW | inicializar_flow:208 | 🚀 INICIANDO INSIGHTS-AI FLOW
+2025-05-27 16:40:31 |     INFO | FLOW | inicializar_flow:209 | ============================================================
+2025-05-27 16:40:31 |     INFO | FLOW | inicializar_flow:225 | ✅ Datas validadas: 2025-05-20 a 2025-05-27
+2025-05-27 16:40:31 |     INFO | FLOW | inicializar_flow:233 | 📅 Período de análise: 2025-05-20 até 2025-05-27
+2025-05-27 16:40:31 |     INFO | FLOW | inicializar_flow:234 | 🔧 Modo de execução: completo
+2025-05-27 16:40:31 |     INFO | FLOW | inicializar_flow:235 | 🆔 Flow ID: flow_20250527_164031
+2025-05-27 16:40:31 |     INFO | FLOW | inicializar_flow:243 | 🚀 Etapa 3 - Sistemas avançados inicializados
+2025-05-27 16:40:31 |     INFO | FLOW | inicializar_flow:251 | ✅ Inicialização concluída - Preparando extração de dados
+2025-05-27 16:40:31 |     INFO | FLOW | __init__:198 | 🔧 Inicializando InsightsFlow...
+2025-05-27 16:40:31 |     INFO | FLOW | criar_flow_com_parametros:2208 | 🏗️ Flow criado: 2025-04-27 a 2025-05-27 (modo: completo)
+2025-05-27 16:40:31 |     INFO | FLOW | __init__:198 | 🔧 Inicializando InsightsFlow...
+2025-05-27 16:40:31 |     INFO | FLOW | criar_flow_com_parametros:2208 | 🏗️ Flow criado: 2025-04-27 a 2025-05-27 (modo: completo)
+2025-05-27 16:40:31 |     INFO | FLOW | __init__:198 | 🔧 Inicializando InsightsFlow...
+2025-05-27 16:40:31 |     INFO | FLOW | criar_flow_com_parametros:2208 | 🏗️ Flow criado: 2025-04-27 a 2025-05-27 (modo: completo)
+2025-05-27 16:40:31 |     INFO | FLOW | __init__:198 | 🔧 Inicializando InsightsFlow...
+2025-05-27 16:40:31 |     INFO | FLOW | criar_flow_com_parametros:2208 | 🏗️ Flow criado: 2025-05-20 a 2025-05-27 (modo: completo)
+2025-05-27 16:40:31 |     INFO | FLOW | __init__:198 | 🔧 Inicializando InsightsFlow...
+2025-05-27 16:40:31 |     INFO | FLOW | criar_flow_com_parametros:2208 | 🏗️ Flow criado: 2025-05-20 a 2025-05-27 (modo: completo)
+2025-05-27 16:40:31 |     INFO | FLOW | __init__:198 | 🔧 Inicializando InsightsFlow...
+2025-05-27 16:40:31 |     INFO | FLOW | criar_flow_com_parametros:2208 | 🏗️ Flow criado: 2025-05-20 a 2025-05-27 (modo: completo)

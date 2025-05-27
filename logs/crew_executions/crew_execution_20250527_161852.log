@@ -1,0 +1,43 @@
+2025-05-27 16:18:52 |     INFO | crew_insights | setup_crew_file_logging:95 | ================================================================================
+2025-05-27 16:18:52 |     INFO | crew_insights | setup_crew_file_logging:96 | 🚀 INSIGHTS-AI CREW - LOGGING INICIADO
+2025-05-27 16:18:52 |     INFO | crew_insights | setup_crew_file_logging:97 | 📁 Arquivo de log: logs\crew_executions\crew_execution_20250527_161852.log
+2025-05-27 16:18:52 |     INFO | crew_insights | setup_crew_file_logging:98 | 🕒 Execução iniciada em: 2025-05-27 16:18:52
+2025-05-27 16:18:52 |     INFO | crew_insights | setup_crew_file_logging:99 | ================================================================================
+2025-05-27 16:18:52 |     INFO | crew_insights | __init__:162 | ✅ Sistema de logging em arquivo configurado com sucesso
+2025-05-27 16:18:52 |     INFO | crew_insights | validate_tools_setup_quiet:867 | ✅ Ferramentas validadas: 17/17 funcionando
+2025-05-27 16:18:52 |     INFO | crew_insights | setup_logging_callbacks:289 | 🔧 Configurando callbacks de monitoramento...
+2025-05-27 16:18:52 |     INFO | crew_insights | setup_logging_callbacks:293 |    • Handlers ativos: ['FileHandler', 'StreamHandler']
+2025-05-27 16:18:52 |     INFO | crew_insights | setup_logging_callbacks:296 |    • Arquivo de log: logs\crew_executions\crew_execution_20250527_161852.log
+2025-05-27 16:18:52 |     INFO | crew_insights | _log_system_info:262 | 🖥️ INFORMAÇÕES DO SISTEMA:
+2025-05-27 16:18:52 |     INFO | crew_insights | _log_system_info:263 |    • OS: Windows 11
+2025-05-27 16:18:52 |     INFO | crew_insights | _log_system_info:264 |    • Python: 3.12.10
+2025-05-27 16:18:52 |     INFO | crew_insights | _log_system_info:265 |    • Working Directory: C:\Users\jean.moura\Documents\Python\CrewAI\insights-ai
+2025-05-27 16:18:52 |     INFO | crew_insights | _log_system_info:266 |    • Process ID: 29516
+2025-05-27 16:18:52 |     INFO | crew_insights | _log_system_info:270 | 🔑 VARIÁVEIS DE AMBIENTE:
+2025-05-27 16:18:52 |  WARNING | crew_insights | _log_system_info:280 |    • INSIGHTS_DEBUG: NÃO DEFINIDA
+2025-05-27 16:18:52 |     INFO | crew_insights | _log_system_info:276 |    • OPENROUTER_API_KEY: sk-or-v1...a957
+2025-05-27 16:18:52 |     INFO | crew_insights | _log_system_info:282 | --------------------------------------------------
+2025-05-27 16:18:52 |     INFO | crew_insights | engenheiro_dados:378 | 🔧 Inicializando Engenheiro de Dados...
+2025-05-27 16:18:52 |     INFO | crew_insights | engenheiro_dados_task:616 | 📋 Configurando Task: Engenheiro de Dados
+2025-05-27 16:18:52 |     INFO | crew_insights | crew:776 | 🚀 Configurando Crew com logging avançado...
+2025-05-27 16:18:52 |     INFO | crew_insights | before_kickoff:188 | 🚀 INICIANDO INSIGHTS-AI OTIMIZADO
+2025-05-27 16:18:52 |     INFO | crew_insights | before_kickoff:189 | ============================================================
+2025-05-27 16:18:52 |     INFO | crew_insights | before_kickoff:190 | 📅 Data/Hora: 2025-05-27 16:18:52
+2025-05-27 16:18:52 |     INFO | crew_insights | before_kickoff:191 | 📋 Inputs recebidos: {'data_inicio': '2021-05-28', 'data_fim': '2025-05-27'}
+2025-05-27 16:18:52 |     INFO | crew_insights | before_kickoff:192 | 📁 Log sendo salvo em: logs\crew_executions\crew_execution_20250527_161852.log
+2025-05-27 16:18:52 |     INFO | crew_insights | before_kickoff:193 | ============================================================
+2025-05-27 16:18:52 |     INFO | crew_insights | before_kickoff:200 | 📅 Período de análise: 2021-05-28 até 2025-05-27
+2025-05-27 16:18:52 |     INFO | crew_insights | before_kickoff:206 | ✅ Formato de datas validado com sucesso
+2025-05-27 16:18:52 |     INFO | crew_insights | before_kickoff:213 | 🔧 VALIDANDO FERRAMENTAS CRÍTICAS:
+2025-05-27 16:18:52 |     INFO | crew_insights | before_kickoff:223 |    ✅ sql_tool carregada - Tipo: SQLServerQueryTool
+2025-05-27 16:18:52 |     INFO | crew_insights | before_kickoff:223 |    ✅ prophet_tool carregada - Tipo: ProphetForecastTool
+2025-05-27 16:18:52 |     INFO | crew_insights | before_kickoff:223 |    ✅ stats_tool carregada - Tipo: StatisticalAnalysisTool
+2025-05-27 16:18:52 |     INFO | crew_insights | before_kickoff:223 |    ✅ bi_tool carregada - Tipo: BusinessIntelligenceTool
+2025-05-27 16:18:52 |     INFO | crew_insights | before_kickoff:228 | 📊 Status geral: 4/4 ferramentas críticas funcionando
+2025-05-27 16:18:52 |     INFO | crew_insights | before_kickoff:231 | 📊 PREPARANDO EXTRAÇÃO DE DADOS:
+2025-05-27 16:18:52 |     INFO | crew_insights | before_kickoff:234 |    🔄 Modo: Extração com filtro temporal 2021-05-28 a 2025-05-27
+2025-05-27 16:18:52 |     INFO | crew_insights | before_kickoff:235 |    📋 Dados serão extraídos pelo agente usando os inputs fornecidos
+2025-05-27 16:18:52 |     INFO | crew_insights | before_kickoff:246 | ============================================================
+2025-05-27 16:18:52 |     INFO | crew_insights | before_kickoff:247 | ⏱️ SETUP CONCLUÍDO em 0.03 segundos
+2025-05-27 16:18:52 |     INFO | crew_insights | before_kickoff:248 | 🚀 INICIANDO EXECUÇÃO DO CREW...
+2025-05-27 16:18:52 |     INFO | crew_insights | before_kickoff:249 | ============================================================

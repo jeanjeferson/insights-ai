@@ -1,0 +1,14 @@
+{
+  "timestamp": "2025-05-27T16:06:30.231838",
+  "alert_id": "stress_flow_5_stress_metric_1748372790",
+  "level": "warning",
+  "title": "Stress Alert 5",
+  "message": "Alert gerado durante teste de stress 5",
+  "flow_id": "stress_flow_5",
+  "metric_name": "stress_metric",
+  "threshold_value": 25.0,
+  "current_value": 5.0,
+  "context": {},
+  "resolved": false,
+  "resolved_timestamp": ""
+}

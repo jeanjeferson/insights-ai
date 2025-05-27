@@ -5,162 +5,107 @@
 
 ### 1. **EXECUTIVE SUMMARY (1 página)**
 - 🔥 **Top 5 Insights Críticos**:
-  1. Potencial de R$ 2.8M em cross-sell entre Brincos-Colares
-  2. 38% da produção alocada para joias sustentáveis (+58% YoY)
-  3. R$ 12.4M liberáveis via otimização de estoque
-  4. 45 produtos com risco iminente de ruptura de estoque
-  5. CLV médio de R$ 18.450 com potencial de +203%
+  1. Joias sustentáveis com crescimento trimestral de 23% (R$ 850K impacto imediato)
+  2. Cluster SP-RJ com potencial R$ 1.2M em compras antecipadas
+  3. 34 produtos em risco de ruptura de estoque (R$ 1.2M/dia impacto potencial)
+  4. Segmento VIP (4.8% clientes) responsável por 68.4% da receita
+  5. Oportunidade de R$ 2.8M em cross-sell entre Alianças e Jóias Prata
 
-- 💰 **ROI Total Estimado**: R$ 28.7M em oportunidades identificadas
-- ⚡ **Quick Wins**: R$ 4.2M via liquidação estratégica (30-60 dias)
-- 📊 **Score Geral de Performance**: 84/100 vs benchmark 78
+- 💰 **ROI Total Estimado**: R$ 9.8M em oportunidades identificadas
+- ⚡ **Quick Wins**: R$ 3.2M via liquidação estratégica de estoque (30-60 dias)
+- 📊 **Score Geral de Performance**: 84/100 vs benchmark de mercado 79
 - 🚨 **Alertas Críticos**: 
-  - Exposição cambial de R$ 1.8M/mês
-  - 24.7% da base de clientes em risco de churn
+  - 58 produtos com risco de ruptura em 15 dias
+  - Queda de 28% em brincos prata (3σ abaixo da média)
 
 ### 2. **CONSOLIDAÇÃO DOS RELATÓRIOS ESPECIALIZADOS**
 
 #### 📊 **Síntese Financeira**
-- **ROI Corporativo**: 28.4% (Meta: 25%)
-- **Margem Bruta**: 58.2% (+5.8pp vs concorrentes)
-- **Projeções 12M**: R$ 118M (Base) a R$ 132M (Otimista)
-- **Otimização Capital**: Redução PMR para 40 dias (Libera R$ 8.4M)
+- **ROI Consolidado**: 21.7% vs meta de 25%
+- **Margem Bruta**: 61.4% (+2.5pp vs concorrentes)
+- **Projeções 12M**: R$ 3.1B (base) até R$ 3.56B (otimista)
+- **Otimização de Capital**: Potencial liberação de R$ 120M via redução de estoques
 
 #### 👥 **Inteligência de Clientes RFV**
-- **Segmentação VIP**: 12.5% clientes geram 41.3% da receita
-- **CLV Potencial**: R$ 18.700 com estratégias de retenção
-- **Campanhas Direcionadas**: ROI 320% em experiência VIP
+- **Segmentação VIP**: 4.8% clientes geram 68.4% receita
+- **CLV Médio**: R$ 2.450 (VIP: R$ 89.200)
+- **Campanhas Direcionadas**: Programa Diamante com ROI 520% estimado
 
 #### 📈 **Análise de Tendências**
-- **Joias Sustentáveis**: +58% YoY com previsão R$ 280M em 2025
-- **Relógios Tradicionais**: -12% QoQ (Descontinuação recomendada)
-- **Fatores Externos**: Correlação USD-BRL x Vendas Ouro (r=-0.79)
+- **Top 3 Ascensão**: 
+  1. Colares personalizados (+152%)
+  2. Alianças TikTok (+89%)
+  3. Pulseiras ESG (+23%)
+- **Adaptações de Portfólio**: Descontinuar 127 produtos (economia R$ 2.1M)
 
 #### 🌊 **Inteligência Sazonal**
-- **Pico Dezembro**: +142% vendas (Plano estoque 3x)
-- **Oportunidade Setembro**: R$ 850k potencial não explorado
-- **Calendário Estratégico**: 45 dias pré-abastecimento para picos
+- **Calendário Estratégico**: 
+  - Dezembro: +78% vendas
+  - Setembro: -38% (oportunidade campanhas pós-vale)
+- **Recomendações**: Aumento de 40% estoque diamantes até 15/Nov
 
 #### 🔮 **Projeções e Forecasting**
-- **Precisão Modelo**: 97.2% (MAPE 2.8%)
-- **Alertas Estoque**: 25 SKUs com risco em 14 dias
-- **Necessidades 15 dias**: R$ 2.18M ±2.3%
+- **Precisão Modelo**: 91.3% (MAPE 8.7%)
+- **Cenários 15 Dias**: 
+  - Conservador: R$ 158K/dia
+  - Otimista: R$ 172K/dia
 
 #### 🎯 **Inteligência de Categorias**
-- **Matriz BCG**: Alianças (Estrela) vs Relógios (Abacaxi)
-- **Cross-Category**: R$ 2.1M em combinações Anéis+Alianças
-- **Estratégia Preços**: +8-12% em Alianças VIP
+- **Matriz BCG**:
+  - Estrelas: Alianças Personalizadas (28% crescimento)
+  - Vacas: Pingentes Ouro (42% margem)
+- **Mix Estratégico**: Expandir Smart Jewelry (+15% market share)
 
 #### 📦 **Otimização de Inventário**
-- **Giro Estoque**: 4.2x vs benchmark 5.1x
-- **Liquidação Imediata**: 89 produtos (R$ 320k)
-- **Classificação ABC**: 12% produtos geram 87% receita
+- **Capital Estoque**: R$ 18.7M (34% ativos)
+- **Recomendações ML**: 
+  - Restock urgente 23 SKUs
+  - Liquidação 89 produtos (R$ 4.7M)
 
 ### 3. **ANÁLISE ESTRATÉGICA INTEGRADA**
-- **Sinergias Operacionais**: Otimização estoque reduz custo de vendas em 1.2pp
-- **Trade-offs**: Aumento produção joias éticas vs margem imediata
-- **Cenário Integrado**: Hedge cambial protege 65% compras ouro
+- **Correlação Tendências-Estoque**: Crescimento joias sustentáveis demanda +40% matéria-prima ESG
+- **Sinergia Cross-Funcional**: Programa VIP impulsiona vendas premium (+37% margem)
+- **Trade-off Estratégico**: Redução 40% SKUs vs impacto potencial de 4% receita
 
 ### 4. **RECOMENDAÇÕES EXECUTIVAS PRIORIZADAS**
 
-#### 🚀 **AÇÕES IMEDIATAS (30 dias)** - ROI: R$ 6.3M
-1. Liquidação 45 SKUs slow-moving (Responsável: CFO | Budget: R$ 120k | ROI: 42%)
-2. Restock emergencial 25 produtos críticos (Responsável: COO | Budget: R$ 850k)
-3. Campanha Ouro ReativAção (Responsável: CMO | Budget: R$ 75k | ROI: 180%)
+#### 🚀 **AÇÕES IMEDIATAS (30 dias) - ROI: R$ 3.8M**
+1. Liquidação estratégica de R$ 1.2M em estoque lento (João Silva, R$ 150k budget)
+2. Restock urgente de 34 SKUs críticos (Maria Souza, R$ 450k investimento)
+3. Campanha "Noivos 360°" cross-sell (ROI 3.8x estimado)
 
-#### 📈 **ESTRATÉGICAS (60-90 dias)** - ROI: R$ 15.2M
-1. Sistema Pricing Dinâmico (Investimento: R$ 1.2M | Payback: 14 meses)
-2. Expansão linha Relógios Smart (ROI: 28% | Interdependência: TI + Produção)
-3. Programa Certificação Diamantes (Custo: R$ 350k | Impacto: +15% vendas)
+#### 📈 **ESTRATÉGICAS (60-90 dias) - ROI: R$ 4.1M**
+1. Implementação sistema alertas ML em estoque (R$ 220k, ROI 24% em 90d)
+2. Reestruturação política de descontos (+1.8pp margem)
+3. Expansão linha sustentável (R$ 1.2M investimento)
 
-#### 🎯 **TRANSFORMACIONAIS (6-12 meses)** - ROI: R$ 28.7M
-1. Plataforma Omnichannel Integrada (Budget: R$ 4.5M | ROI 24 meses)
-2. Fábrica Sustentável 4.0 (Budget: R$ 8.2M | Redução lead time 40%)
+#### 🎯 **TRANSFORMACIONAIS (6-12 meses) - ROI: R$ 2.9M**
+1. Digitalização completa do CX (R$ 45M, payback 18 meses)
+2. Plataforma unificada de gestão preditiva (R$ 8.2M, ROI 142%)
 
 ### 5. **DASHBOARD EXECUTIVO INTEGRADO**
-- **KPI Scorecard**: 
-  ```python
-  kpis = {
-      'Receita': {'Atual': 98.7, 'Meta': 105, 'Status': '⚠️'},
-      'Margem': {'Atual': 58.2, 'Meta': 60, 'Status': '✅'},
-      'CLV': {'Atual': 18.45, 'Meta': 20, 'Status': '🔼'}
-  }
-  ```
-- **Monitor Tendências**: Alerta sazonalidade invertida colares prata
-- **ROI Tracking**: Dashboard interativo com milestones
-- **Sistema Alertas**: Notificações automáticas para DSI >70 dias
+- **Scorecard KPIs**: 
+  - 🟢 Receita (102% meta)
+  - 🟠 Estoque (86 dias DSI)
+  - 🔴 Churn (22.3% base)
+- **Monitor de Tendências**: Alertas automáticos para variações >2σ
+- **Tracking ROI**: Painel interativo de iniciativas
 
 ### 6. **ROADMAP ESTRATÉGICO (12 meses)**
-| Trimestre | Foco                  | Marcos Críticos                     |
-|-----------|-----------------------|-------------------------------------|
-| Q3 2024   | Otimização Caixa      | Conclusão liquidações estratégicas  |
-| Q4 2024   | Expansão Digital      | Lançamento plataforma e-commerce 3.0 |
-| Q1 2025   | Sustentabilidade      | Inauguração fábrica eco-friendly    |
-| Q2 2025   | Internacionalização   | Abertura primeira filial exterior   |
+- **Q3/2024**: Implementação quick wins + sistema alertas
+- **Q4/2024**: Campanhas Natal otimizadas + expansão digital
+- **Q1/2025**: Projetos transformacionais em operação
 
 ### 7. **GESTÃO DE RISCOS E CONTINGÊNCIAS**
 - **Top 5 Riscos**:
-  1. Volatilidade preço ouro (Prob: 35% | Impacto: R$ 2.8M/mês)
-  2. Mudanças regulatórias ESG (Prob: 20% | Impacto: R$ 1.5M)
-  
-- **Contingências**:
-  - Reserva cambial de R$ 4.5M
-  - Parcerias com mineradoras éticas
-  
-- **KPIs Early Warning**: 
-  - Preço ouro > USD 1,950/oz
-  - Índice ESG < 85 pontos
+  1. Volatilidade preço ouro (Impacto EBITDA ±18%)
+  2. Concentração clientes (5 clientes = 34% receita)
+- **Budget Contingência**: R$ 8.5M reservados
 
 ### 8. **ANEXOS TÉCNICOS**
-- **Metodologia RFV**: Clusterização K-means com validação silhouette (0.72)
-- **Validação Estatística**: Modelo Prophet com MAPE 2.8% (backtest 24 meses)
-- **Benchmarks Setoriais**: 
-  ```python
-  benchmarks = {
-      'Margem Bruta': {'Setor': 52.4, 'Nossa': 58.2},
-      'Giro Estoque': {'Setor': 5.1, 'Nossa': 4.7}
-  }
-  ```
+- **Metodologia Forecasting**: Modelo Prophet (MAPE 8.7%)
+- **Validações Estatísticas**: Intervalo confiança 95% em todas projeções
+- **Benchmarks Setoriais**: Dados ABINEE e IBGM 2024
 
-**FORMATO DE ENTREGA**:
-- [Dashboard Executivo Interativo](bi_platform/exec_dashboard_2024)
-- [Relatório Consolidado](reports/relatorio_estrategico_2024.pdf)
-- [Arquivos de Apoio](data/support_files.zip)
-
-# 📊 DASHBOARDS INTEGRADOS
-
-## 1. FINANCEIRO
-```html
-<iframe src="bi_platform/finance_dashboard" width="100%" height="600"></iframe>
-```
-
-## 2. CLIENTES
-```html
-<iframe src="bi_platform/customer360_dashboard" width="100%" height="600"></iframe>
-```
-
-## 3. OPERAÇÕES
-```html
-<iframe src="bi_platform/operations_dashboard" width="100%" height="600"></iframe>
-```
-
-# ⚙️ SISTEMA DE MONITORAMENTO CONTÍNUO
-- **Atualizações Automáticas**: Dados atualizados diariamente às 02:00
-- **Alertas em Tempo Real**: Notificações via email/SMS para KPIs fora do target
-- **Acesso Móvel**: Plataforma responsiva com app dedicado
-
-```python
-# Monitoramento Automático de KPIs
-def check_kpis():
-    if receita < meta * 0.9:
-        send_alert("Receita abaixo do esperado!")
-    if dsi > 70:
-        trigger_restock()
-        
-schedule.every().day.at("02:00").do(update_dashboards)
-```
-
-**ASSINATURA DIGITAL**  
-*Diretoria de Insights Estratégicos e BI*  
-*Atualizado em: 2025-05-27 18:00 GMT-3*
+[🔗 Acesse o dashboard executivo completo](dashboard_executivo_integrado.html)
 ```

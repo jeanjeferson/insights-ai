@@ -1,0 +1,46 @@
+2025-05-27 15:43:20 |     INFO | FLOW | setup_flow_logging:68 | 🚀 INSIGHTS-AI FLOW - LOGGING INICIADO
+2025-05-27 15:43:20 |     INFO | FLOW | setup_flow_logging:69 | 📁 Arquivo de log: logs\flow_executions\flow_execution_20250527_154320.log
+2025-05-27 15:43:20 |     INFO | FLOW | __init__:174 | 🔧 Inicializando InsightsFlow...
+2025-05-27 15:43:20 |     INFO | FLOW | criar_flow_com_parametros:942 | 🏗️ Flow criado: 2025-01-20 a 2025-01-27 (modo: completo)
+2025-05-27 15:43:20 |     INFO | FLOW | inicializar_flow:184 | 🚀 INICIANDO INSIGHTS-AI FLOW
+2025-05-27 15:43:20 |     INFO | FLOW | inicializar_flow:185 | ============================================================
+2025-05-27 15:43:20 |     INFO | FLOW | inicializar_flow:201 | ✅ Datas validadas: 2025-01-20 a 2025-01-27
+2025-05-27 15:43:20 |     INFO | FLOW | inicializar_flow:209 | 📅 Período de análise: 2025-01-20 até 2025-01-27
+2025-05-27 15:43:20 |     INFO | FLOW | inicializar_flow:210 | 🔧 Modo de execução: completo
+2025-05-27 15:43:20 |     INFO | FLOW | inicializar_flow:211 | 🆔 Flow ID: flow_20250527_154320
+2025-05-27 15:43:20 |     INFO | FLOW | inicializar_flow:216 | ✅ Inicialização concluída - Preparando extração de dados
+2025-05-27 15:43:20 |     INFO | FLOW | extrair_e_processar_dados:225 | 🔧 INICIANDO EXTRAÇÃO DE DADOS
+2025-05-27 15:43:20 |     INFO | FLOW | extrair_e_processar_dados:226 | ----------------------------------------
+2025-05-27 15:43:20 |     INFO | FLOW | extrair_e_processar_dados:243 | 🏗️ Criando crew do Engenheiro de Dados...
+2025-05-27 15:43:20 |     INFO | FLOW | extrair_e_processar_dados:255 | 📊 Executando extração com inputs: {'data_inicio': '2025-01-20', 'data_fim': '2025-01-27'}
+2025-05-27 15:45:03 |     INFO | FLOW | extrair_e_processar_dados:291 | ✅ EXTRAÇÃO CONCLUÍDA em 102.42s
+2025-05-27 15:45:03 |     INFO | FLOW | extrair_e_processar_dados:292 | 📊 Qualidade dos dados: 88.0/100
+2025-05-27 15:45:03 |     INFO | FLOW | extrair_e_processar_dados:293 | 📁 Total de registros: 25000
+2025-05-27 15:45:03 |     INFO | FLOW | validar_resultado_extracao:320 | 🔍 Validando resultado da extração...
+2025-05-27 15:45:03 |     INFO | FLOW | validar_resultado_extracao:325 | ✅ Dados com qualidade adequada - Prosseguindo com análises
+2025-05-27 15:45:03 |     INFO | FLOW | executar_analise_tendencias:401 | 📈 INICIANDO ANÁLISE DE TENDÊNCIAS
+2025-05-27 15:45:03 |     INFO | FLOW | executar_analise_tendencias:402 | ----------------------------------------
+2025-05-27 15:45:03 |     INFO | FLOW | executar_analise_tendencias:418 | 🏗️ Criando crew do Analista de Tendências...
+2025-05-27 15:45:03 |     INFO | FLOW | executar_analise_tendencias:432 | 📊 Executando análise de tendências com inputs: {'data_inicio': '2025-01-20', 'data_fim': '2025-01-27', 'qualidade_dados': {'total_registros': 25000, 'completude_percent': 95.0, 'consistencia_percent': 92.0, 'score_confiabilidade': 88.0, 'anomalias_detectadas': 3, 'gaps_temporais': 1}, 'focus': 'tendencias_mercado'}
+2025-05-27 15:46:41 |     INFO | FLOW | executar_analise_tendencias:464 | ✅ ANÁLISE DE TENDÊNCIAS CONCLUÍDA em 97.77s
+2025-05-27 15:46:41 |     INFO | FLOW | executar_analise_tendencias:465 | 📊 Confidence Score: 90.0/100
+2025-05-27 15:46:41 |     INFO | FLOW | executar_analise_sazonalidade:491 | 🌊 INICIANDO ANÁLISE DE SAZONALIDADE
+2025-05-27 15:46:41 |     INFO | FLOW | executar_analise_sazonalidade:492 | ----------------------------------------
+2025-05-27 15:46:41 |     INFO | FLOW | executar_analise_sazonalidade:508 | 🏗️ Criando crew do Analista de Sazonalidade...
+2025-05-27 15:46:41 |     INFO | FLOW | executar_analise_sazonalidade:522 | 📊 Executando análise de sazonalidade com inputs: {'data_inicio': '2025-01-20', 'data_fim': '2025-01-27', 'qualidade_dados': {'total_registros': 25000, 'completude_percent': 95.0, 'consistencia_percent': 92.0, 'score_confiabilidade': 88.0, 'anomalias_detectadas': 3, 'gaps_temporais': 1}, 'focus': 'padroes_sazonais'}
+2025-05-27 15:46:41 |    ERROR | FLOW | executar_analise_sazonalidade:563 | ❌ Erro na análise de sazonalidade: 'CrewBase(Insights)' object has no attribute 'analista_sazonalidade'
+2025-05-27 15:46:41 |     INFO | FLOW | executar_analise_segmentos:581 | 👥 INICIANDO ANÁLISE DE SEGMENTOS
+2025-05-27 15:46:41 |     INFO | FLOW | executar_analise_segmentos:582 | ----------------------------------------
+2025-05-27 15:46:41 |     INFO | FLOW | executar_analise_segmentos:598 | 🏗️ Criando crew do Analista de Segmentação...
+2025-05-27 15:46:41 |     INFO | FLOW | executar_analise_segmentos:612 | 📊 Executando análise de segmentos com inputs: {'data_inicio': '2025-01-20', 'data_fim': '2025-01-27', 'qualidade_dados': {'total_registros': 25000, 'completude_percent': 95.0, 'consistencia_percent': 92.0, 'score_confiabilidade': 88.0, 'anomalias_detectadas': 3, 'gaps_temporais': 1}, 'focus': 'segmentacao_clientes'}
+2025-05-27 15:46:41 |    ERROR | FLOW | executar_analise_segmentos:653 | ❌ Erro na análise de segmentos: 'CrewBase(Insights)' object has no attribute 'analista_segmentacao'
+2025-05-27 15:46:41 |     INFO | FLOW | preparar_analises_paralelas:839 | 🚀 PREPARANDO ANÁLISES PARALELAS
+2025-05-27 15:46:41 |     INFO | FLOW | preparar_analises_paralelas:840 | ----------------------------------------
+2025-05-27 15:46:41 |     INFO | FLOW | preparar_analises_paralelas:858 | 📊 Análises habilitadas: 6
+2025-05-27 15:46:41 |     INFO | FLOW | preparar_analises_paralelas:860 |    ✅ Analise Tendencias
+2025-05-27 15:46:41 |     INFO | FLOW | preparar_analises_paralelas:860 |    ✅ Analise Sazonalidade
+2025-05-27 15:46:41 |     INFO | FLOW | preparar_analises_paralelas:860 |    ✅ Analise Segmentos
+2025-05-27 15:46:41 |     INFO | FLOW | preparar_analises_paralelas:860 |    ✅ Analise Inventario
+2025-05-27 15:46:41 |     INFO | FLOW | preparar_analises_paralelas:860 |    ✅ Analise Financeira
+2025-05-27 15:46:41 |     INFO | FLOW | preparar_analises_paralelas:860 |    ✅ Analise Clientes
+2025-05-27 15:46:41 |     INFO | FLOW | preparar_analises_paralelas:873 | ✅ Preparação concluída - Iniciando análises paralelas

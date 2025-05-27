@@ -1,0 +1,3 @@
+2025-05-27 16:12:12 |     INFO | FLOW | setup_flow_logging:70 | 🚀 INSIGHTS-AI FLOW - LOGGING INICIADO
+2025-05-27 16:12:12 |     INFO | FLOW | setup_flow_logging:71 | 📁 Arquivo de log: logs\flow_executions\flow_execution_20250527_161212.log
+2025-05-27 16:12:12 |     INFO | FLOW | __init__:181 | 🔧 Inicializando InsightsFlow...

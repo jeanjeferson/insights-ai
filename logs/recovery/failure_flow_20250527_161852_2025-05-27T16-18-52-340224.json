@@ -1,0 +1,9 @@
+{
+  "timestamp": "2025-05-27T16:18:52.340224",
+  "flow_id": "flow_20250527_161852",
+  "failure_type": "FailureType.UNKNOWN_ERROR",
+  "error_message": "Checkpoint failed: 'StateWithId' object does not support item assignment",
+  "stack_trace": "Traceback (most recent call last):\n  File \"C:\\Users\\jean.moura\\Documents\\Python\\CrewAI\\insights-ai\\src\\insights\\flow_main.py\", line 2345, in criar_checkpoint_completo\n    self.monitoring_system.collect_metric(\n  File \"C:\\Users\\jean.moura\\Documents\\Python\\CrewAI\\insights-ai\\src\\insights\\flow_monitoring.py\", line 192, in collect_metric\n    self.current_flows[flow_id][\"last_activity\"] = time.time()\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\nTypeError: 'StateWithId' object does not support item assignment\n",
+  "recovery_attempts": 0,
+  "context": {}
+}

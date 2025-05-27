@@ -1,0 +1,22 @@
+{
+  "timestamp": "2025-05-27T16:18:52.338742",
+  "flow_id": "flow_20250527_161852",
+  "estado_atual": "validacao_inputs",
+  "analises_concluidas": [],
+  "analises_em_execucao": [],
+  "dados_estado": {
+    "flow_id": "flow_20250527_161852",
+    "fase_atual": "validacao_inputs",
+    "inicio_execucao": "",
+    "nivel_recovery": "complete",
+    "analise_tendencias": {},
+    "analise_sazonalidade": {},
+    "analise_segmentos": {},
+    "analise_projecoes": {},
+    "crews_cache": {},
+    "arquivos_gerados": [],
+    "metricas_performance": {}
+  },
+  "checksum": "db4d6d0029e354a8970d9b71b7e8f3fd145b2def7c3132bd16fb5d5fb2d7e84b",
+  "versao_recovery": "3.0"
+}

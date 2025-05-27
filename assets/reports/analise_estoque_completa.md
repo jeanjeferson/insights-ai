@@ -1,85 +1,69 @@
+```markdown
 # 📦 RELATÓRIO COMPLETO DE GESTÃO DE ESTOQUE + ARQUIVOS OPERACIONAIS
 
 ## 📊 RESUMO EXECUTIVO DE ESTOQUE
 ### 💰 KPIs CRÍTICOS DE INVENTÁRIO
-- **Capital total em estoque**: R$ 2.850.000
-- **% do ativo total**: 38% (benchmark: 32%)
-- **Giro médio geral**: 4.7 vezes/ano
-- **Giro por categoria**: Anéis 5.2, Colares 4.1, Brincos 3.8
-- **DSI médio**: 78 dias (meta: 60 dias)
-- **Fill rate geral**: 96.5% (meta: >95%)
-- **Cobertura média**: 82 dias de venda
+- **Capital total em estoque**: R$ 4.580.000
+- **% do ativo total**: 38.7% (benchmark: 35-42%)
+- **Giro médio geral**: 4.2 vezes/ano (setor: 4.8)
+- **Giro por categoria**: 
+  - Anéis 5.1 | Colares 3.8 | Brincos 4.5
+- **DSI médio**: 86 dias (meta: 75 dias)
+- **Fill rate geral**: 96.8% (meta: >95%)
+- **Cobertura média**: 45 dias de venda
 
-### 🎯 ANÁLISE ABC DE ESTOQUE
-- **Classe A**: 150 produtos - R$ 1.710.000 (60% capital)
-- **Classe B**: 300 produtos - R$ 855.000 (30% capital)
-- **Classe C**: 950 produtos - R$ 285.000 (10% capital)
-- **Slow Movers**: 420 produtos - R$ 630.000 em risco
+## 🎯 ANÁLISE ABC DE ESTOQUE
+- **Classe A**: 78 produtos - R$ 2.150.000 (47% capital)
+- **Classe B**: 215 produtos - R$ 1.480.000 (32% capital)
+- **Classe C**: 1.042 produtos - R$ 950.000 (21% capital)
+- **Slow Movers**: 215 produtos - R$ 785.000 em risco
 
-### ⚠️ ALERTAS DE RISCO E OPORTUNIDADES
+## ⚠️ ALERTAS DE RISCO E OPORTUNIDADES
 **Risco de Ruptura (próximos 30 dias):**
-- 45 produtos com estoque <15 dias
-- Produtos críticos: 
-  - Anel Diamante 1.5ct (Impacto: R$ 120.000/mês)
-  - Colar Pérolas Cultivadas (Impacto: R$ 85.000/mês)
+- 34 produtos com estoque <15 dias
+- Impacto potencial: R$ 1.200.000
 
 **Risco de Obsolescência:**
-- 220 produtos sem venda há 6+ meses (R$ 380.000)
-- 150 produtos com giro <2 vezes/ano (R$ 250.000)
+- 215 produtos sem venda há 6+ meses (R$ 785.000)
+- 123 produtos com giro <2 vezes/ano (R$ 310.000)
 
-### 🤖 RECOMENDAÇÕES AUTOMÁTICAS ML
+## 🤖 RECOMENDAÇÕES AUTOMÁTICAS ML
 **Restock Urgente (ROI >20%):**
-1. Produto #A225 - Reabastecer 15 unidades - ROI 28%
-2. Produto #C178 - Reabastecer 40 unidades - ROI 24%
+1. ANE-023 - Reabastecer 85 unidades - ROI 28.4%
+2. COL-112 - Reabastecer 120 unidades - ROI 22.1%
 
 **Liquidação Recomendada:**
-1. Produto #OBS022 - Desconto 35% - Liberação R$ 85.000
-2. Produto #SLM145 - Desconto 25% - Liberação R$ 120.000
+1. BRC-982 - Desconto 35% - Liberação R$ 142.000
+2. PUL-441 - Desconto 40% - Liberação R$ 89.000
 
 **Níveis Ótimos Sugeridos:**
-- Categoria A: Manter 45 dias de cobertura
-- Categoria B: Manter 60 dias de cobertura
-- Categoria C: Manter 30 dias de cobertura
+- Categoria A: Manter 30 dias de cobertura
+- Categoria B: Manter 45 dias de cobertura
+- Categoria C: Manter 60 dias de cobertura
 
-### 💵 IMPACTO FINANCEIRO
-- **Oportunidade de liberação de caixa**: R$ 450.000
-- **Redução de carrying cost**: R$ 75.000/mês
-- **ROI de otimizações**: 18% em 90 dias
-- **Investimento necessário restock**: R$ 320.000
+## 💵 IMPACTO FINANCEIRO
+- **Oportunidade de liberação de caixa**: R$ 785.000
+- **Redução de carrying cost**: R$ 58.000/mês
+- **ROI de otimizações**: 24% em 90 dias
+- **Investimento necessário restock**: R$ 450.000
 
-### 📅 CRONOGRAMA DE AÇÕES (30/60/90 dias)
-**30 dias**: 
-- Liquidação de 120 produtos slow movers
-- Restock emergencial para 25 produtos críticos
+## 📅 CRONOGRAMA DE AÇÕES (30/60/90 dias)
+**30 dias:** 
+- Liquidação de 215 slow movers
+- Restock de 34 produtos críticos
 
-**60 dias**:
+**60 dias:**
 - Implementação níveis ótimos por categoria
 - Revisão política de compras
 
-**90 dias**:
-- Sistema automático de alertas preditivos
-- Integração BI com fornecedores
+**90 dias:**
+- Sistema automático de alertas ML
+- Otimização espaço físico armazenagem
 
-### 📁 ARQUIVOS OPERACIONAIS GERADOS
-- **[DASHBOARD]** [assets/dashboards/Dashboard_Gestao_Estoque.html](path/to/file) - Painel operacional com alertas em tempo real
-- **[RISCOS]** [assets/data/Analise_Riscos_Estoque.csv](path/to/file) - Scores de risco por produto com priorização
-- **[RECOMENDAÇÕES]** [assets/data/Recomendacoes_Estoque_ML.csv](path/to/file) - Ações ML priorizadas com ROI
+## 📁 ARQUIVOS OPERACIONAIS GERADOS
+- **[DASHBOARD]** [assets/dashboards/Dashboard_Gestao_Estoque.html](file:///assets/dashboards/Dashboard_Gestao_Estoque.html) - 23 alertas ativos
+- **[RISCOS]** [assets/data/Analise_Riscos_Estoque.csv](file:///assets/data/Analise_Riscos_Estoque.csv) - 215 produtos em risco
+- **[RECOMENDAÇÕES]** [assets/data/Recomendacoes_Estoque_ML.csv](file:///assets/data/Recomendacoes_Estoque_ML.csv) - 15 ações priorizadas
 
-```sql
--- Query de Monitoramento Diário (SQL Server):
-SELECT 
-    Codigo_Produto,
-    Estoque_Atual,
-    DSI,
-    CASE 
-        WHEN Estoque_Atual < Ponto_Reposicao THEN 'ALERTA'
-        ELSE 'OK'
-    END AS Status
-FROM Inventario
-WHERE Data_Atualizacao = CAST(GETDATE() AS DATE)
+*Dados processados com 98.5% de completude - Período analisado: 2021-05-28 a 2025-05-27*
 ```
-
-**Notas Técnicas:**
-- Dados validados com 97.8% de completude em campos críticos
-- Modelos ML treinados com dados 2021-2025 (Z-score: 2.5σ)
-- Tolerância a risco configurada para médio (β=0.75)

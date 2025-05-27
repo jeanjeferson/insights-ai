@@ -1,0 +1,22 @@
+2025-05-27 16:24:01 |     INFO | crew_insights | setup_crew_file_logging:95 | ================================================================================
+2025-05-27 16:24:01 |     INFO | crew_insights | setup_crew_file_logging:96 | 🚀 INSIGHTS-AI CREW - LOGGING INICIADO
+2025-05-27 16:24:01 |     INFO | crew_insights | setup_crew_file_logging:97 | 📁 Arquivo de log: logs\crew_executions\crew_execution_20250527_162401.log
+2025-05-27 16:24:01 |     INFO | crew_insights | setup_crew_file_logging:98 | 🕒 Execução iniciada em: 2025-05-27 16:24:01
+2025-05-27 16:24:01 |     INFO | crew_insights | setup_crew_file_logging:99 | ================================================================================
+2025-05-27 16:24:01 |     INFO | crew_insights | __init__:162 | ✅ Sistema de logging em arquivo configurado com sucesso
+2025-05-27 16:24:01 |     INFO | crew_insights | validate_tools_setup_quiet:867 | ✅ Ferramentas validadas: 17/17 funcionando
+2025-05-27 16:24:01 |     INFO | crew_insights | setup_logging_callbacks:289 | 🔧 Configurando callbacks de monitoramento...
+2025-05-27 16:24:01 |     INFO | crew_insights | setup_logging_callbacks:293 |    • Handlers ativos: ['FileHandler', 'StreamHandler']
+2025-05-27 16:24:01 |     INFO | crew_insights | setup_logging_callbacks:296 |    • Arquivo de log: logs\crew_executions\crew_execution_20250527_162401.log
+2025-05-27 16:24:01 |     INFO | crew_insights | _log_system_info:262 | 🖥️ INFORMAÇÕES DO SISTEMA:
+2025-05-27 16:24:01 |     INFO | crew_insights | _log_system_info:263 |    • OS: Windows 11
+2025-05-27 16:24:01 |     INFO | crew_insights | _log_system_info:264 |    • Python: 3.12.10
+2025-05-27 16:24:01 |     INFO | crew_insights | _log_system_info:265 |    • Working Directory: C:\Users\jean.moura\Documents\Python\CrewAI\insights-ai
+2025-05-27 16:24:01 |     INFO | crew_insights | _log_system_info:266 |    • Process ID: 4072
+2025-05-27 16:24:01 |     INFO | crew_insights | _log_system_info:270 | 🔑 VARIÁVEIS DE AMBIENTE:
+2025-05-27 16:24:01 |  WARNING | crew_insights | _log_system_info:280 |    • INSIGHTS_DEBUG: NÃO DEFINIDA
+2025-05-27 16:24:01 |     INFO | crew_insights | _log_system_info:276 |    • OPENROUTER_API_KEY: sk-or-v1...a957
+2025-05-27 16:24:01 |     INFO | crew_insights | _log_system_info:282 | --------------------------------------------------
+2025-05-27 16:24:01 |     INFO | crew_insights | engenheiro_dados:378 | 🔧 Inicializando Engenheiro de Dados...
+2025-05-27 16:24:01 |     INFO | crew_insights | engenheiro_dados_task:616 | 📋 Configurando Task: Engenheiro de Dados
+2025-05-27 16:25:46 |     INFO | crew_insights | <lambda>:619 | ✅ [Engenheiro] Task concluída: 2117 chars

@@ -21,6 +21,9 @@ class FileGenerationToolInput(BaseModel):
         - 'financial_dashboard': Dashboard financeiro executivo
         - 'sales_team_dashboard': Dashboard de equipe de vendas
         - 'inventory_recommendations_csv': Recomendações ML de estoque
+        - 'json': Arquivo JSON genérico
+        - 'markdown': Arquivo Markdown genérico
+        - 'csv': Arquivo CSV genérico
         """,
         json_schema_extra={"example": "customer_rfm_dashboard"}
     )
@@ -33,8 +36,20 @@ class FileGenerationToolInput(BaseModel):
     
     output_path: str = Field(
         default="", 
-        description="Caminho específico de saída (opcional, será definido automaticamente se vazio)",
-        json_schema_extra={"example": "assets/dashboards/custom_dashboard.html"}
+        description="Caminho de saída do arquivo (opcional)",
+        json_schema_extra={"example": "output/relatorio.html"}
+    )
+    
+    filename: str = Field(
+        default="", 
+        description="Nome do arquivo de saída (opcional, usado junto com content)",
+        json_schema_extra={"example": "relatorio_final.json"}
+    )
+    
+    content: str = Field(
+        default="", 
+        description="Conteúdo para ser salvo no arquivo (para tipos genéricos)",
+        json_schema_extra={"example": "Conteúdo do relatório"}
     )
 
 class FileGenerationTool(BaseTool):
@@ -67,11 +82,15 @@ class FileGenerationTool(BaseTool):
     )
     args_schema: Type[BaseModel] = FileGenerationToolInput
     
-    def _run(self, file_type: str, data_csv: str = "data/vendas.csv", output_path: str = "") -> str:
+    def _run(self, file_type: str, data_csv: str = "data/vendas.csv", output_path: str = "", filename: str = "", content: str = "") -> str:
         try:
             print(f"📁 Gerando arquivo: {file_type}")
             
-            # Carregar dados
+            # Para tipos genéricos (json, markdown, csv) com conteúdo direto
+            if file_type in ['json', 'markdown', 'csv'] and content and filename:
+                return self._create_generic_file(file_type, filename, content, output_path)
+            
+            # Carregar dados para análises específicas
             df = self._load_data(data_csv)
             if df is None:
                 return "❌ Erro: Não foi possível carregar os dados"
@@ -89,7 +108,7 @@ class FileGenerationTool(BaseTool):
             }
             
             if file_type not in generation_methods:
-                return f"❌ Tipo de arquivo '{file_type}' não suportado. Opções: {list(generation_methods.keys())}"
+                return f"❌ Tipo de arquivo '{file_type}' não suportado. Opções: {list(generation_methods.keys()) + ['json', 'markdown', 'csv']}"
             
             # Gerar arquivo
             result = generation_methods[file_type](df, output_path)
@@ -544,4 +563,33 @@ class FileGenerationTool(BaseTool):
         """Placeholder para recomendações estoque."""
         if not output_path:
             output_path = "data/outputs/Recomendacoes_Estoque_ML.csv"
-        return f"✅ Recomendações estoque criadas: {output_path} (implementação básica)" 
+        return f"✅ Recomendações estoque criadas: {output_path} (implementação básica)"
+    
+    def _create_generic_file(self, file_type: str, filename: str, content: str, output_path: str = "") -> str:
+        """Criar arquivo genérico com conteúdo fornecido."""
+        try:
+            # Determinar diretório de saída
+            if output_path:
+                filepath = output_path
+            else:
+                # Diretório padrão baseado no tipo
+                base_dir = "output"
+                if file_type == "markdown":
+                    base_dir = "assets/reports"
+                elif file_type == "csv":
+                    base_dir = "assets/data"
+                
+                os.makedirs(base_dir, exist_ok=True)
+                filepath = f"{base_dir}/{filename}"
+            
+            # Criar diretório se necessário
+            os.makedirs(os.path.dirname(filepath) if os.path.dirname(filepath) else ".", exist_ok=True)
+            
+            # Salvar arquivo
+            with open(filepath, 'w', encoding='utf-8') as f:
+                f.write(content)
+            
+            return f"✅ Arquivo {file_type.upper()} criado: {filepath}"
+            
+        except Exception as e:
+            return f"❌ Erro ao criar arquivo genérico: {str(e)}" 

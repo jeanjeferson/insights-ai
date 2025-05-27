@@ -1,0 +1,14 @@
+{
+  "timestamp": "2025-05-27T16:18:52.348380",
+  "alert_id": "flow_20250527_161852__1748373532",
+  "level": "critical",
+  "title": "Falha do Sistema: unknown_error",
+  "message": "Checkpoint failed: 'StateWithId' object does not support item assignment",
+  "flow_id": "flow_20250527_161852",
+  "metric_name": "",
+  "threshold_value": 0.0,
+  "current_value": 0.0,
+  "context": {},
+  "resolved": false,
+  "resolved_timestamp": ""
+}

@@ -1,0 +1,19 @@
+{
+  "timestamp": "2025-05-27T16:41:01.713646",
+  "flow_id": "flow_20250527_164031",
+  "estado_atual": "preparacao_extracao",
+  "analises_concluidas": [],
+  "analises_em_execucao": [],
+  "dados_estado": {
+    "flow_id": "flow_20250527_164031",
+    "fase_atual": "preparacao_extracao",
+    "inicio_execucao": "",
+    "nivel_recovery": "partial",
+    "analise_tendencias": {},
+    "analise_sazonalidade": {},
+    "analise_segmentos": {},
+    "analise_projecoes": {}
+  },
+  "checksum": "4eda993c050e771d4fbf6ded4f9b927c810422333f1206dd2c1a03ac475503f7",
+  "versao_recovery": "3.0"
+}
