@@ -1,9 +1,0 @@
-2025-05-26 17:53:54 |     INFO | crew_insights | setup_crew_file_logging:86 | ================================================================================
-2025-05-26 17:53:54 |     INFO | crew_insights | setup_crew_file_logging:87 | 🚀 INSIGHTS-AI CREW - LOGGING INICIADO
-2025-05-26 17:53:54 |     INFO | crew_insights | setup_crew_file_logging:88 | 📁 Arquivo de log: logs\crew_executions\crew_execution_20250526_175354.log
-2025-05-26 17:53:54 |     INFO | crew_insights | setup_crew_file_logging:89 | 🕒 Execução iniciada em: 2025-05-26 17:53:54
-2025-05-26 17:53:54 |     INFO | crew_insights | setup_crew_file_logging:90 | ================================================================================
-2025-05-26 17:53:54 |    DEBUG | crew_insights | test_logging_system:30 | 🔍 Teste de log DEBUG
-2025-05-26 17:53:54 |     INFO | crew_insights | test_logging_system:31 | ℹ️ Teste de log INFO
-2025-05-26 17:53:54 |  WARNING | crew_insights | test_logging_system:32 | ⚠️ Teste de log WARNING
-2025-05-26 17:53:54 |    ERROR | crew_insights | test_logging_system:33 | ❌ Teste de log ERROR

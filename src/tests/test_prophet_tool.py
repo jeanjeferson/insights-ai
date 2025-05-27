@@ -8,6 +8,7 @@ Versão focada em funcionalidade básica com dados do projeto.
 
 import sys
 import os
+import tempfile
 from pathlib import Path
 import pandas as pd
 import numpy as np
@@ -156,18 +157,26 @@ class TestProphetTool:
             print(f"📊 Usando dados: {len(data)} pontos de {min_date} até {max_date}")
             print(f"📈 Período total: {total_days} dias, Forecast: {forecast_periods} dias")
             
-            # Converter para JSON
-            data_json = data.to_json(orient='records', date_format='iso')
+            # Salvar dados em arquivo temporário (Prophet Tool espera arquivo CSV)
+            import tempfile
+            with tempfile.NamedTemporaryFile(mode='w', suffix='.csv', delete=False) as f:
+                # Converter de volta para formato original (Data, Total_Liquido)
+                temp_data = data.rename(columns={'ds': 'Data', 'y': 'Total_Liquido'})
+                temp_data.to_csv(f.name, sep=';', index=False, encoding='utf-8')
+                temp_path = f.name
             
             # Executar forecast com período calculado
             tool = ProphetForecastTool()
             result = tool._run(
-                data=data_json,
-                data_column='ds',
-                target_column='y',
-                periods=forecast_periods,
-                include_history=True  # Incluir histórico para análise completa
+                data_path=temp_path,
+                date_column='Data',
+                target_column='Total_Liquido',
+                periods=forecast_periods
             )
+            
+            # Limpar arquivo temporário
+            import os
+            os.unlink(temp_path)
             
             # Validações básicas
             assert result is not None, "Resultado não deve ser None"
@@ -198,24 +207,35 @@ class TestProphetTool:
         try:
             # Usar dados simples para teste rápido
             data = create_simple_time_series()
-            data_json = data.to_json(orient='records', date_format='iso')
+            
+            # Salvar dados em arquivo temporário
+            import tempfile
+            with tempfile.NamedTemporaryFile(mode='w', suffix='.csv', delete=False) as f:
+                # Converter para formato original (Data, Total_Liquido)
+                temp_data = data.rename(columns={'ds': 'Data', 'y': 'Total_Liquido'})
+                temp_data.to_csv(f.name, sep=';', index=False, encoding='utf-8')
+                temp_path = f.name
             
             tool = ProphetForecastTool()
             
             # Teste 1: Períodos diferentes
             result_short = tool._run(
-                data=data_json,
-                data_column='ds',
-                target_column='y',
+                data_path=temp_path,
+                date_column='Data',
+                target_column='Total_Liquido',
                 periods=3
             )
             
             result_long = tool._run(
-                data=data_json,
-                data_column='ds',
-                target_column='y',
+                data_path=temp_path,
+                date_column='Data',
+                target_column='Total_Liquido',
                 periods=14
             )
+            
+            # Limpar arquivo temporário
+            import os
+            os.unlink(temp_path)
             
             # Validações
             assert result_short is not None, "Forecast curto deve funcionar"
@@ -244,12 +264,12 @@ class TestProphetTool:
         try:
             tool = ProphetForecastTool()
             
-            # Teste 1: Dados inválidos
+            # Teste 1: Arquivo inexistente
             try:
                 result_invalid = tool._run(
-                    data='{"invalid": "data"}',
-                    data_column='ds',
-                    target_column='y'
+                    data_path='arquivo_inexistente.csv',
+                    date_column='Data',
+                    target_column='Total_Liquido'
                 )
                 # Se não falhar, deve retornar mensagem de erro
                 error_handled = 'erro' in result_invalid.lower() if result_invalid else True
@@ -259,14 +279,24 @@ class TestProphetTool:
             # Teste 2: Colunas inexistentes
             try:
                 valid_data = create_simple_time_series()
-                data_json = valid_data.to_json(orient='records', date_format='iso')
+                
+                # Salvar dados válidos em arquivo temporário
+                import tempfile
+                with tempfile.NamedTemporaryFile(mode='w', suffix='.csv', delete=False) as f:
+                    temp_data = valid_data.rename(columns={'ds': 'Data', 'y': 'Total_Liquido'})
+                    temp_data.to_csv(f.name, sep=';', index=False, encoding='utf-8')
+                    temp_path = f.name
                 
                 result_wrong_col = tool._run(
-                    data=data_json,
-                    data_column='coluna_inexistente',
-                    target_column='y'
+                    data_path=temp_path,
+                    date_column='coluna_inexistente',
+                    target_column='Total_Liquido'
                 )
                 column_error_handled = 'erro' in result_wrong_col.lower() if result_wrong_col else True
+                
+                # Limpar arquivo temporário
+                import os
+                os.unlink(temp_path)
             except:
                 column_error_handled = True
             

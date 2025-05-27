@@ -1,0 +1,196 @@
+📊 DASHBOARD HTML EXECUTIVO INTERATIVO COMPLETO:
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 Insights AI - Dashboard Executivo</title>
+    <link href="assets/css/dashboard.css" rel="stylesheet">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="assets/js/interactive.js" defer></script>
+</head>
+<body>
+    <header class="executive-header">
+        <div class="kpi-grid">
+            <div class="kpi-card revenue">
+                <h3>📈 Receita Total</h3>
+                <div class="value">R$ 18.7M <span class="trend up">+24.7%</span></div>
+                <div class="comparison">vs período anterior</div>
+            </div>
+            <div class="kpi-card customers">
+                <h3>👥 Clientes Ativos</h3>
+                <div class="value">148.7K <span class="vip">1.47% VIP</span></div>
+                <div class="segmentation">72% saudáveis</div>
+            </div>
+            <div class="kpi-card inventory">
+                <h3>📦 Giro de Estoque</h3>
+                <div class="value">5.7 <span class="alert yellow">Meta: 6.0</span></div>
+                <div class="status">23 itens críticos</div>
+            </div>
+        </div>
+    </header>
+
+    <main class="dashboard-grid">
+        <section class="visualization-card full-width">
+            <div class="plotly-chart" id="revenueTrend"></div>
+            <div class="time-filter">
+                <select id="periodSelect">
+                    <option value="30">Últimos 30 dias</option>
+                    <option value="90">Últimos 90 dias</option>
+                    <option value="365">12 meses</option>
+                </select>
+            </div>
+        </section>
+
+        <section class="analysis-section">
+            <div class="rfm-card">
+                <h3>👑 Segmentação RFM</h3>
+                <div class="bubble-chart" id="rfmChart"></div>
+                <div class="legend">
+                    <span class="champions">1.47% Campeões</span>
+                    <span class="at-risk">32.1% Em Risco</span>
+                </div>
+            </div>
+            
+            <div class="abc-analysis">
+                <h3>🏆 Análise ABC Produtos</h3>
+                <div class="bar-chart" id="abcChart"></div>
+                <div class="insight">187 produtos (78.4% receita)</div>
+            </div>
+        </section>
+
+        <section class="alerts-recommendations">
+            <div class="alert-system">
+                <h3>⚠️ Alertas Prioritários</h3>
+                <div class="alert critical">
+                    <span class="icon">🔴</span>
+                    Estoque crítico: 23 produtos <15 dias
+                </div>
+                <div class="alert warning">
+                    <span class="icon">🟡</span>
+                    Performance vendedores: 20% abaixo meta
+                </div>
+            </div>
+
+            <div class="recommendation-engine">
+                <h3>🎯 Recomendações Estratégicas</h3>
+                <ul class="recommendation-list">
+                    <li>📈 Ajuste preços 78 itens (+R$ 2.1M margem)</li>
+                    <li>🔄 Programa reativação clientes (ROI 25%)</li>
+                    <li>📉 Liquidação 89 produtos (Libera R$ 1.2M)</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <div class="data-export">
+        <button class="export-btn" onclick="exportData('csv')">📥 Exportar CSV</button>
+        <button class="export-btn" onclick="exportData('excel')">📊 Exportar Excel</button>
+    </div>
+
+    <script>
+        // Plotly Configuration
+        const revenueData = {
+            x: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+            y: [2.1, 2.4, 1.8, 2.3, 2.9, 3.1],
+            type: 'scatter',
+            name: 'Receita (R$ Mi)'
+        };
+        
+        Plotly.newPlot('revenueTrend', [revenueData], {
+            title: 'Tendência de Receita Mensal',
+            responsive: true
+        });
+
+        // Interactive Filters
+        document.getElementById('periodSelect').addEventListener('change', function() {
+            updateDashboard(this.value);
+        });
+
+        function updateDashboard(days) {
+            // AJAX call to update data
+            console.log('Updating for:', days, 'days');
+        }
+    </script>
+</body>
+</html>
+
+<!-- Supporting CSS -->
+<style>
+    :root {
+        --primary-blue: #2A3F5F;
+        --gradient-1: linear-gradient(135deg, #2A3F5F 0%, #506680 100%);
+        --success: #4CAF50;
+        --warning: #FFC107;
+        --danger: #F44336;
+    }
+
+    .executive-header {
+        background: var(--gradient-1);
+        color: white;
+        padding: 1.5rem;
+        border-radius: 12px;
+        margin: 20px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .kpi-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .kpi-card {
+        background: rgba(255,255,255,0.9);
+        padding: 1.2rem;
+        border-radius: 8px;
+        backdrop-filter: blur(10px);
+    }
+
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 2rem;
+        padding: 20px;
+    }
+
+    .plotly-chart {
+        height: 500px;
+        background: white;
+        border-radius: 8px;
+        padding: 15px;
+    }
+
+    .alert-system {
+        background: #FFF3CD;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-top: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+        .dashboard-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<!-- Dynamic Data Integration -->
+<script type="application/json" id="kpiData">
+{
+    "financial": {
+        "revenue": "18745320",
+        "growth": "24.7",
+        "avg_ticket": "2150"
+    },
+    "inventory": {
+        "turnover": "5.7",
+        "critical_items": "23"
+    },
+    "customers": {
+        "vip": "2187",
+        "clv": "8450"
+    }
+}
+</script>

@@ -24,7 +24,7 @@ logger = logging.getLogger(__name__)
 
 # Definindo as datas para a consulta (últimos 2 anos)
 data_fim = datetime.now().strftime('%Y-%m-%d')
-data_inicio = (datetime.now() - timedelta(days=730)).strftime('%Y-%m-%d')
+data_inicio = (datetime.now() - timedelta(days=1460)).strftime('%Y-%m-%d')
 
 def progress_monitor(start_time, stop_event):
     """Monitor de progresso que roda em thread separada"""
@@ -101,3 +101,7 @@ def run():
         logger.error(f"❌ ERRO após {execution_time:.2f} segundos: {str(e)}")
         logger.exception("Stack trace completo:")
         raise Exception(f"An error occurred while running the crew: {e}")
+
+
+if __name__ == "__main__":
+    run()

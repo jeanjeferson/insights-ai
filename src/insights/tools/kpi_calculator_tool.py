@@ -462,6 +462,11 @@ class KPICalculatorTool(BaseTool,
             kpis['median_order_value'] = round(df['Total_Liquido'].median(), 2)
             kpis['total_transactions'] = len(df)
             
+            # NOVO: KPI Receita Ano Atual (YTD) com comparação YoY
+            ytd_analysis = self._calculate_ytd_comparison(df)
+            if ytd_analysis:
+                kpis['ytd_analysis'] = ytd_analysis
+            
             # KPIs de margem real (usando dados preparados)
             if 'Margem_Real' in df.columns:
                 kpis['margem_analysis'] = {
@@ -984,4 +989,194 @@ class KPICalculatorTool(BaseTool,
         sorted_values = np.sort(values)
         n = len(values)
         cumsum = np.cumsum(sorted_values)
-        return round((n + 1 - 2 * np.sum(cumsum) / cumsum[-1]) / n, 3) 
+        return round((n + 1 - 2 * np.sum(cumsum) / cumsum[-1]) / n, 3)
+    
+    def _calculate_ytd_comparison(self, df: pd.DataFrame) -> Dict[str, Any]:
+        """
+        Calcular KPI de Receita Total no Ano Atual (YTD) com comparação year-over-year.
+        
+        Compara o mesmo período do ano anterior para uma análise precisa.
+        Usa no mínimo 2 anos de dados para projeções confiáveis.
+        """
+        print("📅 Calculando análise YTD (Year-to-Date)...")
+        
+        try:
+            if 'Data' not in df.columns:
+                print("⚠️ Coluna 'Data' não encontrada para análise YTD")
+                return {}
+            
+            # Converter Data para datetime se necessário
+            df_copy = df.copy()
+            df_copy['Data'] = pd.to_datetime(df_copy['Data'])
+            
+            # Obter data atual e ano atual
+            current_date = df_copy['Data'].max()
+            current_year = current_date.year
+            current_month = current_date.month
+            current_day = current_date.day
+            
+            # Verificar se temos pelo menos 2 anos de dados
+            min_date = df_copy['Data'].min()
+            years_of_data = (current_date - min_date).days / 365.25
+            
+            if years_of_data < 2:
+                print(f"⚠️ Apenas {years_of_data:.1f} anos de dados disponíveis. Recomendado: mínimo 2 anos para projeções confiáveis")
+            
+            # Definir período YTD do ano atual
+            ytd_start_current = pd.Timestamp(f"{current_year}-01-01")
+            ytd_end_current = current_date
+            
+            # Definir mesmo período do ano anterior
+            ytd_start_previous = pd.Timestamp(f"{current_year-1}-01-01") 
+            ytd_end_previous = pd.Timestamp(f"{current_year-1}-{current_month:02d}-{current_day:02d}")
+            
+            # Filtrar dados para YTD atual
+            ytd_current_data = df_copy[
+                (df_copy['Data'] >= ytd_start_current) & 
+                (df_copy['Data'] <= ytd_end_current)
+            ]
+            
+            # Filtrar dados para mesmo período do ano anterior
+            ytd_previous_data = df_copy[
+                (df_copy['Data'] >= ytd_start_previous) & 
+                (df_copy['Data'] <= ytd_end_previous)
+            ]
+            
+            if ytd_current_data.empty:
+                print("⚠️ Nenhum dado encontrado para o ano atual")
+                return {}
+            
+            # Calcular métricas YTD atual
+            ytd_current_revenue = ytd_current_data['Total_Liquido'].sum()
+            ytd_current_transactions = len(ytd_current_data)
+            ytd_current_avg_ticket = ytd_current_data['Total_Liquido'].mean()
+            ytd_current_days = (ytd_end_current - ytd_start_current).days + 1
+            
+            # Calcular métricas do ano anterior (mesmo período)
+            ytd_previous_revenue = ytd_previous_data['Total_Liquido'].sum() if not ytd_previous_data.empty else 0
+            ytd_previous_transactions = len(ytd_previous_data)
+            ytd_previous_avg_ticket = ytd_previous_data['Total_Liquido'].mean() if not ytd_previous_data.empty else 0
+            ytd_previous_days = (ytd_end_previous - ytd_start_previous).days + 1
+            
+            # Calcular variações YoY
+            revenue_yoy_change = 0
+            transactions_yoy_change = 0
+            avg_ticket_yoy_change = 0
+            
+            if ytd_previous_revenue > 0:
+                revenue_yoy_change = ((ytd_current_revenue - ytd_previous_revenue) / ytd_previous_revenue) * 100
+            
+            if ytd_previous_transactions > 0:
+                transactions_yoy_change = ((ytd_current_transactions - ytd_previous_transactions) / ytd_previous_transactions) * 100
+            
+            if ytd_previous_avg_ticket > 0:
+                avg_ticket_yoy_change = ((ytd_current_avg_ticket - ytd_previous_avg_ticket) / ytd_previous_avg_ticket) * 100
+            
+            # Calcular projeção anual baseada em dados históricos (mínimo 2 anos)
+            annual_projection = self._calculate_annual_projection(df_copy, current_date, years_of_data)
+            
+            # Calcular progresso em relação ao ano
+            year_progress_pct = (current_date - ytd_start_current).days / 365 * 100
+            
+            ytd_analysis = {
+                'current_year': current_year,
+                'analysis_date': current_date.strftime('%Y-%m-%d'),
+                'year_progress_percentage': round(year_progress_pct, 1),
+                'ytd_current': {
+                    'revenue': round(ytd_current_revenue, 2),
+                    'transactions': ytd_current_transactions,
+                    'avg_ticket': round(ytd_current_avg_ticket, 2),
+                    'period_days': ytd_current_days,
+                    'daily_average': round(ytd_current_revenue / ytd_current_days, 2)
+                },
+                'ytd_previous_year': {
+                    'revenue': round(ytd_previous_revenue, 2),
+                    'transactions': ytd_previous_transactions,
+                    'avg_ticket': round(ytd_previous_avg_ticket, 2),
+                    'period_days': ytd_previous_days,
+                    'daily_average': round(ytd_previous_revenue / ytd_previous_days, 2) if ytd_previous_days > 0 else 0
+                },
+                'yoy_comparison': {
+                    'revenue_change_pct': round(revenue_yoy_change, 2),
+                    'revenue_change_abs': round(ytd_current_revenue - ytd_previous_revenue, 2),
+                    'transactions_change_pct': round(transactions_yoy_change, 2),
+                    'avg_ticket_change_pct': round(avg_ticket_yoy_change, 2),
+                    'trend': 'positiva' if revenue_yoy_change > 0 else 'negativa' if revenue_yoy_change < 0 else 'estável'
+                },
+                'annual_projection': annual_projection,
+                'data_quality': {
+                    'years_of_data': round(years_of_data, 1),
+                    'min_recommended_years': 2,
+                    'confidence_level': 'alta' if years_of_data >= 2 else 'média' if years_of_data >= 1 else 'baixa'
+                }
+            }
+            
+            print(f"✅ Análise YTD concluída: YTD {current_year} vs {current_year-1} = {revenue_yoy_change:+.1f}%")
+            return ytd_analysis
+            
+        except Exception as e:
+            print(f"❌ Erro na análise YTD: {str(e)}")
+            return {}
+    
+    def _calculate_annual_projection(self, df: pd.DataFrame, current_date: pd.Timestamp, years_of_data: float) -> Dict[str, Any]:
+        """
+        Calcular projeção anual baseada em dados históricos.
+        Usa padrões sazonais de pelo menos 2 anos para maior precisão.
+        """
+        try:
+            current_year = current_date.year
+            
+            # Se temos menos de 2 anos, fazer projeção simples
+            if years_of_data < 2:
+                ytd_revenue = df[df['Data'].dt.year == current_year]['Total_Liquido'].sum()
+                days_elapsed = (current_date - pd.Timestamp(f"{current_year}-01-01")).days + 1
+                daily_average = ytd_revenue / days_elapsed
+                simple_projection = daily_average * 365
+                
+                return {
+                    'method': 'simple_extrapolation',
+                    'projected_annual_revenue': round(simple_projection, 2),
+                    'confidence': 'baixa',
+                    'note': 'Projeção baseada em tendência linear (dados insuficientes para análise sazonal)'
+                }
+            
+            # Para 2+ anos, usar análise sazonal
+            # Calcular receita média por mês dos anos anteriores
+            historical_data = df[df['Data'].dt.year < current_year].copy()
+            monthly_avg = historical_data.groupby(historical_data['Data'].dt.month)['Total_Liquido'].sum().groupby(level=0).mean()
+            
+            # YTD atual
+            current_ytd = df[df['Data'].dt.year == current_year]['Total_Liquido'].sum()
+            current_month = current_date.month
+            
+            # Projeção baseada em padrão sazonal histórico
+            remaining_months_projection = monthly_avg[monthly_avg.index > current_month].sum()
+            seasonal_projection = current_ytd + remaining_months_projection
+            
+            # Calcular crescimento médio anual histórico
+            yearly_revenues = historical_data.groupby(historical_data['Data'].dt.year)['Total_Liquido'].sum()
+            if len(yearly_revenues) >= 2:
+                avg_growth_rate = yearly_revenues.pct_change().mean()
+                growth_adjusted_projection = seasonal_projection * (1 + avg_growth_rate)
+            else:
+                growth_adjusted_projection = seasonal_projection
+                avg_growth_rate = 0
+            
+            return {
+                'method': 'seasonal_analysis_with_growth',
+                'projected_annual_revenue': round(growth_adjusted_projection, 2),
+                'seasonal_baseline': round(seasonal_projection, 2),
+                'historical_growth_rate': round(avg_growth_rate * 100, 2),
+                'confidence': 'alta' if years_of_data >= 2 else 'média',
+                'years_analyzed': round(years_of_data, 1),
+                'note': f'Projeção baseada em padrões sazonais de {len(yearly_revenues)} anos completos'
+            }
+            
+        except Exception as e:
+            print(f"❌ Erro na projeção anual: {str(e)}")
+            return {
+                'method': 'error',
+                'projected_annual_revenue': 0,
+                'confidence': 'nenhuma',
+                'note': f'Erro no cálculo: {str(e)}'
+            } 

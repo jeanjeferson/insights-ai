@@ -27,6 +27,15 @@ from insights.tools.advanced.advanced_analytics_engine_tool import AdvancedAnaly
 from insights.tools.advanced.risk_assessment_tool import RiskAssessmentTool
 from insights.tools.advanced.competitive_intelligence_tool import CompetitiveIntelligenceTool
 
+# Ferramenta de geração de arquivos
+from insights.tools.file_generation_tool import FileGenerationTool
+
+# Ferramentas de exportação de dados especializadas
+from insights.tools.product_data_exporter import ProductDataExporter
+from insights.tools.inventory_data_exporter import InventoryDataExporter
+from insights.tools.customer_data_exporter import CustomerDataExporter
+from insights.tools.financial_data_exporter import FinancialDataExporter
+
 load_dotenv()
 
 # =============== CONFIGURAÇÃO AVANÇADA DE LOGGING ===============
@@ -122,6 +131,15 @@ recommendation_engine = RecommendationEngine()
 analytics_engine = AdvancedAnalyticsEngineTool()
 risk_tool = RiskAssessmentTool()
 competitive_tool = CompetitiveIntelligenceTool()
+
+# Ferramenta de geração de arquivos
+file_generation_tool = FileGenerationTool()
+
+# Ferramentas especializadas de exportação de dados
+product_data_exporter = ProductDataExporter()
+inventory_data_exporter = InventoryDataExporter()
+customer_data_exporter = CustomerDataExporter()
+financial_data_exporter = FinancialDataExporter()
 
 @CrewBase
 class Insights():
@@ -363,9 +381,7 @@ class Insights():
             verbose=True,
             llm=llm,
             tools=[
-                # file_tool,                # ✅ Leitura de arquivos
                 sql_tool,                 # ✅ Acesso direto SQL Server
-                # analytics_engine          # ✅ ETL avançado e preparação
             ]
         )
 
@@ -432,9 +448,9 @@ class Insights():
     @agent
     def analista_segmentos(self) -> Agent:
         """
-        👥 ESPECIALISTA EM CATEGORIAS E CLIENTES
-        Ferramentas: KPI Calculator + Customer Insights + BI Dashboard
-        Foco: Segmentação, análise por categoria e comportamento do cliente
+        🎯 ESPECIALISTA EM PRODUTOS E CATEGORIAS COM IA + EXPORTAÇÃO CSV
+        Ferramentas: Advanced Analytics + Statistical Analysis + Recommendation Engine + KPI Calculator + Risk Assessment + BI Tool + File Generation Tool + Product Data Exporter
+        Foco: Classificação ABC com ML, market basket analysis, slow movers/dead stock, cross-sell e exportação CSV de produtos
         """
         return Agent(
             config=self.agents_config['analista_segmentos'],
@@ -442,9 +458,14 @@ class Insights():
             llm=llm,
             tools=[
                 file_tool,                # ✅ Leitura de dados
-                kpi_tool,                 # ✅ KPIs especializados por categoria
-                customer_engine,          # ✅ Segmentação automática IA
-                bi_tool                   # ✅ Dashboards comparativos
+                analytics_engine,         # ✅ Classificação ABC com ML e clustering de produtos
+                stats_tool,               # ✅ Correlações entre categorias e elasticidade de preços
+                recommendation_engine,    # ✅ Market basket analysis e cross-sell
+                kpi_tool,                 # ✅ KPIs especializados por categoria e produto
+                risk_tool,                # ✅ Análise de riscos de obsolescência
+                bi_tool,                  # ✅ Dashboards interativos de performance por categoria
+                file_generation_tool,     # ✅ Geração de dashboards ABC e matrizes de produtos
+                product_data_exporter     # 🆕 Exportação CSV de produtos com ABC/BCG/ciclo de vida
             ],
             respect_context_window=True
         )
@@ -452,9 +473,9 @@ class Insights():
     @agent
     def analista_inventario(self) -> Agent:
         """
-        📦 OTIMIZADOR DE ESTOQUE INTELIGENTE
-        Ferramentas: KPI Calculator + Recommendation Engine + Risk Assessment + BI Dashboard
-        Foco: Otimização de inventário, gestão de riscos e recomendações automáticas
+        📦 OTIMIZADOR DE ESTOQUE INTELIGENTE + EXPORTAÇÃO CSV
+        Ferramentas: KPI Calculator + Recommendation Engine + Risk Assessment + BI Dashboard + Inventory Data Exporter
+        Foco: Otimização de inventário, gestão de riscos, recomendações automáticas e exportação CSV de estoque
         """
         return Agent(
             config=self.agents_config['analista_inventario'],
@@ -465,7 +486,104 @@ class Insights():
                 kpi_tool,                 # ✅ KPIs de estoque especializados
                 recommendation_engine,    # ✅ Recomendações ML para estoque
                 risk_tool,                # ✅ Avaliação de riscos de inventário
-                bi_tool                   # ✅ Dashboards operacionais
+                bi_tool,                  # ✅ Dashboards operacionais
+                inventory_data_exporter   # 🆕 Exportação CSV de estoque com ABC por capital investido
+            ],
+            respect_context_window=True
+        )
+
+    @agent
+    def analista_financeiro(self) -> Agent:
+        """
+        💰 ANALISTA FINANCEIRO SÊNIOR COM IA + EXPORTAÇÃO CSV
+        Ferramentas: KPI Calculator + Advanced Analytics + Statistical Analysis + Prophet + Competitive Intelligence + Risk Assessment + BI Tool + File Generation Tool + Financial Data Exporter
+        Foco: KPIs críticos, análise de margens/custos, elasticidade de preços, projeções financeiras e exportação CSV financeiro
+        """
+        return Agent(
+            config=self.agents_config['analista_financeiro'],
+            verbose=True,
+            llm=llm,
+            tools=[
+                file_tool,                # ✅ Leitura de dados
+                kpi_tool,                 # ✅ KPIs financeiros críticos
+                analytics_engine,         # ✅ Análise de margens, custos e elasticidade de preços
+                stats_tool,               # ✅ Análise de tendências e correlações financeiras
+                prophet_tool,             # ✅ Projeções financeiras e cenários
+                competitive_tool,         # ✅ Benchmarking competitivo
+                risk_tool,                # ✅ Análise de riscos financeiros e stress testing
+                bi_tool,                  # ✅ Dashboards financeiros executivos
+                file_generation_tool,     # ✅ Geração de dashboards financeiros especializados
+                financial_data_exporter   # 🆕 Exportação CSV financeiro com KPIs e projeções
+            ],
+            respect_context_window=True
+        )
+
+    @agent
+    def especialista_clientes(self) -> Agent:
+        """
+        👥 ESPECIALISTA EM INTELIGÊNCIA DE CLIENTES RFV + EXPORTAÇÃO CSV
+        Ferramentas: Customer Insights Engine + Advanced Analytics + Statistical Analysis + Recommendation Engine + KPI Calculator + BI Tool + File Generation Tool + Customer Data Exporter
+        Foco: Segmentação RFV com ML, CLV preditivo, análise demográfica/geográfica, estratégias personalizadas e exportação CSV de clientes
+        """
+        return Agent(
+            config=self.agents_config['especialista_clientes'],
+            verbose=True,
+            llm=llm,
+            tools=[
+                file_tool,                # ✅ Leitura de dados
+                customer_engine,          # ✅ Segmentação RFV avançada
+                analytics_engine,         # ✅ Análise comportamental ML e clustering
+                stats_tool,               # ✅ Cálculo de CLV, demografia e geografia
+                recommendation_engine,    # ✅ Estratégias personalizadas e cross-sell
+                kpi_tool,                 # ✅ KPIs de relacionamento
+                bi_tool,                  # ✅ Dashboards interativos e mapas geográficos
+                file_generation_tool,     # ✅ Geração de dashboards e arquivos específicos
+                customer_data_exporter    # 🆕 Exportação CSV de clientes com RFM e CLV
+            ],
+            respect_context_window=True
+        )
+
+    @agent
+    def especialista_estoque(self) -> Agent:
+        """
+        🏪 ESPECIALISTA EM GESTÃO DE ESTOQUE E LOGÍSTICA + EXPORTAÇÃO CSV
+        Ferramentas: KPI Calculator + Risk Assessment + Recommendation Engine + Advanced Analytics + BI Tool + File Generation Tool + Inventory Data Exporter
+        Foco: Otimização de níveis de estoque, gestão de riscos, recomendações automáticas e exportação CSV especializada
+        """
+        return Agent(
+            config=self.agents_config['especialista_estoque'],
+            verbose=True,
+            llm=llm,
+            tools=[
+                file_tool,                # ✅ Leitura de dados
+                kpi_tool,                 # ✅ Métricas de estoque (giro, DSI, fill rate)
+                risk_tool,                # ✅ Análise de riscos de obsolescência e ruptura
+                recommendation_engine,    # ✅ Recomendações inteligentes de reposição/liquidação
+                analytics_engine,         # ✅ ML para previsão de demanda e clustering
+                bi_tool,                  # ✅ Dashboards operacionais de estoque
+                file_generation_tool,     # ✅ Geração de recomendações CSV especializadas
+                inventory_data_exporter   # 🆕 Exportação CSV de estoque com recomendações ML
+            ],
+            respect_context_window=True
+        )
+
+    @agent
+    def analista_vendedores(self) -> Agent:
+        """
+        👤 ANALISTA DE PERFORMANCE DE VENDEDORES
+        Ferramentas: Statistical Analysis + KPI Calculator + BI Tool + File Generation Tool
+        Foco: Avaliação de performance individual e desenvolvimento da equipe
+        """
+        return Agent(
+            config=self.agents_config['analista_vendedores'],
+            verbose=True,
+            llm=llm,
+            tools=[
+                file_tool,                # ✅ Leitura de dados
+                stats_tool,               # ✅ Ranking e análise estatística de performance
+                kpi_tool,                 # ✅ Métricas individuais de vendedores
+                bi_tool,                  # ✅ Dashboards personalizados por vendedor
+                file_generation_tool      # ✅ Geração de dashboards de performance individual
             ],
             respect_context_window=True
         )
@@ -498,8 +616,6 @@ class Insights():
         crew_logger.info("📋 Configurando Task: Engenheiro de Dados")
         return Task(
             config=self.tasks_config['engenheiro_dados_task'],
-            # Garantir que os inputs de data sejam passados para a task
-            # context_variables=['data_inicio', 'data_fim'],
             callback=lambda output: crew_logger.info(f"✅ [Engenheiro] Task concluída: {len(str(output))} chars")
         )
     
@@ -508,7 +624,7 @@ class Insights():
         return Task(
             config=self.tasks_config['analista_tendencias_task'],
             context=[self.engenheiro_dados_task()]
-        )
+            )
     
     @task
     def especialista_sazonalidade_task(self) -> Task:
@@ -537,23 +653,121 @@ class Insights():
             config=self.tasks_config['analise_inventario_task'],
             context=[self.engenheiro_dados_task()]
         )
+
+    @task
+    def analise_financeira_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['analise_financeira_task'],
+            context=[self.engenheiro_dados_task()]
+        )
+
+    @task
+    def analise_clientes_rfv_task(self) -> Task:
+        return Task(
+            config=self.tasks_config['analise_clientes_rfv_task'],
+            context=[self.engenheiro_dados_task()]
+        )
+
+    # =============== NOVAS TASKS ESPECIALIZADAS ===============
+
+    @task
+    def analise_clientes_avancada_task(self) -> Task:
+        """Task completa de análise de clientes com todas as ferramentas"""
+        return Task(
+            config=self.tasks_config['analise_clientes_avancada_task'],
+            context=[self.engenheiro_dados_task()],
+            markdown=True,
+            output_file='assets/reports/analise_clientes_completa.md'
+        )
+
+    @task
+    def analise_produtos_avancada_task(self) -> Task:
+        """Task completa de análise de produtos com IA"""
+        return Task(
+            config=self.tasks_config['analise_produtos_avancada_task'],
+            context=[self.engenheiro_dados_task()],
+            markdown=True,
+            output_file='assets/reports/analise_produtos_completa.md'
+        )
+
+    @task
+    def analise_financeira_avancada_task(self) -> Task:
+        """Task completa de análise financeira com margens e projeções"""
+        return Task(
+            config=self.tasks_config['analise_financeira_avancada_task'],
+            context=[self.engenheiro_dados_task()],
+            markdown=True,
+            output_file='assets/reports/analise_financeira_completa.md'
+        )
+
+    @task
+    def analise_estoque_avancada_task(self) -> Task:
+        """Task completa de gestão de estoque com IA"""
+        return Task(
+            config=self.tasks_config['analise_estoque_avancada_task'],
+            context=[self.engenheiro_dados_task()],
+            markdown=True,
+            output_file='assets/reports/analise_estoque_completa.md'
+        )
+
+    @task
+    def analise_vendedores_performance_task(self) -> Task:
+        """Task de análise de performance de vendedores"""
+        return Task(
+            config=self.tasks_config['analise_vendedores_performance_task'],
+            context=[self.engenheiro_dados_task()],
+            markdown=True,
+            output_file='assets/reports/analise_vendedores_performance.md'
+        )
+
+    @task
+    def relatorio_html_dinamico_task(self) -> Task:
+        """Task para criar dashboard HTML dinâmico e interativo"""
+        return Task(
+            config=self.tasks_config['relatorio_html_dinamico_task'],
+            context=[
+                # Usar TODAS as análises como contexto para o dashboard
+                self.engenheiro_dados_task(),
+                self.analise_clientes_avancada_task(),
+                self.analise_produtos_avancada_task(), 
+                self.analise_financeira_avancada_task(),
+                self.analise_estoque_avancada_task(),
+                self.analise_vendedores_performance_task(),
+                self.analista_tendencias_task(),
+                self.especialista_sazonalidade_task(),
+                self.especialista_projecoes_task()
+            ],
+            output_file='assets/dashboards/dashboard_executivo_integrado.html'
+        )
         
     @task
     def relatorio_executivo_completo_task(self) -> Task:
         """
-        TASK FINAL OTIMIZADA - Síntese estratégica com todas as ferramentas
+        TASK FINAL OTIMIZADA - Síntese estratégica com TODAS as análises especializadas + Dashboard HTML
         """
         return Task(
             config=self.tasks_config['relatorio_executivo_completo_task'],
             context=[
+                # Análises básicas existentes
                 self.engenheiro_dados_task(), 
                 self.analista_tendencias_task(), 
                 self.especialista_sazonalidade_task(), 
                 self.especialista_projecoes_task(), 
                 self.analista_segmentos_task(), 
-                self.analise_inventario_task()
+                self.analise_inventario_task(),
+                self.analise_financeira_task(),
+                self.analise_clientes_rfv_task(),
+                # Novas análises especializadas
+                self.analise_clientes_avancada_task(),
+                self.analise_produtos_avancada_task(),
+                self.analise_financeira_avancada_task(),
+                self.analise_estoque_avancada_task(),
+                self.analise_vendedores_performance_task(),
+                # Dashboard HTML dinâmico
+                self.relatorio_html_dinamico_task() 
             ],
-            output_file='reports/relatorio_executivo_completo.md'
+            markdown=True,
+            output_file='assets/reports/relatorio_executivo_integrado_completo.md'
         )
 
     @crew
@@ -618,7 +832,14 @@ def validate_tools_setup_quiet():
             "RecommendationEngine": _validate_tool(recommendation_engine, "recommendation_engine"),
             "AdvancedAnalyticsEngine": _validate_tool(analytics_engine, "analytics_engine"),
             "RiskAssessmentTool": _validate_tool(risk_tool, "risk_tool"),
-            "CompetitiveIntelligenceTool": _validate_tool(competitive_tool, "competitive_tool")
+            "CompetitiveIntelligenceTool": _validate_tool(competitive_tool, "competitive_tool"),
+            "FileGenerationTool": _validate_tool(file_generation_tool, "file_generation_tool")
+        },
+        "Exportação": {
+            "ProductDataExporter": _validate_tool(product_data_exporter, "product_data_exporter"),
+            "InventoryDataExporter": _validate_tool(inventory_data_exporter, "inventory_data_exporter"),
+            "CustomerDataExporter": _validate_tool(customer_data_exporter, "customer_data_exporter"),
+            "FinancialDataExporter": _validate_tool(financial_data_exporter, "financial_data_exporter")
         }
     }
     
@@ -665,7 +886,14 @@ def validate_tools_setup():
             "RecommendationEngine": _validate_tool(recommendation_engine, "recommendation_engine"),
             "AdvancedAnalyticsEngine": _validate_tool(analytics_engine, "analytics_engine"),
             "RiskAssessmentTool": _validate_tool(risk_tool, "risk_tool"),
-            "CompetitiveIntelligenceTool": _validate_tool(competitive_tool, "competitive_tool")
+            "CompetitiveIntelligenceTool": _validate_tool(competitive_tool, "competitive_tool"),
+            "FileGenerationTool": _validate_tool(file_generation_tool, "file_generation_tool")
+        },
+        "Exportação": {
+            "ProductDataExporter": _validate_tool(product_data_exporter, "product_data_exporter"),
+            "InventoryDataExporter": _validate_tool(inventory_data_exporter, "inventory_data_exporter"),
+            "CustomerDataExporter": _validate_tool(customer_data_exporter, "customer_data_exporter"),
+            "FinancialDataExporter": _validate_tool(financial_data_exporter, "financial_data_exporter")
         }
     }
     
@@ -728,12 +956,16 @@ def _validate_tool(tool_instance, tool_name: str) -> dict:
 def get_tools_by_agent():
     """Retornar mapeamento de ferramentas por agente para debugging"""
     return {
-        "engenheiro_dados": ["FileReadTool", "SQLServerQueryTool", "AdvancedAnalyticsEngine"],
+        "engenheiro_dados": ["FileReadTool", "SQLServerQueryTool"],
         "analista_tendencias": ["FileReadTool", "StatisticalAnalysisTool", "DuckDuckGoSearchTool", "BusinessIntelligenceTool"],
         "especialista_sazonalidade": ["FileReadTool", "StatisticalAnalysisTool", "AdvancedAnalyticsEngine", "BusinessIntelligenceTool"],
         "especialista_projecoes": ["FileReadTool", "ProphetForecastTool", "StatisticalAnalysisTool", "BusinessIntelligenceTool"],
-        "analista_segmentos": ["FileReadTool", "KPICalculatorTool", "CustomerInsightsEngine", "BusinessIntelligenceTool"],
-        "analista_inventario": ["FileReadTool", "KPICalculatorTool", "RecommendationEngine", "RiskAssessmentTool", "BusinessIntelligenceTool"],
+        "analista_segmentos": ["FileReadTool", "AdvancedAnalyticsEngine", "StatisticalAnalysisTool", "RecommendationEngine", "KPICalculatorTool", "RiskAssessmentTool", "BusinessIntelligenceTool", "FileGenerationTool", "ProductDataExporter"],
+        "analista_inventario": ["FileReadTool", "KPICalculatorTool", "RecommendationEngine", "RiskAssessmentTool", "BusinessIntelligenceTool", "InventoryDataExporter"],
+        "analista_financeiro": ["FileReadTool", "KPICalculatorTool", "AdvancedAnalyticsEngine", "StatisticalAnalysisTool", "ProphetForecastTool", "CompetitiveIntelligenceTool", "RiskAssessmentTool", "BusinessIntelligenceTool", "FileGenerationTool", "FinancialDataExporter"],
+        "especialista_clientes": ["FileReadTool", "CustomerInsightsEngine", "AdvancedAnalyticsEngine", "StatisticalAnalysisTool", "RecommendationEngine", "KPICalculatorTool", "BusinessIntelligenceTool", "FileGenerationTool", "CustomerDataExporter"],
+        "especialista_estoque": ["FileReadTool", "KPICalculatorTool", "RiskAssessmentTool", "RecommendationEngine", "AdvancedAnalyticsEngine", "BusinessIntelligenceTool", "FileGenerationTool", "InventoryDataExporter"],
+        "analista_vendedores": ["FileReadTool", "StatisticalAnalysisTool", "KPICalculatorTool", "BusinessIntelligenceTool", "FileGenerationTool"],
         "diretor_insights": ["FileReadTool", "KPICalculatorTool", "BusinessIntelligenceTool", "RecommendationEngine", "CompetitiveIntelligenceTool"]
     }
 
@@ -743,21 +975,53 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
     
     # Validar setup ao executar diretamente
-    crew_logger.info("🚀 INSIGHTS-AI CREW OTIMIZADA")
-    crew_logger.info("=" * 50)
+    crew_logger.info("🚀 INSIGHTS-AI CREW EXPANDIDA E OTIMIZADA")
+    crew_logger.info("=" * 60)
     
     tools_status = validate_tools_setup()
     
-    crew_logger.info(f"\n🎯 DISTRIBUIÇÃO DE FERRAMENTAS POR AGENTE:")
-    crew_logger.info("=" * 50)
+    crew_logger.info(f"\n🎯 DISTRIBUIÇÃO DE FERRAMENTAS POR AGENTE ESPECIALIZADO:")
+    crew_logger.info("=" * 60)
     
     agent_tools = get_tools_by_agent()
+    total_tools_distributed = 0
+    
     for agent, tools in agent_tools.items():
-        crew_logger.info(f"\n👤 {agent.replace('_', ' ').title()}:")
+        crew_logger.info(f"\n👤 {agent.replace('_', ' ').title()} ({len(tools)} ferramentas):")
         for tool in tools:
             crew_logger.info(f"  🔧 {tool}")
+        total_tools_distributed += len(tools)
     
-    crew_logger.info(f"\n🚀 Crew otimizada pronta para uso!")
-    crew_logger.info(f"📊 Ferramentas distribuídas por especialização")
-    crew_logger.info(f"🎯 Capacidade analítica maximizada")
+    crew_logger.info(f"\n📊 ESTATÍSTICAS DO SISTEMA:")
+    crew_logger.info("=" * 40)
+    crew_logger.info(f"🤖 Total de agentes especializados: {len(agent_tools)}")
+    crew_logger.info(f"🔧 Total de ferramentas distribuídas: {total_tools_distributed}")
+    crew_logger.info(f"📋 Média de ferramentas por agente: {total_tools_distributed/len(agent_tools):.1f}")
+    
+    crew_logger.info(f"\n🎯 CAPACIDADES EXPANDIDAS:")
+    crew_logger.info("=" * 40)
+    crew_logger.info(f"✅ Análise completa de clientes com ML e geografia")
+    crew_logger.info(f"✅ Análise de produtos com ABC inteligente e cross-sell")
+    crew_logger.info(f"✅ Análise financeira com margens e elasticidade de preços")
+    crew_logger.info(f"✅ Gestão inteligente de estoque com IA")
+    crew_logger.info(f"✅ Performance de vendedores individual")
+    crew_logger.info(f"✅ Relatórios especializados por dimensão")
+    crew_logger.info(f"✅ Geração automática de dashboards e arquivos específicos")
+    
+    crew_logger.info(f"\n📁 ARQUIVOS GERADOS AUTOMATICAMENTE:")
+    crew_logger.info("=" * 40)
+    crew_logger.info(f"📊 Dashboard_Interativo_RFM_v4.1.html")
+    crew_logger.info(f"📊 Matriz_Clusters_ML_V2.csv")
+    crew_logger.info(f"🗺️ Heatmap_Clientes_por_CEP.html")
+    crew_logger.info(f"📈 Dashboard_Produtos_ABC.html")
+    crew_logger.info(f"🛒 Market_Basket_Matrix.html")
+    crew_logger.info(f"💰 Dashboard_Financeiro_Executivo.html")
+    crew_logger.info(f"📦 Recomendacoes_Estoque_ML.csv")
+    crew_logger.info(f"👥 Dashboard_Equipe_Vendas.html")
+    
+    crew_logger.info(f"\n🚀 Sistema pronto para análises avançadas!")
+    crew_logger.info(f"📊 Utilização completa das 18 ferramentas disponíveis")
+    crew_logger.info(f"🎯 KPIs específicos por dimensão de negócio")
+    crew_logger.info(f"📁 Geração automática de arquivos mencionados nos relatórios")
+    crew_logger.info(f"📥 Exportação CSV especializada para produtos, estoque, clientes e financeiro")
     crew_logger.info(f"⚡ Performance e rate limiting otimizados")
