@@ -1,0 +1,110 @@
+2025-05-29 12:36:17 |     INFO | crew_insights | setup_crew_file_logging:95 | ================================================================================
+2025-05-29 12:36:17 |     INFO | crew_insights | setup_crew_file_logging:96 | 🚀 INSIGHTS-AI CREW - LOGGING INICIADO
+2025-05-29 12:36:17 |     INFO | crew_insights | setup_crew_file_logging:97 | 📁 Arquivo de log: logs\crew_executions\crew_execution_20250529_123617.log
+2025-05-29 12:36:17 |     INFO | crew_insights | setup_crew_file_logging:98 | 🕒 Execução iniciada em: 2025-05-29 12:36:17
+2025-05-29 12:36:17 |     INFO | crew_insights | setup_crew_file_logging:99 | ================================================================================
+2025-05-29 12:36:17 |     INFO | crew_insights | __init__:161 | ✅ Sistema de logging em arquivo configurado com sucesso
+2025-05-29 12:36:17 |     INFO | crew_insights | validate_tools_setup_quiet:866 | ✅ Ferramentas validadas: 17/17 funcionando
+2025-05-29 12:36:17 |     INFO | crew_insights | setup_logging_callbacks:288 | 🔧 Configurando callbacks de monitoramento...
+2025-05-29 12:36:17 |     INFO | crew_insights | setup_logging_callbacks:292 |    • Handlers ativos: ['FileHandler', 'StreamHandler']
+2025-05-29 12:36:17 |     INFO | crew_insights | setup_logging_callbacks:295 |    • Arquivo de log: logs\crew_executions\crew_execution_20250529_123617.log
+2025-05-29 12:36:17 |     INFO | crew_insights | _log_system_info:261 | 🖥️ INFORMAÇÕES DO SISTEMA:
+2025-05-29 12:36:17 |     INFO | crew_insights | _log_system_info:262 |    • OS: Windows 11
+2025-05-29 12:36:17 |     INFO | crew_insights | _log_system_info:263 |    • Python: 3.12.10
+2025-05-29 12:36:17 |     INFO | crew_insights | _log_system_info:264 |    • Working Directory: C:\Users\jean.moura\Documents\Python\CrewAI\insights-ai
+2025-05-29 12:36:17 |     INFO | crew_insights | _log_system_info:265 |    • Process ID: 23876
+2025-05-29 12:36:17 |     INFO | crew_insights | _log_system_info:269 | 🔑 VARIÁVEIS DE AMBIENTE:
+2025-05-29 12:36:17 |  WARNING | crew_insights | _log_system_info:279 |    • INSIGHTS_DEBUG: NÃO DEFINIDA
+2025-05-29 12:36:17 |     INFO | crew_insights | _log_system_info:275 |    • OPENROUTER_API_KEY: sk-or-v1...a957
+2025-05-29 12:36:17 |     INFO | crew_insights | _log_system_info:281 | --------------------------------------------------
+2025-05-29 12:36:17 |     INFO | crew_insights | engenheiro_dados:377 | 🔧 Inicializando Engenheiro de Dados...
+2025-05-29 12:36:17 |     INFO | crew_insights | engenheiro_dados_task:615 | 📋 Configurando Task: Engenheiro de Dados
+2025-05-29 12:36:17 |     INFO | crew_insights | crew:775 | 🚀 Configurando Crew com logging avançado...
+2025-05-29 12:36:17 |     INFO | crew_insights | before_kickoff:187 | 🚀 INICIANDO INSIGHTS-AI OTIMIZADO
+2025-05-29 12:36:17 |     INFO | crew_insights | before_kickoff:188 | ============================================================
+2025-05-29 12:36:17 |     INFO | crew_insights | before_kickoff:189 | 📅 Data/Hora: 2025-05-29 12:36:17
+2025-05-29 12:36:17 |     INFO | crew_insights | before_kickoff:190 | 📋 Inputs recebidos: {'data_inicio': '2021-05-30', 'data_fim': '2025-05-29'}
+2025-05-29 12:36:17 |     INFO | crew_insights | before_kickoff:191 | 📁 Log sendo salvo em: logs\crew_executions\crew_execution_20250529_123617.log
+2025-05-29 12:36:17 |     INFO | crew_insights | before_kickoff:192 | ============================================================
+2025-05-29 12:36:17 |     INFO | crew_insights | before_kickoff:199 | 📅 Período de análise: 2021-05-30 até 2025-05-29
+2025-05-29 12:36:17 |     INFO | crew_insights | before_kickoff:205 | ✅ Formato de datas validado com sucesso
+2025-05-29 12:36:17 |     INFO | crew_insights | before_kickoff:212 | 🔧 VALIDANDO FERRAMENTAS CRÍTICAS:
+2025-05-29 12:36:17 |     INFO | crew_insights | before_kickoff:222 |    ✅ sql_tool carregada - Tipo: SQLServerQueryTool
+2025-05-29 12:36:17 |     INFO | crew_insights | before_kickoff:222 |    ✅ prophet_tool carregada - Tipo: ProphetForecastTool
+2025-05-29 12:36:17 |     INFO | crew_insights | before_kickoff:222 |    ✅ stats_tool carregada - Tipo: StatisticalAnalysisTool
+2025-05-29 12:36:17 |     INFO | crew_insights | before_kickoff:222 |    ✅ bi_tool carregada - Tipo: BusinessIntelligenceTool
+2025-05-29 12:36:17 |     INFO | crew_insights | before_kickoff:227 | 📊 Status geral: 4/4 ferramentas críticas funcionando
+2025-05-29 12:36:17 |     INFO | crew_insights | before_kickoff:230 | 📊 PREPARANDO EXTRAÇÃO DE DADOS:
+2025-05-29 12:36:17 |     INFO | crew_insights | before_kickoff:233 |    🔄 Modo: Extração com filtro temporal 2021-05-30 a 2025-05-29
+2025-05-29 12:36:17 |     INFO | crew_insights | before_kickoff:234 |    📋 Dados serão extraídos pelo agente usando os inputs fornecidos
+2025-05-29 12:36:17 |     INFO | crew_insights | before_kickoff:245 | ============================================================
+2025-05-29 12:36:17 |     INFO | crew_insights | before_kickoff:246 | ⏱️ SETUP CONCLUÍDO em 0.00 segundos
+2025-05-29 12:36:17 |     INFO | crew_insights | before_kickoff:247 | 🚀 INICIANDO EXECUÇÃO DO CREW...
+2025-05-29 12:36:17 |     INFO | crew_insights | before_kickoff:248 | ============================================================
+2025-05-29 12:37:43 |     INFO | crew_insights | <lambda>:618 | ✅ [Engenheiro] Task concluída: 2641 chars
+2025-05-29 12:37:43 |     INFO | crew_insights | task_callback:780 | ✅ Task concluída: 🔧 ENGENHARIA DE DADOS AVANÇADA COM FILTROS TEMPORAIS:
+**IMPORTANTE: Use os inputs 2021-05-30 e 2025-...
+2025-05-29 12:37:43 |     INFO | crew_insights | task_callback:781 | 📊 Output type: <class 'crewai.tasks.task_output.TaskOutput'>
+2025-05-29 12:37:43 |     INFO | crew_insights | task_callback:782 | 📏 Output length: 2641 chars
+2025-05-29 12:38:23 |     INFO | crew_insights | task_callback:780 | ✅ Task concluída: 📈 ANÁLISE DE TENDÊNCIAS COM IA:
+1. **Análise Estatística Avançada**:
+   - Usar Statistical Analysis ...
+2025-05-29 12:38:23 |     INFO | crew_insights | task_callback:781 | 📊 Output type: <class 'crewai.tasks.task_output.TaskOutput'>
+2025-05-29 12:38:23 |     INFO | crew_insights | task_callback:782 | 📏 Output length: 4414 chars
+2025-05-29 12:38:59 |     INFO | crew_insights | task_callback:780 | ✅ Task concluída: 🌊 MODELAGEM SAZONAL AVANÇADA:
+1. **Decomposição Estatística STL**:
+   - Usar Statistical Analysis To...
+2025-05-29 12:38:59 |     INFO | crew_insights | task_callback:781 | 📊 Output type: <class 'crewai.tasks.task_output.TaskOutput'>
+2025-05-29 12:38:59 |     INFO | crew_insights | task_callback:782 | 📏 Output length: 4473 chars
+2025-05-29 12:39:28 |     INFO | crew_insights | task_callback:780 | ✅ Task concluída: 🔮 FORECASTING PROFISSIONAL COM PROPHET:
+1. **Modelagem Prophet Avançada**:
+   - Usar Prophet Forecas...
+2025-05-29 12:39:28 |     INFO | crew_insights | task_callback:781 | 📊 Output type: <class 'crewai.tasks.task_output.TaskOutput'>
+2025-05-29 12:39:28 |     INFO | crew_insights | task_callback:782 | 📏 Output length: 3661 chars
+2025-05-29 12:41:16 |     INFO | crew_insights | task_callback:780 | ✅ Task concluída: 👥 SEGMENTAÇÃO INTELIGENTE COM IA:
+1. **Análise de Performance por Categoria**:
+   - Usar KPI Calcula...
+2025-05-29 12:41:16 |     INFO | crew_insights | task_callback:781 | 📊 Output type: <class 'crewai.tasks.task_output.TaskOutput'>
+2025-05-29 12:41:16 |     INFO | crew_insights | task_callback:782 | 📏 Output length: 4336 chars
+2025-05-29 12:42:02 |     INFO | crew_insights | task_callback:780 | ✅ Task concluída: 📦 OTIMIZAÇÃO INTELIGENTE DE ESTOQUE:
+1. **KPIs Avançados de Inventário**:
+   - Usar KPI Calculator T...
+2025-05-29 12:42:02 |     INFO | crew_insights | task_callback:781 | 📊 Output type: <class 'crewai.tasks.task_output.TaskOutput'>
+2025-05-29 12:42:02 |     INFO | crew_insights | task_callback:782 | 📏 Output length: 3413 chars
+2025-05-29 12:42:36 |     INFO | crew_insights | task_callback:780 | ✅ Task concluída: 💰 ANÁLISE FINANCEIRA AVANÇADA COM BUSINESS INTELLIGENCE:
+1. **KPIs Financeiros Críticos**:
+   - Usar...
+2025-05-29 12:42:36 |     INFO | crew_insights | task_callback:781 | 📊 Output type: <class 'crewai.tasks.task_output.TaskOutput'>
+2025-05-29 12:42:36 |     INFO | crew_insights | task_callback:782 | 📏 Output length: 3450 chars
+2025-05-29 12:44:02 |     INFO | crew_insights | task_callback:780 | ✅ Task concluída: 👥 ANÁLISE AVANÇADA DE CLIENTES RFV (RECÊNCIA, FREQUÊNCIA, VALOR):
+1. **Segmentação RFV Automática**:...
+2025-05-29 12:44:02 |     INFO | crew_insights | task_callback:781 | 📊 Output type: <class 'crewai.tasks.task_output.TaskOutput'>
+2025-05-29 12:44:02 |     INFO | crew_insights | task_callback:782 | 📏 Output length: 4638 chars
+2025-05-29 12:46:05 |     INFO | crew_insights | task_callback:780 | ✅ Task concluída: 👥 ANÁLISE COMPLETA DE CLIENTES COM TODAS AS FERRAMENTAS:
+**OBJETIVO**: Gerar relatório completo de c...
+2025-05-29 12:46:05 |     INFO | crew_insights | task_callback:781 | 📊 Output type: <class 'crewai.tasks.task_output.TaskOutput'>
+2025-05-29 12:46:05 |     INFO | crew_insights | task_callback:782 | 📏 Output length: 3242 chars
+2025-05-29 12:50:54 |     INFO | crew_insights | task_callback:780 | ✅ Task concluída: 📦 ANÁLISE COMPLETA DE PRODUTOS COM INTELIGÊNCIA ARTIFICIAL:
+**OBJETIVO**: Relatório detalhado de per...
+2025-05-29 12:50:54 |     INFO | crew_insights | task_callback:781 | 📊 Output type: <class 'crewai.tasks.task_output.TaskOutput'>
+2025-05-29 12:50:54 |     INFO | crew_insights | task_callback:782 | 📏 Output length: 3227 chars
+2025-05-29 12:52:53 |     INFO | crew_insights | task_callback:780 | ✅ Task concluída: 💰 ANÁLISE FINANCEIRA COMPLETA COM TODAS AS DIMENSÕES:
+**OBJETIVO**: Relatório financeiro executivo c...
+2025-05-29 12:52:53 |     INFO | crew_insights | task_callback:781 | 📊 Output type: <class 'crewai.tasks.task_output.TaskOutput'>
+2025-05-29 12:52:53 |     INFO | crew_insights | task_callback:782 | 📏 Output length: 1808 chars
+2025-05-29 12:53:38 |     INFO | crew_insights | task_callback:780 | ✅ Task concluída: 📦 GESTÃO INTELIGENTE DE ESTOQUE E INVENTÁRIO:
+**OBJETIVO**: Análise completa de estoque com gestão d...
+2025-05-29 12:53:38 |     INFO | crew_insights | task_callback:781 | 📊 Output type: <class 'crewai.tasks.task_output.TaskOutput'>
+2025-05-29 12:53:38 |     INFO | crew_insights | task_callback:782 | 📏 Output length: 2395 chars
+2025-05-29 12:55:45 |     INFO | crew_insights | task_callback:780 | ✅ Task concluída: 👤 ANÁLISE DE PERFORMANCE DE VENDEDORES:
+**OBJETIVO**: Avaliar performance individual e identificar o...
+2025-05-29 12:55:45 |     INFO | crew_insights | task_callback:781 | 📊 Output type: <class 'crewai.tasks.task_output.TaskOutput'>
+2025-05-29 12:55:45 |     INFO | crew_insights | task_callback:782 | 📏 Output length: 3148 chars
+2025-05-29 12:56:47 |     INFO | crew_insights | task_callback:780 | ✅ Task concluída: 📊 DASHBOARD HTML DINÂMICO E INTERATIVO:
+**OBJETIVO**: Criar um relatório executivo HTML dinâmico e i...
+2025-05-29 12:56:47 |     INFO | crew_insights | task_callback:781 | 📊 Output type: <class 'crewai.tasks.task_output.TaskOutput'>
+2025-05-29 12:56:47 |     INFO | crew_insights | task_callback:782 | 📏 Output length: 100 chars
+2025-05-29 12:57:43 |     INFO | crew_insights | task_callback:780 | ✅ Task concluída: 🎯 SÍNTESE ESTRATÉGICA COM INTELIGÊNCIA EXECUTIVA:
+A) **CONSOLIDAÇÃO INTELIGENTE COM BI**: 1. Usar Bu...
+2025-05-29 12:57:43 |     INFO | crew_insights | task_callback:781 | 📊 Output type: <class 'crewai.tasks.task_output.TaskOutput'>
+2025-05-29 12:57:43 |     INFO | crew_insights | task_callback:782 | 📏 Output length: 5891 chars

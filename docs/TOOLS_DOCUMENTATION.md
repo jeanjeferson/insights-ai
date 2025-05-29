@@ -1,49 +1,377 @@
-# 📊 DOCUMENTAÇÃO COMPLETA DAS TOOLS - INSIGHTS AI
+# 🚀 GUIA COMPLETO DE TOOLS - INSIGHTS AI
+*Documentação para implementação em novos projetos CrewAI*
 
-## 📋 Índice
+## 📋 ÍNDICE ESTRUTURADO
 
-### 🔬 [Tools de Análise Avançada](#tools-de-análise-avançada)
-1. [Advanced Analytics Engine Tool](#1-advanced-analytics-engine-tool)
-2. [Statistical Analysis Tool](#2-statistical-analysis-tool)
-3. [Customer Insights Engine](#3-customer-insights-engine)
-
-### 🎯 [Tools de Inteligência de Negócio](#tools-de-inteligência-de-negócio)
-4. [Business Intelligence Tool](#4-business-intelligence-tool)
-5. [KPI Calculator Tool](#5-kpi-calculator-tool)
-6. [Competitive Intelligence Tool](#6-competitive-intelligence-tool)
-
-### 🤖 [Tools de Recomendação e Predição](#tools-de-recomendação-e-predição)
-7. [Recommendation Engine](#7-recommendation-engine)
-8. [Prophet Forecast Tool](#8-prophet-forecast-tool)
-9. [Risk Assessment Tool](#9-risk-assessment-tool)
-
-### 🗄️ [Tools de Dados e Consultas](#tools-de-dados-e-consultas)
-10. [SQL Query Tool](#10-sql-query-tool)
-11. [SQL Query Tool Improved](#11-sql-query-tool-improved)
-12. [DuckDuckGo Search Tool](#12-duckduckgo-search-tool)
-
-### 📁 [Tools de Exportação e Geração de Arquivos](#tools-de-exportação-e-geração-de-arquivos)
-13. [Customer Data Exporter](#13-customer-data-exporter)
-14. [Financial Data Exporter](#14-financial-data-exporter)
-15. [Inventory Data Exporter](#15-inventory-data-exporter)
-16. [Product Data Exporter](#16-product-data-exporter)
-17. [File Generation Tool](#17-file-generation-tool)
-
-### 🔧 [Módulos Compartilhados](#módulos-compartilhados)
-18. [Data Preparation Mixin](#18-data-preparation-mixin)
-19. [Report Formatter Mixin](#19-report-formatter-mixin)
-20. [Business Mixins](#20-business-mixins)
-21. [Performance Optimizations](#21-performance-optimizations)
+### 🎯 [GUIA RÁPIDO DE IMPLEMENTAÇÃO](#guia-rápido-de-implementação)
+### 🔗 [MAPEAMENTO AGENTE → TOOLS](#mapeamento-agente--tools)  
+### 🛠️ [CATEGORIAS DE TOOLS](#categorias-de-tools)
+### 📝 [WORKFLOWS E INTEGRAÇÕES](#workflows-e-integrações)
+### ⚡ [TROUBLESHOOTING](#troubleshooting)
 
 ---
 
-## 🔬 Tools de Análise Avançada
+## 🎯 GUIA RÁPIDO DE IMPLEMENTAÇÃO
 
-### 1. Advanced Analytics Engine Tool
+### **Para Novos Projetos CrewAI:**
 
-**Descrição Breve:** Motor de análises avançadas com Machine Learning para insights profundos de joalherias.
+1. **📊 Analytics Básico** → Usar: Statistical Analysis + KPI Calculator + Business Intelligence
+2. **🤖 ML Avançado** → Usar: Advanced Analytics Engine + Customer Insights + Recommendation Engine
+3. **💼 Business Intelligence** → Usar: Business Intelligence + Competitive Intelligence + Risk Assessment
+4. **📈 Forecasting** → Usar: Prophet + Advanced Analytics + Statistical Analysis
+5. **🗄️ Gestão de Dados** → Usar: SQL Tools + Exporters + File Generation
 
-**Objetivo Principal:** Descobrir padrões ocultos complexos usando algoritmos ML (Random Forest, XGBoost), realizar previsões avançadas, detectar anomalias e otimizar processos baseado em evidências estatísticas.
+### **Templates de Agentes Recomendados:**
+
+```yaml
+# AGENTE ANALISTA BÁSICO
+analista_basico:
+  tools: [StatisticalAnalysisTool, KPICalculatorTool, BusinessIntelligenceTool]
+  complexity: Básico
+  use_cases: [KPIs, relatórios executivos, análises estatísticas simples]
+
+# AGENTE ML ESPECIALISTA  
+ml_especialista:
+  tools: [AdvancedAnalyticsEngineTool, CustomerInsightsEngine, RecommendationEngine]
+  complexity: Avançado
+  use_cases: [ML insights, segmentação avançada, recomendações]
+
+# AGENTE ESTRATÉGICO
+estrategista:
+  tools: [CompetitiveIntelligenceTool, RiskAssessmentTool, ProphetForecastTool]
+  complexity: Intermediário
+  use_cases: [análise competitiva, gestão de riscos, forecasting]
+```
+
+---
+
+## 🔗 MAPEAMENTO AGENTE → TOOLS
+
+### **🔧 ENGENHEIRO DE DADOS**
+**Tools Principais:** SQL Query Tool, Statistical Analysis Tool, Advanced Analytics Engine
+**Complexidade:** Intermediário
+**Casos de Uso:** ETL, qualidade de dados, validações, transformações
+
+### **📈 ANALISTA DE TENDÊNCIAS** 
+**Tools Principais:** Statistical Analysis Tool, DuckDuckGo Search Tool, Prophet Forecast Tool
+**Complexidade:** Intermediário  
+**Casos de Uso:** Análise temporal, correlações, tendências de mercado
+
+### **🌊 ESPECIALISTA EM SAZONALIDADE**
+**Tools Principais:** Statistical Analysis Tool, Advanced Analytics Engine, Prophet Forecast Tool
+**Complexidade:** Avançado
+**Casos de Uso:** Decomposição STL, modelagem sazonal, eventos especiais
+
+### **🎯 ANALISTA DE CLIENTES**
+**Tools Principais:** Customer Insights Engine, Recommendation Engine, Statistical Analysis Tool  
+**Complexidade:** Avançado
+**Casos de Uso:** Segmentação RFM, churn prediction, CLV, jornada do cliente
+
+### **💰 ANALISTA FINANCEIRO**
+**Tools Principais:** Business Intelligence Tool, KPI Calculator Tool, Risk Assessment Tool
+**Complexidade:** Intermediário
+**Casos de Uso:** KPIs financeiros, rentabilidade, análise de riscos
+
+### **📦 ESPECIALISTA EM PRODUTOS**
+**Tools Principais:** Advanced Analytics Engine, Statistical Analysis Tool, Recommendation Engine
+**Complexidade:** Intermediário  
+**Casos de Uso:** Análise ABC, BCG matrix, performance de produtos
+
+### **🏆 ANALISTA COMPETITIVO**
+**Tools Principais:** Competitive Intelligence Tool, DuckDuckGo Search Tool, Statistical Analysis Tool
+**Complexidade:** Avançado
+**Casos de Uso:** Benchmarking, market share, análise competitiva
+
+### **📊 BUSINESS INTELLIGENCE**
+**Tools Principais:** Business Intelligence Tool, KPI Calculator Tool, File Generation Tool
+**Complexidade:** Básico
+**Casos de Uso:** Dashboards, relatórios executivos, exportações
+
+---
+
+## 🛠️ CATEGORIAS DE TOOLS
+
+### 🔬 **ANALYTICS & MACHINE LEARNING**
+*Complexidade: Avançada | Tempo: 30-120s*
+
+#### **Advanced Analytics Engine Tool**
+- **Função:** Motor ML com Random Forest, XGBoost, clustering avançado
+- **Casos de Uso:** Insights ocultos, anomaly detection, demand forecasting, customer behavior
+- **Inputs Principais:** `analysis_type`, `data_csv`, `target_column`, `model_complexity`
+- **Outputs:** Insights ML, recomendações baseadas em evidências, métricas de performance
+
+#### **Statistical Analysis Tool** 
+- **Função:** Análises estatísticas rigorosas com testes de significância
+- **Casos de Uso:** Correlações, clustering, outliers, distribuições, tendências temporais
+- **Inputs Principais:** `analysis_type`, `data_csv`, `statistical_tests`, `confidence_level`
+- **Outputs:** Testes estatísticos, clustering, insights baseados em significância
+
+#### **Customer Insights Engine**
+- **Função:** Segmentação avançada, RFM, lifecycle, churn prediction
+- **Casos de Uso:** Behavioral segmentation, lifecycle analysis, churn prediction, value analysis
+- **Inputs Principais:** `analysis_type`, `segmentation_method`, `customer_id_column`
+- **Outputs:** Segmentos de clientes, scores de risco, estratégias de retenção
+
+---
+
+### 🎯 **BUSINESS INTELLIGENCE**
+*Complexidade: Básica a Intermediária | Tempo: 15-60s*
+
+#### **Business Intelligence Tool**
+- **Função:** Plataforma unificada de BI com dashboards interativos
+- **Casos de Uso:** Executive summary, dashboards, análises financeiras, customer intelligence
+- **Inputs Principais:** `analysis_type`, `time_period`, `output_format`, `include_forecasts`
+- **Outputs:** Relatórios HTML, dashboards Plotly, análises executivas
+
+#### **KPI Calculator Tool**
+- **Função:** Calculadora de KPIs com alertas automáticos e benchmarks
+- **Casos de Uso:** Monitoramento KPIs, benchmarking, alertas de problemas críticos
+- **Inputs Principais:** `categoria`, `periodo`, `benchmark_mode`, `alert_threshold`
+- **Outputs:** KPIs categorizados, scores de saúde, alertas inteligentes
+
+#### **Competitive Intelligence Tool**
+- **Função:** Inteligência competitiva e análise de market share
+- **Casos de Uso:** Market positioning, pricing analysis, trend comparison, competitive gaps
+- **Inputs Principais:** `analysis_type`, `market_segment`, `benchmark_period`
+- **Outputs:** Posicionamento competitivo, market share estimado, recomendações estratégicas
+
+---
+
+### 🤖 **FORECASTING & PREDICTION**
+*Complexidade: Intermediária a Avançada | Tempo: 20-90s*
+
+#### **Prophet Forecast Tool**
+- **Função:** Previsões profissionais com Prophet considerando sazonalidade
+- **Casos de Uso:** Projeções de vendas, demand forecasting, planejamento estratégico
+- **Inputs Principais:** `target_column`, `periods`, `seasonality_mode`, `include_holidays`
+- **Outputs:** Previsões com intervalos de confiança, decomposição sazonal
+
+#### **Risk Assessment Tool**
+- **Função:** Avaliação de riscos empresariais com estratégias de mitigação
+- **Casos de Uso:** Business risk, financial risk, operational risk, market risk
+- **Inputs Principais:** `assessment_type`, `risk_tolerance`, `time_horizon`
+- **Outputs:** Matriz de riscos, scores de risco, planos de mitigação
+
+#### **Recommendation Engine**
+- **Função:** Sistema ML de recomendações (Collaborative + Content-Based)
+- **Casos de Uso:** Product recommendations, customer targeting, pricing optimization
+- **Inputs Principais:** `recommendation_type`, `target_segment`, `confidence_threshold`
+- **Outputs:** Recomendações rankeadas, ROI estimado, campanhas personalizadas
+
+---
+
+### 🗄️ **DATA MANAGEMENT**
+*Complexidade: Básica | Tempo: 5-30s*
+
+#### **SQL Query Tool / SQL Query Tool Improved**
+- **Função:** Extração de dados do SQL Server com filtros temporais
+- **Casos de Uso:** ETL, extração de dados filtrados, alimentação de outras tools
+- **Inputs Principais:** `date_start`, `date_end`, `output_format`
+- **Outputs:** Dados estruturados CSV/JSON, validações de integridade
+
+#### **DuckDuckGo Search Tool**
+- **Função:** Pesquisa web para contexto externo e tendências
+- **Casos de Uso:** Trends de mercado, análise competitiva, contexto econômico
+- **Inputs Principais:** `query`, `domain`, `max_results`
+- **Outputs:** Insights contextualizados, links para fontes, recomendações
+
+---
+
+### 📊 **EXPORT & REPORTING**
+*Complexidade: Básica | Tempo: 10-30s*
+
+#### **Customer Data Exporter**
+- **Função:** Exporta dados completos de análise de clientes
+- **Outputs:** CSV com RFM, CLV, segmentação, análise geográfica/demográfica
+
+#### **Financial Data Exporter**  
+- **Função:** Exporta dados financeiros com KPIs e projeções
+- **Outputs:** CSV com KPIs financeiros, análise de margens, projeções
+
+#### **Inventory Data Exporter**
+- **Função:** Exporta dados de gestão de estoque
+- **Outputs:** CSV com classificação ABC, análise de giro, recomendações ML
+
+#### **Product Data Exporter**
+- **Função:** Exporta dados de produtos com classificações
+- **Outputs:** CSV com ABC, BCG matrix, lifecycle analysis, métricas de performance
+
+#### **File Generation Tool**
+- **Função:** Gera arquivos específicos (dashboards HTML, matrizes CSV)
+- **Casos de Uso:** Customer RFM dashboard, geographic heatmap, product ABC dashboard
+
+---
+
+### 🔧 **SHARED INFRASTRUCTURE**
+*Módulos compartilhados para otimização*
+
+#### **Data Preparation Mixin**
+- **Função:** Limpeza e validação de dados padronizada
+- **Uso:** Inherited por todas as tools que processam dados
+
+#### **Report Formatter Mixin**
+- **Função:** Formatação unificada de relatórios
+- **Uso:** Formatting consistente entre todas as tools
+
+#### **Business Mixins**
+- **Função:** Análises de negócio padronizadas (RFM, ABC, BCG)
+- **Uso:** Análises consistency entre diferentes tools
+
+#### **Performance Optimizations**
+- **Função:** Cache, parallel processing, sampling estratificado
+- **Uso:** Otimização automática para datasets grandes
+
+---
+
+## 📝 WORKFLOWS E INTEGRAÇÕES
+
+### **🏆 WORKFLOW BÁSICO DE ANÁLISE**
+```
+1. SQL Query Tool → Extrair dados filtrados
+2. Statistical Analysis Tool → Análise exploratória 
+3. KPI Calculator Tool → KPIs essenciais
+4. Business Intelligence Tool → Relatório executivo
+5. Customer Data Exporter → Dados estruturados para BI externo
+```
+
+### **🤖 WORKFLOW AVANÇADO DE ML**
+```
+1. SQL Query Tool → Dados filtrados
+2. Advanced Analytics Engine → ML insights + anomaly detection  
+3. Customer Insights Engine → Segmentação avançada
+4. Recommendation Engine → Recomendações personalizadas
+5. Prophet Forecast Tool → Previsões
+6. Financial Data Exporter → Dados consolidados
+```
+
+### **🏆 WORKFLOW COMPETITIVO**
+```
+1. SQL Query Tool → Dados internos
+2. DuckDuckGo Search Tool → Contexto de mercado
+3. Competitive Intelligence Tool → Análise competitiva
+4. Statistical Analysis Tool → Validação estatística
+5. Risk Assessment Tool → Avaliação de riscos estratégicos
+```
+
+### **📊 INTEGRAÇÃO ENTRE TOOLS**
+
+**Sequência Recomendada:**
+- **Dados → Análise → Insights → Ação**
+- SQL Tools primeiro (dados)
+- Statistical/Analytics depois (análise)
+- BI/KPI para insights
+- Exporters para ação
+
+**Dependências Críticas:**
+- Todas as tools de análise dependem de dados limpos (SQL Tools)
+- Tools avançadas podem usar outputs de tools básicas
+- Exporters são sempre o último passo no workflow
+
+---
+
+## ⚡ TROUBLESHOOTING
+
+### **🚨 PROBLEMAS COMUNS**
+
+#### **"Dados Insuficientes"**
+- **Causa:** Filtro temporal muito restritivo
+- **Solução:** Ampliar range de datas no SQL Query Tool
+- **Prevenção:** Verificar volume de dados antes de análises avançadas
+
+#### **"Timeout na Query SQL"** 
+- **Causa:** Query muito pesada ou conexão instável
+- **Solução:** Usar SQL Query Tool Improved com timeouts configuráveis
+- **Prevenção:** Filtrar por períodos menores
+
+#### **"Erro de Validação de Schema"**
+- **Causa:** Parâmetros obrigatórios ausentes ou formato inválido
+- **Solução:** Verificar documentation específica da tool
+- **Prevenção:** Usar templates de inputs recomendados
+
+#### **"Performance Lenta"**
+- **Causa:** Dataset muito grande sem sampling
+- **Solução:** Habilitar cache_results=True e sampling automático
+- **Prevenção:** Monitorar tamanho dos datasets
+
+### **✅ BEST PRACTICES**
+
+1. **Sempre começar com SQL Query Tool** para dados filtrados
+2. **Usar cache_results=True** em análises repetitivas  
+3. **Validar inputs** antes de executar tools complexas
+4. **Combinar tools complementares** (ex: Statistical + KPI)
+5. **Exportar resultados** para análises externas quando necessário
+
+### **📊 MONITORAMENTO DE PERFORMANCE**
+
+**Tempos Esperados:**
+- SQL Tools: 5-30s
+- Statistical/KPI: 15-60s  
+- Advanced Analytics: 30-120s
+- Exporters: 10-30s
+
+**Indicadores de Problema:**
+- Tempo > 3x do esperado
+- Errors de memory/timeout
+- Resultados vazios ou inconsistentes
+
+---
+
+## 📚 REFERÊNCIAS PARA IMPLEMENTAÇÃO
+
+### **Templates de YAML para Agentes:**
+```yaml
+analista_exemplo:
+  role: "Analista de Dados Especializado"
+  goal: "Realizar análises estatísticas e gerar insights acionáveis"
+  backstory: "Especialista em análise de dados com foco em insights de negócio"
+  tools: [StatisticalAnalysisTool, KPICalculatorTool, BusinessIntelligenceTool]
+  verbose: true
+  memory: true
+```
+
+### **Templates de Tasks:**
+```yaml
+analise_exemplo_task:
+  description: "Realizar análise completa usando {data_inicio} e {data_fim}"
+  expected_output: "Relatório estruturado com insights e recomendações"
+  agent: analista_exemplo
+```
+
+### **Checklist de Implementação:**
+- [ ] Definir agentes e suas tools especializadas
+- [ ] Configurar workflows de integração entre tools
+- [ ] Testar com dados de amostra
+- [ ] Validar outputs esperados
+- [ ] Configurar error handling
+- [ ] Documentar casos de uso específicos
+
+**Esta documentação serve como guia completo para implementação das Tools do Insights AI em novos projetos CrewAI, garantindo uso eficiente e resultados consistentes.** 
+
+---
+
+## 🎯 CASOS DE USO POR SETOR
+
+### **📈 E-COMMERCE / VAREJO**
+- **Tools Principais:** Customer Insights, Recommendation Engine, Business Intelligence
+- **Foco:** Segmentação de clientes, recomendações de produtos, análise de conversão
+
+### **💎 JOALHERIAS** 
+- **Tools Principais:** Competitive Intelligence, Statistical Analysis, Prophet Forecast
+- **Foco:** Sazonalidade, análise de luxo vs. premium, eventos especiais
+
+### **🏪 RETAIL FÍSICO**
+- **Tools Principais:** Geographic Analysis, Inventory Management, Risk Assessment  
+- **Foco:** Análise regional, gestão de estoque, riscos operacionais
+
+### **💰 SERVIÇOS FINANCEIROS**
+- **Tools Principais:** Risk Assessment, Advanced Analytics, KPI Calculator
+- **Foco:** Gestão de riscos, compliance, métricas financeiras
+
+---
+
+## 🔧 REFERÊNCIA TÉCNICA AVANÇADA - TODAS AS FUNÇÕES
+
+### 🔬 **ADVANCED ANALYTICS ENGINE TOOL**
 
 **Funções Principais:**
 
@@ -70,11 +398,7 @@
 
 ---
 
-### 2. Statistical Analysis Tool
-
-**Descrição Breve:** Motor de análises estatísticas avançadas para descobrir padrões ocultos em dados de joalherias.
-
-**Objetivo Principal:** Realizar análises estatísticas rigorosas com testes de significância, clustering, correlações e segmentações para insights profundos sobre comportamento de clientes e performance de produtos.
+### 📊 **STATISTICAL ANALYSIS TOOL**
 
 **Funções Principais:**
 
@@ -106,11 +430,7 @@
 
 ---
 
-### 3. Customer Insights Engine
-
-**Descrição Breve:** Motor avançado de insights de clientes para segmentação, análise comportamental e predição de churn.
-
-**Objetivo Principal:** Segmentar clientes por comportamento, valor e perfil demográfico, entender padrões de compra, identificar riscos de abandono e calcular valor vitalício (CLV).
+### 🎯 **CUSTOMER INSIGHTS ENGINE**
 
 **Funções Principais:**
 
@@ -146,13 +466,7 @@
 
 ---
 
-## 🎯 Tools de Inteligência de Negócio
-
-### 4. Business Intelligence Tool
-
-**Descrição Breve:** Plataforma unificada de Business Intelligence para relatórios executivos e dashboards interativos.
-
-**Objetivo Principal:** Criar análises visuais profissionais, forecasting, segmentação de clientes e benchmarks do setor para tomada de decisão estratégica e monitoramento de performance.
+### 📈 **BUSINESS INTELLIGENCE TOOL**
 
 **Funções Principais:**
 
@@ -186,11 +500,7 @@
 
 ---
 
-### 5. KPI Calculator Tool
-
-**Descrição Breve:** Calculadora avançada de KPIs para joalherias com alertas automáticos e benchmarks.
-
-**Objetivo Principal:** Calcular métricas essenciais de negócio, comparar com padrões do setor, gerar alertas automáticos e insights acionáveis para monitoramento contínuo de performance.
+### ⚡ **KPI CALCULATOR TOOL**
 
 **Funções Principais:**
 
@@ -222,11 +532,7 @@
 
 ---
 
-### 6. Competitive Intelligence Tool
-
-**Descrição Breve:** Ferramenta especializada em inteligência competitiva para análise de posicionamento de mercado.
-
-**Objetivo Principal:** Analisar posicionamento competitivo, estratégias de preço, tendências de mercado, estimativa de market share e identificação de gaps/oportunidades competitivas.
+### 🏆 **COMPETITIVE INTELLIGENCE TOOL**
 
 **Funções Principais:**
 
@@ -261,13 +567,7 @@
 
 ---
 
-## 🤖 Tools de Recomendação e Predição
-
-### 7. Recommendation Engine
-
-**Descrição Breve:** Sistema de recomendações inteligentes otimizado para joalherias e CrewAI.
-
-**Objetivo Principal:** Fornecer recomendações baseadas em ML (Collaborative + Content-Based Filtering), análise RFM, Market Basket Analysis e otimização de preços/inventário/campanhas.
+### 🤖 **RECOMMENDATION ENGINE**
 
 **Funções Principais:**
 
@@ -304,11 +604,7 @@
 
 ---
 
-### 8. Prophet Forecast Tool
-
-**Descrição Breve:** Ferramenta de previsão profissional usando Prophet para análise de séries temporais.
-
-**Objetivo Principal:** Criar projeções precisas de vendas considerando tendências, sazonalidade e feriados para planejamento estratégico e gestão de estoque.
+### 🔮 **PROPHET FORECAST TOOL**
 
 **Funções Principais:**
 
@@ -326,11 +622,7 @@
 
 ---
 
-### 9. Risk Assessment Tool
-
-**Descrição Breve:** Ferramenta de avaliação de riscos para identificação e mitigação de riscos empresariais.
-
-**Objetivo Principal:** Avaliar riscos empresariais, financeiros, operacionais, de mercado e de clientes, fornecendo estratégias de mitigação e planos de contingência.
+### ⚠️ **RISK ASSESSMENT TOOL**
 
 **Funções Principais:**
 
@@ -364,13 +656,7 @@
 
 ---
 
-## 🗄️ Tools de Dados e Consultas
-
-### 10. SQL Query Tool
-
-**Descrição Breve:** Ferramenta especializada para extrair dados de vendas do SQL Server com filtros dinâmicos.
-
-**Objetivo Principal:** Executar consultas otimizadas no banco de dados, aplicar filtros de data específicos e retornar dados estruturados prontos para análises.
+### 🗄️ **SQL QUERY TOOL**
 
 **Funções Principais:**
 
@@ -383,11 +669,7 @@
 
 ---
 
-### 11. SQL Query Tool Improved
-
-**Descrição Breve:** Versão melhorada da ferramenta SQL com timeouts, logs detalhados e tratamento robusto de erros.
-
-**Objetivo Principal:** Extrair dados do SQL Server com maior confiabilidade, incluindo timeouts configuráveis, logs de progresso e fallbacks automáticos.
+### 🗄️ **SQL QUERY TOOL IMPROVED**
 
 **Funções Principais:**
 
@@ -404,11 +686,7 @@
 
 ---
 
-### 12. DuckDuckGo Search Tool
-
-**Descrição Breve:** Pesquisa web inteligente para contexto de mercado, tendências e análise competitiva.
-
-**Objetivo Principal:** Buscar informações externas que complementem análises internas, validar hipóteses, entender contexto econômico e identificar tendências de mercado.
+### 🌐 **DUCKDUCKGO SEARCH TOOL**
 
 **Funções Principais:**
 
@@ -421,26 +699,7 @@
 
 ---
 
-## 📁 Tools de Exportação e Geração de Arquivos
-
-**QUANDO USAR ESTAS FERRAMENTAS:**
-- 📊 **Customer Data Exporter**: Quando precisar de dados de clientes para CRM, campanhas segmentadas ou análises externas
-- 💰 **Financial Data Exporter**: Para relatórios board, dashboards de BI ou análises financeiras em planilhas
-- 📦 **Inventory Data Exporter**: Para gestão de compras, identificação de produtos críticos ou otimização de estoque
-- 🛍️ **Product Data Exporter**: Para análises de portfólio, classificações ABC/BCG ou planejamento de mix de produtos  
-- 📁 **File Generation Tool**: Para criar dashboards específicos, visualizações personalizadas ou arquivos mencionados em relatórios
-
-**INTEGRAÇÃO COM OUTRAS FERRAMENTAS:**
-- Use **SQL Query Tool** ANTES para extrair dados atualizados
-- Use **KPI Calculator** ou **Business Intelligence** ANTES para identificar que dados exportar
-- Use as ferramentas de exportação APÓS análises para disponibilizar dados estruturados
-- Use **File Generation Tool** para criar visualizações dos dados exportados
-
-### 13. Customer Data Exporter
-
-**Descrição Breve:** Ferramenta especializada para exportar dados completos de análise de clientes com segmentação RFM, CLV e insights comportamentais.
-
-**Objetivo Principal:** Gerar arquivo CSV abrangente com análise completa de clientes incluindo segmentação RFM detalhada, Customer Lifetime Value (CLV), análise geográfica e demográfica, insights comportamentais, estratégias personalizadas por segmento e scores de saúde do cliente.
+### 📊 **CUSTOMER DATA EXPORTER**
 
 **Funções Principais:**
 
@@ -461,11 +720,7 @@
 
 ---
 
-### 14. Financial Data Exporter
-
-**Descrição Breve:** Ferramenta especializada para exportar dados completos de análise financeira com KPIs, margens, tendências e projeções.
-
-**Objetivo Principal:** Criar arquivo CSV estruturado com KPIs financeiros críticos, métricas de margens e rentabilidade, análise de tendências e sazonalidade, projeções financeiras e insights estratégicos por período para relatórios executivos e dashboards de BI.
+### 💰 **FINANCIAL DATA EXPORTER**
 
 **Funções Principais:**
 
@@ -485,11 +740,7 @@
 
 ---
 
-### 15. Inventory Data Exporter
-
-**Descrição Breve:** Ferramenta especializada para exportar dados completos de gestão de estoque com classificação ABC, análise de riscos e recomendações ML.
-
-**Objetivo Principal:** Gerar arquivo CSV abrangente com classificação ABC baseada em capital investido, análise de giro e turnover de estoque, identificação de riscos (ruptura/obsolescência), recomendações ML para restock e liquidação, e scores de saúde de estoque.
+### 📦 **INVENTORY DATA EXPORTER**
 
 **Funções Principais:**
 
@@ -508,11 +759,7 @@
 
 ---
 
-### 16. Product Data Exporter
-
-**Descrição Breve:** Ferramenta especializada para exportar dados completos de produtos com classificações ABC, BCG Matrix e análise de ciclo de vida.
-
-**Objetivo Principal:** Criar arquivo CSV estruturado com classificação ABC automática, Matriz BCG (Stars, Cash Cows, Question Marks, Dogs), análise de ciclo de vida, métricas de performance e flags de alertas para tomada de decisão.
+### 🛍️ **PRODUCT DATA EXPORTER**
 
 **Funções Principais:**
 
@@ -531,11 +778,7 @@
 
 ---
 
-### 17. File Generation Tool
-
-**Descrição Breve:** Ferramenta especializada para gerar arquivos específicos mencionados nos relatórios, incluindo dashboards HTML interativos e planilhas CSV processadas.
-
-**Objetivo Principal:** Criar arquivos específicos sob demanda como dashboards HTML interativos, planilhas CSV com dados processados, mapas geográficos, visualizações e matrizes de análise ML para complementar relatórios e análises.
+### 📁 **FILE GENERATION TOOL**
 
 **Funções Principais:**
 
@@ -554,15 +797,9 @@
 
 ---
 
-## 🔧 Módulos Compartilhados
+## 🔧 **MÓDULOS COMPARTILHADOS - FUNÇÕES DETALHADAS**
 
-### 18. Data Preparation Mixin
-
-**Descrição Breve:** Módulo compartilhado para preparação e limpeza de dados de joalherias.
-
-**Objetivo Principal:** Padronizar preparação de dados, validação de estrutura, limpeza, conversão de tipos e cálculo de campos derivados.
-
-**Funções Principais:**
+### **Data Preparation Mixin**
 
 | Função | Descrição |
 |--------|-----------|
@@ -578,15 +815,7 @@
 | `_final_data_validation()` | Validação final dos dados |
 | `get_data_quality_report()` | Relatório de qualidade dos dados |
 
----
-
-### 19. Report Formatter Mixin
-
-**Descrição Breve:** Módulo compartilhado para formatação padronizada de relatórios e saídas.
-
-**Objetivo Principal:** Padronizar formatação de relatórios, KPIs, tabelas e insights em formato consistente e profissional.
-
-**Funções Principais:**
+### **Report Formatter Mixin**
 
 | Função | Descrição |
 |--------|-----------|
@@ -603,17 +832,8 @@
 | `_format_nested_dict()` | Formata dicionários aninhados |
 | `_format_dict_as_table()` | Formata dicionário como tabela |
 
----
+### **Business Mixins - JewelryRFMAnalysisMixin**
 
-### 20. Business Mixins
-
-**Descrição Breve:** Conjunto de mixins especializados em análises de negócio para joalherias.
-
-**Objetivo Principal:** Fornecer análises especializadas RFM, BCG Matrix, ABC Analysis e benchmarks específicos do setor joalheiro.
-
-**Componentes:**
-
-#### JewelryRFMAnalysisMixin
 | Função | Descrição |
 |--------|-----------|
 | `analyze_product_rfm()` | Análise RFM de produtos |
@@ -623,7 +843,8 @@
 | `_generate_jewelry_rfm_recommendations()` | Recomendações RFM para joalherias |
 | `_create_customer_segment_profiles()` | Cria perfis de segmentos |
 
-#### JewelryBusinessAnalysisMixin
+### **Business Mixins - JewelryBusinessAnalysisMixin**
+
 | Função | Descrição |
 |--------|-----------|
 | `create_product_bcg_matrix()` | Cria matriz BCG de produtos |
@@ -631,7 +852,8 @@
 | `_generate_bcg_recommendations()` | Recomendações BCG |
 | `_generate_abc_recommendations()` | Recomendações ABC |
 
-#### JewelryBenchmarkMixin
+### **Business Mixins - JewelryBenchmarkMixin**
+
 | Função | Descrição |
 |--------|-----------|
 | `get_jewelry_industry_benchmarks()` | Benchmarks da indústria joalheira |
@@ -639,17 +861,8 @@
 | `_assess_overall_benchmark_performance()` | Avalia performance vs benchmarks |
 | `_generate_benchmark_recommendations()` | Recomendações baseadas em benchmarks |
 
----
+### **Performance Optimizations - CacheManager**
 
-### 21. Performance Optimizations
-
-**Descrição Breve:** Módulo de otimizações de performance para análises pesadas e processamento eficiente.
-
-**Objetivo Principal:** Fornecer cache inteligente, processamento paralelo, amostragem estratificada e detecção de drift para otimizar performance das análises.
-
-**Componentes:**
-
-#### CacheManager
 | Função | Descrição |
 |--------|-----------|
 | `get_cached_result()` | Obtém resultado do cache |
@@ -658,13 +871,15 @@
 | `get_cache_stats()` | Estatísticas do cache |
 | `_cleanup_cache_if_needed()` | Limpeza automática do cache |
 
-#### ParallelProcessor
+### **Performance Optimizations - ParallelProcessor**
+
 | Função | Descrição |
 |--------|-----------|
 | `parallel_model_training()` | Treinamento paralelo de modelos |
 | `parallel_category_analysis()` | Análise paralela por categoria |
 
-#### StratifiedSampler
+### **Performance Optimizations - StratifiedSampler**
+
 | Função | Descrição |
 |--------|-----------|
 | `should_sample()` | Verifica se deve fazer amostragem |
@@ -674,7 +889,8 @@
 | `_product_stratified_sample()` | Amostra estratificada por produto |
 | `_validate_sample_representativeness()` | Valida representatividade da amostra |
 
-#### DataDriftDetector
+### **Performance Optimizations - DataDriftDetector**
+
 | Função | Descrição |
 |--------|-----------|
 | `detect_drift()` | Detecta drift nos dados |
@@ -685,35 +901,4 @@
 
 ---
 
-## 📈 Resumo de Capacidades
-
-### 🎯 Análises Principais
-- **17 Tools Especializadas** para diferentes aspectos do negócio
-- **Machine Learning Avançado** com Random Forest, XGBoost, clustering
-- **Análises Estatísticas Rigorosas** com testes de significância
-- **Inteligência Competitiva** com benchmarks de mercado
-- **Previsões Temporais** com Prophet e algoritmos adaptativos
-- **Exportação Completa de Dados** com 4 exportadores especializados
-- **Geração Automática de Arquivos** com dashboards e visualizações
-
-### 🔧 Infraestrutura Robusta
-- **Módulos Compartilhados** para reutilização e consistência
-- **Cache Inteligente** para otimização de performance
-- **Processamento Paralelo** para análises pesadas
-- **Validação Automática** de qualidade dos dados
-- **Formatação Padronizada** de relatórios
-
-### 📊 Outputs Profissionais
-- **Relatórios Executivos** em HTML e JSON
-- **Dashboards Interativos** com Plotly
-- **Insights Acionáveis** baseados em evidências
-- **Recomendações Estratégicas** automatizadas
-- **Alertas Inteligentes** para problemas críticos
-- **Arquivos CSV Estruturados** para análises externas
-- **Dashboards HTML Personalizados** com visualizações avançadas
-- **Matrizes de Análise ML** exportáveis
-- **Mapas Geográficos Interativos** para distribuição regional
-
----
-
-*Documentação gerada automaticamente para o sistema Insights AI v4.1 - Atualizada com Tools de Exportação e Geração de Arquivos* 
+**Esta documentação completa fornece todas as informações necessárias para implementar as Tools do Insights AI em qualquer projeto CrewAI, com exemplos práticos, workflows de integração e troubleshooting.** 

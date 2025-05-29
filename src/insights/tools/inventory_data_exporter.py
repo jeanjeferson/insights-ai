@@ -22,7 +22,7 @@ class InventoryDataExporterInput(BaseModel):
     )
     
     output_path: str = Field(
-        default="data/outputs/analise_estoque_dados_completos.csv",
+        default="assets/data/analise_estoque_dados_completos.csv",
         description="Caminho de saída para o arquivo CSV de estoque exportado"
     )
     
@@ -87,7 +87,7 @@ class InventoryDataExporter(BaseTool, DataPreparationMixin, JewelryBusinessAnaly
     args_schema: Type[BaseModel] = InventoryDataExporterInput
 
     def _run(self, data_csv: str = "data/vendas.csv", 
-             output_path: str = "data/outputs/analise_estoque_dados_completos.csv",
+             output_path: str = "assets/data/analise_estoque_dados_completos.csv",
              include_abc_classification: bool = True,
              include_risk_analysis: bool = True,
              include_ml_recommendations: bool = True,

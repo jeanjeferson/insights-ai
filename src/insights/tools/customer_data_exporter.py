@@ -22,7 +22,7 @@ class CustomerDataExporterInput(BaseModel):
     )
     
     output_path: str = Field(
-        default="data/outputs/analise_clientes_dados_completos.csv",
+        default="assets/data/analise_clientes_dados_completos.csv",
         description="Caminho de saída para o arquivo CSV de clientes exportado"
     )
     
@@ -87,7 +87,7 @@ class CustomerDataExporter(BaseTool, DataPreparationMixin, JewelryBusinessAnalys
     args_schema: Type[BaseModel] = CustomerDataExporterInput
 
     def _run(self, data_csv: str = "data/vendas.csv", 
-             output_path: str = "data/outputs/analise_clientes_dados_completos.csv",
+             output_path: str = "assets/data/analise_clientes_dados_completos.csv",
              include_rfm_analysis: bool = True,
              include_clv_calculation: bool = True,
              include_geographic_analysis: bool = True,

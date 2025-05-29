@@ -1,0 +1,480 @@
+
+            <!DOCTYPE html>
+            <html lang="pt-BR">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>📊 Sales Team Analysis - Insights AI</title>
+                <style>
+                    * {
+                        margin: 0;
+                        padding: 0;
+                        box-sizing: border-box;
+                    }
+                    
+                    body {
+                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+                        min-height: 100vh;
+                        padding: 20px;
+                        line-height: 1.6;
+                    }
+                    
+                    .container {
+                        max-width: 1200px;
+                        margin: 0 auto;
+                        background: white;
+                        border-radius: 20px;
+                        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+                        overflow: hidden;
+                    }
+                    
+                    .header {
+                        background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+                        color: white;
+                        padding: 40px;
+                        text-align: center;
+                    }
+                    
+                    .header h1 {
+                        font-size: 2.5em;
+                        margin-bottom: 10px;
+                        font-weight: 300;
+                    }
+                    
+                    .header p {
+                        font-size: 1.2em;
+                        opacity: 0.9;
+                    }
+                    
+                    .content {
+                        padding: 40px;
+                    }
+                    
+                    .kpi-grid {
+                        display: grid;
+                        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                        gap: 20px;
+                        margin-bottom: 30px;
+                    }
+                    
+                    .kpi-card {
+                        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+                        padding: 25px;
+                        border-radius: 15px;
+                        border: 1px solid #e2e8f0;
+                        text-align: center;
+                        transition: transform 0.3s ease;
+                    }
+                    
+                    .kpi-card:hover {
+                        transform: translateY(-5px);
+                        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+                    }
+                    
+                    .kpi-value {
+                        font-size: 2.5em;
+                        font-weight: bold;
+                        color: #1e293b;
+                        margin-bottom: 10px;
+                    }
+                    
+                    .kpi-icon {
+                        font-size: 2.5em;
+                        margin-bottom: 15px;
+                        opacity: 0.8;
+                    }
+                    
+                    .kpi-label {
+                        color: #374151;
+                        font-size: 1.1em;
+                        font-weight: 600;
+                        margin-bottom: 5px;
+                    }
+                    
+                    .kpi-meta {
+                        color: #6b7280;
+                        font-size: 0.9em;
+                        font-style: italic;
+                        margin-top: 5px;
+                    }
+                    
+                    .kpi-change {
+                        font-size: 0.9em;
+                        margin-top: 5px;
+                        padding: 5px 10px;
+                        border-radius: 20px;
+                        display: inline-block;
+                    }
+                    
+                    .kpi-change.positive {
+                        background: #dcfce7;
+                        color: #166534;
+                    }
+                    
+                    .kpi-change.negative {
+                        background: #fef2f2;
+                        color: #dc2626;
+                    }
+                    
+                    .section {
+                        margin-bottom: 40px;
+                    }
+                    
+                    .section-title {
+                        font-size: 1.8em;
+                        color: #1e293b;
+                        margin-bottom: 20px;
+                        padding-bottom: 10px;
+                        border-bottom: 3px solid #3b82f6;
+                    }
+                    
+                    .alert {
+                        background: #fef2f2;
+                        border-left: 4px solid #ef4444;
+                        padding: 15px 20px;
+                        margin: 15px 0;
+                        border-radius: 0 8px 8px 0;
+                    }
+                    
+                    .alert-title {
+                        font-weight: bold;
+                        color: #dc2626;
+                        margin-bottom: 5px;
+                    }
+                    
+                    .insight {
+                        background: #f0f9ff;
+                        border-left: 4px solid #3b82f6;
+                        padding: 15px 20px;
+                        margin: 15px 0;
+                        border-radius: 0 8px 8px 0;
+                    }
+                    
+                    .insight-title {
+                        font-weight: bold;
+                        color: #1e40af;
+                        margin-bottom: 5px;
+                    }
+                    
+                    .recommendation {
+                        background: #f0fdf4;
+                        border-left: 4px solid #22c55e;
+                        padding: 15px 20px;
+                        margin: 15px 0;
+                        border-radius: 0 8px 8px 0;
+                    }
+                    
+                    .recommendation-title {
+                        font-weight: bold;
+                        color: #166534;
+                        margin-bottom: 5px;
+                    }
+                    
+                    .health-score {
+                        background: linear-gradient(135deg, #fef3c7 0%, #fbbf24 100%);
+                        padding: 30px;
+                        border-radius: 15px;
+                        text-align: center;
+                        margin: 30px 0;
+                    }
+                    
+                    .health-score-value {
+                        font-size: 4em;
+                        font-weight: bold;
+                        color: #92400e;
+                    }
+                    
+                    .health-score-label {
+                        font-size: 1.5em;
+                        color: #92400e;
+                        margin-top: 10px;
+                    }
+                    
+                    .data-table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin: 20px 0;
+                        background: white;
+                        border-radius: 10px;
+                        overflow: hidden;
+                        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                    }
+                    
+                    .data-table th {
+                        background: #f8fafc;
+                        padding: 15px;
+                        text-align: left;
+                        font-weight: 600;
+                        color: #374151;
+                        border-bottom: 1px solid #e5e7eb;
+                    }
+                    
+                    .data-table td {
+                        padding: 12px 15px;
+                        border-bottom: 1px solid #f3f4f6;
+                    }
+                    
+                    .data-table tr:hover {
+                        background: #f9fafb;
+                    }
+                    
+                    .footer {
+                        background: #f8fafc;
+                        padding: 30px;
+                        text-align: center;
+                        color: #64748b;
+                        border-top: 1px solid #e2e8f0;
+                    }
+                    
+                    .footer-logo {
+                        font-size: 1.5em;
+                        margin-bottom: 10px;
+                    }
+                    
+                    @media (max-width: 768px) {
+                        .container {
+                            margin: 10px;
+                            border-radius: 10px;
+                        }
+                        
+                        .header {
+                            padding: 20px;
+                        }
+                        
+                        .header h1 {
+                            font-size: 2em;
+                        }
+                        
+                        .content {
+                            padding: 20px;
+                        }
+                        
+                        .kpi-grid {
+                            grid-template-columns: 1fr;
+                        }
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                    <div class="header">
+                        <h1>📊 Sales Team Analysis</h1>
+                        <p>Relatório Executivo de Business Intelligence</p>
+                        <p>Gerado em: 29/05/2025 às 12:55</p>
+                    </div>
+                    
+                    <div class="content">
+                        
+                        <div class="section">
+                            <h2 class="section-title">📊 Dados da Análise</h2>
+                            <pre style="background: #f8fafc; padding: 20px; border-radius: 10px; overflow-x: auto;">
+            {
+  "sales_data": {
+    "top_by_revenue": {
+      "Alberto Carlos de Moraes": {
+        "Total_Revenue": 275411.02999999997,
+        "Transactions": 469
+      },
+      "DISTAG": {
+        "Total_Revenue": 216250.52,
+        "Transactions": 697
+      },
+      "CONSULTOR": {
+        "Total_Revenue": 197350.02,
+        "Transactions": 603
+      },
+      "ANDRE GONÇALVES JUNIOR": {
+        "Total_Revenue": 193676.85,
+        "Transactions": 477
+      },
+      "GERENCIA": {
+        "Total_Revenue": 178385.33,
+        "Transactions": 388
+      },
+      "FEIRA": {
+        "Total_Revenue": 167555.91,
+        "Transactions": 198
+      },
+      "Osvaldo Gomes da Silva": {
+        "Total_Revenue": 160569.62,
+        "Transactions": 451
+      },
+      "GEORGE WASHINGTON DE ARAÚJO SILVA": {
+        "Total_Revenue": 134875.67,
+        "Transactions": 35
+      },
+      "Paulo Fabiano": {
+        "Total_Revenue": 121328.62,
+        "Transactions": 258
+      },
+      "Alderite Garcia Silva": {
+        "Total_Revenue": 113601.72,
+        "Transactions": 278
+      }
+    },
+    "top_by_volume": {
+      "DISTAG": {
+        "Transactions": 697,
+        "Total_Revenue": 216250.52
+      },
+      "CONSULTOR": {
+        "Transactions": 603,
+        "Total_Revenue": 197350.02
+      },
+      "ANDRE GONÇALVES JUNIOR": {
+        "Transactions": 477,
+        "Total_Revenue": 193676.85
+      },
+      "Alberto Carlos de Moraes": {
+        "Transactions": 469,
+        "Total_Revenue": 275411.02999999997
+      },
+      "Osvaldo Gomes da Silva": {
+        "Transactions": 451,
+        "Total_Revenue": 160569.62
+      },
+      "GERENCIA": {
+        "Transactions": 388,
+        "Total_Revenue": 178385.33
+      },
+      "Alderite Garcia Silva": {
+        "Transactions": 278,
+        "Total_Revenue": 113601.72
+      },
+      "Paulo Fabiano": {
+        "Transactions": 258,
+        "Total_Revenue": 121328.62
+      },
+      "GILMAR ANTONIO CARMINATTI JUNIOR": {
+        "Transactions": 214,
+        "Total_Revenue": 104465.4
+      },
+      "FEIRA": {
+        "Transactions": 198,
+        "Total_Revenue": 167555.91
+      }
+    },
+    "performance_matrix": {
+      "Total_Revenue": {
+        "ANDRE GONÇALVES JUNIOR": 193676.85,
+        "Adao Diogo Oliveira Lobato": 6710.01,
+        "Alberto Carlos de Moraes": 275411.02999999997,
+        "Alderite Garcia Silva": 113601.72,
+        "Amilton Pedrini": 10395.98,
+        "Ana Celia Rodrigues Evangelista": 76626.45,
+        "CLAUDIA ROBERTA DOS SANTOS": 7938.25,
+        "CONSULTOR": 197350.02,
+        "DISTAG": 216250.52,
+        "Emmanuel Alessandro Vieira de Mendonca": 2372.98,
+        "FEIRA": 167555.91,
+        "GEORGE WASHINGTON DE ARAÚJO SILVA": 134875.67,
+        "GERENCIA": 178385.33,
+        "GILMAR ANTONIO CARMINATTI JUNIOR": 104465.4,
+        "Jose Claudio Aparecido Troian": 31294.350000000002,
+        "LUIZ CLAUDIO DOS SANTOS": 1269.18,
+        "LUIZ FLAVIO": 43740.57,
+        "Lucas Jonatas Bilhar": 7490.71,
+        "MARCUS VINICIUS DOS SANTOS": 5326.08,
+        "Osmar Barbosa dos Santos": 96996.14,
+        "Osvaldo Gomes da Silva": 160569.62,
+        "Paulo Fabiano": 121328.62,
+        "Rodrigo Carlos de Moraes": 54256.95,
+        "Valdiney Magno Ferreira": 16198.6
+      },
+      "Avg_Ticket": {
+        "ANDRE GONÇALVES JUNIOR": 406.0311320754717,
+        "Adao Diogo Oliveira Lobato": 181.35162162162163,
+        "Alberto Carlos de Moraes": 587.2303411513859,
+        "Alderite Garcia Silva": 408.63928057553954,
+        "Amilton Pedrini": 385.03629629629626,
+        "Ana Celia Rodrigues Evangelista": 2642.291379310345,
+        "CLAUDIA ROBERTA DOS SANTOS": 317.53,
+        "CONSULTOR": 327.28029850746265,
+        "DISTAG": 310.2589956958393,
+        "Emmanuel Alessandro Vieira de Mendonca": 237.298,
+        "FEIRA": 846.2419696969697,
+        "GEORGE WASHINGTON DE ARAÚJO SILVA": 3853.590571428572,
+        "GERENCIA": 459.7560051546391,
+        "GILMAR ANTONIO CARMINATTI JUNIOR": 488.1560747663551,
+        "Jose Claudio Aparecido Troian": 590.4594339622641,
+        "LUIZ CLAUDIO DOS SANTOS": 634.59,
+        "LUIZ FLAVIO": 364.50475,
+        "Lucas Jonatas Bilhar": 749.071,
+        "MARCUS VINICIUS DOS SANTOS": 887.68,
+        "Osmar Barbosa dos Santos": 898.1124074074074,
+        "Osvaldo Gomes da Silva": 356.030199556541,
+        "Paulo Fabiano": 470.265968992248,
+        "Rodrigo Carlos de Moraes": 609.6286516853933,
+        "Valdiney Magno Ferreira": 213.13947368421054
+      },
+      "Transactions": {
+        "ANDRE GONÇALVES JUNIOR": 477,
+        "Adao Diogo Oliveira Lobato": 37,
+        "Alberto Carlos de Moraes": 469,
+        "Alderite Garcia Silva": 278,
+        "Amilton Pedrini": 27,
+        "Ana Celia Rodrigues Evangelista": 29,
+        "CLAUDIA ROBERTA DOS SANTOS": 25,
+        "CONSULTOR": 603,
+        "DISTAG": 697,
+        "Emmanuel Alessandro Vieira de Mendonca": 10,
+        "FEIRA": 198,
+        "GEORGE WASHINGTON DE ARAÚJO SILVA": 35,
+        "GERENCIA": 388,
+        "GILMAR ANTONIO CARMINATTI JUNIOR": 214,
+        "Jose Claudio Aparecido Troian": 53,
+        "LUIZ CLAUDIO DOS SANTOS": 2,
+        "LUIZ FLAVIO": 120,
+        "Lucas Jonatas Bilhar": 10,
+        "MARCUS VINICIUS DOS SANTOS": 6,
+        "Osmar Barbosa dos Santos": 108,
+        "Osvaldo Gomes da Silva": 451,
+        "Paulo Fabiano": 258,
+        "Rodrigo Carlos de Moraes": 89,
+        "Valdiney Magno Ferreira": 76
+      },
+      "Customers": {
+        "ANDRE GONÇALVES JUNIOR": 39,
+        "Adao Diogo Oliveira Lobato": 6,
+        "Alberto Carlos de Moraes": 40,
+        "Alderite Garcia Silva": 36,
+        "Amilton Pedrini": 3,
+        "Ana Celia Rodrigues Evangelista": 8,
+        "CLAUDIA ROBERTA DOS SANTOS": 5,
+        "CONSULTOR": 69,
+        "DISTAG": 72,
+        "Emmanuel Alessandro Vieira de Mendonca": 1,
+        "FEIRA": 30,
+        "GEORGE WASHINGTON DE ARAÚJO SILVA": 5,
+        "GERENCIA": 34,
+        "GILMAR ANTONIO CARMINATTI JUNIOR": 31,
+        "Jose Claudio Aparecido Troian": 7,
+        "LUIZ CLAUDIO DOS SANTOS": 1,
+        "LUIZ FLAVIO": 21,
+        "Lucas Jonatas Bilhar": 1,
+        "MARCUS VINICIUS DOS SANTOS": 2,
+        "Osmar Barbosa dos Santos": 14,
+        "Osvaldo Gomes da Silva": 60,
+        "Paulo Fabiano": 39,
+        "Rodrigo Carlos de Moraes": 14,
+        "Valdiney Magno Ferreira": 8
+      }
+    }
+  },
+  "has_sales_team_data": true
+}
+                            </pre>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="footer">
+                        <div class="footer-logo">🚀 Insights AI</div>
+                        <p>Business Intelligence Platform</p>
+                        <p>Relatório gerado automaticamente com dados em tempo real</p>
+                    </div>
+                </div>
+            </body>
+            </html>
+            

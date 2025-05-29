@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 import pyodbc
 import pandas as pd
 import os
+import time
 
 class SQLServerQueryInput(BaseModel):
     """Schema otimizado para consultas SQL Server com validações robustas."""
@@ -32,6 +33,14 @@ class SQLServerQueryInput(BaseModel):
         description="Formato de saída: 'csv' (dados estruturados), 'summary' (resumo), 'json' (JSON), 'raw' (dados brutos).",
         json_schema_extra={
             "pattern": "^(csv|summary|json|raw)$"
+        }
+    )
+    
+    max_records: Optional[int] = Field(
+        None,
+        description="Limite máximo de registros para retornar. Para datasets grandes, use um limite menor.",
+        json_schema_extra={
+            "example": 100000
         }
     )
     
@@ -178,11 +187,13 @@ class SQLServerQueryTool(BaseTool):
     ORDER BY RTRIM(grp.dgrus), YEAR(vendas.datas) DESC, MONTH(vendas.datas) DESC, CAST(vendas.datas AS DATE) DESC 
     """
 
-    def _run(self, date_start: str, date_end: Optional[str] = None, output_format: str = "csv") -> str:
+    def _run(self, date_start: str, date_end: Optional[str] = None, output_format: str = "csv", max_records: Optional[int] = None) -> str:
         print(f"🔍 SQL Query Tool executando com parâmetros:")
         print(f"   📅 Data início: {date_start}")
         print(f"   📅 Data fim: {date_end}")
         print(f"   📋 Formato: {output_format}")
+        if max_records:
+            print(f"   🔢 Limite: {max_records:,} registros")
         
         # Validar datas
         try:
@@ -214,36 +225,103 @@ class SQLServerQueryTool(BaseTool):
         
         # Substituir o placeholder pelo filtro de data real
         sql_query = self.SQL_QUERY.replace('-- <<FILTRO_DATA>>', date_filter)
+        
+        # Aplicar limite de registros se especificado
+        if max_records:
+            # Adicionar TOP clause após SELECT
+            sql_query = sql_query.replace('SELECT', f'SELECT TOP {max_records}', 1)
+            print(f"✅ Limite de {max_records:,} registros aplicado na query")
+        
         print(f"✅ Placeholder -- <<FILTRO_DATA>> substituído por: {date_filter}")
         
         try:
-            # Conectar ao SQL Server
-            conn = pyodbc.connect(conn_str)
+            print("🔌 Conectando ao SQL Server...")
+            start_time = time.time()
             
-            # Executar a consulta e buscar resultados
+            # Conectar ao SQL Server com timeout maior
+            conn = pyodbc.connect(conn_str, timeout=120)
+            
+            connection_time = time.time() - start_time
+            print(f"✅ Conexão estabelecida em {connection_time:.2f} segundos")
+            
+            # Executar a consulta diretamente com pandas (mais simples e estável)
+            print("⏰ Executando consulta SQL (pode demorar alguns segundos)...")
+            
+            query_start_time = time.time()
             df = pd.read_sql(sql_query, conn)
             
-            # Fechar a conexão
+            query_exec_time = time.time() - query_start_time
+            print(f"✅ Query executada e processada em {query_exec_time:.2f} segundos")
+            
             conn.close()
             
+            total_time = time.time() - start_time
+            print(f"🎉 Operação completa em {total_time:.2f} segundos")
+            
             # Verificar se obtivemos resultados
-            if df.empty:
+            if not df.empty:
+                print(f"📊 Total de {len(df)} registros extraídos")
+                
+                # Formatar a saída com base no formato solicitado
+                if output_format == "summary":
+                    return self._format_summary(df, date_start, date_end)
+                elif output_format == "raw":
+                    return f"Recuperados {len(df)} registros.\n\n{df.head(20).to_string()}"
+                elif output_format == "json":
+                    return f"Recuperados {len(df)} registros.\n\n{df.to_json(orient='records')}"
+                elif output_format == "csv":
+                    # Para datasets grandes, salvar em arquivo ao invés de retornar string
+                    if len(df) > 1000:  # Se mais de 50k registros
+                        # Sempre salvar em data/vendas.csv para padronização
+                        os.makedirs('data', exist_ok=True)
+                        filename = 'data/vendas.csv'
+                        df.to_csv(filename, index=False, sep=';', encoding='utf-8')
+                        
+                        # Retornar apenas confirmação sem amostra para datasets grandes
+                        return (
+                            f"✅ DADOS EXTRAÍDOS COM SUCESSO!\n"
+                            f"📊 Total: {len(df):,} registros de vendas ({date_start} a {date_end})\n"
+                            f"💾 Arquivo salvo em: {filename}\n"
+                            f"📁 Tamanho do dataset: {len(df):,} registros\n"
+                            f"📋 Colunas disponíveis: {len(df.columns)} colunas\n"
+                            f"📋 Principais colunas: {', '.join(df.columns[:10])}{'...' if len(df.columns) > 10 else ''}\n\n"
+                            f"🎯 Dataset pronto para análise pelos próximos agentes!\n"
+                            f"💡 ATENÇÃO: Arquivo padronizado salvo em 'data/vendas.csv'\n"
+                            f"💡 Todos os agentes devem ler deste arquivo padrão."
+                        )
+                    else:
+                        # Para datasets pequenos, também salvar no arquivo padrão
+                        os.makedirs('data', exist_ok=True)
+                        filename = 'data/vendas.csv'
+                        df.to_csv(filename, index=False, sep=';', encoding='utf-8')
+                        
+                        csv_result = df.to_csv(index=False, sep=';', encoding='utf-8')
+                        print(f"✅ CSV gerado com {len(csv_result)} caracteres e salvo em {filename}")
+                        return (
+                            f"✅ DADOS EXTRAÍDOS COM SUCESSO!\n"
+                            f"📊 Total: {len(df):,} registros de vendas ({date_start} a {date_end})\n"
+                            f"💾 Arquivo salvo em: {filename}\n"
+                            f"🎯 Dataset pronto para análise pelos próximos agentes!\n"
+                            f"💡 ATENÇÃO: Arquivo padronizado salvo em 'data/vendas.csv'\n"
+                            f"💡 Todos os agentes devem ler deste arquivo padrão.\n\n"
+                            f"Dados em formato CSV:\n\n{csv_result[:1000]}{'...' if len(csv_result) > 1000 else ''}"
+                        )
+                else:
+                    return f"Formato de saída não suportado: '{output_format}'"
+            else:
                 return "A consulta foi executada com sucesso mas não retornou resultados."
             
-            # Formatar a saída com base no formato solicitado
-            if output_format == "summary":
-                return self._format_summary(df, date_start, date_end)
-            elif output_format == "raw":
-                return f"Recuperados {len(df)} registros.\n\n{df.head(20).to_string()}"
-            elif output_format == "json":
-                return f"Recuperados {len(df)} registros.\n\n{df.to_json(orient='records')}"
-            elif output_format == "csv":
-                return f"Recuperados {len(df)} registros.\n\n{df.to_csv(index=False, sep=';', encoding='utf-8')}"
+        except pyodbc.OperationalError as e:
+            if "timeout" in str(e).lower():
+                print("⏰ TIMEOUT detectado na consulta SQL")
+                return f"❌ Timeout na consulta SQL: A query demorou mais que o esperado. Tente reduzir o período de análise."
             else:
-                return f"Formato de saída não suportado: '{output_format}'"
-            
+                print(f"❌ Erro operacional SQL: {e}")
+                return f"❌ Erro operacional SQL: {str(e)}"
+                
         except Exception as e:
-            return f"Erro ao executar consulta SQL: {str(e)}"
+            print(f"❌ Erro geral: {e}")
+            return f"❌ Erro ao executar consulta SQL: {str(e)}"
     
     def _format_summary(self, df: pd.DataFrame, date_start: str, date_end: Optional[str] = None) -> str:
         """Formatar um resumo dos resultados."""

@@ -1,0 +1,96 @@
+2025-05-29 15:13:09 |     INFO | crew_insights | setup_crew_file_logging:103 | ================================================================================
+2025-05-29 15:13:09 |     INFO | crew_insights | setup_crew_file_logging:104 | 🚀 INSIGHTS-AI CREW - LOGGING INICIADO
+2025-05-29 15:13:09 |     INFO | crew_insights | setup_crew_file_logging:105 | 📁 Arquivo de log: logs\crew_executions\crew_execution_20250529_151309.log
+2025-05-29 15:13:09 |     INFO | crew_insights | setup_crew_file_logging:106 | 🕒 Execução iniciada em: 2025-05-29 15:13:09
+2025-05-29 15:13:09 |     INFO | crew_insights | setup_crew_file_logging:107 | ================================================================================
+2025-05-29 15:13:09 |     INFO | crew_insights | __init__:174 | ✅ Sistema de logging em arquivo configurado com sucesso
+2025-05-29 15:13:09 |     INFO | crew_insights | __init__:181 | 🔧 Integrando com sistema COMPLETAMENTE centralizado de ferramentas...
+2025-05-29 15:13:09 |     INFO | crew_insights | validate_centralized_system:139 | 🔧 SISTEMA CENTRALIZADO VALIDADO:
+2025-05-29 15:13:09 |     INFO | crew_insights | validate_centralized_system:140 |    • Total de ferramentas: 17
+2025-05-29 15:13:09 |     INFO | crew_insights | validate_centralized_system:141 |    • Categorias disponíveis: 13
+2025-05-29 15:13:09 |     INFO | crew_insights | validate_centralized_system:142 |    • Integrações configuradas: 7
+2025-05-29 15:13:09 |     INFO | crew_insights | validate_centralized_system:143 |    • Agentes mapeados: 11
+2025-05-29 15:13:09 |     INFO | crew_insights | validate_centralized_system:144 |    • Migrações documentadas: 26
+2025-05-29 15:13:09 |     INFO | crew_insights | validate_centralized_system:145 |    • Ferramentas funcionando: 17/17 (100.0%)
+2025-05-29 15:13:09 |     INFO | crew_insights | validate_centralized_system:149 |    • Integrações habilitadas: 6/6
+2025-05-29 15:13:09 |     INFO | crew_insights | _log_advanced_tools_config_info:398 | 📊 SISTEMA TOOLS_CONFIG_V3 EXPANDIDO:
+2025-05-29 15:13:09 |     INFO | crew_insights | _log_advanced_tools_config_info:399 |    • Total de ferramentas: 17
+2025-05-29 15:13:09 |     INFO | crew_insights | _log_advanced_tools_config_info:400 |    • Categorias disponíveis: 13
+2025-05-29 15:13:09 |     INFO | crew_insights | _log_advanced_tools_config_info:401 |    • Integrações configuradas: 7
+2025-05-29 15:13:09 |     INFO | crew_insights | _log_advanced_tools_config_info:402 |    • Agentes mapeados: 11
+2025-05-29 15:13:09 |     INFO | crew_insights | _log_advanced_tools_config_info:403 |    • Migrações documentadas: 26
+2025-05-29 15:13:09 |     INFO | crew_insights | _log_advanced_tools_config_info:408 |    • Integrações habilitadas: 6/6
+2025-05-29 15:13:09 |     INFO | crew_insights | _log_advanced_tools_config_info:414 |      - basic_tools: 5 ferramentas
+2025-05-29 15:13:09 |     INFO | crew_insights | _log_advanced_tools_config_info:414 |      - advanced_ai: 5 ferramentas
+2025-05-29 15:13:09 |     INFO | crew_insights | _log_advanced_tools_config_info:414 |      - data_export: 4 ferramentas
+2025-05-29 15:13:09 |     INFO | crew_insights | _log_advanced_tools_config_info:414 |      - financial_analysis: 5 ferramentas
+2025-05-29 15:13:09 |     INFO | crew_insights | _log_advanced_tools_config_info:414 |      - customer_analysis: 4 ferramentas
+2025-05-29 15:13:09 |     INFO | crew_insights | validate_tools_setup_quiet:816 | 🔧 Sistema Tools Config V3 Expandido:
+2025-05-29 15:13:09 |     INFO | crew_insights | validate_tools_setup_quiet:817 |    • Ferramentas carregadas: 17
+2025-05-29 15:13:09 |     INFO | crew_insights | validate_tools_setup_quiet:818 |    • Categorias disponíveis: 13
+2025-05-29 15:13:09 |     INFO | crew_insights | validate_tools_setup_quiet:819 |    • Integrações configuradas: 7
+2025-05-29 15:13:09 |     INFO | crew_insights | validate_tools_setup_quiet:820 |    • Agentes mapeados: 11
+2025-05-29 15:13:09 |     INFO | crew_insights | validate_tools_setup_quiet:826 | ✅ Sistema expandido validado: 17/17 funcionando (100.0%)
+2025-05-29 15:13:09 |     INFO | crew_insights | setup_logging_callbacks:313 | 🔧 Configurando callbacks de monitoramento...
+2025-05-29 15:13:09 |     INFO | crew_insights | setup_logging_callbacks:317 |    • Handlers ativos: ['FileHandler', 'StreamHandler']
+2025-05-29 15:13:09 |     INFO | crew_insights | setup_logging_callbacks:320 |    • Arquivo de log: logs\crew_executions\crew_execution_20250529_151309.log
+2025-05-29 15:13:09 |     INFO | crew_insights | _log_system_info:286 | 🖥️ INFORMAÇÕES DO SISTEMA:
+2025-05-29 15:13:09 |     INFO | crew_insights | _log_system_info:287 |    • OS: Windows 11
+2025-05-29 15:13:09 |     INFO | crew_insights | _log_system_info:288 |    • Python: 3.12.10
+2025-05-29 15:13:09 |     INFO | crew_insights | _log_system_info:289 |    • Working Directory: C:\Users\jean.moura\Documents\Python\CrewAI\insights-ai
+2025-05-29 15:13:09 |     INFO | crew_insights | _log_system_info:290 |    • Process ID: 29412
+2025-05-29 15:13:09 |     INFO | crew_insights | _log_system_info:294 | 🔑 VARIÁVEIS DE AMBIENTE:
+2025-05-29 15:13:09 |  WARNING | crew_insights | _log_system_info:304 |    • INSIGHTS_DEBUG: NÃO DEFINIDA
+2025-05-29 15:13:09 |     INFO | crew_insights | _log_system_info:300 |    • OPENROUTER_API_KEY: sk-or-v1...a957
+2025-05-29 15:13:09 |     INFO | crew_insights | _log_system_info:306 | --------------------------------------------------
+2025-05-29 15:13:10 |     INFO | crew_insights | engenheiro_dados:493 | 🔧 Inicializando Engenheiro de Dados via sistema centralizado...
+2025-05-29 15:13:10 |     INFO | crew_insights | engenheiro_dados:497 |    • Ferramentas configuradas: ['SQLServerQueryTool', 'FileReadTool', 'BusinessIntelligenceTool']
+2025-05-29 15:13:10 |     INFO | crew_insights | analista_vendas_tendencias:514 | 📈 Inicializando Analista de Vendas e Tendências via sistema centralizado...
+2025-05-29 15:13:10 |     INFO | crew_insights | analista_vendas_tendencias:518 |    • Total de ferramentas: 17
+2025-05-29 15:13:10 |     INFO | crew_insights | analista_vendas_tendencias:519 |    • Principais: ['FileReadTool', 'SQLServerQueryTool', 'DuckDuckGoSearchTool', 'ProphetForecastTool']
+2025-05-29 15:13:10 |     INFO | crew_insights | especialista_produtos:539 | 🎯 Inicializando Especialista em Produtos via sistema centralizado...
+2025-05-29 15:13:10 |     INFO | crew_insights | especialista_produtos:542 |    • Total de ferramentas: 17
+2025-05-29 15:13:10 |     INFO | crew_insights | analista_estoque:562 | 📦 Inicializando Analista de Estoque via sistema centralizado...
+2025-05-29 15:13:10 |     INFO | crew_insights | analista_estoque:565 |    • Total de ferramentas: 17
+2025-05-29 15:13:10 |     INFO | crew_insights | analista_financeiro:585 | 💰 Inicializando Analista Financeiro via sistema centralizado...
+2025-05-29 15:13:10 |     INFO | crew_insights | analista_financeiro:590 |    • Categoria: financial_analysis
+2025-05-29 15:13:10 |     INFO | crew_insights | analista_financeiro:591 |    • Total de ferramentas: 7
+2025-05-29 15:13:10 |     INFO | crew_insights | analista_financeiro:592 |    • Ferramentas financeiras especializadas disponíveis
+2025-05-29 15:13:10 |     INFO | crew_insights | especialista_clientes:612 | 👥 Inicializando Especialista em Clientes via sistema centralizado...
+2025-05-29 15:13:10 |     INFO | crew_insights | especialista_clientes:617 |    • Categoria: customer_analysis
+2025-05-29 15:13:10 |     INFO | crew_insights | especialista_clientes:618 |    • Total de ferramentas: 6
+2025-05-29 15:13:10 |     INFO | crew_insights | especialista_clientes:619 |    • ML e análise comportamental incluídos
+2025-05-29 15:13:10 |     INFO | crew_insights | analista_performance:639 | 👤 Inicializando Analista de Performance via sistema centralizado...
+2025-05-29 15:13:10 |     INFO | crew_insights | analista_performance:642 |    • Total de ferramentas: 17
+2025-05-29 15:13:10 |     INFO | crew_insights | diretor_insights:662 | 🎯 Inicializando Diretor de Insights via sistema centralizado...
+2025-05-29 15:13:10 |     INFO | crew_insights | diretor_insights:665 |    • Total de ferramentas: 17
+2025-05-29 15:13:10 |     INFO | crew_insights | engenheiro_dados_task:682 | 📋 Configurando Task: Engenheiro de Dados
+2025-05-29 15:13:10 |     INFO | crew_insights | analista_vendas_tendencias_task:690 | 📋 Configurando Task: Analista Vendas e Tendências (Consolidada)
+2025-05-29 15:13:10 |     INFO | crew_insights | especialista_produtos_task:699 | 📋 Configurando Task: Especialista Produtos (Consolidada)
+2025-05-29 15:13:10 |     INFO | crew_insights | analista_estoque_task:708 | 📋 Configurando Task: Analista Estoque (Consolidada)
+2025-05-29 15:13:10 |     INFO | crew_insights | analista_financeiro_task:717 | 📋 Configurando Task: Analista Financeiro
+2025-05-29 15:13:10 |     INFO | crew_insights | especialista_clientes_task:726 | 📋 Configurando Task: Especialista Clientes
+2025-05-29 15:13:10 |     INFO | crew_insights | analista_performance_task:735 | 📋 Configurando Task: Analista Performance (Consolidada)
+2025-05-29 15:13:10 |     INFO | crew_insights | diretor_insights_task:744 | 📋 Configurando Task: Diretor Insights (Síntese Final)
+2025-05-29 15:13:10 |     INFO | crew_insights | crew:762 | 🚀 Configurando Crew com logging avançado...
+2025-05-29 15:13:10 |     INFO | crew_insights | before_kickoff:212 | 🚀 INICIANDO INSIGHTS-AI OTIMIZADO
+2025-05-29 15:13:10 |     INFO | crew_insights | before_kickoff:213 | ============================================================
+2025-05-29 15:13:10 |     INFO | crew_insights | before_kickoff:214 | 📅 Data/Hora: 2025-05-29 15:13:10
+2025-05-29 15:13:10 |     INFO | crew_insights | before_kickoff:215 | 📋 Inputs recebidos: {'data_inicio': '2021-05-30', 'data_fim': '2025-05-29'}
+2025-05-29 15:13:10 |     INFO | crew_insights | before_kickoff:216 | 📁 Log sendo salvo em: logs\crew_executions\crew_execution_20250529_151309.log
+2025-05-29 15:13:10 |     INFO | crew_insights | before_kickoff:217 | ============================================================
+2025-05-29 15:13:10 |     INFO | crew_insights | before_kickoff:224 | 📅 Período de análise: 2021-05-30 até 2025-05-29
+2025-05-29 15:13:10 |     INFO | crew_insights | before_kickoff:230 | ✅ Formato de datas validado com sucesso
+2025-05-29 15:13:10 |     INFO | crew_insights | before_kickoff:237 | 🔧 VALIDANDO FERRAMENTAS CRÍTICAS:
+2025-05-29 15:13:10 |     INFO | crew_insights | before_kickoff:247 |    ✅ sql_tool carregada - Tipo: SQLServerQueryTool
+2025-05-29 15:13:10 |     INFO | crew_insights | before_kickoff:247 |    ✅ prophet_tool carregada - Tipo: ProphetForecastTool
+2025-05-29 15:13:10 |     INFO | crew_insights | before_kickoff:247 |    ✅ stats_tool carregada - Tipo: StatisticalAnalysisTool
+2025-05-29 15:13:10 |     INFO | crew_insights | before_kickoff:247 |    ✅ bi_tool carregada - Tipo: BusinessIntelligenceTool
+2025-05-29 15:13:10 |     INFO | crew_insights | before_kickoff:252 | 📊 Status geral: 4/4 ferramentas críticas funcionando
+2025-05-29 15:13:10 |     INFO | crew_insights | before_kickoff:255 | 📊 PREPARANDO EXTRAÇÃO DE DADOS:
+2025-05-29 15:13:10 |     INFO | crew_insights | before_kickoff:258 |    🔄 Modo: Extração com filtro temporal 2021-05-30 a 2025-05-29
+2025-05-29 15:13:10 |     INFO | crew_insights | before_kickoff:259 |    📋 Dados serão extraídos pelo agente usando os inputs fornecidos
+2025-05-29 15:13:10 |     INFO | crew_insights | before_kickoff:270 | ============================================================
+2025-05-29 15:13:10 |     INFO | crew_insights | before_kickoff:271 | ⏱️ SETUP CONCLUÍDO em 0.01 segundos
+2025-05-29 15:13:10 |     INFO | crew_insights | before_kickoff:272 | 🚀 INICIANDO EXECUÇÃO DO CREW...
+2025-05-29 15:13:10 |     INFO | crew_insights | before_kickoff:273 | ============================================================

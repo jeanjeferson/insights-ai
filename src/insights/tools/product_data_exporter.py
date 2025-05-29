@@ -22,7 +22,7 @@ class ProductDataExporterInput(BaseModel):
     )
     
     output_path: str = Field(
-        default="data/outputs/analise_produtos_dados_completos.csv",
+        default="assets/data/analise_produtos_dados_completos.csv",
         description="Caminho de saída para o arquivo CSV exportado"
     )
     
@@ -79,7 +79,7 @@ class ProductDataExporter(BaseTool, DataPreparationMixin, JewelryBusinessAnalysi
     args_schema: Type[BaseModel] = ProductDataExporterInput
 
     def _run(self, data_csv: str = "data/vendas.csv", 
-             output_path: str = "data/outputs/analise_produtos_dados_completos.csv",
+             output_path: str = "assets/data/analise_produtos_dados_completos.csv",
              include_abc_classification: bool = True,
              include_bcg_matrix: bool = True, 
              include_lifecycle_analysis: bool = True,

@@ -1,0 +1,103 @@
+15:22:08 [INFO] 🚀 Iniciando Insights-AI Otimizado
+15:22:08 [INFO] 🚀 Inicializando Insights-AI Otimizado
+15:22:08 [INFO] 🔧 Validando sistema...
+15:22:08 [INFO] ✅ Sistema validado: 17 ferramentas
+15:22:08 [INFO] ✅ Ferramentas críticas: 3/3
+15:22:08 [INFO] 💻 Sistema: Windows_NT
+15:22:08 [INFO] 🔧 Modo: Normal
+15:22:08 [INFO] 🚀 Inicialização concluída: 3 componentes em 0.00s
+15:22:08 [INFO] ⚡ Executando análise...
+15:22:08 [INFO] 🚀 Iniciando análise Insights-AI
+15:22:08 [INFO] 📅 Período: 2025-05-22 até 2025-05-29
+15:22:08 [ERROR] ❌ Erro após 73.59s: litellm.RateLimitError: RateLimitError: OpenAIException - Request too large for gpt-4.1-mini-long-context in organization org-aSMxxc2gVycYcRu9GFdLQtXB on tokens per min (TPM): Limit 400000, Requested 514043. The input or output tokens must be reduced in order to run successfully. Visit https://platform.openai.com/account/rate-limits to learn more.
+15:25:25 [INFO] 🚀 Iniciando Insights-AI Otimizado
+15:25:25 [INFO] 🚀 Inicializando Insights-AI Otimizado
+15:25:25 [INFO] 🔧 Validando sistema...
+15:25:25 [INFO] ✅ Sistema validado: 17 ferramentas
+15:25:25 [INFO] ✅ Ferramentas críticas: 3/3
+15:25:25 [INFO] 💻 Sistema: Windows_NT
+15:25:25 [INFO] 🔧 Modo: Normal
+15:25:25 [INFO] 🚀 Inicialização concluída: 3 componentes em 0.00s
+15:25:25 [INFO] ⚡ Executando análise...
+15:25:25 [INFO] 🚀 Iniciando análise Insights-AI
+15:25:25 [INFO] 📅 Período: 2025-04-29 até 2025-05-29
+15:25:25 [ERROR] ❌ Erro após 17.03s: litellm.RateLimitError: RateLimitError: OpenAIException - Request too large for gpt-4.1-mini-long-context in organization org-aSMxxc2gVycYcRu9GFdLQtXB on tokens per min (TPM): Limit 400000, Requested 520824. The input or output tokens must be reduced in order to run successfully. Visit https://platform.openai.com/account/rate-limits to learn more.
+15:37:31 [INFO] 🚀 Iniciando Insights-AI Otimizado
+15:37:31 [INFO] 🚀 Inicializando Insights-AI Otimizado
+15:37:31 [INFO] 🔧 Validando sistema...
+15:37:31 [INFO] ✅ Sistema validado: 17 ferramentas
+15:37:31 [INFO] ✅ Ferramentas críticas: 3/3
+15:37:31 [INFO] 💻 Sistema: Windows_NT
+15:37:31 [INFO] 🔧 Modo: Normal
+15:37:31 [INFO] 🚀 Inicialização concluída: 3 componentes em 0.00s
+15:37:31 [INFO] 📊 Contexto total: 20 chars
+15:37:31 [INFO] ⚡ Executando análise...
+15:37:31 [INFO] 🚀 Iniciando análise Insights-AI
+15:37:31 [INFO] 📅 Período: 2025-05-22 até 2025-05-29
+15:37:31 [INFO] 🔄 Iniciando pré-processamento de dados...
+15:37:31 [INFO] 📊 Extraindo dados com limite de contexto...
+15:37:31 [WARNING] ⚠️ Erro no pré-processamento: SQLServerQueryTool._run() got an unexpected keyword argument 'data_inicio'
+15:37:31 [INFO] 📊 Contexto total preparado: 115 chars
+15:37:31 [INFO] ✅ Análise concluída em 414.70s
+15:37:31 [INFO] 📊 MÉTRICAS DE PERFORMANCE:
+15:37:31 [INFO]    • Nível de log: NORMAL
+15:37:31 [INFO]    • Cache habilitado: True
+15:37:31 [INFO]    • Lazy loading: True
+15:37:31 [INFO]    • Cache size: 1
+15:37:31 [INFO]    • Gerenciamento de contexto: active
+16:09:02 [INFO] 🚀 Iniciando Insights-AI com Arquitetura ETL
+16:09:02 [INFO] 🏗️ SQL → CSV → Análises Especializadas → Dashboard
+16:09:02 [INFO] 🚀 Inicializando Insights-AI Otimizado
+16:09:02 [INFO] 🔧 Validando sistema...
+16:09:02 [INFO] ✅ Sistema validado: 17 ferramentas
+16:09:02 [INFO] ✅ Ferramentas críticas: 3/3
+16:09:02 [INFO] 💻 Sistema: Windows_NT
+16:09:02 [INFO] 🔧 Modo: Normal
+16:09:02 [INFO] 🚀 Inicialização concluída: 3 componentes em 0.00s
+16:09:02 [INFO] ⚡ Executando análise com separação SQL/CSV...
+16:09:02 [INFO] 🚀 Iniciando análise Insights-AI com arquitetura ETL
+16:09:02 [INFO] 📅 Período: 2021-06-29 até 2025-05-29
+16:09:02 [INFO] 🏗️ Configurando arquitetura ETL + Análise baseada em CSV...
+16:09:02 [INFO] 🔒 Validando separação de acesso aos dados...
+16:09:02 [INFO] 🔗 Verificando conectividade SQL (apenas para engenheiro_dados)...
+16:09:02 [INFO] ✅ SQL disponível para extração de dados
+16:09:02 [INFO] 🏗️ Arquitetura ETL configurada:
+16:09:02 [INFO]    📤 engenheiro_dados: SQL Server → vendas.csv
+16:09:02 [INFO]    📥 Outros agentes: vendas.csv → análises especializadas
+16:09:02 [INFO]    🎯 diretor_insights: consolidação final
+16:46:29 [INFO] 🚀 Iniciando Insights-AI com Arquitetura ETL
+16:55:13 [INFO] 🏗️ SQL → CSV → Análises Especializadas → Dashboard
+16:55:13 [INFO] 🚀 Inicializando Insights-AI Otimizado
+16:55:13 [INFO] 🔧 Validando sistema...
+16:55:13 [INFO] ✅ Sistema validado: 17 ferramentas
+16:55:13 [INFO] ✅ Ferramentas críticas: 3/3
+16:55:13 [INFO] 💻 Sistema: Windows_NT
+16:55:13 [INFO] 🔧 Modo: Normal
+16:55:13 [INFO] 🚀 Inicialização concluída: 3 componentes em 0.00s
+16:55:13 [INFO] ⚡ Executando análise com separação SQL/CSV...
+16:55:13 [INFO] 🚀 Iniciando análise Insights-AI com arquitetura ETL
+16:55:13 [INFO] 📅 Período: 2021-06-29 até 2025-05-29
+16:55:13 [INFO] 🏗️ Configurando arquitetura ETL + Análise baseada em CSV...
+16:55:13 [INFO] 🔒 Validando separação de acesso aos dados...
+16:55:13 [INFO] 🔗 Verificando conectividade SQL (apenas para engenheiro_dados)...
+16:55:13 [INFO] ✅ SQL disponível para extração de dados
+16:55:13 [INFO] 🏗️ Arquitetura ETL configurada:
+16:55:13 [INFO]    📤 engenheiro_dados: SQL Server → data/vendas.csv
+16:55:13 [INFO]    📥 Outros agentes: data/vendas.csv → análises especializadas
+16:55:13 [INFO]    🎯 diretor_insights: consolidação final
+16:55:13 [INFO] ✅ Análise ETL concluída em 524.05s
+16:55:13 [INFO] 📊 Resultado gerado: 6,255 caracteres
+16:55:13 [INFO] 🏗️ Arquitetura ETL executada com sucesso:
+16:55:13 [INFO]    📤 Extração SQL executada pelo engenheiro_dados
+16:55:13 [INFO]    📁 Dados exportados para data/vendas.csv
+16:55:13 [INFO]    📊 Análises especializadas baseadas no CSV
+16:55:13 [INFO]    🎯 Dashboard executivo consolidado
+16:55:13 [INFO] 📊 MÉTRICAS DA ARQUITETURA ETL:
+16:55:13 [INFO]    🏗️ Arquitetura: ETL_CSV_based
+16:55:13 [INFO]    🔐 Modelo de acesso: separated_responsibilities
+16:55:13 [INFO]    🗄️ Acesso SQL restrito a: engenheiro_dados
+16:55:13 [INFO]    📁 Análise baseada em CSV: enabled
+16:55:13 [INFO]    🔧 Validação de acesso: active
+16:55:13 [INFO]    📈 Fluxo de dados: SQL_to_CSV_to_Analysis
+16:55:13 [INFO]    💾 Cache habilitado: True
+16:55:13 [INFO]    📝 Nível de log: NORMAL

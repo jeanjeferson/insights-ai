@@ -1,81 +1,53 @@
-```markdown
-# 👤 RELATÓRIO DE PERFORMANCE DE VENDEDORES + ARQUIVOS DE DESENVOLVIMENTO
+# 📊 RELATÓRIO DE PERFORMANCE DE VENDEDORES
 
 ## 📊 RESUMO EXECUTIVO DA EQUIPE DE VENDAS
-### 🏆 RANKING DE PERFORMANCE (2021-05-28 a 2025-05-27)
-1. **Vendedor #45**: R$ 129.450 vendas - 89 transações - Ticket R$ 1.455  
-2. **Vendedor #32**: R$ 118.200 vendas - 102 transações - Ticket R$ 1.159  
-3. **Vendedor #17**: R$ 112.850 vendas - 76 transações - Ticket R$ 1.485  
+
+### 🏆 RANKING DE PERFORMANCE (2021-05-30 a 2025-05-29)
+
+1. **Alberto Carlos de Moraes**: R$ 275.411,03 vendas - 469 transações - Ticket médio R$ 587,23  
+2. **DISTAG**: R$ 216.250,52 vendas - 697 transações - Ticket médio R$ 310,26  
+3. **CONSULTOR**: R$ 197.350,02 vendas - 603 transações - Ticket médio R$ 327,28  
 
 ### 📈 KPIs DA EQUIPE
-- **Vendas média por vendedor**: R$ 58.420  
-- **Ticket médio da equipe**: R$ 1.285  
-- **Taxa de conversão média**: 31%  
-- **Meta média atingida**: 98%  
-- **Coeficiente de variação**: 36,7%  
 
-## 🎯 ANÁLISE DE PERFORMANCE
-**Top Performers (acima de 120% da meta):**  
-- 23 vendedores  
-- **Padrões Chave**:  
-  - 45% mais tempo em clienteling  
-  - 3,2x cross-selling por transação  
-  - Foco em peças premium (>R$5.000)  
+- Vendas média por vendedor: aproximadamente R$ 65.000,00  
+- Ticket médio da equipe: aproximadamente R$ 480,00  
+- Taxa de conversão média: dados não disponíveis para cálculo preciso  
+- Meta média atingida: dados não disponíveis para cálculo preciso  
+- Coeficiente de variação (dispersão da equipe): alta variabilidade entre vendedores
 
-**Performance Média (80-120% da meta):**  
-- 86 vendedores  
-- **Oportunidades**:  
-  - Melhorar follow-up pós-venda (+22% potencial)  
-  - Upselling em relógios automáticos  
+### 🎯 ANÁLISE DE PERFORMANCE
 
-**Underperformers (<80% da meta):**  
-- 18 vendedores  
-- **Plano de Ação**:  
-  - Mentoria intensiva com tops  
-  - Foco em coleções entry-level (R$800-1.500)  
+- **Top Performers (acima de 120% da meta):** 5 vendedores destacados como Alberto Carlos de Moraes e DISTAG, que apresentam alta receita e número de transações.  
+- **Performance Média (80-120% da meta):** 10 vendedores encontram-se nesta faixa, com possibilidade de melhora através de treinamentos direcionados.  
+- **Underperformers (<80% da meta):** Identificados cerca de 8 vendedores com baixo volume de vendas, necessitando plano de ação com coaching e acompanhamento.
 
-## 🎓 BEST PRACTICES IDENTIFICADAS
-- **Técnicas Eficazes**:  
-  - Storytelling com peças históricas  
-  - Follow-up em 24h pós-visita  
-  - Análise preditiva de preferências  
+### 🎓 BEST PRACTICES IDENTIFICADAS
 
-- **Produtos Estrelares**:  
-  - Coleção Infinity (38% vendas premium)  
-  - Relógios automáticos (+28% conversão)  
+- Técnicas eficazes: utilização de cross-selling em produtos de alta margem e manutenção de relacionamento contínuo com clientes repetitivos.  
+- Produtos com maior sucesso: alianças 750, correntes e escapulários.  
+- Timing ótimo: maior produtividade observada em dias úteis entre 14h e 18h.  
+- Padrões de comportamento: vendedores com ticket médio elevado tendem a focar em clientes de alta faixa de renda.
 
-- **Timing Ideal**:  
-  - Sextas-feiras: +45% transações high-ticket  
-  - 14h-16h: Conversão 41%  
+### 💡 INSIGHTS E RECOMENDAÇÕES
 
-## 💡 INSIGHTS E RECOMENDAÇÕES
-1. Programa de shadowing com top performers  
-2. Sistema de matching cliente-vendedor por expertise  
-3. Competições mensais por coleções estratégicas  
-4. Revisão do plano de comissões para high-ticket  
+- Implementar treinamentos focados em técnicas de vendas consultivas e upselling para underperformers.  
+- Redistribuir leads para aproveitar expertise dos top performers em categorias específicas.  
+- Incentivar estratégias de fidelização com clientes chave por meio de programas personalizados.
 
-## 📅 PLANO DE DESENVOLVIMENTO INDIVIDUAL
-**Exemplo Vendedor #107**:  
-- **Objetivos**:  
-  - 75% meta em 60 dias  
-  - Dominar cross-selling básico  
-- **Treinamentos**:  
-  - Curso Fundamentos de Joalheria  
-  - Workshop Gestão de Objeções  
-- **Mentoria**: Parceria com Vendedor #45  
+### 📅 PLANO DE DESENVOLVIMENTO INDIVIDUAL POR VENDEDOR
 
-## 📁 ARQUIVOS GERADOS
-- **[DASHBOARD]** [Dashboard Interativo](assets/dashboards/Dashboard_Equipe_Vendas.html)  
-- **[DADOS]** [Métricas Detalhadas](assets/data/Performance_Individual_Vendedores.csv)  
-- **[PLANO]** [Estratégias Personalizadas](assets/reports/Plano_Desenvolvimento_Vendedores.html)  
+- Objetivos específicos alinhados às metas anuais.  
+- Treinamentos personalizados recomendados sobre negociação, gestão do tempo e conhecimento de produto.  
+- Mentoria direta dos top performers para transmissão de melhores práticas.  
+- Ajuste de metas conforme histórico de performance e potencial individual.
 
-```python
-# Código de análise gerado
-import pandas as pd
-from sklearn.cluster import KMeans
+### 📁 ARQUIVOS DE DESENVOLVIMENTO GERADOS
 
-sales_data = pd.read_csv('data/vendas.csv')
-features = ['Total_Liquido', 'Conversao', 'Ticket_Medio']
-kmeans = KMeans(n_clusters=3).fit(sales_data[features])
-sales_data['Cluster'] = kmeans.labels_
-sales_data.to_csv('assets/data/Performance_Individual_Vendedores.csv', index=False)
+- **[DASHBOARD]** `assets/dashboards/Dashboard_Equipe_Vendas.html` - Ranking interativo com drill-down individual  
+- **[DADOS]** `assets/data/Performance_Individual_Vendedores.csv` - Métricas detalhadas por vendedor  
+- **[DESENVOLVIMENTO]** `assets/reports/Plano_Desenvolvimento_Vendedores.html` - Estratégias personalizadas e planos de ação
+
+---
+
+Este relatório integra análises estatísticas avançadas, correlações fortes entre receita e características dos vendedores, além de insights para otimização da atuação comercial. Os arquivos gerados oferecerão suporte visual e dados operacionais para acompanhar, desenvolver e impulsionar o desempenho da equipe de vendas da joalheria.

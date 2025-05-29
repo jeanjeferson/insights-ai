@@ -22,7 +22,7 @@ class FinancialDataExporterInput(BaseModel):
     )
     
     output_path: str = Field(
-        default="data/outputs/analise_financeira_dados_completos.csv",
+        default="assets/data/analise_financeira_dados_completos.csv",
         description="Caminho de saída para o arquivo CSV financeiro exportado"
     )
     
@@ -81,7 +81,7 @@ class FinancialDataExporter(BaseTool, DataPreparationMixin, JewelryBusinessAnaly
     args_schema: Type[BaseModel] = FinancialDataExporterInput
 
     def _run(self, data_csv: str = "data/vendas.csv", 
-             output_path: str = "data/outputs/analise_financeira_dados_completos.csv",
+             output_path: str = "assets/data/analise_financeira_dados_completos.csv",
              include_kpi_analysis: bool = True,
              include_margin_analysis: bool = True,
              include_trend_analysis: bool = True,

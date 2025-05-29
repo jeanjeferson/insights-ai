@@ -1,4 +1,4 @@
-# =============== TASKS OTIMIZADAS PARA NOVAS FERRAMENTAS ===============
+# =============== TASKS ALINHADAS COM OS 8 AGENTES DEFINIDOS ===============
 
 engenheiro_dados_task:
   description: >
@@ -65,661 +65,105 @@ engenheiro_dados_task:
     **FORMATO**: JSON estruturado + relatório markdown técnico para validação pelos demais agentes
   
   agent: engenheiro_dados
-  
 
-analista_tendencias_task:
+analista_vendas_tendencias_task:
   description: >
-    📈 ANÁLISE DE TENDÊNCIAS COM IA:
+    📈 ANÁLISE COMPLETA DE VENDAS, TENDÊNCIAS, SAZONALIDADE E PROJEÇÕES:
     
-    1. **Análise Estatística Avançada**:
+    **OBJETIVO CONSOLIDADO**: Unifica análise de tendências, padrões sazonais e forecasting profissional em um único relatório abrangente.
+    
+    1. **Análise de Tendências com IA**:
        - Usar Statistical Analysis Tool para análise de correlação
        - Aplicar testes de significância estatística
        - Detectar mudanças de tendência (change point detection)
        - Calcular elasticidades e sensibilidades
     
-    2. **Contexto Externo**:
-       - Usar DuckDuckGo Search Tool para pesquisar tendências do setor
-       - Correlacionar com eventos econômicos e sociais
-       - Identificar influências externas nas vendas
-    
-    3. **Visualizações Inteligentes**:
-       - Usar Advanced Visualization Tool para gráficos de tendência
-       - Criar dashboards interativos de análise temporal
-       - Gerar mapas de calor de correlação
-    
-    4. **Modelagem Preditiva de Tendências**:
-       - Identificar tendências emergentes vs. estabelecidas
-       - Quantificar velocidade e aceleração de mudanças
-       - Prever pontos de inflexão baseado em padrões históricos
-  
-  expected_output: >
-    📊 RELATÓRIO DE ANÁLISE DE TENDÊNCIAS E PADRÕES:
-    
-    ## 📈 RELATÓRIO ESPECIALIZADO EM TENDÊNCIAS DE MERCADO
-    
-    ### 1. **RESUMO EXECUTIVO DE TENDÊNCIAS**:
-    - 🔥 Top 3 tendências críticas com impacto quantificado (% crescimento/declínio)
-    - 📊 Score de velocidade de mudança: XX/100 (lento/moderado/acelerado)
-    - ⚠️ Alertas de reversão de tendência identificados
-    - 💡 Oportunidades de timing detectadas com janela temporal
-    
-    ### 2. **KPIs DE TENDÊNCIAS**:
-    - **Velocidade de Mudança**: Taxa de aceleração/desaceleração por categoria
-    - **Correlações Críticas**: Coeficientes estatisticamente significativos (p<0.05)
-    - **Pontos de Inflexão**: Mudanças de direção identificadas
-    - **Sazonalidade vs Tendência**: Decomposição estatística STL
-    - **Persistência de Tendências**: Análise de durabilidade histórica
-    
-    ### 3. **ANÁLISE DE PRODUTOS E CATEGORIAS**:
-    - **Produtos em Ascensão**: Top 10 com % crescimento e projeção
-    - **Produtos em Declínio**: Identificação precoce com alertas
-    - **Categorias Emergentes**: Novas oportunidades detectadas
-    - **Análise de Ciclo de Vida**: Produtos por estágio (intro/crescimento/maturidade/declínio)
-    
-    ### 4. **CONTEXTO EXTERNO E CORRELAÇÕES**:
-    - Tendências de mercado (pesquisa DuckDuckGo) correlacionadas aos dados
-    - Eventos econômicos/sociais com impacto nas vendas
-    - Análise competitiva de tendências do setor
-    - Influências externas quantificadas
-    
-    ### 5. **RECOMENDAÇÕES ESTRATÉGICAS**:
-    - Adaptações de portfólio com prioridade e ROI estimado
-    - Timing ótimo para lançamentos/descontinuações
-    - Estratégias anti-cíclicas para tendências negativas
-    - Plano de monitoramento contínuo de tendências
-    
-    **FORMATO**: Relatório markdown estruturado + dashboards interativos para análise temporal
-  
-  agent: analista_tendencias
-  
-
-especialista_sazonalidade_task:
-  description: >
-    🌊 MODELAGEM SAZONAL AVANÇADA:
-    
-    1. **Decomposição Estatística STL**:
-       - Usar Statistical Analysis Tool para decomposição sazonal
+    2. **Modelagem Sazonal Avançada**:
+       - Usar Statistical Analysis Tool para decomposição sazonal STL
        - Separar tendência, sazonalidade e ruído
        - Quantificar força sazonal por categoria
        - Detectar mudanças nos padrões sazonais
-    
-    2. **Modelagem Multi-Nível**:
-       - Usar Advanced Analytics Engine para modelos hierárquicos
-       - Modelar sazonalidade anual, mensal, semanal e diária
-       - Incorporar efeitos de feriados e eventos especiais
        - Criar índices sazonais por categoria de produto
     
-    3. **Visualizações Sazonais**:
-       - Usar Advanced Visualization Tool para calendários de calor
-       - Criar dashboards de ciclos sazonais
-       - Gerar gráficos polares de sazonalidade
-    
-    4. **Análise de Eventos Especiais**:
-       - Quantificar impacto do Dia das Mães, Natal, Black Friday
-       - Modelar efeitos de campanhas promocionais
-       - Identificar oportunidades sazonais não exploradas
-  
-  expected_output: >
-    📅 RELATÓRIO ESPECIALIZADO DE SAZONALIDADE E CICLOS:
-    
-    ## 🌊 RELATÓRIO DE ANÁLISE SAZONAL AVANÇADA
-    
-    ### 1. **RESUMO EXECUTIVO SAZONAL**:
-    - 📊 Score de sazonalidade geral: XX/100 (baixa/média/alta)
-    - 🔥 Picos sazonais identificados: meses/eventos críticos com % aumento
-    - ❄️ Vales sazonais: períodos de baixa com % redução
-    - 🎯 Oportunidades sazonais não exploradas com potencial estimado
-    
-    ### 2. **KPIs SAZONAIS**:
-    - **Índices Sazonais**: Por mês/categoria (base 100 = média anual)
-    - **Amplitude Sazonal**: Diferença entre pico e vale por categoria
-    - **Previsibilidade**: Consistência dos padrões sazonais (R² > 0.8)
-    - **Velocidade de Transição**: Tempo entre picos e vales
-    - **Impacto de Eventos**: Quantificação de Natal, Dia das Mães, etc.
-    
-    ### 3. **ANÁLISE POR CATEGORIA**:
-    - **Produtos Altamente Sazonais**: Lista com amplitude > 50%
-    - **Produtos Anti-Sazonais**: Contrafluxo identificado
-    - **Categorias Estáveis**: Baixa variação sazonal (< 20%)
-    - **Novos Padrões**: Mudanças nos ciclos tradicionais
-    
-    ### 4. **CALENDÁRIO ESTRATÉGICO**:
-    - Mapeamento completo mês a mês com índices
-    - Eventos especiais e impacto quantificado
-    - Comparativo ano sobre ano com tendências
-    - Previsões sazonais para próximos 12 meses
-    
-    ### 5. **RECOMENDAÇÕES OPERACIONAIS**:
-    - **Gestão de Estoque**: Cronograma de reposição sazonal
-    - **Campanhas de Marketing**: Timing ótimo por categoria
-    - **Estratégias Anti-Sazonalidade**: Ações para suavizar flutuações
-    - **Planejamento de Caixa**: Projeções de fluxo sazonal
-    
-    **FORMATO**: Relatório markdown + calendários visuais + índices sazonais tabulados
-  
-  agent: especialista_sazonalidade
-  
-
-especialista_projecoes_task:
-  description: >
-    🔮 FORECASTING PROFISSIONAL COM PROPHET:
-    
-    1. **Modelagem Prophet Avançada**:
+    3. **Forecasting Profissional com Prophet**:
        - Usar Prophet Forecast Tool para modelagem profissional
        - Configurar sazonalidades múltiplas (anual, mensal, semanal)
        - Incorporar feriados brasileiros e eventos especiais
        - Ajustar capacidade de mercado e pontos de saturação
-    
-    2. **Validação Estatística**:
-       - Usar Statistical Analysis Tool para validação de modelos
-       - Calcular métricas de precisão (MAE, MAPE, RMSE)
-       - Aplicar testes de resíduos e autocorrelação
-       - Cross-validation temporal para robustez
-    
-    3. **Cenários Múltiplos**:
        - Criar projeções conservadora, realista e otimista
-       - Modelar impacto de campanhas futuras
-       - Simular efeitos de mudanças econômicas
-       - Incorporar insights de sazonalidade identificados
     
-    4. **Visualizações Profissionais**:
-       - Usar Advanced Visualization Tool para gráficos de projeção
-       - Criar dashboards interativos de forecast
-       - Gerar intervalos de confiança visuais
-       - Mostrar decomposição de componentes (trend, seasonality)
+    4. **Contexto Externo e Pesquisa**:
+       - Usar DuckDuckGo Search Tool para pesquisar tendências do setor
+       - Correlacionar com eventos econômicos e sociais
+       - Identificar influências externas nas vendas
+    
+    5. **Visualizações Inteligentes**:
+       - Usar Advanced Visualization Tool para gráficos de tendência
+       - Criar dashboards interativos de análise temporal
+       - Gerar mapas de calor de correlação
+       - Calendários de calor sazonais
   
   expected_output: >
-    🔮 RELATÓRIO ESPECIALIZADO DE PROJEÇÕES E FORECASTING:
+    📊 RELATÓRIO INTEGRADO DE VENDAS, TENDÊNCIAS E PROJEÇÕES:
     
-    ## 🎯 RELATÓRIO DE MODELAGEM PREDITIVA PROFISSIONAL
+    ## 📈 ANÁLISE COMPLETA TEMPORAL E FORECASTING
     
-    ### 1. **RESUMO EXECUTIVO DE PREVISÕES**:
-    - 📊 Precisão do modelo: XX% (MAE, MAPE) com benchmark de mercado
-    - 📈 Projeção para 15 dias: R$ XXX (+/-YY% intervalo de confiança)
+    ### 1. **RESUMO EXECUTIVO INTEGRADO**:
+    - 🔥 Top 3 tendências críticas com impacto quantificado
+    - 📊 Score de sazonalidade geral: XX/100 (baixa/média/alta)
+    - 🔮 Projeção para 15 dias: R$ XXX (+/-YY% intervalo de confiança)
     - ⚠️ Alertas de mudança de tendência ou cenários de risco
     - 🎯 Confiabilidade geral do modelo: XX/100 score
     
-    ### 2. **KPIs DE FORECASTING**:
-    - **Precisão do Modelo**: MAE, MAPE, RMSE com histórico de performance
-    - **Intervalos de Confiança**: 80%, 90%, 95% para gestão de risco
-    - **Decomposição de Componentes**: % tendência, sazonalidade, eventos
-    - **Cross-Validation**: Performance em dados out-of-sample
-    - **Drift Detection**: Mudanças na qualidade das previsões
+    ### 2. **ANÁLISE DE TENDÊNCIAS**:
+    - **Velocidade de Mudança**: Taxa de aceleração/desaceleração por categoria
+    - **Correlações Críticas**: Coeficientes estatisticamente significativos
+    - **Pontos de Inflexão**: Mudanças de direção identificadas
+    - **Produtos em Ascensão**: Top 10 com % crescimento e projeção
+    - **Produtos em Declínio**: Identificação precoce com alertas
     
-    ### 3. **PROJEÇÕES POR CENÁRIO**:
+    ### 3. **ANÁLISE SAZONAL DETALHADA**:
+    - **Índices Sazonais**: Por mês/categoria (base 100 = média anual)
+    - **Amplitude Sazonal**: Diferença entre pico e vale por categoria
+    - **Previsibilidade**: Consistência dos padrões sazonais
+    - **Impacto de Eventos**: Quantificação de Natal, Dia das Mães, etc.
+    - **Calendário Estratégico**: Mapeamento mês a mês com índices
+    
+    ### 4. **PROJEÇÕES PROFISSIONAIS**:
     - **Cenário Conservador (P25)**: Projeções base com 75% probabilidade
     - **Cenário Realista (P50)**: Mediana das previsões
     - **Cenário Otimista (P75)**: Upside com 25% probabilidade
-    - **Cenário de Stress**: Impacto de eventos adversos
+    - **Precisão do Modelo**: MAE, MAPE, RMSE com histórico
+    - **Decomposição de Componentes**: % tendência, sazonalidade, eventos
     
-    ### 4. **ANÁLISE POR CATEGORIA**:
-    - Projeções detalhadas por grupo de produto
-    - Variabilidade e confiabilidade por categoria
-    - Identificação de categorias com maior incerteza
-    - Recomendações específicas por segmento
+    ### 5. **CONTEXTO EXTERNO CORRELACIONADO**:
+    - Tendências de mercado correlacionadas aos dados
+    - Eventos econômicos/sociais com impacto nas vendas
+    - Análise competitiva de tendências do setor
+    - Influências externas quantificadas
     
-    ### 5. **IMPACTO OPERACIONAL**:
-    - **Gestão de Estoque**: Necessidades de reposição previstas
-    - **Planejamento de Caixa**: Fluxo de receita projetado
-    - **Alertas de Performance**: Desvios vs previsões anteriores
-    - **Planos de Contingência**: Ações para diferentes cenários
+    ### 6. **RECOMENDAÇÕES ESTRATÉGICAS INTEGRADAS**:
+    - **Adaptações de Portfólio**: com prioridade e ROI estimado
+    - **Timing Ótimo**: para lançamentos/descontinuações baseado em sazonalidade
+    - **Estratégias Anti-Cíclicas**: para tendências negativas
+    - **Gestão de Estoque**: Cronograma de reposição sazonal
+    - **Campanhas de Marketing**: Timing ótimo por categoria
     
-    ### 6. **VALIDAÇÃO E MONITORAMENTO**:
-    - Metodologia Prophet aplicada e parâmetros ótimos
-    - Limitações e premissas do modelo documentadas
-    - Sistema de acompanhamento de precisão contínua
-    - Recomendações para refinamento do modelo
-    
-    **FORMATO**: Relatório markdown estruturado + gráficos de projeção + tabelas de cenários
+    **FORMATO**: Relatório markdown estruturado + dashboards interativos + gráficos de projeção
   
-  agent: especialista_projecoes
-  
+  agent: analista_vendas_tendencias
 
-analista_segmentos_task:
+especialista_produtos_task:
   description: >
-    👥 SEGMENTAÇÃO INTELIGENTE COM IA:
+    🎯 ANÁLISE COMPLETA DE PRODUTOS, CATEGORIAS E SEGMENTAÇÃO:
     
-    1. **Análise de Performance por Categoria**:
-       - Usar KPI Calculator Tool para métricas detalhadas por categoria
-       - Calcular ROI, margem, giro e velocidade por segmento
-       - Análise ABC avançada de produtos
-       - Benchmarking entre categorias
-    
-    2. **Segmentação Automática de Clientes**:
-       - Usar Customer Insights Engine para segmentação RFM automática
-       - Aplicar clustering ML para identificar perfis
-       - Mapear preferências por categoria de produto
-       - Análise de cross-selling entre categorias
-    
-    3. **Visualizações Comparativas**:
-       - Usar Advanced Visualization Tool para dashboards comparativos
-       - Criar matriz de performance categoria vs segmento
-       - Gerar mapas estratégicos de portfólio
-    
-    4. **Inteligência Competitiva**:
-       - Analisar posicionamento relativo por categoria
-       - Identificar gaps e oportunidades de mercado
-       - Mapear elasticidade de preço por segmento
-  
-  expected_output: >
-    👥 RELATÓRIO ESPECIALIZADO DE SEGMENTAÇÃO E CATEGORIAS:
-    
-    ## 🎯 RELATÓRIO DE INTELIGÊNCIA DE SEGMENTOS E PORTFÓLIO
-    
-    ### 1. **RESUMO EXECUTIVO DE SEGMENTAÇÃO**:
-    - 📊 Total de segmentos identificados: XX clusters automaticamente detectados
-    - 🏆 Categoria líder: XXX contribui com XX% da receita e XX% margem
-    - ⚠️ Categorias em risco: XX produtos/categorias com declínio > 20%
-    - 💎 Oportunidades de cross-sell: R$ XXX potencial identificado
-    
-    ### 2. **KPIs DE SEGMENTAÇÃO**:
-    - **Performance por Categoria**: Receita, margem, giro, ROI comparativo
-    - **Análise ABC**: % produtos que geram 80% da receita
-    - **Segmentação RFM**: Clientes High/Medium/Low Value por categoria
-    - **Índice de Concentração**: Diversificação vs dependência
-    - **Cross-Selling Index**: Afinidade entre categorias (0-100)
-    
-    ### 3. **MATRIZ DE PERFORMANCE DE CATEGORIAS**:
-    - **Estrelas (Alto crescimento + Alta margem)**: Categorias para investir
-    - **Vacas Leiteiras (Baixo crescimento + Alta margem)**: Maximizar extração
-    - **Interrogações (Alto crescimento + Baixa margem)**: Decisão estratégica
-    - **Abacaxis (Baixo crescimento + Baixa margem)**: Candidatos à descontinuação
-    
-    ### 4. **PERFIS DE CLIENTE POR CATEGORIA**:
-    - Segmentação automática por comportamento de compra
-    - Valor médio de transação por segmento
-    - Frequência e recência por categoria
-    - Mapas de jornada do cliente cross-category
-    
-    ### 5. **ANÁLISE COMPETITIVA DE PORTFÓLIO**:
-    - Posicionamento relativo no mercado por categoria
-    - Análise de elasticidade de preço
-    - Gaps de produto vs oportunidades identificadas
-    - Benchmarking de margens por segmento
-    
-    ### 6. **RECOMENDAÇÕES ESTRATÉGICAS**:
-    - **Portfólio Mix**: Categorias para expansão/contração
-    - **Estratégias de Preço**: Premium vs competitivo por segmento
-    - **Cross-Selling**: Campanhas direcionadas com ROI estimado
-    - **Roadmap de Produto**: Lançamentos e descontinuações priorizadas
-    
-    **FORMATO**: Relatório markdown + matriz de performance + mapas de segmentação
-  
-  agent: analista_segmentos
-  
-
-analise_inventario_task:
-  description: >
-    📦 OTIMIZAÇÃO INTELIGENTE DE ESTOQUE:
-    
-    1. **KPIs Avançados de Inventário**:
-       - Usar KPI Calculator Tool para métricas especializadas
-       - Calcular inventory turnover, DSO, fill rate por categoria
-       - Análise ABC dinâmica com machine learning
-       - Métricas de obsolescência e slow-moving
-    
-    2. **Sistema de Recomendações ML**:
-       - Usar Recommendation Engine para otimização automática
-       - Identificar produtos para restock, liquidação ou redução
-       - Calcular níveis ótimos de estoque por categoria
-       - Recomendar timing de reposição baseado em sazonalidade
-    
-    3. **Avaliação de Riscos**:
-       - Usar Risk Assessment Tool para análise de riscos de inventário
-       - Quantificar riscos de obsolescência por categoria
-       - Avaliar exposição a mudanças de demanda
-       - Identificar pontos de ruptura críticos
-    
-    4. **Dashboards Operacionais**:
-       - Usar Advanced Visualization Tool para dashboards de estoque
-       - Criar alertas visuais de reposição
-       - Mapas de calor de performance de inventário
-       - Dashboards de liquidação e oportunidades
-  
-  expected_output: >
-    📦 RELATÓRIO ESPECIALIZADO DE GESTÃO DE INVENTÁRIO:
-    
-    ## 🎯 RELATÓRIO DE OTIMIZAÇÃO INTELIGENTE DE ESTOQUE
-    
-    ### 1. **RESUMO EXECUTIVO DE INVENTÁRIO**:
-    - 💰 Capital total em estoque: R$ XXX (XX% do ativo total)
-    - 📊 Giro médio de inventário: XX vezes/ano (benchmark: XX)
-    - ⚠️ Produtos em risco de obsolescência: XX itens (R$ XXX valor)
-    - 🚨 Alertas de ruptura: XX produtos com risco em XX dias
-    
-    ### 2. **KPIs CRÍTICOS DE INVENTÁRIO**:
-    - **Inventory Turnover**: Giro por categoria vs benchmark
-    - **DSO (Days Sales Outstanding)**: Dias de venda em estoque
-    - **Fill Rate**: % atendimento sem ruptura por categoria
-    - **Shrinkage**: Perdas e obsolescência como % do total
-    - **Working Capital**: Capital de giro em inventário
-    
-    ### 3. **ANÁLISE ABC+ DINÂMICA**:
-    - **Classe A (70% receita)**: XX produtos - gestão intensiva
-    - **Classe B (20% receita)**: XX produtos - gestão balanceada  
-    - **Classe C (10% receita)**: XX produtos - gestão simplificada
-    - **Classe D (Slow-moving)**: XX produtos - ação imediata
-    
-    ### 4. **RECOMENDAÇÕES AUTOMÁTICAS ML**:
-    - **Restock Urgente**: Top 20 produtos com nível crítico
-    - **Liquidação Imediata**: Produtos para promoção/desconto
-    - **Níveis Ótimos**: Estoque ideal por produto/categoria
-    - **Timing de Reposição**: Cronograma baseado em sazonalidade
-    
-    ### 5. **ANÁLISE DE RISCOS**:
-    - **Risco de Obsolescência**: Produtos com baixo giro há XX meses
-    - **Risco de Ruptura**: Previsão de stockout em XX dias
-    - **Concentração de Risco**: % inventário em top 10 produtos
-    - **Exposição Sazonal**: Risco de sobrestoque pós-alta temporada
-    
-    ### 6. **OPORTUNIDADES FINANCEIRAS**:
-    - **Liberação de Caixa**: R$ XXX através de otimização
-    - **Redução de Carrying Cost**: Economia estimada R$ XXX/mês
-    - **ROI de Liquidações**: Retorno vs manter estoque
-    - **Investimento em Fast Movers**: Oportunidades identificadas
-    
-    ### 7. **PLANO DE AÇÃO EXECUTÁVEL**:
-    - Timeline de 30/60/90 dias com ações específicas
-    - Responsáveis e métricas de acompanhamento
-    - Budget necessário para otimizações
-    - Sistema de alertas automatizados
-    
-    **FORMATO**: Relatório executivo + dashboard operacional + listas de ação prioritárias
-  
-  agent: analista_inventario
-  
-
-analise_financeira_task:
-  description: >
-    💰 ANÁLISE FINANCEIRA AVANÇADA COM BUSINESS INTELLIGENCE:
-    
-    1. **KPIs Financeiros Críticos**:
-       - Usar KPI Calculator Tool para métricas financeiras especializadas
-       - Calcular ROI, ROIC, margem bruta/líquida, EBITDA por categoria
-       - Análise de rentabilidade por produto/cliente
-       - Métricas de eficiência operacional e capital de giro
-    
-    2. **Análise de Fluxo de Caixa**:
-       - Usar Statistical Analysis Tool para projeções de caixa
-       - Análise de ciclo de conversão de caixa
-       - Sazonalidade do fluxo financeiro
-       - Necessidades de capital de giro por período
-    
-    3. **Performance vs Benchmark**:
-       - Usar Competitive Intelligence Tool para comparação de mercado
-       - Benchmarking de margens vs concorrentes
-       - Análise de múltiplos financeiros do setor
-       - Posicionamento competitivo em eficiência
-    
-    4. **Análise de Risco Financeiro**:
-       - Usar Risk Assessment Tool para análise de riscos financeiros
-       - Concentração de receita por cliente/produto
-       - Análise de sensibilidade a mudanças de preço/volume
-       - Projeções de cenários de stress financeiro
-  
-  expected_output: >
-    💰 RELATÓRIO ESPECIALIZADO DE ANÁLISE FINANCEIRA:
-    
-    ## 📊 RELATÓRIO DE PERFORMANCE FINANCEIRA CORPORATIVA
-    
-    ### 1. **RESUMO EXECUTIVO FINANCEIRO**:
-    - 💰 Receita total período: R$ XXX (YY% vs período anterior)
-    - 📊 Margem bruta média: XX% (benchmark setor: XX%)
-    - 🎯 ROI consolidado: XX% vs meta de XX%
-    - ⚠️ Principais riscos financeiros identificados com impacto quantificado
-    
-    ### 2. **KPIs FINANCEIROS CRÍTICOS**:
-    - **Rentabilidade**: ROI, ROIC, ROE por categoria e total
-    - **Margens**: Bruta, operacional, líquida com evolução temporal
-    - **Eficiência**: Giro do ativo, prazo médio recebimento/pagamento
-    - **Liquidez**: Capital de giro, índices de liquidez corrente/seca
-    - **Alavancagem**: Estrutura de capital e custo financeiro
-    
-    ### 3. **ANÁLISE DE RENTABILIDADE**:
-    - **Por Categoria**: Contribuição marginal e ROI por linha de produto
-    - **Por Cliente**: Análise de rentabilidade cliente-específica
-    - **Por Canal**: Performance financeira por canal de venda
-    - **Análise ABC Financeira**: Produtos/clientes que geram 80% do lucro
-    
-    ### 4. **GESTÃO DE CAPITAL DE GIRO**:
-    - Ciclo de conversão de caixa (CCC) atual vs otimizado
-    - Necessidade de capital de giro por sazonalidade
-    - Oportunidades de liberação de caixa identificadas
-    - Impacto de mudanças nos prazos de pagamento/recebimento
-    
-    ### 5. **ANÁLISE COMPETITIVA FINANCEIRA**:
-    - Benchmarking de margens vs principais concorrentes
-    - Múltiplos financeiros do setor vs empresa
-    - Análise de eficiência operacional comparativa
-    - Vantagens/desvantagens competitivas quantificadas
-    
-    ### 6. **PROJEÇÕES E CENÁRIOS FINANCEIROS**:
-    - **Cenário Base**: Projeções financeiras próximos 12 meses
-    - **Cenário Otimista**: Upside com expansão de margens
-    - **Cenário Pessimista**: Stress test com redução de demanda
-    - **Análise de Sensibilidade**: Impacto de mudanças em variáveis-chave
-    
-    ### 7. **RECOMENDAÇÕES FINANCEIRAS**:
-    - Ações para otimização de margens com ROI estimado
-    - Estratégias de gestão de capital de giro
-    - Oportunidades de redução de custos priorizadas
-    - Investimentos necessários com payback calculado
-    
-    **FORMATO**: Relatório financeiro executivo + dashboards de KPIs + cenários de projeção
-  
-  agent: analista_financeiro
-  
-
-analise_clientes_rfv_task:
-  description: >
-    👥 ANÁLISE AVANÇADA DE CLIENTES RFV (RECÊNCIA, FREQUÊNCIA, VALOR):
-    
-    1. **Segmentação RFV Automática**:
-       - Usar Customer Insights Engine para segmentação RFV avançada
-       - Aplicar machine learning para clustering automático de clientes
-       - Calcular scores RFV individuais e por segmento
-       - Identificar perfis comportamentais de alta/baixa valor
-    
-    2. **Análise de Valor Vitalício (CLV)**:
-       - Usar Statistical Analysis Tool para cálculo de CLV
-       - Projeção de valor futuro por segmento de cliente
-       - Análise de churn risk por categoria RFV
-       - ROI de campanhas de retenção vs aquisição
-    
-    3. **Inteligência Comportamental**:
-       - Usar Advanced Analytics Engine para padrões comportamentais
-       - Análise de jornada do cliente cross-category
-       - Sazonalidade de compras por segmento RFV
-       - Triggers de reativação para clientes dormentes
-    
-    4. **Estratégias Personalizadas**:
-       - Usar Recommendation Engine para estratégias por segmento
-       - Campanhas direcionadas com ROI estimado
-       - Preços personalizados por valor do cliente
-       - Cross-sell/up-sell direcionado por perfil RFV
-  
-  expected_output: >
-    👥 RELATÓRIO ESPECIALIZADO DE ANÁLISE DE CLIENTES RFV:
-    
-    ## 🎯 RELATÓRIO DE INTELIGÊNCIA DE CLIENTES E RELACIONAMENTO
-    
-    ### 1. **RESUMO EXECUTIVO RFV**:
-    - 👑 Clientes VIP (High RFV): XX clientes geram XX% da receita
-    - 📊 Score RFV médio da base: XX/100 (distribução detalhada)
-    - 🚨 Clientes em risco de churn: XX% da base ativa
-    - 💰 CLV médio: R$ XXX com potencial de otimização R$ XXX
-    
-    ### 2. **SEGMENTAÇÃO RFV DETALHADA**:
-    - **Campeões (High R+F+V)**: XX% - estratégias de fidelização premium
-    - **Leais (High F+V, médio R)**: XX% - programas de retenção
-    - **Potenciais Leais (High R+V, médio F)**: XX% - incentivo frequência
-    - **Novos Clientes (High R, baixo F+V)**: XX% - onboarding estratégico
-    - **Em Risco (baixo R, alto F+V)**: XX% - campanhas de reativação
-    - **Perdidos (baixo R+F+V)**: XX% - análise de win-back ROI
-    
-    ### 3. **KPIs DE RELACIONAMENTO**:
-    - **Ticket Médio por Segmento**: Variação entre campeões vs novos
-    - **Frequência de Compra**: Intervalos médios por categoria RFV
-    - **Taxa de Retenção**: % clientes ativos por período por segmento
-    - **Churn Rate**: Taxa de perda por categoria RFV
-    - **Share of Wallet**: Participação estimada vs potencial
-    
-    ### 4. **ANÁLISE DE VALOR VITALÍCIO (CLV)**:
-    - CLV por segmento com projeções 12/24/36 meses
-    - Payback period de campanhas de aquisição vs segmento
-    - ROI de investimentos em retenção por categoria RFV
-    - Identificação de clientes "diamante" com maior potencial
-    
-    ### 5. **INTELIGÊNCIA COMPORTAMENTAL**:
-    - **Padrões de Compra**: Sazonalidade e ciclos por segmento
-    - **Preferências de Categoria**: Afinidade produto vs perfil RFV
-    - **Canais Preferenciais**: Online vs offline por segmento
-    - **Sensibilidade a Preço**: Elasticidade por categoria de cliente
-    
-    ### 6. **OPORTUNIDADES DE CRESCIMENTO**:
-    - **Cross-Sell**: Produtos complementares por perfil RFV
-    - **Up-Sell**: Oportunidades de ticket médio maior
-    - **Reativação**: Clientes dormentes com maior potencial
-    - **Expansão de Categoria**: Novos produtos para clientes leais
-    
-    ### 7. **ESTRATÉGIAS PERSONALIZADAS**:
-    - Campanhas específicas por segmento com ROI estimado
-    - Programa de fidelidade diferenciado por valor
-    - Estratégias de preço dinâmico por perfil
-    - Cronograma de comunicação personalizada
-    
-    ### 8. **PLANO DE AÇÃO CRM**:
-    - Automações de marketing por trigger comportamental
-    - Sistema de alertas para mudanças de segmento
-    - Métricas de acompanhamento por categoria RFV
-    - Budget de campanhas direcionadas com ROI esperado
-    
-    **FORMATO**: Relatório estratégico + matriz RFV + dashboards comportamentais + ações CRM
-  
-  agent: especialista_clientes
-  
-
-# =============== TASKS ESPECIALIZADAS POR DIMENSÃO ===============
-
-analise_clientes_avancada_task:
-  description: >
-    👥 ANÁLISE COMPLETA DE CLIENTES COM TODAS AS FERRAMENTAS:
-    
-    **OBJETIVO**: Gerar relatório completo de clientes usando Customer Insights Engine, Advanced Analytics, Statistical Analysis e KPI Calculator.
-    **IMPORTANTE**: Criar arquivos de apoio específicos além do relatório principal.
-    
-    1. **Customer Insights Engine - Segmentação RFM Avançada**:
-       - Executar segmentação RFM automática com machine learning
-       - Calcular CLV (Customer Lifetime Value) por segmento detalhado
-       - Análise de churn risk com scores individuais
-       - Mapear jornada completa do cliente cross-category
-       - Identificar padrões comportamentais por perfil RFM
-    
-    2. **Advanced Analytics Engine - ML e Clustering**:
-       - Clustering comportamental avançado de clientes
-       - Detecção de anomalias em padrões de compra
-       - Análise preditiva de valor futuro por cliente
-       - Identificar clientes "diamante" com maior potencial
-       - **CRIAR ARQUIVO: assets/data/Matriz_Clusters_ML_V2.csv** com dados dos clusters
-    
-    3. **Statistical Analysis Tool - Demografia e Geografia**:
-       - Análise demográfica detalhada por idade, sexo, estado civil
-       - Análise geográfica por estado, cidade e região
-       - Correlações entre perfil demográfico e comportamento de compra
-       - Testes estatísticos de significância em segmentação
-       - **CRIAR ARQUIVO: assets/maps/Heatmap_Clientes_por_CEP.html** com mapa interativo
-    
-    4. **KPI Calculator Tool - Métricas Críticas**:
-       - Total de clientes únicos no período {data_inicio} a {data_fim}
-       - % clientes VIP (High RFV) com thresholds personalizados
-       - CLV médio geral e por segmento (12/24/36 meses)
-       - Frequência média de compras por segmento
-       - Taxa de retenção por período e segmento
-       - % clientes saudáveis vs em risco de churn
-       - Ticket médio por segmento RFM
-    
-    5. **Business Intelligence Tool - Dashboards Interativos**:
-       - Dashboard completo de clientes com drill-down
-       - Mapas geográficos de distribuição de clientes
-       - Visualizações demográficas interativas
-       - Gráficos de evolução RFM temporal
-       - **CRIAR ARQUIVO: assets/dashboards/Dashboard_Interativo_RFM_v4.1.html** com dashboard completo
-    
-         6. **Outputs Específicos a Criar com File Generation Tool**:
-        - **OBRIGATÓRIO**: Usar File Generation Tool com file_type='customer_clusters_csv' para criar assets/data/Matriz_Clusters_ML_V2.csv
-        - **OBRIGATÓRIO**: Usar File Generation Tool com file_type='geographic_heatmap' para criar assets/maps/Heatmap_Clientes_por_CEP.html
-        - **OBRIGATÓRIO**: Usar File Generation Tool com file_type='customer_rfm_dashboard' para criar assets/dashboards/Dashboard_Interativo_RFM_v4.1.html
-        - **OBRIGATÓRIO**: Incluir links corretos para estes arquivos reais no relatório final
-
-  expected_output: >
-    👥 RELATÓRIO COMPLETO DE ANÁLISE DE CLIENTES + ARQUIVOS DE APOIO:
-    
-    ## 📊 RESUMO EXECUTIVO DE CLIENTES
-    
-    ### 📈 KPIs CRÍTICOS DE CLIENTES ({data_inicio} a {data_fim})
-    - **Total de clientes únicos**: XXX clientes ativos
-    - **Clientes VIP (RFM Alto)**: XXX clientes (XX% da base)
-    - **CLV médio geral**: R$ XXX (projeção 24 meses)
-    - **CLV por segmento**: Campeões R$ XXX, Leais R$ XXX, Novos R$ XXX
-    - **Frequência média**: XX dias entre compras
-    - **Taxa de retenção**: XX% (benchmark: XX%)
-    - **Clientes saudáveis**: XX% vs XX% em risco de churn
-    - **Ticket médio por segmento**: VIP R$ XXX, Regular R$ XXX
-    
-    ### 👑 TOP 10 CLIENTES POR VALOR VITALÍCIO
-    1. Cliente XXX - CLV: R$ XXX - Segmento: Campeão - Última compra: XX dias
-    2. Cliente XXX - CLV: R$ XXX - Segmento: Leal - Última compra: XX dias
-    [Lista completa com perfil RFM e recomendações específicas]
-    
-    ### 🎯 SEGMENTAÇÃO RFM DETALHADA COM ML
-    - **Campeões (High R+F+V)**: XX% - Estratégia premium personalizada
-    - **Leais (High F+V)**: XX% - Programas de fidelização avançados  
-    - **Potenciais Leais**: XX% - Campanhas de frequência
-    - **Novos Clientes**: XX% - Onboarding estratégico
-    - **Em Risco**: XX% - Reativação urgente
-    - **Perdidos**: XX% - Win-back com ROI calculado
-    
-    ### 🌍 INTELIGÊNCIA GEOGRÁFICA E DEMOGRÁFICA
-    - **Performance por Estado**: Top 5 com concentração e CLV médio
-    - **Análise por Faixa Etária**: 18-25, 26-35, 36-50, 50+ anos
-    - **Perfil por Gênero**: Comportamento masculino vs feminino
-    - **Estado Civil**: Solteiros, casados, outros - padrões de compra
-    
-    ### 🧠 INSIGHTS COMPORTAMENTAIS COM IA
-    - Padrões sazonais por segmento RFM
-    - Categorias preferidas por perfil demográfico
-    - Canais de compra preferenciais por segmento
-    - Triggers de recompra identificados por ML
-    
-    ### 🎯 ESTRATÉGIAS PERSONALIZADAS POR SEGMENTO
-    - Campanhas específicas com ROI estimado
-    - Cronograma de comunicação otimizado
-    - Ofertas personalizadas por perfil
-    - Programas de fidelidade diferenciados
-    
-    ### 📁 ARQUIVOS DE APOIO GERADOS
-    - **[DASHBOARD]** assets/dashboards/Dashboard_Interativo_RFM_v4.1.html - Dashboard completo com filtros e drill-down
-    - **[DADOS]** assets/data/Matriz_Clusters_ML_V2.csv - Dataset completo dos clusters com scores RFM
-    - **[MAPA]** assets/maps/Heatmap_Clientes_por_CEP.html - Mapa interativo de distribuição geográfica
-    
-    **FORMATO**: Relatório executivo + 3 arquivos de apoio com dados/visualizações específicas
-
-  agent: especialista_clientes
-  
-
-analise_produtos_avancada_task:
-  description: >
-    📦 ANÁLISE COMPLETA DE PRODUTOS COM INTELIGÊNCIA ARTIFICIAL:
-    
-    **OBJETIVO**: Relatório detalhado de performance de produtos usando Advanced Analytics, Statistical Analysis, Recommendation Engine e KPI Calculator.
-    **IMPORTANTE**: Criar arquivos de apoio visuais específicos.
+    **OBJETIVO CONSOLIDADO**: Unifica análise de produtos, classificação ABC, market basket analysis e estratégias de cross-sell.
     
     1. **Advanced Analytics Engine - Análise ABC com ML**:
        - Classificação ABC automática baseada em receita, margem e giro
        - Identificação inteligente de slow movers e dead stock
        - Clustering de produtos por performance e características
        - Análise de ciclo de vida automatizada por categoria
-       - **CRIAR ARQUIVO: assets/data/Classificacao_ABC_ML.csv** com classificação detalhada
     
     2. **Statistical Analysis Tool - Correlações e Padrões**:
        - Correlações entre categorias de produtos
@@ -732,7 +176,6 @@ analise_produtos_avancada_task:
        - Identificação de produtos complementares
        - Recomendações de cross-sell baseadas em IA
        - Sugestões de descontinuação com análise de impacto
-       - **CRIAR ARQUIVO: assets/charts/Market_Basket_Matrix.html** com matriz interativa
     
     4. **KPI Calculator Tool - Métricas Especializadas**:
        - Total de produtos únicos vendidos no período
@@ -742,37 +185,32 @@ analise_produtos_avancada_task:
        - Giro de estoque por categoria e produto
        - Margem média por classificação ABC
     
-    5. **Risk Assessment Tool - Análise de Riscos**:
-       - Produtos em risco de obsolescência
-       - Análise de concentração de receita por produto
-       - Risco de ruptura por sazonalidade
+    5. **Segmentação e Performance Comparativa**:
+       - Usar Business Intelligence Tool para dashboards comparativos
+       - Criar matriz BCG avançada (crescimento vs participação)
+       - Gerar mapas estratégicos de portfólio com ações recomendadas
     
-    6. **Business Intelligence Tool - Visualizações**:
-       - Dashboard de performance de produtos
-       - Gráficos de giro e margem por categoria
-       - **CRIAR ARQUIVO: assets/dashboards/Dashboard_Produtos_ABC.html** com análise visual completa
-    
-         7. **Outputs Específicos a Criar com File Generation Tool**:
-        - **OBRIGATÓRIO**: Usar File Generation Tool com file_type='product_abc_dashboard' para criar assets/dashboards/Dashboard_Produtos_ABC.html
-        - **OBRIGATÓRIO**: Usar File Generation Tool com file_type='market_basket_matrix' para criar assets/charts/Market_Basket_Matrix.html
-        - **OBRIGATÓRIO**: Incluir referências corretas para arquivos reais no relatório final
-
   expected_output: >
-    📦 RELATÓRIO COMPLETO DE ANÁLISE DE PRODUTOS + ARQUIVOS DE APOIO:
+    🎯 RELATÓRIO COMPLETO DE ANÁLISE DE PRODUTOS E CATEGORIAS:
     
-    ## 📊 RESUMO EXECUTIVO DE PRODUTOS
+    ## 📊 INTELIGÊNCIA DE PORTFÓLIO E SEGMENTAÇÃO
     
-    ### 📈 KPIs CRÍTICOS DE PRODUTOS ({data_inicio} a {data_fim})
-    - **Total de produtos únicos**: XXX SKUs ativos
+    ### 1. **RESUMO EXECUTIVO DE PRODUTOS**:
+    - 📊 Total de produtos únicos: XXX SKUs ativos
+    - 🏆 Categoria líder: XXX contribui com XX% da receita
+    - ⚠️ Categorias em risco: XX produtos com declínio > 20%
+    - 💎 Oportunidades de cross-sell: R$ XXX potencial identificado
+    - 📈 Score de performance geral: XX/100 vs benchmark
+    
+    ### 2. **CLASSIFICAÇÃO ABC COMPLETA**:
     - **Produtos Classe A**: XXX produtos (geram 80% receita)
     - **Produtos Classe B**: XXX produtos (15% receita)
     - **Produtos Classe C**: XXX produtos (5% receita)
     - **Slow Movers identificados**: XXX produtos (< 4 giros/ano)
     - **Dead Stock**: XXX produtos (sem venda 6+ meses)
     - **Giro médio geral**: XX vezes/ano
-    - **Margem média Classe A**: XX% vs Classe C: XX%
     
-    ### 🏆 TOP 10 PRODUTOS POR RECEITA E VOLUME
+    ### 3. **TOP PERFORMERS POR CATEGORIA**:
     **Por Receita:**
     1. Produto XXX - R$ XXX - Margem XX% - Giro XX vezes
     2. Produto XXX - R$ XXX - Margem XX% - Giro XX vezes
@@ -781,235 +219,108 @@ analise_produtos_avancada_task:
     1. Produto XXX - XXX unidades - Ticket médio R$ XXX
     2. Produto XXX - XXX unidades - Ticket médio R$ XXX
     
-    ### 📊 ANÁLISE ABC COMPLETA COM IA
-    - **Classe A (Stars)**: Alta receita + Alta margem - Focar investimento
-    - **Classe B (Cash Cows)**: Média receita + Alta margem - Manter performance
-    - **Classe C (Question Marks)**: Baixa receita + Potencial - Decisão estratégica
-    - **Classe D (Dogs)**: Baixa performance - Candidatos descontinuação
-    
-    ### 🔗 ANÁLISE DE MARKET BASKET E CROSS-SELL
+    ### 4. **ANÁLISE DE MARKET BASKET E CROSS-SELL**:
     - **Produtos frequentemente comprados juntos**:
       * Anel + Brincos: XX% das transações
       * Colar + Pulseira: XX% das transações
     - **Oportunidades de cross-sell**: R$ XXX potencial não explorado
     - **Produtos complementares por categoria**
     
-    ### 📈 ANÁLISE DE CICLO DE VIDA E SAZONALIDADE
-    - **Produtos em crescimento**: XXX itens com trend positivo
-    - **Produtos maduros**: XXX itens estáveis
-    - **Produtos em declínio**: XXX itens para ação
-    - **Índices sazonais por categoria**: Natal +XX%, Dia das Mães +XX%
+    ### 5. **MATRIZ BCG ESTRATÉGICA**:
+    - **Stars (Alto crescimento + Alta participação)**: XX produtos - Investir agressivamente
+    - **Cash Cows (Baixo crescimento + Alta participação)**: XX produtos - Maximizar extração
+    - **Question Marks (Alto crescimento + Baixa participação)**: XX produtos - Decisão estratégica
+    - **Dogs (Baixo crescimento + Baixa participação)**: XX produtos - Descontinuar
     
-    ### ⚠️ ALERTAS E RECOMENDAÇÕES
+    ### 6. **ANÁLISE DE CICLO DE VIDA**:
+    - **Produtos em Introdução**: XX produtos, investimento R$ XXX
+    - **Produtos em Crescimento**: XX produtos, crescimento +XX% anual
+    - **Produtos Maduros**: XX produtos, estabilidade +/-XX%
+    - **Produtos em Declínio**: XX produtos, cronograma liquidação
+    
+    ### 7. **RECOMENDAÇÕES ESTRATÉGICAS**:
     - **Restock urgente**: XXX produtos com risco de ruptura
     - **Liquidação recomendada**: XXX produtos slow movers
     - **Descontinuação sugerida**: XXX produtos dead stock
     - **Novos lançamentos**: Gaps identificados por categoria
+    - **Cross-selling direcionado**: Campanhas específicas com ROI estimado
     
-    ### 📁 ARQUIVOS DE APOIO GERADOS
-    - **[DASHBOARD]** assets/dashboards/Dashboard_Produtos_ABC.html - Análise visual completa com filtros
-    - **[DADOS]** assets/data/Classificacao_ABC_ML.csv - Dataset com scores e classificações por produto
-    - **[MATRIX]** assets/charts/Market_Basket_Matrix.html - Matriz interativa de produtos complementares
-    
-    **FORMATO**: Relatório executivo + 3 arquivos de apoio especializados
-
-  agent: analista_segmentos
+    **FORMATO**: Relatório executivo + dashboards ABC + matrizes de cross-sell
   
+  agent: especialista_produtos
 
-analise_financeira_avancada_task:
-  description: >
-    💰 ANÁLISE FINANCEIRA COMPLETA COM TODAS AS DIMENSÕES:
-    
-    **OBJETIVO**: Relatório financeiro executivo com KPIs críticos, análise de margens, tendências e projeções usando todas as ferramentas financeiras.
-    **IMPORTANTE**: Criar dashboards e planilhas financeiras específicas.
-    
-    1. **KPI Calculator Tool - Métricas Financeiras Críticas**:
-       - Receita total período vs período anterior (variação %)
-       - Receita média diária com tendência
-       - Ticket médio geral e por segmento de cliente
-       - Total de transações e crescimento
-       - Receita por cliente (segmentação RFM)
-       - Transações por cliente ativo
-       - Métricas de eficiência (ROI, ROAS, margem)
-    
-    2. **Advanced Analytics Engine - Análise de Margens e Custos**:
-       - Análise detalhada de margem bruta por produto/categoria
-       - Impacto de descontos na rentabilidade
-       - Cálculo de margem líquida considerando custos operacionais
-       - Análise de elasticidade de preços por categoria
-       - Otimização de pricing baseada em dados
-       - **CRIAR ARQUIVO: assets/data/Analise_Margens_Detalhada.csv** com análise por produto
-    
-    3. **Statistical Analysis Tool - Tendências e Correlações**:
-       - Análise de tendências temporais de receita
-       - Decomposição sazonal detalhada
-       - Correlações entre preço, volume e receita
-       - Testes de significância em variações de performance
-    
-    4. **Prophet Forecast Tool - Projeções Financeiras**:
-       - Projeções de receita para próximos 30/60/90 dias
-       - Previsão de ticket médio com sazonalidade
-       - Cenários conservador/realista/otimista
-       - Análise de impacto de campanhas futuras
-       - **CRIAR ARQUIVO: assets/data/Projecoes_Financeiras_Prophet.csv** com cenários detalhados
-    
-    5. **Business Intelligence Tool - Dashboard Financeiro**:
-       - Dashboard executivo com KPIs em tempo real
-       - Análise de performance vs metas
-       - Visualizações de tendências e sazonalidade
-       - Drill-down por categoria/período/canal
-       - **CRIAR ARQUIVO: assets/dashboards/Dashboard_Financeiro_Executivo.html** com métricas interativas
-    
-    6. **Competitive Intelligence Tool - Benchmarking**:
-       - Comparação de margens vs mercado
-       - Análise de posicionamento competitivo
-       - **CRIAR ARQUIVO: assets/reports/Benchmark_Competitivo_Financeiro.html** com análise comparativa
-    
-         7. **Outputs Específicos a Criar com File Generation Tool**:
-        - **OBRIGATÓRIO**: Usar File Generation Tool com file_type='financial_dashboard' para criar assets/dashboards/Dashboard_Financeiro_Executivo.html
-        - **OBRIGATÓRIO**: Incluir links corretos para arquivos reais no relatório final
-
-  expected_output: >
-    💰 RELATÓRIO FINANCEIRO EXECUTIVO COMPLETO + ARQUIVOS DE APOIO:
-    
-    ## 📊 RESUMO EXECUTIVO FINANCEIRO
-    
-    ### 📈 KPIs FINANCEIROS CRÍTICOS ({data_inicio} a {data_fim})
-    - **Receita total período**: R$ XXX.XXX
-    - **Variação vs período anterior**: +XX.X% (R$ XXX diferença)
-    - **Receita média diária**: R$ XXX (tendência: ↑↓)
-    - **Ticket médio geral**: R$ XXX (+/-XX% vs anterior)
-    - **Total de transações**: XXX transações
-    - **Crescimento transações**: +XX% vs período anterior
-    - **Receita por cliente**: R$ XXX (VIP: R$ XXX, Regular: R$ XXX)
-    - **Transações por cliente**: XX transações/cliente
-    
-    ### 💵 ANÁLISE DE MARGENS E RENTABILIDADE
-    - **Margem bruta média**: XX.X% (R$ XXX)
-    - **Margem por categoria**: Anéis XX%, Colares XX%, Brincos XX%
-    - **Impacto de descontos**: -XX% na margem (R$ XXX perdidos)
-    - **Margem líquida estimada**: XX.X% após custos operacionais
-    - **ROI por categoria**: Anéis XX%, Colares XX%, Brincos XX%
-    
-    ### 📊 MÉTRICAS DE EFICIÊNCIA OPERACIONAL
-    - **Receita por transação**: R$ XXX
-    - **Custo de aquisição por cliente**: R$ XXX
-    - **Valor vitalício vs custo aquisição**: Ratio X:1
-    - **Eficiência por canal**: Online XX%, Presencial XX%
-    - **ROAS (Return on Ad Spend)**: X:1 retorno
-    
-    ### 📈 ANÁLISE DE TENDÊNCIAS E SAZONALIDADE
-    - **Tendência de crescimento**: +XX% anual projetado
-    - **Componente sazonal**: Pico Dezembro (+XX%), Vale Março (-XX%)
-    - **Ciclos identificados**: Quinzenal (+XX% salários), Mensal (+XX% fim mês)
-    - **Correlações significativas**: Preço vs Volume (r=-0.XX)
-    
-    ### 🔮 PROJEÇÕES FINANCEIRAS (30/60/90 dias)
-    - **Cenário Conservador**: R$ XXX (-XX% vs atual)
-    - **Cenário Realista**: R$ XXX (tendência natural)
-    - **Cenário Otimista**: R$ XXX (+XX% com campanhas)
-    - **Confiabilidade do modelo**: XX% precisão histórica
-    
-    ### 💡 INSIGHTS E OPORTUNIDADES
-    - **Categorias com maior potencial de crescimento**: XXX
-    - **Oportunidades de otimização de margem**: R$ XXX
-    - **Produtos para ajuste de preço**: XXX itens
-    - **Canais para expandir investimento**: XXX
-    
-    ### 🎯 RECOMENDAÇÕES EXECUTIVAS
-    - Foco em categorias com margem >XX% (ROI R$ XXX)
-    - Otimizar descontos (economia R$ XXX/mês)
-    - Expandir produtos premium (upside R$ XXX)
-    - Ajustar pricing sazonal (ganho R$ XXX)
-    
-    ### 📁 ARQUIVOS DE APOIO GERADOS
-    - **[DASHBOARD]** assets/dashboards/Dashboard_Financeiro_Executivo.html - KPIs executivos interativos
-    - **[DADOS]** assets/data/Analise_Margens_Detalhada.csv - Margens por produto/categoria
-    - **[PROJEÇÕES]** assets/data/Projecoes_Financeiras_Prophet.csv - Cenários futuros detalhados
-    - **[BENCHMARK]** assets/reports/Benchmark_Competitivo_Financeiro.html - Análise vs mercado
-    
-    **FORMATO**: Relatório executivo + 4 arquivos especializados com dados e visualizações
-
-  agent: analista_financeiro
-  
-
-analise_estoque_avancada_task:
+analista_estoque_task:
   description: >
     📦 GESTÃO INTELIGENTE DE ESTOQUE E INVENTÁRIO:
     
-    **OBJETIVO**: Análise completa de estoque com gestão de riscos, otimização de capital e recomendações automáticas.
-    **IMPORTANTE**: Criar planilhas e dashboards específicos para gestão operacional.
+    **OBJETIVO CONSOLIDADO**: Unifica otimização de estoque, gestão de riscos e recomendações automáticas.
     
-    1. **KPI Calculator Tool - Métricas de Estoque**:
+    1. **KPIs Avançados de Inventário**:
+       - Usar KPI Calculator Tool para métricas especializadas
+       - Calcular inventory turnover, DSO, fill rate por categoria
+       - Análise ABC dinâmica com machine learning
+       - Métricas de obsolescência e slow-moving
        - Capital total investido em estoque
        - Giro de estoque por categoria (anual/mensal)
        - DSI (Days Sales Inventory) por produto
-       - Fill rate - % atendimento sem ruptura
-       - Cobertura de estoque (dias de venda)
-       - Estoque médio vs estoque ótimo
     
-    2. **Risk Assessment Tool - Análise de Riscos**:
+    2. **Sistema de Recomendações ML**:
+       - Usar Recommendation Engine para otimização automática
+       - Identificar produtos para restock, liquidação ou redução
+       - Calcular níveis ótimos de estoque por categoria
+       - Recomendar timing de reposição baseado em sazonalidade
+       - Recomendações de reposição inteligente
+       - ROI de ações de liquidação vs manter estoque
+    
+    3. **Avaliação de Riscos Integrada**:
+       - Usar Risk Assessment Tool para análise de riscos de inventário
+       - Quantificar riscos de obsolescência por categoria
+       - Avaliar exposição a mudanças de demanda
+       - Identificar pontos de ruptura críticos
        - Produtos em risco de obsolescência
        - Análise de concentração de capital em estoque
-       - Risco de ruptura por sazonalidade
-       - Produtos com baixa rotatividade há 6+ meses
        - Stress test em cenários de baixa demanda
-       - **CRIAR ARQUIVO: assets/data/Analise_Riscos_Estoque.csv** com scores de risco por produto
     
-    3. **Recommendation Engine - Otimização Automática**:
-       - Recomendações de reposição inteligente
-       - Produtos candidatos à liquidação
-       - Cálculo de níveis ótimos de estoque
-       - Timing ideal de reposição baseado em sazonalidade
-       - ROI de ações de liquidação vs manter estoque
-       - **CRIAR ARQUIVO: assets/data/Recomendacoes_Estoque_ML.csv** com ações priorizadas
-    
-    4. **Advanced Analytics Engine - ML para Inventário**:
+    4. **Advanced Analytics para Inventário**:
+       - Usar Advanced Analytics Engine para ML de inventário
        - Clustering de produtos por padrão de demanda
        - Previsão de demanda por categoria
        - Otimização de ponto de reposição
        - Análise ABC dinâmica com machine learning
     
-    5. **Business Intelligence Tool - Dashboards Operacionais**:
-       - Dashboard de gestão de estoque em tempo real
-       - Alertas visuais de reposição e liquidação
-       - Mapas de performance por categoria
-       - **CRIAR ARQUIVO: assets/dashboards/Dashboard_Gestao_Estoque.html** com alertas operacionais
-    
-         6. **Outputs Específicos a Criar com File Generation Tool**:
-        - **OBRIGATÓRIO**: Usar File Generation Tool com file_type='inventory_recommendations_csv' para criar assets/data/Recomendacoes_Estoque_ML.csv
-        - **OBRIGATÓRIO**: Incluir links corretos para arquivos reais no relatório final
-
+    5. **Dashboards Operacionais**:
+       - Usar Advanced Visualization Tool para dashboards de estoque
+       - Criar alertas visuais de reposição
+       - Mapas de calor de performance de inventário
+       - Dashboards de liquidação e oportunidades
+  
   expected_output: >
-    📦 RELATÓRIO COMPLETO DE GESTÃO DE ESTOQUE + ARQUIVOS OPERACIONAIS:
+    📦 RELATÓRIO COMPLETO DE GESTÃO DE ESTOQUE E INVENTÁRIO:
     
-    ## 📊 RESUMO EXECUTIVO DE ESTOQUE
+    ## 🎯 OTIMIZAÇÃO INTELIGENTE DE ESTOQUE
     
-    ### 💰 KPIs CRÍTICOS DE INVENTÁRIO
-    - **Capital total em estoque**: R$ XXX.XXX
-    - **% do ativo total**: XX% (benchmark: XX%)
-    - **Giro médio geral**: XX.X vezes/ano
-    - **Giro por categoria**: Anéis XX.X, Colares XX.X, Brincos XX.X
-    - **DSI médio**: XX dias (meta: XX dias)
-    - **Fill rate geral**: XX.X% (meta: >95%)
-    - **Cobertura média**: XX dias de venda
+    ### 1. **RESUMO EXECUTIVO DE INVENTÁRIO**:
+    - 💰 Capital total em estoque: R$ XXX.XXX
+    - 📊 Giro médio geral: XX.X vezes/ano
+    - ⚠️ Produtos em risco de obsolescência: XX itens (R$ XXX valor)
+    - 🚨 Alertas de ruptura: XX produtos com risco em XX dias
+    - 💵 Oportunidade de liberação de caixa: R$ XXX
     
-    ### 🎯 ANÁLISE ABC DE ESTOQUE
-    - **Classe A**: XXX produtos - R$ XXX (XX% capital)
-    - **Classe B**: XXX produtos - R$ XXX (XX% capital)
-    - **Classe C**: XXX produtos - R$ XXX (XX% capital)
-    - **Slow Movers**: XXX produtos - R$ XXX em risco
+    ### 2. **KPIs CRÍTICOS DE INVENTÁRIO**:
+    - **Inventory Turnover**: Giro por categoria vs benchmark
+    - **DSO (Days Sales Outstanding)**: Dias de venda em estoque
+    - **Fill Rate**: % atendimento sem ruptura por categoria
+    - **Shrinkage**: Perdas e obsolescência como % do total
+    - **Working Capital**: Capital de giro em inventário
+    - **Cobertura de estoque**: XX dias de venda
     
-    ### ⚠️ ALERTAS DE RISCO E OPORTUNIDADES
-    **Risco de Ruptura (próximos 30 dias):**
-    - XXX produtos com estoque <15 dias
-    - Produtos críticos: [Lista com impacto na receita]
+    ### 3. **ANÁLISE ABC+ DE ESTOQUE**:
+    - **Classe A**: XXX produtos - R$ XXX (XX% capital) - gestão intensiva
+    - **Classe B**: XXX produtos - R$ XXX (XX% capital) - gestão balanceada  
+    - **Classe C**: XXX produtos - R$ XXX (XX% capital) - gestão simplificada
+    - **Classe D (Slow-moving)**: XXX produtos - ação imediata
     
-    **Risco de Obsolescência:**
-    - XXX produtos sem venda há 6+ meses (R$ XXX)
-    - XXX produtos com giro <2 vezes/ano (R$ XXX)
-    
-    ### 🤖 RECOMENDAÇÕES AUTOMÁTICAS ML
+    ### 4. **RECOMENDAÇÕES AUTOMÁTICAS ML**:
     **Restock Urgente (ROI >20%):**
     1. Produto XXX - Reabastecer XXX unidades - ROI estimado XX%
     2. Produto XXX - Reabastecer XXX unidades - ROI estimado XX%
@@ -1023,33 +334,328 @@ analise_estoque_avancada_task:
     - Categoria B: Manter XX dias de cobertura  
     - Categoria C: Manter XX dias de cobertura
     
-    ### 💵 IMPACTO FINANCEIRO
-    - **Oportunidade de liberação de caixa**: R$ XXX
-    - **Redução de carrying cost**: R$ XXX/mês
-    - **ROI de otimizações**: XX% em 90 dias
-    - **Investimento necessário restock**: R$ XXX
+    ### 5. **ANÁLISE DE RISCOS DE INVENTÁRIO**:
+    **Risco de Ruptura (próximos 30 dias):**
+    - XXX produtos com estoque <15 dias
+    - Produtos críticos com impacto na receita
     
-    ### 📅 CRONOGRAMA DE AÇÕES (30/60/90 dias)
+    **Risco de Obsolescência:**
+    - XXX produtos sem venda há 6+ meses (R$ XXX)
+    - XXX produtos com giro <2 vezes/ano (R$ XXX)
+    - Score de risco por produto (0-100)
+    
+    ### 6. **IMPACTO FINANCEIRO E OPORTUNIDADES**:
+    - **Liberação de Caixa**: R$ XXX através de otimização
+    - **Redução de Carrying Cost**: Economia estimada R$ XXX/mês
+    - **ROI de Liquidações**: Retorno vs manter estoque
+    - **Investimento em Fast Movers**: Oportunidades identificadas
+    
+    ### 7. **CRONOGRAMA DE AÇÕES (30/60/90 dias)**:
     **30 dias**: Liquidação slow movers + restock críticos
     **60 dias**: Ajuste níveis ótimos por categoria
     **90 dias**: Implementação sistema alertas automático
     
-    ### 📁 ARQUIVOS OPERACIONAIS GERADOS
-    - **[DASHBOARD]** assets/dashboards/Dashboard_Gestao_Estoque.html - Painel operacional com alertas em tempo real
-    - **[RISCOS]** assets/data/Analise_Riscos_Estoque.csv - Scores de risco por produto com priorização
-    - **[RECOMENDAÇÕES]** assets/data/Recomendacoes_Estoque_ML.csv - Ações ML priorizadas com ROI
-    
-    **FORMATO**: Relatório executivo + 3 arquivos operacionais para gestão diária
-
-  agent: analista_inventario
+    **FORMATO**: Relatório executivo + dashboard operacional + listas de ação prioritárias
   
+  agent: analista_estoque
 
-analise_vendedores_performance_task:
+analista_financeiro_task:
+  description: >
+    💰 ANÁLISE FINANCEIRA AVANÇADA COM KPIS EXECUTIVOS:
+
+    **OBJETIVO CONSOLIDADO**: Análise completa da saúde financeira com KPIs executivos, projeções e métricas de liquidez e rentabilidade.
+
+    1. **KPIs Financeiros Executivos EXPANDIDOS**:
+       - Usar KPI Calculator Tool para análise financeira completa  
+       - Calcular KPIs críticos: ROI, EBITDA simulado, margem operacional
+       - Métricas de Liquidez (Capital de Giro, Cycle Cash)
+       - Índices de Rentabilidade (ROA, ROE estimados)
+       - Análise de Break-Even por categoria e período
+       - Métricas de Eficiência Operacional (vendas/funcionário)
+       - Indicadores de Sustentabilidade Financeira
+       - Comparar com benchmarks do setor joalheiro brasileiro
+
+    2. **Análise de Margens DETALHADA**:
+       - Usar Advanced Analytics Engine para análise de margens
+       - Margem Bruta vs Líquida vs Contribuição por produto
+       - Análise de Ponte de Margem (price-mix-volume-cost)
+       - Elasticidade de Margem vs Volume de vendas
+       - Margem por Canal (presencial vs online se aplicável)
+       - Impacto de Descontos na margem real
+       - Identificar produtos com melhor e pior performance de margem
+
+    3. **Projeções e Forecasting AVANÇADO**:
+       - Usar Prophet Tool para projeções financeiras robustas
+       - Projeção de Fluxo de Caixa (30/60/90 dias)
+       - Cenários Financeiros (otimista/realista/pessimista)
+       - Break-Even Analysis por categoria futuro
+       - Impacto de Sazonalidade no cash flow
+       - Projeção de Necessidade de Capital de Giro
+       - Validar projeções com dados históricos
+
+    4. **Análise de Risco Financeiro**:
+       - Usar Risk Assessment Tool para análise de riscos
+       - Stress Testing de cenários adversos
+       - Análise de Concentração de Receita (clientes/produtos)
+       - Volatilidade de Receita e Margem por período
+       - Risco de Liquidez e Necessidades de Funding
+       - Impacto de Mudanças Econômicas (inflação, juros)
+
+    5. **Benchmarking Setorial AMPLIADO**:
+       - Usar Competitive Intelligence Tool para benchmarks
+       - Comparação de Múltiplos Financeiros vs setor
+       - Posicionamento de Margem vs concorrentes
+       - Eficiência Operacional vs players similares
+       - Crescimento vs média do mercado joalheiro
+
+  expected_output: >
+    💰 RELATÓRIO FINANCEIRO EXECUTIVO COMPLETO:
+
+    ## 💼 ANÁLISE FINANCEIRA EXECUTIVA E PROJEÇÕES
+
+    ### 1. **RESUMO EXECUTIVO FINANCEIRO**:
+    - 📊 **ROI Geral**: XX% (vs XX% benchmark setor)
+    - 💰 **Margem Bruta**: XX% vs **Margem Líquida**: XX%
+    - 🔄 **Capital de Giro**: R$ XXX (XX dias de vendas)
+    - 📈 **Crescimento YoY**: +/-XX% receita, +/-XX% margem
+    - ⚡ **Break-Even**: R$ XXX mensais (atual: R$ XXX)
+    - 🎯 **Score Saúde Financeira**: XX/100 vs XX/100 setor
+    - 💳 **Necessidade Caixa 90d**: R$ XXX (cenário conservador)
+
+    ### 2. **KPIs EXECUTIVOS CRÍTICOS**:
+
+    #### 💰 **Rentabilidade Avançada**:
+    - **ROI Total**: XX% (meta: XX%, vs setor: XX%)
+    - **ROA Estimado**: XX% (retorno sobre ativos)
+    - **ROE Estimado**: XX% (retorno sobre equity)
+    - **EBITDA Simulado**: R$ XXX (XX% margem)
+    - **Margem Operacional**: XX% (vs XX% benchmark)
+
+    #### 🏦 **Liquidez e Capital de Giro**:
+    - **Capital de Giro**: R$ XXX (XX dias vendas)
+    - **Cycle Cash**: XX dias (recebimento - pagamento)
+    - **Necessidade Financiamento**: R$ XXX próximos 90 dias
+    - **Reserva de Segurança**: XX% receita mensal
+    - **Índice Liquidez**: X.X (ideal: >1.5)
+
+    #### ⚡ **Eficiência Operacional**:
+    - **Vendas por Funcionário**: R$ XXX/mês (vs benchmark R$ XXX)
+    - **Custo por Transação**: R$ XX (vs ticket médio R$ XXX)
+    - **ROI Marketing**: X:1 (cada R$ 1 gera R$ X vendas)
+    - **Produtividade Vendedor**: R$ XXX/comissão paga
+
+    ### 3. **ANÁLISE DE MARGENS DETALHADA**:
+
+    #### 📊 **Margem por Categoria**:
+    - **Anéis**: Bruta XX% → Líquida XX% (contribuição R$ XXX)
+    - **Colares**: Bruta XX% → Líquida XX% (contribuição R$ XXX)
+    - **Brincos**: Bruta XX% → Líquida XX% (contribuição R$ XXX)
+    - **Pulseiras**: Bruta XX% → Líquida XX% (contribuição R$ XXX)
+
+    #### 🔗 **Ponte de Margem (vs período anterior)**:
+    - **Efeito Preço**: +/-XX pp (mudanças de preço)
+    - **Efeito Mix**: +/-XX pp (mudança composição vendas)
+    - **Efeito Volume**: +/-XX pp (escala/diluição custos)
+    - **Efeito Custo**: +/-XX pp (alteração custos diretos)
+    - **Margem Final**: XX% (variação total: +/-XX pp)
+
+    ### 4. **PROJEÇÕES FINANCEIRAS (90 DIAS)**:
+
+    #### 📈 **Cenários de Receita**:
+    - **Pessimista (P25)**: R$ XXX (-XX% vs atual)
+    - **Realista (P50)**: R$ XXX (+/-XX% vs atual)  
+    - **Otimista (P75)**: R$ XXX (+XX% vs atual)
+    - **Confiabilidade**: XX% (baseado em modelo Prophet)
+
+    #### 💰 **Projeção Fluxo de Caixa**:
+    - **30 dias**: Entrada R$ XXX, Saída R$ XXX, Saldo R$ XXX
+    - **60 dias**: Entrada R$ XXX, Saída R$ XXX, Saldo R$ XXX
+    - **90 dias**: Entrada R$ XXX, Saída R$ XXX, Saldo R$ XXX
+    - **Capital Giro Adicional**: R$ XXX em XX dias
+
+    ### 5. **ANÁLISE DE RISCO FINANCEIRO**:
+
+    #### 🎯 **Concentração de Risco**:
+    - **Top 10 Clientes**: XX% da receita (risco: X/10)
+    - **Top 5 Produtos**: XX% da receita (risco: X/10)
+    - **Sazonalidade**: Var. +/-XX% (Natal: +XX%, Julho: -XX%)
+    - **Índice Diversificação**: XX/100 (ideal: >60)
+
+    #### ⚡ **Stress Testing**:
+    - **Cenário Recessão (-20% vendas)**: Impacto R$ XXX margem
+    - **Cenário Inflação (+10% custos)**: Impacto R$ XXX resultado
+    - **Cenário Competição (-15% preços)**: Impacto R$ XXX receita
+    - **Tempo Resistência**: XX meses com reservas atuais
+
+    ### 6. **BENCHMARKING SETORIAL**:
+    - **Margem Bruta**: Nossa XX% vs Setor XX% (+/-XX pp)
+    - **Giro Estoque**: XX dias vs XX dias setor
+    - **ROI**: Nosso XX% vs XX% benchmark setor
+    - **Crescimento**: +XX% vs +XX% média setor
+    - **Ranking Estimado**: #X de XX players similares
+
+    ### 7. **RECOMENDAÇÕES ESTRATÉGICAS**:
+
+    #### 💰 **Gestão de Caixa**:
+    - Manter reserva mínima R$ XXX (XX dias vendas)
+    - Negociar prazo fornecedores: +XX dias pagamento
+    - Acelerar recebimentos: desconto XX% pgto à vista
+    - Linha crédito preventiva: R$ XXX aprovação
+
+    #### 📊 **Otimização Margem**:
+    - Aumentar preços XX% categoria de baixa elasticidade
+    - Reduzir desconto médio de XX% para XX%
+    - Focar mix produtos margem >XX%
+    - Renegociar custos categoria com margem <XX%
+
+    #### 🎯 **Crescimento Sustentável**:
+    - Meta crescimento: +XX% anual (vs +XX% setor)
+    - Investimento máximo: XX% receita/mês
+    - ROI mínimo novos projetos: XX%
+    - Alavancagem máxima: XX% do patrimônio
+
+    **FORMATO**: Relatório executivo + dashboards financeiros + projeções de cash flow
+
+  agent: analista_financeiro
+
+especialista_clientes_task:
+  description: >
+    👥 ANÁLISE AVANÇADA DE CLIENTES RFV COM DEMOGRAPHICS E GEOGRAFIA:
+
+    **OBJETIVO CONSOLIDADO**: Análise completa de clientes com segmentação RFV, análise demográfica, geográfica e comportamental.
+
+    1. **Análise RFV PROFISSIONAL EXPANDIDA**:
+       - Usar Customer Insights Engine para segmentação RFV automática
+       - Aplicar algoritmos ML para clustering comportamental
+       - Análise Geracional (Gen Z, Millennials, Gen X, Boomers)
+       - Segmentação por Poder de Compra (Premium, Médio, Econômico)
+       - Análise de Jornada do Cliente por perfil demográfico
+       - Customer Lifetime Value (CLV) por segmento demográfico
+       - Identificar padrões de migração entre segmentos RFV
+
+    2. **ANÁLISE DEMOGRÁFICA DETALHADA**:
+       - Usar Statistical Analysis Tool para padrões demográficos
+       - Performance por Faixa Etária (18-25, 26-35, 36-50, 50+)
+       - Análise por Gênero (comportamento, preferências, ticket)
+       - Padrões por Estado Civil (solteiro, casado, divorciado)
+       - Correlação Idade vs Categoria de Produto
+       - Elasticidade de Preço por Perfil Demográfico
+       - Sazonalidade Comportamental por Demografia
+
+    3. **ANÁLISE GEOGRÁFICA AVANÇADA**:
+       - Usar Business Intelligence Tool para mapas interativos
+       - Performance por Estado e Região
+       - Análise Urbano vs Interior (comportamento diferenciado)
+       - Correlação Geografia vs Poder de Compra
+       - Oportunidades de Expansão Geográfica
+       - Sazonalidade Regional (diferenças por estado)
+       - Penetração de Mercado por Região
+
+    4. **KPIs COMPORTAMENTAIS AVANÇADOS**:
+       - Índice de Fidelidade por Segmento (0-100)
+       - Propensão Cross-Sell por Demografia
+       - Sensibilidade a Promoções por Perfil
+       - Tempo Médio entre Compras por Segmento
+       - Taxa de Reativação por Cluster RFV
+       - Score de Engagement (interação/satisfação)
+
+    5. **CHURN PREDICTION E RETENÇÃO**:
+       - Usar Risk Assessment Tool para análise de risco de perda
+       - Score de Risco de Churn por Cliente (0-100)
+       - Fatores de Churn por Segmento Demográfico
+       - Estratégias de Retenção Personalizadas
+       - ROI de Campanhas de Retenção por Perfil
+
+  expected_output: >
+    👥 RELATÓRIO COMPLETO DE INTELIGÊNCIA DE CLIENTES:
+
+    ## 🎯 ANÁLISE AVANÇADA DE CLIENTES: RFV + DEMOGRAPHICS + GEOGRAFIA
+
+    ### 1. **RESUMO EXECUTIVO DE CLIENTES**:
+    - 👥 **Base Total**: XXX clientes ativos (XX% crescimento YoY)
+    - 💎 **Clientes VIP**: XX% da base geram XX% da receita
+    - 🎯 **CLV Médio**: R$ XXX (VIP: R$ XXX, Regular: R$ XXX)
+    - 📊 **Score Fidelidade**: XX/100 médio (VIP: XX, Regular: XX)
+    - ⚠️ **Risco Churn**: XX% da base em risco médio/alto
+    - 🌍 **Cobertura Geográfica**: XX estados, XX cidades ativas
+    - 👫 **Perfil Dominante**: XX% mulheres, XX% faixa 26-40 anos
+
+    ### 2. **SEGMENTAÇÃO RFV EXPANDIDA**:
+
+    #### 👑 **Clientes VIP (XX% base, XX% receita)**:
+    - **Recência**: Última compra XX dias (vs XX média)
+    - **Frequência**: XX compras/ano (vs XX média)
+    - **Valor Monetário**: R$ XXX ticket médio (vs R$ XXX)
+    - **CLV**: R$ XXX em XX meses projetados
+    - **Demografia**: XX% mulheres, idade média XX anos
+    - **Geografia**: XX% região Sudeste, XX% capitais
+
+    #### 👥 **Clientes Leais (XX% base, XX% receita)**:
+    - **Perfil**: Frequência alta, valor médio
+    - **Oportunidade**: Upsell para VIP (potencial R$ XXX)
+    - **Demografia**: XX% casados, faixa 30-45 anos
+    - **Produtos**: XX% anéis, XX% brincos preferência
+
+    #### 🆕 **Clientes Novos (XX% base, XX% receita)**:
+    - **Potencial**: XX% se tornam regulares em XX meses
+    - **Perfil**: XX% millennials, XX% primeira joia
+    - **Conversão**: Produtos entrada → categoria premium
+
+    #### ⚠️ **Clientes em Risco (XX% base, XX% receita)**:
+    - **Última Compra**: >XXX dias (limite crítico)
+    - **Score Churn**: XX/100 (alto risco)
+    - **Ação**: Campanha reativação R$ XXX investimento
+
+    ### 3. **ANÁLISE DEMOGRÁFICA DETALHADA**:
+
+    #### 👩 **Análise por Gênero**:
+    - **Mulheres (XX% base)**: Ticket R$ XXX, frequência XX/ano
+      - Preferências: XX% brincos, XX% colares, XX% anéis
+      - Sazonalidade: Pico Dia das Mães (+XX%), Natal (+XX%)
+    
+    #### 👨 **Homens (XX% base)**: Ticket R$ XXX, frequência XX/ano
+      - Preferências: XX% alianças, XX% relógios, XX% anéis
+      - Sazonalidade: Pico Dia dos Namorados (+XX%), Natal (+XX%)
+
+    #### 🎂 **Análise por Faixa Etária**:
+    - **18-25 anos**: Produtos acessíveis, tendência, sustentabilidade
+    - **26-35 anos**: Investimento, qualidade, marcos de vida
+    - **36-50 anos**: Luxo acessível, status, durabilidade
+    - **50+ anos**: Premium, tradição, presentes familiares
+
+    ### 4. **ANÁLISE GEOGRÁFICA**:
+    - **Região Sudeste**: XX% base, ticket médio R$ XXX
+    - **Região Sul**: XX% base, ticket médio R$ XXX
+    - **Região Nordeste**: XX% base, ticket médio R$ XXX
+    - **Capitais vs Interior**: Comportamento diferenciado identificado
+    - **Oportunidades Expansão**: XX cidades com potencial alto
+
+    ### 5. **INSIGHTS COMPORTAMENTAIS**:
+    - **Tempo Médio entre Compras**: VIP XX dias, Regular XX dias
+    - **Propensão Cross-Sell**: VIP XX%, Regular XX%
+    - **Sensibilidade Promoção**: Novo XX%, Regular XX%, VIP XX%
+    - **Canais Preferidos**: Online XX%, Físico XX%, Híbrido XX%
+
+    ### 6. **CHURN PREDICTION E RETENÇÃO**:
+    - **Fatores de Churn**: Tempo sem compra, redução ticket, concorrência
+    - **Campanhas Retenção**: ROI XX:1 VIP, XX:1 Regular
+    - **Win-back**: XX% taxa sucesso com investimento R$ XXX
+
+    ### 7. **ESTRATÉGIAS PERSONALIZADAS**:
+    - **Campanhas VIP**: Lançamentos exclusivos, atendimento premium
+    - **Campanhas Regulares**: Promoções, programas fidelidade
+    - **Campanhas Novos**: Onboarding, produtos entrada
+    - **Campanhas Reativação**: Ofertas específicas, desconto progressivo
+
+    **FORMATO**: Relatório executivo + mapas geográficos + matriz RFV + estratégias personalizadas
+
+  agent: especialista_clientes
+
+analista_performance_task:
   description: >
     👤 ANÁLISE DE PERFORMANCE DE VENDEDORES:
     
-    **OBJETIVO**: Avaliar performance individual e identificar oportunidades de melhoria na equipe de vendas.
-    **IMPORTANTE**: Criar dashboards individuais e planilhas de desenvolvimento.
+    **OBJETIVO CONSOLIDADO**: Avaliar performance individual da equipe e identificar oportunidades de melhoria e desenvolvimento.
     
     1. **Statistical Analysis Tool - Ranking e Performance**:
        - Ranking completo de vendedores por múltiplos KPIs
@@ -1064,252 +670,148 @@ analise_vendedores_performance_task:
        - Taxa de conversão individual
        - Meta vs realizado por vendedor
        - Comissões calculadas por performance
-       - **CRIAR ARQUIVO: assets/data/Performance_Individual_Vendedores.csv** com métricas detalhadas
     
     3. **Business Intelligence Tool - Dashboards Individuais**:
        - Dashboard personalizado por vendedor
        - Comparativo com média da equipe
        - Evolução temporal de performance
        - Análise de produtos vendidos por vendedor
-       - **CRIAR ARQUIVO: assets/dashboards/Dashboard_Equipe_Vendas.html** com ranking interativo
-       - **CRIAR ARQUIVO: assets/reports/Plano_Desenvolvimento_Vendedores.html** com estratégias individuais
     
-         4. **Outputs Específicos a Criar com File Generation Tool**:
-        - **OBRIGATÓRIO**: Usar File Generation Tool com file_type='sales_team_dashboard' para criar assets/dashboards/Dashboard_Equipe_Vendas.html
-        - **OBRIGATÓRIO**: Incluir links corretos para arquivos reais no relatório final
+    4. **Análise Comportamental e Desenvolvimento**:
+       - Identificação de best practices dos top performers
+       - Padrões de comportamento que geram sucesso
+       - Análise de timing e produtividade
+       - Correlação entre treinamento e performance
 
   expected_output: >
-    👤 RELATÓRIO DE PERFORMANCE DE VENDEDORES + ARQUIVOS DE DESENVOLVIMENTO:
+    👤 RELATÓRIO DE PERFORMANCE DE VENDEDORES E DESENVOLVIMENTO:
     
-    ## 📊 RESUMO EXECUTIVO DA EQUIPE DE VENDAS
+    ## 📊 ANÁLISE COMPLETA DA EQUIPE DE VENDAS
     
-    ### 🏆 RANKING DE PERFORMANCE ({data_inicio} a {data_fim})
-    1. **Vendedor A**: R$ XXX vendas - XX transações - Ticket R$ XXX
-    2. **Vendedor B**: R$ XXX vendas - XX transações - Ticket R$ XXX
-    3. **Vendedor C**: R$ XXX vendas - XX transações - Ticket R$ XXX
-    
-    ### 📈 KPIs DA EQUIPE
+    ### 1. **RESUMO EXECUTIVO DA EQUIPE**:
+    - 🏆 **Total de Vendedores**: XX ativos no período
+    - 📊 **Performance Média**: R$ XXX por vendedor
+    - 🎯 **Meta Geral Atingida**: XX% (vs XX% período anterior)
+    - ⚡ **Top Performer**: Vendedor X com R$ XXX (XX% acima média)
+    - ⚠️ **Underperformers**: XX vendedores abaixo de 80% meta
+    - 📈 **Variação Performance**: Coeficiente XX% (dispersão equipe)
+
+    ### 2. **RANKING DE PERFORMANCE ({data_inicio} a {data_fim})**:
+    1. **Vendedor A**: R$ XXX vendas - XX transações - Ticket R$ XXX - Meta XX%
+    2. **Vendedor B**: R$ XXX vendas - XX transações - Ticket R$ XXX - Meta XX%
+    3. **Vendedor C**: R$ XXX vendas - XX transações - Ticket R$ XXX - Meta XX%
+    4. **Vendedor D**: R$ XXX vendas - XX transações - Ticket R$ XXX - Meta XX%
+    5. **Vendedor E**: R$ XXX vendas - XX transações - Ticket R$ XXX - Meta XX%
+
+    ### 3. **KPIs DA EQUIPE DETALHADOS**:
     - **Vendas média por vendedor**: R$ XXX
-    - **Ticket médio da equipe**: R$ XXX
-    - **Taxa de conversão média**: XX%
-    - **Meta média atingida**: XX%
-    - **Coeficiente de variação**: XX% (dispersão da equipe)
-    
-    ### 🎯 ANÁLISE DE PERFORMANCE
-    **Top Performers (acima de 120% da meta):**
-    - XXX vendedores - Características: [análise de padrões]
-    
-    **Performance Média (80-120% da meta):**
-    - XXX vendedores - Oportunidades: [sugestões específicas]
-    
-    **Underperformers (<80% da meta):**
-    - XXX vendedores - Plano de ação: [melhorias necessárias]
-    
-    ### 🎓 BEST PRACTICES IDENTIFICADAS
+    - **Ticket médio da equipe**: R$ XXX (variação: R$ XXX - R$ XXX)
+    - **Taxa de conversão média**: XX% (top: XX%, baixa: XX%)
+    - **Transações médias**: XX por vendedor
+    - **Meta média atingida**: XX% (spread: XX% - XX%)
+    - **Comissão média**: R$ XXX por vendedor
+
+    ### 4. **ANÁLISE DE PERFORMANCE POR GRUPOS**:
+
+    #### 🏆 **Top Performers (>120% meta) - XX vendedores**:
+    - **Características**: [Análise de padrões comuns]
+    - **Produtos preferidos**: XX% anéis, XX% colares
+    - **Timing ótimo**: Picos em XX horário, XX dias semana
+    - **Técnicas identificadas**: [Best practices específicas]
+
+    #### 📊 **Performance Média (80-120% meta) - XX vendedores**:
+    - **Perfil**: Consistentes, oportunidades específicas
+    - **Potencial**: Upside R$ XXX com melhorias
+    - **Gaps identificados**: [Áreas de melhoria]
+
+    #### ⚠️ **Underperformers (<80% meta) - XX vendedores**:
+    - **Análise**: Causas de baixa performance
+    - **Plano de ação**: Treinamento, mentoria, suporte
+    - **Timeline**: XX dias para melhoria mensurada
+
+    ### 5. **BEST PRACTICES IDENTIFICADAS**:
     - **Técnicas dos Top Performers**: [Estratégias que funcionam]
-    - **Produtos com maior sucesso**: [Por vendedor]
-    - **Timing ótimo**: [Horários/dias mais produtivos]
-    - **Padrões de comportamento**: [Correlações identificadas]
-    
-    ### 💡 INSIGHTS E RECOMENDAÇÕES
-    - Melhores práticas dos top performers
-    - Categorias de produto com maior sucesso por vendedor
-    - Treinamentos recomendados por perfil
-    - Redistribuição de leads/clientes sugerida
-    
-    ### 📅 PLANO DE DESENVOLVIMENTO INDIVIDUAL
+    - **Produtos com maior sucesso**: Por vendedor/categoria
+    - **Timing ótimo**: Horários/dias mais produtivos
+    - **Abordagem de Clientes**: Padrões de relacionamento
+    - **Cross-selling**: Técnicas de venda adicional
+
+    ### 6. **ANÁLISE POR CATEGORIA DE PRODUTO**:
+    - **Anéis**: Top 3 vendedores, técnicas específicas
+    - **Colares**: Especialistas identificados, abordagem
+    - **Brincos**: Performance por vendedor
+    - **Outros**: Oportunidades não exploradas
+
+    ### 7. **DESENVOLVIMENTO INDIVIDUAL**:
+
+    #### 📚 **Plano de Treinamento Personalizado**:
     **Por Vendedor:**
-    - Objetivos específicos para próximo período
-    - Treinamentos personalizados recomendados
-    - Mentoria com top performers
-    - Metas ajustadas por perfil
-    
-    ### 📁 ARQUIVOS DE DESENVOLVIMENTO GERADOS
-    - **[DASHBOARD]** assets/dashboards/Dashboard_Equipe_Vendas.html - Ranking interativo com drill-down individual
-    - **[DADOS]** assets/data/Performance_Individual_Vendedores.csv - Métricas detalhadas por vendedor
-    - **[DESENVOLVIMENTO]** assets/reports/Plano_Desenvolvimento_Vendedores.html - Estratégias personalizadas
-    
-    **FORMATO**: Relatório executivo + 3 arquivos para gestão e desenvolvimento da equipe
+    - **Vendedor X**: Foco em ticket médio (+XX% potencial)
+    - **Vendedor Y**: Melhoria conversão (+XX transações)
+    - **Vendedor Z**: Cross-sell training (+R$ XXX potencial)
 
-  agent: analista_vendedores
-  
+    #### 🎯 **Metas Ajustadas Próximo Período**:
+    - **Top Performers**: Meta +XX% (stretch goals)
+    - **Médios**: Meta +XX% (crescimento gradual)
+    - **Desenvolvimento**: Meta personalizada por perfil
 
-relatorio_html_dinamico_task:
-  description: >
-    📊 DASHBOARD HTML DINÂMICO E INTERATIVO:
-    
-    **OBJETIVO**: Criar um relatório executivo HTML dinâmico e interativo, similar aos exemplos em output/, 
-    consolidando TODAS as análises especializadas em um dashboard visual moderno e responsivo.
-    
-    1. **Business Intelligence Tool - Dashboard HTML Principal**:
-       - Criar index.html principal estilo portal executivo
-       - Design moderno com gradientes e cards responsivos
-       - Estatísticas gerais do sistema (total relatórios, tamanho, data)
-       - Menu de navegação para diferentes seções de análise
-       - Links diretos para relatórios específicos por dimensão
-    
-    2. **Dashboard Executivo Visual Integrado**:
-       - Consolidar KPIs críticos de todas as análises (clientes, produtos, financeiro, estoque, vendedores)
-       - Gráficos interativos com Plotly.js para visualizações dinâmicas
-       - Cards de métricas com comparações período anterior
-       - Semáforos de performance (verde/amarelo/vermelho)
-       - Drill-down por dimensão de negócio
-    
-    3. **Seções Especializadas HTML**:
-       - **Clientes**: RFM visual, mapa geográfico, CLV trends
-       - **Produtos**: Análise ABC interativa, cross-sell matrix, giro de estoque
-       - **Financeiro**: Margens por categoria, tendências, projeções
-       - **Estoque**: Alertas visuais, recomendações ML, ROI calculado
-       - **Vendedores**: Ranking interativo, performance vs meta
-    
-    4. **Recursos Interativos Avançados**:
-       - Filtros por período, categoria, segmento
-       - Tooltips explicativos para cada métrica
-       - Exportação de dados para Excel/CSV
-       - Responsividade para mobile/tablet/desktop
-       - Modo claro/escuro configurável
-    
-    5. **Alertas e Recomendações Dinâmicas**:
-       - Sistema de alertas visuais para KPIs críticos
-       - Pop-ups com recomendações automáticas
-       - Timeline de ações prioritárias com ROI
-       - Notificações de oportunidades identificadas
-    
-    6. **Integração de Dados em Tempo Real**:
-       - Usar KPI Calculator Tool para métricas atualizadas
-       - Integrar insights do Recommendation Engine em cards interativos
-       - Mostrar benchmarks do Competitive Intelligence Tool
-       - Projeções do Prophet em gráficos temporais
+    #### 👥 **Programa de Mentoria**:
+    - **Mentores**: Top 3 performers
+    - **Mentorados**: XX vendedores em desenvolvimento
+    - **Timeline**: XX semanas, acompanhamento semanal
 
-  expected_output: >
-    📊 DASHBOARD HTML EXECUTIVO INTERATIVO COMPLETO:
-    
-    ## 🎯 RELATÓRIO EXECUTIVO VISUAL DINÂMICO
-    
-    ### 📱 **PORTAL PRINCIPAL (index.html)**
-    ```html
-    <!DOCTYPE html>
-    <html lang="pt-BR">
-    <head>
-        <title>🚀 Insights AI - Dashboard Executivo</title>
-        <!-- CSS moderno com gradientes e animações -->
-        <!-- Responsividade mobile-first -->
-    </head>
-    <body>
-        <!-- Header executivo com KPIs principais -->
-        <!-- Grid de cards por dimensão (clientes/produtos/financeiro/estoque/vendedores) -->
-        <!-- Estatísticas gerais do sistema -->
-        <!-- Links para relatórios especializados -->
-    </body>
-    </html>
-    ```
-    
-    ### 📊 **DASHBOARD VISUAL INTEGRADO**
-    - **Gráficos Plotly.js Interativos**:
-      * Receita por período com tendência
-      * RFM bubble chart de clientes
-      * Análise ABC visual de produtos  
-      * Margens por categoria (heatmap)
-      * Performance de vendedores (ranking)
-    
-    - **Cards de KPIs Dinâmicos**:
-      * Receita total: R$ XXX (+XX% vs anterior)
-      * Clientes ativos: XXX (XX% VIP)
-      * Produtos classe A: XXX (XX% receita)
-      * Giro de estoque: XX.X (meta: XX)
-      * Top vendedor: XXX (R$ XXX vendas)
-    
-    ### 🎨 **DESIGN VISUAL MODERNO**
-    - **Layout Responsivo**: Grid CSS com breakpoints mobile/tablet/desktop
-    - **Gradientes e Animações**: Transições suaves, hover effects
-    - **Cards Interativos**: Shadow effects, tooltips explicativos
-    - **Paleta de Cores**: Azul executivo + gradientes + alertas coloridos
-    - **Tipografia**: Hierarquia clara, peso visual adequado
-    
-    ### 🔧 **FUNCIONALIDADES INTERATIVAS**
-    - **Filtros Dinâmicos**:
-      * Seletor de período (últimos 30/60/90 dias)
-      * Filtro por categoria de produto
-      * Segmentação de clientes (VIP/Regular/Novos)
-    
-    - **Drill-Down Inteligente**:
-      * Click em categoria → detalhar produtos
-      * Click em segmento cliente → listar indivíduos
-      * Click em vendedor → performance detalhada
-    
-    - **Exportação de Dados**:
-      * Botões para download Excel/CSV por seção
-      * Print-friendly version do dashboard
-      * Compartilhamento via link ou email
-    
-    ### ⚡ **ALERTAS E RECOMENDAÇÕES**
-    - **Sistema de Notificações Visuais**:
-      * 🔴 Alertas críticos (estoque baixo, churn alto)
-      * 🟡 Atenção necessária (performance abaixo da meta)
-      * 🟢 Oportunidades (cross-sell, clientes potenciais)
-    
-    - **Cards de Recomendações**:
-      * "Restock urgente: 12 produtos" → Lista específica
-      * "Campanha para clientes em risco: ROI +25%" → Detalhes
-      * "Otimizar preços categoria X: +R$ 50K/mês" → Análise
-    
-    ### 📱 **ESTRUTURA DE ARQUIVOS**
-    ```
-    output/
-    ├── dashboard_executivo_integrado.html      # Portal principal
-    ├── assets/
-    │   ├── css/dashboard.css                   # Estilos modernos
-    │   ├── js/interactive.js                   # Interatividade
-    │   └── data/kpis.json                      # Dados dinâmicos
-    ├── relatorios/
-    │   ├── clientes_detalhado.html             # Deep dive clientes
-    │   ├── produtos_abc.html                   # Análise ABC visual
-    │   ├── financeiro_margens.html             # Margens interativas
-    │   ├── estoque_alertas.html                # Gestão de estoque
-    │   └── vendedores_ranking.html             # Performance individual
-    ```
-    
-    ### 🎯 **MÉTRICAS DE SUCESSO**
-    - **Tempo de carregamento**: <3 segundos
-    - **Responsividade**: 100% mobile-friendly
-    - **Interatividade**: Todos os gráficos clicáveis
-    - **Usabilidade**: Navegação intuitiva em <2 cliques
-    - **Dados**: 100% atualizados com pipeline de dados
-    
-    **FORMATO**: Dashboard HTML principal + seções especializadas + assets + dados JSON dinâmicos
-    **ENTREGA**: Portal executivo completo pronto para produção
+    ### 8. **RECOMENDAÇÕES GERENCIAIS**:
+    - **Redistribuição de Leads**: Otimizar por perfil vendedor
+    - **Treinamentos Específicos**: Por gap identificado
+    - **Sistema de Incentivos**: Ajustar por performance
+    - **Coaching Individual**: XX horas por vendedor/mês
+    - **Best Practice Sharing**: Sessões mensais equipe
 
-  agent: diretor_insights
+    ### 9. **PROJEÇÕES E METAS**:
+    - **Potencial Equipe**: R$ XXX com melhorias implementadas
+    - **Timeline Melhorias**: 30/60/90 dias
+    - **ROI Treinamento**: R$ XXX investimento → R$ XXX retorno
+    - **Meta Próximo Período**: R$ XXX (+XX% vs atual)
 
-relatorio_executivo_completo_task:
+    **FORMATO**: Relatório executivo + dashboards individuais + planos de desenvolvimento personalizados
+
+  agent: analista_performance
+
+diretor_insights_task:
   description: >
     🎯 SÍNTESE ESTRATÉGICA COM INTELIGÊNCIA EXECUTIVA:
     
-    A) **CONSOLIDAÇÃO INTELIGENTE COM BI**:
-    1. Usar Business Intelligence Dashboard para relatório executivo completo
-    2. Integrar KPI Calculator Tool para dashboard de métricas críticas  
-    3. Aplicar todas as análises anteriores em síntese estratégica coesa
+    **OBJETIVO FINAL**: Consolidar todas as análises especializadas em um relatório executivo integrado com recomendações estratégicas priorizadas.
     
-    B) **RECOMENDAÇÕES ESTRATÉGICAS COM ML**:
-    4. Usar Recommendation Engine para ações estratégicas priorizadas
-    5. Quantificar ROI e timeline para cada recomendação
-    6. Criar roadmap de implementação com interdependências
+    1. **CONSOLIDAÇÃO INTELIGENTE COM BI**:
+       - Usar Business Intelligence Dashboard para relatório executivo completo
+       - Integrar KPI Calculator Tool para dashboard de métricas críticas  
+       - Aplicar todas as análises anteriores em síntese estratégica coesa
+       - Identificar correlações entre diferentes dimensões de análise
     
-    C) **INTELIGÊNCIA COMPETITIVA**:
-    7. Usar Competitive Intelligence Tool para benchmarking
-    8. Posicionar achados no contexto do mercado de joalherias
-    9. Identificar vantagens competitivas e gaps estratégicos
+    2. **RECOMENDAÇÕES ESTRATÉGICAS COM ML**:
+       - Usar Recommendation Engine para ações estratégicas priorizadas
+       - Quantificar ROI e timeline para cada recomendação
+       - Criar roadmap de implementação com interdependências
+       - Priorizar por impacto vs esforço
     
-    D) **VISUALIZAÇÕES EXECUTIVAS**:
-    10. Usar Advanced Visualization Tool para dashboards C-level
-    11. Criar apresentação visual de insights estratégicos
-    12. Gerar gráficos de impacto vs esforço para priorização
+    3. **INTELIGÊNCIA COMPETITIVA**:
+       - Usar Competitive Intelligence Tool para benchmarking
+       - Posicionar achados no contexto do mercado de joalherias
+       - Identificar vantagens competitivas e gaps estratégicos
+       - Análise SWOT consolidada
     
-    E) **RELATÓRIO FINAL INTEGRADO**:
-    13. Sintetizar tudo em relatório executivo estruturado
-    14. Incluir cenários de negócio e análise de sensibilidade  
-    15. Documentar metodologia e limitações
-    16. Criar sistema de acompanhamento de KPIs
+    4. **CENÁRIOS E PROJEÇÕES INTEGRADAS**:
+       - Consolidar projeções de vendas, financeiras e de estoque
+       - Criar cenários integrados (otimista/realista/conservador)
+       - Quantificar impactos de decisões estratégicas
+       - Análise de sensibilidade para variáveis críticas
+    
+    5. **RELATÓRIO FINAL INTEGRADO**:
+       - Sintetizar tudo em relatório executivo estruturado
+       - Incluir cenários de negócio e análise de sensibilidade  
+       - Documentar metodologia e limitações
+       - Criar sistema de acompanhamento de KPIs
   
   expected_output: >
     📋 RELATÓRIO EXECUTIVO ESTRATÉGICO INTEGRADO:
@@ -1322,99 +824,92 @@ relatorio_executivo_completo_task:
     - ⚡ **Quick Wins**: R$ XXX liberação imediata de caixa (30-60 dias)
     - 📊 **Score Geral de Performance**: XX/100 vs benchmark de mercado
     - 🚨 **Alertas Críticos**: Riscos que demandam ação imediata
-    
+
     ### 2. **CONSOLIDAÇÃO DOS RELATÓRIOS ESPECIALIZADOS**:
-    
-    #### 📊 **Síntese Financeira** (Analista Financeiro):
-    - ROI, margens e KPIs financeiros críticos consolidados
-    - Análise de rentabilidade por categoria/cliente integrada
-    - Projeções financeiras com cenários de risco/oportunidade
-    - Recomendações de otimização de capital de giro
-    
-    #### 👥 **Inteligência de Clientes RFV** (Especialista Clientes):
-    - Segmentação RFV com estratégias personalizadas por grupo
-    - CLV e oportunidades de cross-sell/up-sell quantificadas
-    - Campanhas direcionadas com ROI estimado por segmento
-    - Plano de retenção vs aquisição com budget otimizado
-    
-    #### 📈 **Análise de Tendências** (Analista Tendências):
-    - Tendências críticas com impacto no negócio (timing/volume)
-    - Produtos em ascensão vs declínio com ações específicas
-    - Correlações externas (mercado/economia) quantificadas
-    - Adaptações de portfólio com ROI e timeline definidos
-    
-    #### 🌊 **Inteligência Sazonal** (Especialista Sazonalidade):
-    - Calendário estratégico com índices sazonais por categoria
-    - Oportunidades sazonais não exploradas com potencial R$ XXX
-    - Estratégias anti-sazonalidade para suavizar flutuações
-    - Cronograma de campanhas e reposições otimizado
-    
-    #### 🔮 **Projeções e Forecasting** (Especialista Projeções):
-    - Previsões 15 dias com cenários conservador/realista/otimista
-    - Precisão do modelo vs benchmarks (MAE, MAPE)
-    - Alertas de mudança de tendência com ações preventivas
-    - Necessidades de estoque baseadas em forecasting
-    
-    #### 🎯 **Inteligência de Categorias** (Analista Segmentos):
-    - Matriz BCG de categorias (estrelas/vacas/interrogações/abacaxis)
-    - Oportunidades de cross-sell entre categorias R$ XXX
-    - Roadmap de produtos: lançamentos/descontinuações priorizadas
-    - Estratégias de preço premium vs competitivo por segmento
-    
-    #### 📦 **Otimização de Inventário** (Analista Inventário):
-    - Capital em estoque: R$ XXX com oportunidades de liberação R$ XXX
-    - Produtos para liquidação vs restock urgente priorizados
-    - Análise ABC+ com ações específicas por classe
-    - ROI de otimizações propostas (30/60/90 dias)
-    
+
+    #### 🔧 **Qualidade de Dados** (Engenheiro de Dados):
+    - Volume e qualidade dos dados analisados no período
+    - Confiabilidade das análises baseadas nos dados validados
+    - Limitações e recomendações técnicas
+
+    #### 📈 **Vendas e Tendências** (Analista Vendas e Tendências):
+    - Tendências críticas identificadas com impacto quantificado
+    - Padrões sazonais e projeções integradas
+    - Oportunidades de timing baseadas em análise temporal
+
+    #### 🎯 **Portfolio de Produtos** (Especialista Produtos):
+    - Performance de categorias e oportunidades de otimização
+    - Análise ABC e recomendações de mix de produtos
+    - Cross-selling e estratégias de pricing por categoria
+
+    #### 📦 **Otimização de Estoque** (Analista Estoque):
+    - Capital liberado através de otimização de inventário
+    - Riscos de ruptura e obsolescência mitigados
+    - Cronograma de ações de reposição e liquidação
+
+    #### 💰 **Saúde Financeira** (Analista Financeiro):
+    - KPIs financeiros críticos e projeções de cash flow
+    - Análise de margens e oportunidades de otimização
+    - Cenários financeiros e necessidades de capital
+
+    #### 👥 **Inteligência de Clientes** (Especialista Clientes):
+    - Segmentação RFV e estratégias personalizadas
+    - CLV e oportunidades de crescimento por segmento
+    - Programas de retenção e aquisição priorizados
+
+    #### 👤 **Performance da Equipe** (Analista Performance):
+    - Gaps de performance e planos de desenvolvimento
+    - Best practices identificadas e programas de treinamento
+    - Potencial de crescimento da equipe de vendas
+
     ### 3. **ANÁLISE ESTRATÉGICA INTEGRADA**:
-    - **Correlações Cross-Funcionais**: Como tendências impactam inventário/finanças
+    - **Correlações Cross-Funcionais**: Como cada dimensão impacta as demais
     - **Sinergias Identificadas**: Ações que potencializam múltiplas áreas
     - **Trade-offs Estratégicos**: Decisões com impacto múltiplo quantificado
     - **Cenários Integrados**: Como mudanças em uma área afetam o todo
-    
+
     ### 4. **RECOMENDAÇÕES EXECUTIVAS PRIORIZADAS**:
-    
+
     #### 🚀 **AÇÕES IMEDIATAS (30 dias)** - Total ROI: R$ XXX
     1. [Ação específica com responsável, budget e ROI estimado]
     2. [Ação específica com responsável, budget e ROI estimado]
     3. [Ação específica com responsável, budget e ROI estimado]
-    
+
     #### 📈 **ESTRATÉGICAS (60-90 dias)** - Total ROI: R$ XXX
     1. [Iniciativa com investimento, ROI, timeline e interdependências]
     2. [Iniciativa com investimento, ROI, timeline e interdependências]
     3. [Iniciativa com investimento, ROI, timeline e interdependências]
-    
+
     #### 🎯 **TRANSFORMACIONAIS (6-12 meses)** - Total ROI: R$ XXX
     1. [Projeto estrutural com budget, marcos e ROI de longo prazo]
     2. [Projeto estrutural com budget, marcos e ROI de longo prazo]
-    
+
     ### 5. **DASHBOARD EXECUTIVO INTEGRADO**:
     - **Scorecard de KPIs**: Semáforo com metas e benchmarks
     - **Monitor de Tendências**: Alertas automáticos de mudanças críticas
     - **Tracking de ROI**: Acompanhamento de iniciativas implementadas
     - **Sistema de Alertas**: Notificações de desvios vs planejado
-    
+
     ### 6. **ROADMAP ESTRATÉGICO (12 meses)**:
     - **Q1**: Foco em quick wins e otimizações de caixa
     - **Q2**: Implementação de estratégias de médio prazo
     - **Q3-Q4**: Projetos transformacionais e expansão
     - **Marcos Críticos**: Entregas, reviews e ajustes planejados
-    
+
     ### 7. **GESTÃO DE RISCOS E CONTINGÊNCIAS**:
     - **Riscos Identificados**: Top 5 com probabilidade e impacto
     - **Planos de Contingência**: Ações para cenários adversos
     - **Sistema de Monitoramento**: KPIs de early warning
     - **Budget de Contingência**: Recursos reservados para riscos
-    
-    ### 8. **ANEXOS TÉCNICOS**:
+
+    ### 8. **METODOLOGIA E VALIDAÇÕES**:
     - Metodologia detalhada de cada análise especializada
     - Validações estatísticas e limitações dos modelos
     - Dados de suporte e evidências dos insights
     - Benchmarks de mercado e fontes utilizadas
-    
-    **FORMATO**: Relatório executivo markdown + dashboards HTML integrados + apresentação C-level
+
+    **FORMATO**: Relatório executivo markdown
     **ENTREGA**: Arquivo único consolidado com todos os insights e ações priorizadas
-  
+
   agent: diretor_insights
   

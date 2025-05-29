@@ -279,7 +279,7 @@ class FileGenerationTool(BaseTool):
     def _create_customer_clusters_csv(self, df: pd.DataFrame, output_path: str = "") -> str:
         """Cria arquivo CSV com matriz de clusters baseada em análise RFM real dos dados."""
         if not output_path:
-            output_path = "data/outputs/Matriz_Clusters_ML_V2.csv"
+            output_path = "assets/data/Matriz_Clusters_ML_V2.csv"
         
         try:
             # Validar dados mínimos necessários
@@ -562,7 +562,7 @@ class FileGenerationTool(BaseTool):
     def _create_inventory_recommendations_csv(self, df: pd.DataFrame, output_path: str = "") -> str:
         """Placeholder para recomendações estoque."""
         if not output_path:
-            output_path = "data/outputs/Recomendacoes_Estoque_ML.csv"
+            output_path = "assets/data/Recomendacoes_Estoque_ML.csv"
         return f"✅ Recomendações estoque criadas: {output_path} (implementação básica)"
     
     def _create_generic_file(self, file_type: str, filename: str, content: str, output_path: str = "") -> str:
