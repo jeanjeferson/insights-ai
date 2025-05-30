@@ -307,7 +307,7 @@ def run_compatibility_test():
         print("✅ Flow importado")
         
         # Sistema tradicional
-        from insights.crew import Insights
+        from old.crew import Insights
         print("✅ Crew tradicional importado")
         
         # Sistema híbrido
@@ -316,7 +316,7 @@ def run_compatibility_test():
         
         # Testar interface compatível
         print("🔄 Testando interface compatível...")
-        from insights.main import run_with_crew, run_with_flow
+        from old.main import run_with_crew, run_with_flow
         print("✅ Interfaces compatíveis disponíveis")
         
         print("=" * 50)

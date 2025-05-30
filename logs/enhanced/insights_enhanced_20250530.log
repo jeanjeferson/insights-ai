@@ -1,0 +1,440 @@
+2025-05-30 11:38:50 [INFO] [OP_0001] Test_Agent Test_Operation_v2 🚀 [OP_0001] Test_Agent - Test_Operation_v2
+2025-05-30 11:38:50 [INFO] [OP_0001] Test_Agent Test_Operation_v2    ⏱️ ETA: 5.0s
+2025-05-30 11:38:50 [INFO] [OP_0001] Test_Agent Test_Operation_v2 📊 [OP_0001] 33.3% | Passo 1 do teste
+2025-05-30 11:38:50 [INFO] [OP_0001] Test_Agent Test_Operation_v2 📊 [OP_0001] 66.7% | ETA: 0.3s | Passo 2 do teste
+2025-05-30 11:38:51 [INFO] [OP_0001] Test_Agent Test_Operation_v2 📊 [OP_0001] 100.0% | Teste concluído
+2025-05-30 11:38:51 [INFO] [OP_0001] Test_Agent Test_Operation_v2 ✅ [OP_0001] Concluído em 1.01s | Mem: 24.3MB | Teste básico OK
+2025-05-30 11:38:51 [INFO] Mensagem repetitiva #0
+2025-05-30 11:38:51 [INFO] [CONSOLIDADO x10] Mensagem repetitiva #0
+2025-05-30 11:38:51 [INFO] [OP_0002] Test_Performance_0 🚀 [OP_0002] Test_Performance_0
+2025-05-30 11:38:52 [INFO] [OP_0002] Test_Performance_0 ✅ [OP_0002] Concluído em 0.50s | Mem: 24.3MB
+2025-05-30 11:38:54 [INFO] [OP_0005] Test_Error 🚀 [OP_0005] Test_Error
+2025-05-30 11:38:54 [ERROR] ❌ ERRO #1 [OP_0005] - test_error_handling_v2
+2025-05-30 11:38:54 [ERROR]    ⏱️ Tempo decorrido: 0.00s
+2025-05-30 11:38:54 [ERROR]    💾 Memória atual: 24.3MB
+2025-05-30 11:38:54 [ERROR]    🔍 Tipo: ValueError
+2025-05-30 11:38:54 [ERROR]    📝 Mensagem: Erro de teste para validar context-aware error handling
+2025-05-30 11:38:54 [INFO] [OP_0005] Test_Error ❌ [OP_0005] Concluído em 0.00s | Mem: 24.3MB | Erro esperado
+2025-05-30 11:39:05 [INFO] 🔧 Configurando Enhanced Tool Integration v2
+2025-05-30 11:39:08 [INFO] ✅ Enhanced Tool Integration configurado (2 ferramentas detectadas)
+2025-05-30 11:39:08 [INFO] 🔧 Enhanced logging aplicado a MockTool (genérico)
+2025-05-30 11:39:08 [INFO] [OP_0006] str str.run 🚀 [OP_0006] str - str.run
+2025-05-30 11:39:08 [INFO] [OP_0006] str str.run ✅ [OP_0006] Concluído em 0.21s | Mem: 356.4MB | Resultado: 20 chars
+2025-05-30 11:39:08 [INFO] [OP_0007] dict dict.analyze 🚀 [OP_0007] dict - dict.analyze
+2025-05-30 11:39:08 [INFO] 🚀 Configurando Enhanced Crew System v2
+2025-05-30 11:39:08 [INFO] 🚀 Enhanced Logging System atualizado para v2
+2025-05-30 11:39:08 [INFO]    ✅ Consolidação de logs ativada
+2025-05-30 11:39:08 [INFO]    ✅ Performance monitoring melhorado
+2025-05-30 11:39:08 [INFO]    ✅ Log file management ativo
+2025-05-30 11:39:08 [INFO] 🎯 ========================================
+2025-05-30 11:39:08 [INFO] 🎯 MARCO: MIGRAÇÃO v1 → v2
+2025-05-30 11:39:08 [INFO]    📊 Sistema_anterior: Enhanced Logging v1
+2025-05-30 11:39:08 [INFO]    📊 Sistema_atual: Enhanced Logging v2
+2025-05-30 11:39:08 [INFO]    📊 Melhorias: Consolidação + Tool Monitoring + File Management
+2025-05-30 11:39:08 [INFO]    📊 Compatibilidade: 100% com v1
+2025-05-30 11:39:08 [INFO]    📈 Operações ativas: 0
+2025-05-30 11:39:08 [INFO]    ⚠️ Total warnings: 0
+2025-05-30 11:39:08 [INFO]    ❌ Total errors: 1
+2025-05-30 11:39:09 [WARNING] ⚠️ ⚠️ crew_optimized não disponível: No module named 'prophet'
+2025-05-30 11:39:09 [ERROR] ❌ ERRO #2 - system_enhancement_v2
+2025-05-30 11:39:09 [ERROR]    💾 Memória atual: 363.8MB
+2025-05-30 11:39:09 [ERROR]    🔍 Tipo: ModuleNotFoundError
+2025-05-30 11:39:09 [ERROR]    📝 Mensagem: No module named 'prophet'
+2025-05-30 11:39:09 [INFO] 🚀 Inicializando Enhanced Crew Wrapper v2
+2025-05-30 11:39:09 [INFO]    ✅ Consolidação de logs ativa
+2025-05-30 11:39:09 [INFO]    ✅ Tool monitoring ativo
+2025-05-30 11:39:09 [INFO]    ✅ Performance tracking ativo
+2025-05-30 11:39:09 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2 🚀 [OP_0008] Enhanced_Crew_System - Insights-AI Analysis v2
+2025-05-30 11:39:09 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2 🎯 MARCO: INÍCIO DA ANÁLISE V2
+2025-05-30 11:39:09 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2    📊 Período: 2024-01-01 a 2024-01-31 (30 dias)
+2025-05-30 11:39:09 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2    📊 Sistema: Enhanced Crew v2.0
+2025-05-30 11:39:09 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2    📊 Consolidação: Ativa
+2025-05-30 11:39:09 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2    📊 Tool_Monitoring: Ativo
+2025-05-30 11:39:09 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2 📊 [OP_0008] 10.0% | ETA: 0.1s | Inicializando sistema v2
+2025-05-30 11:39:09 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2 📊 [OP_0008] 20.0% | ETA: 0.0s | Configurando ferramentas
+2025-05-30 11:39:09 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2 📊 [OP_0008] 30.0% | ETA: 0.0s | Validando dados
+2025-05-30 11:39:09 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2 📊 [OP_0008] 40.0% | ETA: 0.0s | Iniciando análise principal
+2025-05-30 11:39:10 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2 📊 [OP_0008] 80.0% | ETA: 0.3s | Processando resultados
+2025-05-30 11:39:10 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2 📊 [OP_0008] 100.0% | Finalizando análise v2
+2025-05-30 11:39:10 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2 🎯 MARCO: ANÁLISE V2 CONCLUÍDA
+2025-05-30 11:39:10 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2    📊 Resultado: Sucesso
+2025-05-30 11:39:10 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2    📊 Tentativas: 1
+2025-05-30 11:39:10 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2    📊 Tamanho_Resultado: 49
+2025-05-30 11:39:10 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2    📊 Logs_Consolidados: 34
+2025-05-30 11:39:10 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2 🎯 MARCO: PERFORMANCE DAS FERRAMENTAS
+2025-05-30 11:39:10 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2    📊 Total_ferramentas: 2
+2025-05-30 11:39:10 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2    📊 Ferramentas_ativas: 2
+2025-05-30 11:39:10 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2    ✅ str: 1 calls, 0.21s avg, 0.0% erros
+2025-05-30 11:39:10 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2    ✅ dict: 1 calls, 0.1s avg, 0.0% erros
+2025-05-30 11:39:10 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2 🎯 MARCO: RESUMO DE PERFORMANCE V2
+2025-05-30 11:39:10 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2    📊 Padrões_consolidados: 58
+2025-05-30 11:39:10 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2    📊 Mensagens_suprimidas: 44
+2025-05-30 11:39:10 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2    📊 Operações_rastreadas: 7
+2025-05-30 11:39:10 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2    📊 Gargalos_detectados: 0
+2025-05-30 11:39:10 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2    📊 Versão: Enhanced Logging v2
+2025-05-30 11:39:10 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2 [CONSOLIDADO x10] 🎯 ========================================
+2025-05-30 11:39:10 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2 📊 Top padrões de log:
+2025-05-30 11:39:10 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2    1. Mensagem repetitiva #0 (x15)
+2025-05-30 11:39:10 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2    2.    ⏱️ ETA: 5.0s (x8)
+2025-05-30 11:39:10 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2    3. 🎯 ======================================== (x8)
+2025-05-30 11:39:10 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2    4.    📈 Operações ativas: 0 (x4)
+2025-05-30 11:39:10 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2    5.    ⚠️ Total warnings: 0 (x4)
+2025-05-30 11:39:10 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2 📊 Relatório de performance das ferramentas concluído
+2025-05-30 11:39:10 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2 🎯 MARCO: CONSOLIDAÇÃO DE LOGS
+2025-05-30 11:39:10 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2    📊 Mensagens_originais: 120
+2025-05-30 11:39:10 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2    📊 Padrões_únicos: 71
+2025-05-30 11:39:10 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2    📊 Eficiência: 40.8%
+2025-05-30 11:39:10 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2 🎯 MARCO: ESTATÍSTICAS ENHANCED v2
+2025-05-30 11:39:10 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2    📊 Arquivo_log: C:\Users\jean.moura\Documents\Python\CrewAI\insigh...
+2025-05-30 11:39:10 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2    📊 Versão: v2
+2025-05-30 11:39:10 [INFO] [OP_0008] Enhanced_Crew_System Insights-AI Analysis v2 ✅ [OP_0008] Concluído em 1.04s | Mem: 363.8MB | v2 - Tentativa 1
+2025-05-30 11:39:10 [INFO] [OP_0009] Summary_Test_0 🚀 [OP_0009] Summary_Test_0
+2025-05-30 11:39:10 [INFO] [OP_0010] Summary_Test_1 [CONSOLIDADO x10]    ⏱️ ETA: 5.0s
+2025-05-30 11:39:11 [INFO] Log repetitivo padrão A: valor 0
+2025-05-30 11:39:11 [INFO] Log repetitivo padrão A: valor 0
+2025-05-30 11:39:11 [INFO] Log diferente: checkpoint 0
+2025-05-30 11:39:11 [INFO] Log diferente: checkpoint 0
+2025-05-30 11:39:11 [INFO] [CONSOLIDADO x10] Log repetitivo padrão A: valor 0
+2025-05-30 11:39:11 [INFO] [CONSOLIDADO x10] Log repetitivo padrão A: valor 0
+2025-05-30 11:39:11 [INFO] [CONSOLIDADO x20] Log repetitivo padrão A: valor 0
+2025-05-30 11:39:11 [INFO] [CONSOLIDADO x20] Log repetitivo padrão A: valor 0
+2025-05-30 11:39:11 [INFO] [CONSOLIDADO x30] Log repetitivo padrão A: valor 0
+2025-05-30 11:39:11 [INFO] [CONSOLIDADO x30] Log repetitivo padrão A: valor 0
+2025-05-30 11:39:11 [INFO] [CONSOLIDADO x40] Log repetitivo padrão A: valor 0
+2025-05-30 11:39:11 [INFO] [CONSOLIDADO x40] Log repetitivo padrão A: valor 0
+2025-05-30 11:39:11 [INFO] [CONSOLIDADO x50] Log repetitivo padrão A: valor 0
+2025-05-30 11:39:11 [INFO] [CONSOLIDADO x50] Log repetitivo padrão A: valor 0
+2025-05-30 11:39:11 [INFO] Log repetitivo padrão B: processando item 0
+2025-05-30 11:39:11 [INFO] Log repetitivo padrão B: processando item 0
+2025-05-30 11:39:11 [INFO] [CONSOLIDADO x10] Log repetitivo padrão B: processando item 0
+2025-05-30 11:39:11 [INFO] [CONSOLIDADO x10] Log repetitivo padrão B: processando item 0
+2025-05-30 11:39:11 [INFO] [CONSOLIDADO x20] Log repetitivo padrão B: processando item 0
+2025-05-30 11:39:11 [INFO] [CONSOLIDADO x20] Log repetitivo padrão B: processando item 0
+2025-05-30 11:39:11 [INFO] [CONSOLIDADO x30] Log repetitivo padrão B: processando item 0
+2025-05-30 11:39:11 [INFO] [CONSOLIDADO x30] Log repetitivo padrão B: processando item 0
+2025-05-30 11:52:26 [INFO] 🔧 Configurando Enhanced Tool Integration v2
+2025-05-30 11:52:29 [INFO] ✅ Enhanced Tool Integration configurado (2 ferramentas detectadas)
+2025-05-30 11:52:29 [INFO] 🚀 Configurando Enhanced Crew System v2
+2025-05-30 11:52:29 [INFO] 🚀 Enhanced Logging System atualizado para v2
+2025-05-30 11:52:29 [INFO]    ✅ Consolidação de logs ativada
+2025-05-30 11:52:29 [INFO]    ✅ Performance monitoring melhorado
+2025-05-30 11:52:29 [INFO]    ✅ Log file management ativo
+2025-05-30 11:52:29 [INFO] 🎯 ========================================
+2025-05-30 11:52:29 [INFO] 🎯 MARCO: MIGRAÇÃO v1 → v2
+2025-05-30 11:52:29 [INFO]    📊 Sistema_anterior: Enhanced Logging v1
+2025-05-30 11:52:29 [INFO]    📊 Sistema_atual: Enhanced Logging v2
+2025-05-30 11:52:29 [INFO]    📊 Melhorias: Consolidação + Tool Monitoring + File Management
+2025-05-30 11:52:29 [INFO]    📊 Compatibilidade: 100% com v1
+2025-05-30 11:52:29 [INFO]    📈 Operações ativas: 0
+2025-05-30 11:52:29 [INFO]    ⚠️ Total warnings: 0
+2025-05-30 11:52:29 [INFO]    ❌ Total errors: 0
+2025-05-30 11:52:30 [INFO] ✅ Enhanced logging v2 aplicado ao crew_optimized
+2025-05-30 11:52:30 [INFO] ✅ Enhanced Crew System v2 configurado
+2025-05-30 11:52:30 [INFO] 📦 Consolidação de logs ATIVA
+2025-05-30 11:52:30 [INFO] ✅ Environment v2 configurado
+2025-05-30 11:52:30 [INFO] 📅 Usando período padrão v2 (90 dias): 2025-03-01 a 2025-05-30
+2025-05-30 11:52:30 [INFO] [OP_0001] Date_Validator Validação de Datas 🚀 [OP_0001] Date_Validator - Validação de Datas
+2025-05-30 11:52:30 [INFO] [OP_0001] Date_Validator Validação de Datas    ⏱️ ETA: 1.0s
+2025-05-30 11:52:30 [INFO] [OP_0001] Date_Validator Validação de Datas ✅ Datas validadas: 90 dias de análise
+2025-05-30 11:52:30 [INFO] [OP_0001] Date_Validator Validação de Datas ✅ [OP_0001] Concluído em 0.00s | Mem: 406.4MB | 90 dias validados
+2025-05-30 11:52:30 [INFO] 🎯 MARCO: CONFIGURAÇÃO DO SISTEMA V2
+2025-05-30 11:52:30 [INFO]    📊 Período: 2025-03-01 até 2025-05-30 (90 dias)
+2025-05-30 11:52:30 [INFO]    📊 Início: 11:52:30
+2025-05-30 11:52:30 [INFO]    📊 Configuração: NORMAL | DESENVOLVIMENTO | COM CACHE
+2025-05-30 11:52:30 [INFO]    📊 Features_v2: CONSOLIDAÇÃO
+2025-05-30 11:52:30 [INFO]    📊 Sistema: Enhanced Logging v2.0
+2025-05-30 11:52:30 [INFO] [OP_0002] Main_System_v2 Enhanced Insights-AI Execution v2 🚀 [OP_0002] Main_System_v2 - Enhanced Insights-AI Execution v2
+2025-05-30 11:52:30 [INFO] [OP_0002] Main_System_v2 Enhanced Insights-AI Execution v2 📊 [OP_0002] 20.0% | Configurando sistema enhanced v2
+2025-05-30 11:52:30 [INFO] [OP_0002] Main_System_v2 Enhanced Insights-AI Execution v2 📊 [OP_0002] 40.0% | ETA: 0.0s | Executando análise principal v2
+2025-05-30 11:52:30 [INFO] [OP_0002] Main_System_v2 Enhanced Insights-AI Execution v2 🚀 Inicializando Enhanced Crew Wrapper v2
+2025-05-30 11:52:30 [INFO] [OP_0002] Main_System_v2 Enhanced Insights-AI Execution v2    ✅ Consolidação de logs ativa
+2025-05-30 11:52:30 [INFO] [OP_0002] Main_System_v2 Enhanced Insights-AI Execution v2    ✅ Tool monitoring ativo
+2025-05-30 11:52:30 [INFO] [OP_0002] Main_System_v2 Enhanced Insights-AI Execution v2    ✅ Performance tracking ativo
+2025-05-30 11:52:30 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2 🚀 [OP_0003] Enhanced_Crew_System - Insights-AI Analysis v2
+2025-05-30 11:52:30 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2 🎯 MARCO: INÍCIO DA ANÁLISE V2
+2025-05-30 11:52:30 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    📊 Período: 2025-03-01 a 2025-05-30 (90 dias)
+2025-05-30 11:52:30 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    📊 Sistema: Enhanced Crew v2.0
+2025-05-30 11:52:30 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    📊 Consolidação: Ativa
+2025-05-30 11:52:30 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    📊 Tool_Monitoring: Ativo
+2025-05-30 11:52:30 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2 📊 [OP_0003] 10.0% | ETA: 0.0s | Inicializando sistema v2
+2025-05-30 11:52:30 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2 📊 [OP_0003] 20.0% | ETA: 0.0s | Configurando ferramentas
+2025-05-30 11:52:30 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2 📊 [OP_0003] 30.0% | ETA: 0.0s | Validando dados
+2025-05-30 11:52:30 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2 📊 [OP_0003] 40.0% | ETA: 0.0s | Iniciando análise principal
+2025-05-30 12:00:25 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2 📊 [OP_0003] 80.0% | ETA: 118.8s | Processando resultados
+2025-05-30 12:00:25 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2 📊 [OP_0003] 100.0% | Finalizando análise v2
+2025-05-30 12:00:25 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2 🎯 ========================================
+2025-05-30 12:00:25 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2 🎯 MARCO: ANÁLISE V2 CONCLUÍDA
+2025-05-30 12:00:25 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    📊 Resultado: Sucesso
+2025-05-30 12:00:25 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    📊 Tentativas: 1
+2025-05-30 12:00:25 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    📊 Tamanho_Resultado: 7920
+2025-05-30 12:00:25 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    📊 Logs_Consolidados: 0
+2025-05-30 12:00:25 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    📈 Operações ativas: 2
+2025-05-30 12:00:25 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    ⚠️ Total warnings: 0
+2025-05-30 12:00:25 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    ❌ Total errors: 0
+2025-05-30 12:00:25 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2 🎯 MARCO: RESUMO DE PERFORMANCE V2
+2025-05-30 12:00:25 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    📊 Padrões_consolidados: 11
+2025-05-30 12:00:25 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    📊 Mensagens_suprimidas: 1
+2025-05-30 12:00:25 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    📊 Operações_rastreadas: 1
+2025-05-30 12:00:25 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    📊 Gargalos_detectados: 0
+2025-05-30 12:00:25 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    📊 Versão: Enhanced Logging v2
+2025-05-30 12:00:25 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2 📊 Top padrões de log:
+2025-05-30 12:00:25 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    1. 🎯 ======================================== (x2)
+2025-05-30 12:00:25 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    2. 📊 [OP_0003] 80.0% | ETA: 118.8s | Processando resultados (x1)
+2025-05-30 12:00:25 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    3. 📊 [OP_0003] 100.0% | Finalizando análise v2 (x1)
+2025-05-30 12:00:25 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    4. 🎯 MARCO: ANÁLISE V2 CONCLUÍDA (x1)
+2025-05-30 12:00:25 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    5.    📊 Resultado: Sucesso (x1)
+2025-05-30 12:00:25 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2 📊 Relatório de performance das ferramentas concluído
+2025-05-30 12:00:25 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2 🎯 MARCO: CONSOLIDAÇÃO DE LOGS
+2025-05-30 12:00:25 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    📊 Mensagens_originais: 30
+2025-05-30 12:00:25 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    📊 Padrões_únicos: 24
+2025-05-30 12:00:25 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    📊 Eficiência: 20.0%
+2025-05-30 12:00:25 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2 🎯 MARCO: ESTATÍSTICAS ENHANCED v2
+2025-05-30 12:00:25 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    📊 Arquivo_log: C:\Users\jean.moura\Documents\Python\CrewAI\insigh...
+2025-05-30 12:00:25 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    📊 Versão: v2
+2025-05-30 12:00:25 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2 ✅ [OP_0003] Concluído em 475.12s | Mem: 483.5MB | v2 - Tentativa 1
+2025-05-30 12:00:25 [INFO] 🎯 MARCO: EXECUÇÃO V2 CONCLUÍDA
+2025-05-30 12:00:25 [INFO]    📊 Tempo_total: 475.12s
+2025-05-30 12:00:25 [INFO]    📊 Resultado_chars: 7920
+2025-05-30 12:00:25 [INFO]    📊 Status: Sucesso
+2025-05-30 12:00:25 [INFO]    📊 Logs_consolidados: 19
+2025-05-30 12:00:25 [INFO]    📊 Eficiência_logs: 37.3%
+2025-05-30 12:00:25 [INFO]    📊 Arquivo_log: insights_enhanced_20250530.log
+2025-05-30 12:00:25 [INFO] [CONSOLIDADO x10] 🎯 ========================================
+2025-05-30 12:00:25 [INFO] 💾 Resultado salvo em: output/insights_enhanced_v2_20250530_120025.txt
+2025-05-30 12:00:25 [INFO] 🎯 MARCO: MÉTRICAS DE PERFORMANCE V2
+2025-05-30 12:00:25 [INFO]    📊 Operações_ativas: 1
+2025-05-30 12:00:25 [INFO]    📊 Total_warnings: 0
+2025-05-30 12:00:25 [INFO]    📊 Total_errors: 0
+2025-05-30 12:00:25 [INFO]    📊 Memória_MB: 483.5
+2025-05-30 12:00:25 [INFO] 📁 Arquivo de log: C:\Users\jean.moura\Documents\Python\CrewAI\insights-ai\logs\enhanced\insights_enhanced_20250530.log
+2025-05-30 12:00:25 [INFO] 📊 Tamanho do arquivo: 0.02MB
+2025-05-30 12:00:25 [INFO] 📊 Métricas do sistema original:
+2025-05-30 12:00:25 [INFO]    • architecture: ETL_CSV_based
+2025-05-30 12:00:25 [INFO]    • data_access_model: separated_responsibilities
+2025-05-30 12:00:25 [INFO]    • sql_access_restricted_to: engenheiro_dados
+2025-05-30 12:00:25 [INFO]    • csv_based_analysis: enabled
+2025-05-30 12:00:25 [INFO]    • cache_enabled: True
+2025-05-30 12:00:25 [INFO]    • lazy_loading: True
+2025-05-30 12:00:25 [INFO]    • log_level: NORMAL
+2025-05-30 12:00:25 [INFO]    • parallel_init: True
+2025-05-30 12:00:25 [INFO]    • cache_size: 0
+2025-05-30 12:00:25 [INFO]    • cache_hits: 0
+2025-05-30 12:00:25 [INFO]    • cache_misses: 0
+2025-05-30 12:00:25 [INFO]    • intelligent_context_limit: 400000
+2025-05-30 12:00:25 [INFO]    • tool_access_validation: active
+2025-05-30 12:00:25 [INFO]    • data_flow: SQL_to_CSV_to_Analysis
+2025-05-30 13:20:14 [INFO] 🔧 Configurando Enhanced Tool Integration v2
+2025-05-30 13:20:16 [INFO] ✅ Enhanced Tool Integration configurado (2 ferramentas detectadas)
+2025-05-30 13:20:16 [INFO] 🚀 Configurando Enhanced Crew System v2
+2025-05-30 13:20:16 [INFO] 🚀 Enhanced Logging System atualizado para v2
+2025-05-30 13:20:16 [INFO]    ✅ Consolidação de logs ativada
+2025-05-30 13:20:16 [INFO]    ✅ Performance monitoring melhorado
+2025-05-30 13:20:16 [INFO]    ✅ Log file management ativo
+2025-05-30 13:20:16 [INFO] 🎯 ========================================
+2025-05-30 13:20:16 [INFO] 🎯 MARCO: MIGRAÇÃO v1 → v2
+2025-05-30 13:20:16 [INFO]    📊 Sistema_anterior: Enhanced Logging v1
+2025-05-30 13:20:16 [INFO]    📊 Sistema_atual: Enhanced Logging v2
+2025-05-30 13:20:16 [INFO]    📊 Melhorias: Consolidação + Tool Monitoring + File Management
+2025-05-30 13:20:16 [INFO]    📊 Compatibilidade: 100% com v1
+2025-05-30 13:20:16 [INFO]    📈 Operações ativas: 0
+2025-05-30 13:20:16 [INFO]    ⚠️ Total warnings: 0
+2025-05-30 13:20:16 [INFO]    ❌ Total errors: 0
+2025-05-30 13:20:17 [WARNING] ⚠️ ⚠️ crew_optimized não disponível: No module named 'prophet'
+2025-05-30 13:20:17 [ERROR] ❌ ERRO #1 - system_enhancement_v2
+2025-05-30 13:20:17 [ERROR]    💾 Memória atual: 363.8MB
+2025-05-30 13:20:17 [ERROR]    🔍 Tipo: ModuleNotFoundError
+2025-05-30 13:20:17 [ERROR]    📝 Mensagem: No module named 'prophet'
+2025-05-30 13:20:42 [INFO] 🔧 Configurando Enhanced Tool Integration v2
+2025-05-30 13:20:43 [INFO] ✅ Enhanced Tool Integration configurado (2 ferramentas detectadas)
+2025-05-30 13:20:43 [INFO] 🚀 Configurando Enhanced Crew System v2
+2025-05-30 13:20:43 [INFO] 🚀 Enhanced Logging System atualizado para v2
+2025-05-30 13:20:43 [INFO]    ✅ Consolidação de logs ativada
+2025-05-30 13:20:43 [INFO]    ✅ Performance monitoring melhorado
+2025-05-30 13:20:43 [INFO]    ✅ Log file management ativo
+2025-05-30 13:20:43 [INFO] 🎯 ========================================
+2025-05-30 13:20:43 [INFO] 🎯 MARCO: MIGRAÇÃO v1 → v2
+2025-05-30 13:20:43 [INFO]    📊 Sistema_anterior: Enhanced Logging v1
+2025-05-30 13:20:43 [INFO]    📊 Sistema_atual: Enhanced Logging v2
+2025-05-30 13:20:43 [INFO]    📊 Melhorias: Consolidação + Tool Monitoring + File Management
+2025-05-30 13:20:43 [INFO]    📊 Compatibilidade: 100% com v1
+2025-05-30 13:20:43 [INFO]    📈 Operações ativas: 0
+2025-05-30 13:20:43 [INFO]    ⚠️ Total warnings: 0
+2025-05-30 13:20:43 [INFO]    ❌ Total errors: 0
+2025-05-30 13:20:44 [WARNING] ⚠️ ⚠️ crew_optimized não disponível: No module named 'prophet'
+2025-05-30 13:20:44 [ERROR] ❌ ERRO #1 - system_enhancement_v2
+2025-05-30 13:20:44 [ERROR]    💾 Memória atual: 362.8MB
+2025-05-30 13:20:44 [ERROR]    🔍 Tipo: ModuleNotFoundError
+2025-05-30 13:20:44 [ERROR]    📝 Mensagem: No module named 'prophet'
+2025-05-30 13:20:44 [INFO] 🚀 Inicializando Enhanced Crew Wrapper v2
+2025-05-30 13:20:44 [INFO]    ✅ Consolidação de logs ativa
+2025-05-30 13:20:44 [INFO]    ✅ Tool monitoring ativo
+2025-05-30 13:20:44 [INFO]    ✅ Performance tracking ativo
+2025-05-30 13:21:13 [INFO] 🔧 Configurando Enhanced Tool Integration v2
+2025-05-30 13:21:14 [INFO] ✅ Enhanced Tool Integration configurado (2 ferramentas detectadas)
+2025-05-30 13:21:14 [INFO] 🚀 Configurando Enhanced Crew System v2
+2025-05-30 13:21:14 [INFO] 🚀 Enhanced Logging System atualizado para v2
+2025-05-30 13:21:14 [INFO]    ✅ Consolidação de logs ativada
+2025-05-30 13:21:14 [INFO]    ✅ Performance monitoring melhorado
+2025-05-30 13:21:14 [INFO]    ✅ Log file management ativo
+2025-05-30 13:21:14 [INFO] 🎯 ========================================
+2025-05-30 13:21:14 [INFO] 🎯 MARCO: MIGRAÇÃO v1 → v2
+2025-05-30 13:21:14 [INFO]    📊 Sistema_anterior: Enhanced Logging v1
+2025-05-30 13:21:14 [INFO]    📊 Sistema_atual: Enhanced Logging v2
+2025-05-30 13:21:14 [INFO]    📊 Melhorias: Consolidação + Tool Monitoring + File Management
+2025-05-30 13:21:14 [INFO]    📊 Compatibilidade: 100% com v1
+2025-05-30 13:21:14 [INFO]    📈 Operações ativas: 0
+2025-05-30 13:21:14 [INFO]    ⚠️ Total warnings: 0
+2025-05-30 13:21:14 [INFO]    ❌ Total errors: 0
+2025-05-30 13:21:15 [WARNING] ⚠️ ⚠️ crew_optimized não disponível: No module named 'prophet'
+2025-05-30 13:21:15 [ERROR] ❌ ERRO #1 - system_enhancement_v2
+2025-05-30 13:21:15 [ERROR]    💾 Memória atual: 363.8MB
+2025-05-30 13:21:15 [ERROR]    🔍 Tipo: ModuleNotFoundError
+2025-05-30 13:21:15 [ERROR]    📝 Mensagem: No module named 'prophet'
+2025-05-30 13:21:15 [INFO] 🚀 Inicializando Enhanced Crew Wrapper v2
+2025-05-30 13:21:15 [INFO]    ✅ Consolidação de logs ativa
+2025-05-30 13:21:15 [INFO]    ✅ Tool monitoring ativo
+2025-05-30 13:21:15 [INFO]    ✅ Performance tracking ativo
+2025-05-30 13:21:15 [INFO] [OP_0001] Insights-AI Analysis v2 Enhanced_Crew_System 🚀 [OP_0001] Insights-AI Analysis v2 - Enhanced_Crew_System
+2025-05-30 13:22:01 [INFO] 🔧 Configurando Enhanced Tool Integration v2
+2025-05-30 13:22:03 [INFO] ✅ Enhanced Tool Integration configurado (2 ferramentas detectadas)
+2025-05-30 13:22:03 [INFO] 🚀 Configurando Enhanced Crew System v2
+2025-05-30 13:22:03 [INFO] 🚀 Enhanced Logging System atualizado para v2
+2025-05-30 13:22:03 [INFO]    ✅ Consolidação de logs ativada
+2025-05-30 13:22:03 [INFO]    ✅ Performance monitoring melhorado
+2025-05-30 13:22:03 [INFO]    ✅ Log file management ativo
+2025-05-30 13:22:03 [INFO] 🎯 ========================================
+2025-05-30 13:22:03 [INFO] 🎯 MARCO: MIGRAÇÃO v1 → v2
+2025-05-30 13:22:03 [INFO]    📊 Sistema_anterior: Enhanced Logging v1
+2025-05-30 13:22:03 [INFO]    📊 Sistema_atual: Enhanced Logging v2
+2025-05-30 13:22:03 [INFO]    📊 Melhorias: Consolidação + Tool Monitoring + File Management
+2025-05-30 13:22:03 [INFO]    📊 Compatibilidade: 100% com v1
+2025-05-30 13:22:03 [INFO]    📈 Operações ativas: 0
+2025-05-30 13:22:03 [INFO]    ⚠️ Total warnings: 0
+2025-05-30 13:22:03 [INFO]    ❌ Total errors: 0
+2025-05-30 13:22:03 [WARNING] ⚠️ ⚠️ crew_optimized não disponível: No module named 'prophet'
+2025-05-30 13:22:03 [ERROR] ❌ ERRO #1 - system_enhancement_v2
+2025-05-30 13:22:03 [ERROR]    💾 Memória atual: 364.0MB
+2025-05-30 13:22:03 [ERROR]    🔍 Tipo: ModuleNotFoundError
+2025-05-30 13:22:03 [ERROR]    📝 Mensagem: No module named 'prophet'
+2025-05-30 13:22:03 [INFO] 🚀 Inicializando Enhanced Crew Wrapper v2
+2025-05-30 13:22:03 [INFO]    ✅ Consolidação de logs ativa
+2025-05-30 13:22:03 [INFO]    ✅ Tool monitoring ativo
+2025-05-30 13:22:03 [INFO]    ✅ Performance tracking ativo
+2025-05-30 13:22:03 [INFO] [OP_0001] Insights-AI Analysis v2 Enhanced_Crew_System 🚀 [OP_0001] Insights-AI Analysis v2 - Enhanced_Crew_System
+2025-05-30 13:22:03 [INFO] [OP_0001] Insights-AI Analysis v2 Enhanced_Crew_System 🎯 MARCO: INÍCIO DA ANÁLISE V2
+2025-05-30 13:22:03 [INFO] [OP_0001] Insights-AI Analysis v2 Enhanced_Crew_System    📊 período: 2024-01-01 a 2024-01-31 (31 dias)
+2025-05-30 13:22:03 [INFO] [OP_0001] Insights-AI Analysis v2 Enhanced_Crew_System    📊 sistema: Enhanced Crew v2.0
+2025-05-30 13:22:03 [INFO] [OP_0001] Insights-AI Analysis v2 Enhanced_Crew_System    📊 consolidação: Ativa
+2025-05-30 13:22:03 [INFO] [OP_0001] Insights-AI Analysis v2 Enhanced_Crew_System    📊 tool_monitoring: Ativo
+2025-05-30 13:22:03 [INFO] [OP_0001] Insights-AI Analysis v2 Enhanced_Crew_System ✅ [OP_0001] Concluído em 0.00s | Mem: 365.8MB | v2 - Tentativa 1
+2025-05-30 13:31:46 [INFO] 🔧 Configurando Enhanced Tool Integration v2
+2025-05-30 13:31:48 [INFO] ✅ Enhanced Tool Integration configurado (2 ferramentas detectadas)
+2025-05-30 13:31:48 [INFO] 🚀 Configurando Enhanced Crew System v2
+2025-05-30 13:31:48 [INFO] 🚀 Enhanced Logging System atualizado para v2
+2025-05-30 13:31:48 [INFO]    ✅ Consolidação de logs ativada
+2025-05-30 13:31:48 [INFO]    ✅ Performance monitoring melhorado
+2025-05-30 13:31:48 [INFO]    ✅ Log file management ativo
+2025-05-30 13:31:48 [INFO] 🎯 ========================================
+2025-05-30 13:31:48 [INFO] 🎯 MARCO: MIGRAÇÃO v1 → v2
+2025-05-30 13:31:48 [INFO]    📊 Sistema_anterior: Enhanced Logging v1
+2025-05-30 13:31:48 [INFO]    📊 Sistema_atual: Enhanced Logging v2
+2025-05-30 13:31:48 [INFO]    📊 Melhorias: Consolidação + Tool Monitoring + File Management
+2025-05-30 13:31:48 [INFO]    📊 Compatibilidade: 100% com v1
+2025-05-30 13:31:48 [INFO]    📈 Operações ativas: 0
+2025-05-30 13:31:48 [INFO]    ⚠️ Total warnings: 0
+2025-05-30 13:31:48 [INFO]    ❌ Total errors: 0
+2025-05-30 13:31:50 [INFO] ✅ Enhanced logging v2 aplicado ao crew_optimized
+2025-05-30 13:31:50 [INFO] ✅ Enhanced Crew System v2 configurado
+2025-05-30 13:31:50 [INFO] 📦 Consolidação de logs ATIVA
+2025-05-30 13:31:50 [INFO] ✅ Environment v2 configurado
+2025-05-30 13:31:50 [INFO] 📅 Usando período padrão v2 (90 dias): 2025-03-01 a 2025-05-30
+2025-05-30 13:31:50 [INFO] [OP_0001] Date_Validator Validação de Datas 🚀 [OP_0001] Date_Validator - Validação de Datas
+2025-05-30 13:31:50 [INFO] [OP_0001] Date_Validator Validação de Datas    ⏱️ ETA: 1.0s
+2025-05-30 13:31:50 [INFO] [OP_0001] Date_Validator Validação de Datas ✅ Datas validadas: 90 dias de análise
+2025-05-30 13:31:50 [INFO] [OP_0001] Date_Validator Validação de Datas ✅ [OP_0001] Concluído em 0.00s | Mem: 406.1MB | 90 dias validados
+2025-05-30 13:31:50 [INFO] 🎯 MARCO: CONFIGURAÇÃO DO SISTEMA V2
+2025-05-30 13:31:50 [INFO]    📊 Período: 2025-03-01 até 2025-05-30 (90 dias)
+2025-05-30 13:31:50 [INFO]    📊 Início: 13:31:50
+2025-05-30 13:31:50 [INFO]    📊 Configuração: NORMAL | DESENVOLVIMENTO | COM CACHE
+2025-05-30 13:31:50 [INFO]    📊 Features_v2: CONSOLIDAÇÃO
+2025-05-30 13:31:50 [INFO]    📊 Sistema: Enhanced Logging v2.0
+2025-05-30 13:31:50 [INFO] [OP_0002] Main_System_v2 Enhanced Insights-AI Execution v2 🚀 [OP_0002] Main_System_v2 - Enhanced Insights-AI Execution v2
+2025-05-30 13:31:50 [INFO] [OP_0002] Main_System_v2 Enhanced Insights-AI Execution v2 📊 [OP_0002] 20.0% | Configurando sistema enhanced v2
+2025-05-30 13:31:50 [INFO] [OP_0002] Main_System_v2 Enhanced Insights-AI Execution v2 📊 [OP_0002] 40.0% | ETA: 0.0s | Executando análise principal v2
+2025-05-30 13:31:50 [INFO] [OP_0002] Main_System_v2 Enhanced Insights-AI Execution v2 🚀 Inicializando Enhanced Crew Wrapper v2
+2025-05-30 13:31:50 [INFO] [OP_0002] Main_System_v2 Enhanced Insights-AI Execution v2    ✅ Consolidação de logs ativa
+2025-05-30 13:31:50 [INFO] [OP_0002] Main_System_v2 Enhanced Insights-AI Execution v2    ✅ Tool monitoring ativo
+2025-05-30 13:31:50 [INFO] [OP_0002] Main_System_v2 Enhanced Insights-AI Execution v2    ✅ Performance tracking ativo
+2025-05-30 13:31:50 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2 🚀 [OP_0003] Enhanced_Crew_System - Insights-AI Analysis v2
+2025-05-30 13:31:50 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2 🎯 MARCO: INÍCIO DA ANÁLISE V2
+2025-05-30 13:31:50 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    📊 Período: 2025-03-01 a 2025-05-30 (90 dias)
+2025-05-30 13:31:50 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    📊 Sistema: Enhanced Crew v2.0
+2025-05-30 13:31:50 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    📊 Consolidação: Ativa
+2025-05-30 13:31:50 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    📊 Tool_Monitoring: Ativo
+2025-05-30 13:31:50 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2 📊 [OP_0003] 10.0% | ETA: 0.0s | Inicializando sistema v2
+2025-05-30 13:31:50 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2 📊 [OP_0003] 20.0% | ETA: 0.0s | Configurando ferramentas
+2025-05-30 13:31:50 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2 📊 [OP_0003] 30.0% | ETA: 0.0s | Validando dados
+2025-05-30 13:31:50 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2 📊 [OP_0003] 40.0% | ETA: 0.0s | Iniciando análise principal
+2025-05-30 13:43:14 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2 📊 [OP_0003] 80.0% | ETA: 171.2s | Processando resultados
+2025-05-30 13:43:14 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2 📊 [OP_0003] 100.0% | Finalizando análise v2
+2025-05-30 13:43:14 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2 🎯 ========================================
+2025-05-30 13:43:14 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2 🎯 MARCO: ANÁLISE V2 CONCLUÍDA
+2025-05-30 13:43:14 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    📊 Resultado: Sucesso
+2025-05-30 13:43:14 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    📊 Tentativas: 1
+2025-05-30 13:43:14 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    📊 Tamanho_Resultado: 5822
+2025-05-30 13:43:14 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    📊 Logs_Consolidados: 0
+2025-05-30 13:43:14 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    📈 Operações ativas: 2
+2025-05-30 13:43:14 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    ⚠️ Total warnings: 0
+2025-05-30 13:43:14 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    ❌ Total errors: 0
+2025-05-30 13:43:14 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2 🎯 MARCO: RESUMO DE PERFORMANCE V2
+2025-05-30 13:43:14 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    📊 Padrões_consolidados: 11
+2025-05-30 13:43:14 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    📊 Mensagens_suprimidas: 1
+2025-05-30 13:43:14 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    📊 Operações_rastreadas: 1
+2025-05-30 13:43:14 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    📊 Gargalos_detectados: 0
+2025-05-30 13:43:14 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    📊 Versão: Enhanced Logging v2
+2025-05-30 13:43:14 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2 📊 Top padrões de log:
+2025-05-30 13:43:14 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    1. 🎯 ======================================== (x2)
+2025-05-30 13:43:14 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    2. 📊 [OP_0003] 80.0% | ETA: 171.2s | Processando resultados (x1)
+2025-05-30 13:43:14 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    3. 📊 [OP_0003] 100.0% | Finalizando análise v2 (x1)
+2025-05-30 13:43:14 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    4. 🎯 MARCO: ANÁLISE V2 CONCLUÍDA (x1)
+2025-05-30 13:43:14 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    5.    📊 Resultado: Sucesso (x1)
+2025-05-30 13:43:14 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2 📊 Relatório de performance das ferramentas concluído
+2025-05-30 13:43:14 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2 🎯 MARCO: CONSOLIDAÇÃO DE LOGS
+2025-05-30 13:43:14 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    📊 Mensagens_originais: 30
+2025-05-30 13:43:14 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    📊 Padrões_únicos: 24
+2025-05-30 13:43:14 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    📊 Eficiência: 20.0%
+2025-05-30 13:43:14 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2 🎯 MARCO: ESTATÍSTICAS ENHANCED v2
+2025-05-30 13:43:14 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    📊 Arquivo_log: C:\Users\jean.moura\Documents\Python\CrewAI\insigh...
+2025-05-30 13:43:14 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2    📊 Versão: v2
+2025-05-30 13:43:14 [INFO] [OP_0003] Enhanced_Crew_System Insights-AI Analysis v2 ✅ [OP_0003] Concluído em 684.83s | Mem: 400.3MB | v2 - Tentativa 1
+2025-05-30 13:43:14 [INFO] 🎯 MARCO: EXECUÇÃO V2 CONCLUÍDA
+2025-05-30 13:43:14 [INFO]    📊 Tempo_total: 684.83s
+2025-05-30 13:43:14 [INFO]    📊 Resultado_chars: 5822
+2025-05-30 13:43:14 [INFO]    📊 Status: Sucesso
+2025-05-30 13:43:14 [INFO]    📊 Logs_consolidados: 19
+2025-05-30 13:43:14 [INFO]    📊 Eficiência_logs: 37.3%
+2025-05-30 13:43:14 [INFO]    📊 Arquivo_log: insights_enhanced_20250530.log
+2025-05-30 13:43:14 [INFO] [CONSOLIDADO x10] 🎯 ========================================
+2025-05-30 13:43:14 [INFO] 💾 Resultado salvo em: output/insights_enhanced_v2_20250530_134314.txt
+2025-05-30 13:43:14 [INFO] 🎯 MARCO: MÉTRICAS DE PERFORMANCE V2
+2025-05-30 13:43:14 [INFO]    📊 Operações_ativas: 1
+2025-05-30 13:43:14 [INFO]    📊 Total_warnings: 0
+2025-05-30 13:43:14 [INFO]    📊 Total_errors: 0
+2025-05-30 13:43:14 [INFO]    📊 Memória_MB: 400.3
+2025-05-30 13:43:14 [INFO] 📁 Arquivo de log: C:\Users\jean.moura\Documents\Python\CrewAI\insights-ai\logs\enhanced\insights_enhanced_20250530.log
+2025-05-30 13:43:14 [INFO] 📊 Tamanho do arquivo: 0.04MB
+2025-05-30 13:43:14 [INFO] 📊 Métricas do sistema original:
+2025-05-30 13:43:14 [INFO]    • architecture: ETL_CSV_based
+2025-05-30 13:43:14 [INFO]    • data_access_model: separated_responsibilities
+2025-05-30 13:43:14 [INFO]    • sql_access_restricted_to: engenheiro_dados
+2025-05-30 13:43:14 [INFO]    • csv_based_analysis: enabled
+2025-05-30 13:43:14 [INFO]    • cache_enabled: True
+2025-05-30 13:43:14 [INFO]    • lazy_loading: True
+2025-05-30 13:43:14 [INFO]    • log_level: NORMAL
+2025-05-30 13:43:14 [INFO]    • parallel_init: True
+2025-05-30 13:43:14 [INFO]    • cache_size: 0
+2025-05-30 13:43:14 [INFO]    • cache_hits: 0
+2025-05-30 13:43:14 [INFO]    • cache_misses: 0
+2025-05-30 13:43:14 [INFO]    • intelligent_context_limit: 400000
+2025-05-30 13:43:14 [INFO]    • tool_access_validation: active
+2025-05-30 13:43:14 [INFO]    • data_flow: SQL_to_CSV_to_Analysis

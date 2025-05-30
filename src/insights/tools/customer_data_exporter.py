@@ -6,10 +6,36 @@ import numpy as np
 from datetime import datetime, timedelta
 import os
 import warnings
+import json
+import time
+import traceback
+import sys
 
-# Importar módulos compartilhados
-from .shared.data_preparation import DataPreparationMixin
-from .shared.business_mixins import JewelryBusinessAnalysisMixin, JewelryRFMAnalysisMixin
+# Importar módulos compartilhados consolidados
+try:
+    # Imports relativos (quando usado como módulo)
+    from .shared.data_preparation import DataPreparationMixin
+    from .shared.business_mixins import JewelryBusinessAnalysisMixin, JewelryRFMAnalysisMixin
+except ImportError:
+    # Imports absolutos (quando executado diretamente)
+    try:
+        from insights.tools.shared.data_preparation import DataPreparationMixin
+        from insights.tools.shared.business_mixins import JewelryBusinessAnalysisMixin, JewelryRFMAnalysisMixin
+    except ImportError:
+        # Se não conseguir importar, usar versão local ou criar stubs
+        print("⚠️ Importações locais não encontradas, usando implementação básica...")
+        
+        class DataPreparationMixin:
+            """Stub básico para DataPreparationMixin"""
+            pass
+        
+        class JewelryBusinessAnalysisMixin:
+            """Stub básico para JewelryBusinessAnalysisMixin"""
+            pass
+            
+        class JewelryRFMAnalysisMixin:
+            """Stub básico para JewelryRFMAnalysisMixin"""
+            pass
 
 warnings.filterwarnings('ignore')
 
@@ -755,4 +781,663 @@ class CustomerDataExporter(BaseTool, DataPreparationMixin, JewelryBusinessAnalys
                     🎯 **Dados prontos para CRM, campanhas de marketing e análise de segmentação!**
                     """
                             
-        return summary.strip() 
+        return summary.strip()
+
+    def generate_customer_test_report(self, test_data: dict) -> str:
+        """Gera relatório visual completo dos testes de clientes em formato markdown."""
+        
+        # Coletar dados com fallbacks
+        metadata = test_data.get('metadata', {})
+        data_metrics = test_data.get('data_metrics', {})
+        results = test_data.get('results', {})
+        component_tests = test_data.get('component_tests', {})
+        
+        report = [
+            "# 👥 Teste Completo de Análise de Clientes - Relatório Executivo",
+            f"**Data do Teste:** {metadata.get('test_timestamp', 'N/A')}",
+            f"**Fonte de Dados:** `{metadata.get('data_source', 'desconhecida')}`",
+            f"**Registros Analisados:** {data_metrics.get('total_records', 0):,}",
+            f"**Clientes Únicos:** {data_metrics.get('total_customers', 0):,}",
+            f"**Intervalo de Análise:** {data_metrics.get('date_range', {}).get('start', 'N/A')} até {data_metrics.get('date_range', {}).get('end', 'N/A')}",
+            "\n## 📈 Performance de Execução",
+            f"```\n{json.dumps(test_data.get('performance_metrics', {}), indent=2)}\n```",
+            "\n## 🎯 Resumo dos Testes Executados"
+        ]
+        
+        # Contabilizar sucessos e falhas
+        successful_tests = len([r for r in results.values() if 'success' in r and r['success']])
+        failed_tests = len([r for r in results.values() if 'success' in r and not r['success']])
+        total_tests = len(results)
+        
+        report.extend([
+            f"- **Total de Componentes:** {total_tests}",
+            f"- **Sucessos:** {successful_tests} ✅",
+            f"- **Falhas:** {failed_tests} ❌",
+            f"- **Taxa de Sucesso:** {(successful_tests/total_tests*100):.1f}%" if total_tests > 0 else "- **Taxa de Sucesso:** N/A"
+        ])
+        
+        # Principais Descobertas de Clientes
+        report.append("\n## 👥 Principais Descobertas de Clientes")
+        
+        # Análise RFM
+        if 'rfm_analysis' in results and results['rfm_analysis'].get('success'):
+            rfm_data = results['rfm_analysis']
+            total_customers = rfm_data.get('total_customers_analyzed', 0)
+            champions = int(rfm_data.get('champions_count', 0))
+            at_risk = int(rfm_data.get('at_risk_count', 0))
+            avg_rfm_score = rfm_data.get('avg_rfm_score', 0)
+            report.append(f"- **Total de Clientes Analisados:** {total_customers:,}")
+            report.append(f"- **Clientes Campeões:** {champions} ({champions/total_customers*100:.1f}%)" if total_customers > 0 else "- **Clientes Campeões:** N/A")
+            report.append(f"- **Clientes em Risco:** {at_risk} ({at_risk/total_customers*100:.1f}%)" if total_customers > 0 else "- **Clientes em Risco:** N/A")
+            report.append(f"- **Score RFM Médio:** {avg_rfm_score:.1f}")
+        
+        # Análise CLV
+        if 'clv_calculation' in results and results['clv_calculation'].get('success'):
+            clv_data = results['clv_calculation']
+            total_clv = clv_data.get('total_clv_estimated', 0)
+            avg_clv = clv_data.get('avg_clv', 0)
+            premium_customers = clv_data.get('premium_customers_count', 0)
+            report.append(f"- **CLV Total Estimado:** R$ {total_clv:,.0f}")
+            report.append(f"- **CLV Médio:** R$ {avg_clv:,.0f}")
+            report.append(f"- **Clientes Premium:** {premium_customers}")
+        
+        # Demografia
+        if 'geographic_analysis' in results and results['geographic_analysis'].get('success'):
+            geo_data = results['geographic_analysis']
+            top_state = geo_data.get('top_state', 'N/A')
+            dominant_age_group = geo_data.get('dominant_age_group', 'N/A')
+            report.append(f"- **Estado Predominante:** {top_state}")
+            report.append(f"- **Faixa Etária Dominante:** {dominant_age_group}")
+        
+        # Insights Comportamentais
+        if 'behavioral_insights' in results and results['behavioral_insights'].get('success'):
+            behavior_data = results['behavioral_insights']
+            churn_risk = behavior_data.get('churn_risk_customers', 0)
+            seasonal_pattern = behavior_data.get('dominant_seasonal_pattern', 'N/A')
+            report.append(f"- **Clientes em Risco de Churn:** {churn_risk}")
+            report.append(f"- **Padrão Sazonal Dominante:** {seasonal_pattern}")
+        
+        # Health Scores
+        if 'health_scores' in results and results['health_scores'].get('success'):
+            health_data = results['health_scores']
+            avg_health = health_data.get('avg_health_score', 0)
+            healthy_customers = health_data.get('healthy_customers_count', 0)
+            report.append(f"- **Score Médio de Saúde:** {avg_health:.1f}/100")
+            report.append(f"- **Clientes Saudáveis (>70):** {healthy_customers}")
+        
+        # Detalhamento por Componente
+        report.append("\n## 🔧 Detalhamento dos Componentes Testados")
+        
+        component_categories = {
+            'Preparação de Dados': ['data_loading', 'customer_id_estimation', 'data_aggregation'],
+            'Análise RFM': ['rfm_analysis'],
+            'Cálculo CLV': ['clv_calculation'],
+            'Análise Geográfica': ['geographic_analysis'],
+            'Insights Comportamentais': ['behavioral_insights'],
+            'Estratégias Personalizadas': ['personalized_strategies'],
+            'Scores de Saúde': ['health_scores'],
+            'Exportação': ['csv_export', 'summary_generation']
+        }
+        
+        for category, components in component_categories.items():
+            report.append(f"\n### {category}")
+            for component in components:
+                if component in results:
+                    if results[component].get('success'):
+                        metrics = results[component].get('metrics', {})
+                        report.append(f"- ✅ **{component}**: Concluído")
+                        if 'processing_time' in metrics:
+                            report.append(f"  - Tempo: {metrics['processing_time']:.3f}s")
+                        if 'customers_processed' in metrics:
+                            report.append(f"  - Clientes: {metrics['customers_processed']:,}")
+                    else:
+                        error_msg = results[component].get('error', 'Erro desconhecido')
+                        report.append(f"- ❌ **{component}**: {error_msg}")
+                else:
+                    report.append(f"- ⏭️ **{component}**: Não testado")
+        
+        # Arquivos Gerados
+        if 'files_generated' in component_tests:
+            files = component_tests['files_generated']
+            report.append(f"\n### Arquivos Gerados ({len(files)}):")
+            for file_info in files:
+                size_kb = file_info.get('size_kb', 0)
+                report.append(f"- **{file_info['path']}**: {size_kb:.1f} KB")
+        
+        # Recomendações Finais
+        report.append("\n## 💡 Recomendações do Sistema de Clientes")
+        
+        recommendations = [
+            "🎯 Focar em clientes com Prioridade_Acao = 1 (urgente)",
+            "👑 Desenvolver programa VIP para Campeões",
+            "🚨 Implementar campanha de retenção para clientes Em_Risco",
+            "📈 Aproveitar Potenciais_Leais para aumentar frequência",
+            "💰 Priorizar clientes com CLV_Categoria = Premium"
+        ]
+        
+        for rec in recommendations:
+            report.append(f"- {rec}")
+        
+        # Erros encontrados
+        errors = test_data.get('errors', [])
+        if errors:
+            report.append(f"\n### Erros Detectados ({len(errors)}):")
+            for error in errors[-3:]:  # Últimos 3 erros
+                report.append(f"- **{error['context']}**: {error['error_message']}")
+        
+        return "\n".join(report)
+
+    def run_full_customer_test(self) -> str:
+        """Executa teste completo de clientes e retorna relatório formatado"""
+        test_result = self.test_all_customer_components()
+        parsed = json.loads(test_result)
+        return self.generate_customer_test_report(parsed)
+
+    def test_all_customer_components(self, sample_data: str = "data/vendas.csv") -> str:
+        """
+        Executa teste completo de todos os componentes da classe CustomerDataExporter
+        usando especificamente o arquivo data/vendas.csv
+        """
+        
+        # Configurar caminho do arquivo
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        project_root = os.path.abspath(os.path.join(current_dir, "..", "..", ".."))
+        data_file_path = os.path.join(project_root, "data", "vendas.csv")
+        
+        print(f"🔍 DEBUG: Caminho calculado: {data_file_path}")
+        print(f"🔍 DEBUG: Arquivo existe? {os.path.exists(data_file_path)}")
+        
+        # Verificar se arquivo existe
+        if not os.path.exists(data_file_path):
+            alternative_paths = [
+                os.path.join(project_root, "data", "vendas.csv"),
+                os.path.join(os.getcwd(), "data", "vendas.csv"),
+                "data/vendas.csv",
+                "data\\vendas.csv"
+            ]
+            
+            for alt_path in alternative_paths:
+                print(f"🔍 Tentando: {alt_path}")
+                if os.path.exists(alt_path):
+                    data_file_path = alt_path
+                    print(f"✅ Arquivo encontrado em: {data_file_path}")
+                    break
+            else:
+                return json.dumps({
+                    "error": f"Arquivo data/vendas.csv não encontrado em nenhum dos caminhos testados",
+                    "tested_paths": alternative_paths
+                }, indent=2)
+
+        test_report = {
+            "metadata": {
+                "test_timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "test_version": "Customer Test Suite v1.0",
+                "data_source": data_file_path,
+                "tool_version": "Customer Data Exporter v1.0",
+                "status": "in_progress"
+            },
+            "data_metrics": {
+                "total_records": 0,
+                "total_customers": 0,
+                "date_range": {},
+                "data_quality_check": {}
+            },
+            "results": {},
+            "component_tests": {},
+            "performance_metrics": {},
+            "errors": []
+        }
+
+        try:
+            # 1. Carregamento de Dados
+            test_report["metadata"]["current_stage"] = "data_loading"
+            print("\n=== ETAPA 1: CARREGAMENTO DE DADOS ===")
+            print(f"📁 Carregando: {data_file_path}")
+            
+            start_time = time.time()
+            df = self._load_and_prepare_data(data_file_path)
+            loading_time = time.time() - start_time
+            
+            if df.empty:
+                raise Exception("Falha no carregamento do arquivo data/vendas.csv")
+            
+            print(f"✅ Dados carregados: {len(df)} registros em {loading_time:.3f}s")
+            
+            test_report["data_metrics"] = {
+                "total_records": int(len(df)),
+                "date_range": {
+                    "start": str(df['Data'].min()) if 'Data' in df.columns else "N/A",
+                    "end": str(df['Data'].max()) if 'Data' in df.columns else "N/A"
+                },
+                "data_quality_check": self._perform_customer_data_quality_check(df)
+            }
+            
+            test_report["results"]["data_loading"] = {
+                "success": True,
+                "metrics": {
+                    "processing_time": loading_time,
+                    "records_processed": len(df)
+                }
+            }
+
+            # 2. Estimativa de IDs de Cliente
+            test_report["metadata"]["current_stage"] = "customer_id_estimation"
+            print("\n=== ETAPA 2: ESTIMATIVA DE IDs DE CLIENTE ===")
+            
+            try:
+                start_time = time.time()
+                print("🔍 Verificando/Estimando IDs de clientes...")
+                
+                if 'Codigo_Cliente' not in df.columns:
+                    print("⚠️ Campo 'Codigo_Cliente' não encontrado. Criando IDs estimados...")
+                    df['Codigo_Cliente'] = self._estimate_customer_ids(df)
+                    estimated_ids = True
+                else:
+                    estimated_ids = False
+                
+                id_time = time.time() - start_time
+                unique_customers = df['Codigo_Cliente'].nunique()
+                
+                test_report["data_metrics"]["total_customers"] = unique_customers
+                
+                test_report["results"]["customer_id_estimation"] = {
+                    "success": True,
+                    "metrics": {
+                        "processing_time": id_time,
+                        "unique_customers": unique_customers,
+                        "ids_estimated": estimated_ids
+                    }
+                }
+                print(f"✅ IDs processados: {unique_customers:,} clientes únicos em {id_time:.3f}s")
+                
+            except Exception as e:
+                self._log_customer_test_error(test_report, e, "customer_id_estimation")
+                print(f"❌ Erro na estimativa de IDs: {str(e)}")
+
+            # 3. Agregação de Dados por Cliente
+            test_report["metadata"]["current_stage"] = "data_aggregation"
+            print("\n=== ETAPA 3: AGREGAÇÃO DE DADOS POR CLIENTE ===")
+            
+            try:
+                start_time = time.time()
+                print("👥 Agregando dados por cliente...")
+                customer_data = self._aggregate_customer_data(df)
+                aggregation_time = time.time() - start_time
+                
+                test_report["results"]["data_aggregation"] = {
+                    "success": True,
+                    "metrics": {
+                        "processing_time": aggregation_time,
+                        "customers_processed": len(customer_data),
+                        "columns_generated": len(customer_data.columns)
+                    }
+                }
+                print(f"✅ Agregação concluída: {len(customer_data)} clientes em {aggregation_time:.3f}s")
+                
+            except Exception as e:
+                self._log_customer_test_error(test_report, e, "data_aggregation")
+                print(f"❌ Erro na agregação: {str(e)}")
+                customer_data = pd.DataFrame()
+
+            # 4. Análise RFM
+            test_report["metadata"]["current_stage"] = "rfm_analysis"
+            print("\n=== ETAPA 4: ANÁLISE RFM ===")
+            
+            if not customer_data.empty:
+                try:
+                    start_time = time.time()
+                    print("🎯 Aplicando análise RFM...")
+                    customer_data_rfm = self._add_rfm_analysis(df, customer_data.copy())
+                    rfm_time = time.time() - start_time
+                    
+                    # Estatísticas RFM
+                    rfm_segments = customer_data_rfm['Segmento_RFM'].value_counts()
+                    champions = rfm_segments.get('Campeoes', 0)
+                    at_risk = rfm_segments.get('Em_Risco', 0)
+                    avg_rfm = customer_data_rfm[['R_Score', 'F_Score', 'M_Score']].mean().mean()
+                    
+                    test_report["results"]["rfm_analysis"] = {
+                        "success": True,
+                        "metrics": {
+                            "processing_time": rfm_time,
+                            "customers_processed": len(customer_data_rfm)
+                        },
+                        "total_customers_analyzed": len(customer_data_rfm),
+                        "champions_count": champions,
+                        "at_risk_count": at_risk,
+                        "avg_rfm_score": float(avg_rfm),
+                        "segment_distribution": rfm_segments.to_dict()
+                    }
+                    print(f"✅ RFM aplicado: {champions} campeões, {at_risk} em risco, score médio {avg_rfm:.1f} em {rfm_time:.3f}s")
+                    
+                except Exception as e:
+                    self._log_customer_test_error(test_report, e, "rfm_analysis")
+                    print(f"❌ Erro na análise RFM: {str(e)}")
+                    customer_data_rfm = customer_data.copy()
+            else:
+                customer_data_rfm = pd.DataFrame()
+
+            # 5. Cálculo CLV
+            test_report["metadata"]["current_stage"] = "clv_calculation"
+            print("\n=== ETAPA 5: CÁLCULO CLV ===")
+            
+            if not customer_data_rfm.empty:
+                try:
+                    start_time = time.time()
+                    print("💰 Calculando Customer Lifetime Value...")
+                    customer_data_clv = self._add_clv_calculation(df, customer_data_rfm.copy(), 24)
+                    clv_time = time.time() - start_time
+                    
+                    # Estatísticas CLV
+                    total_clv = customer_data_clv['CLV_Estimado'].sum()
+                    avg_clv = customer_data_clv['CLV_Estimado'].mean()
+                    premium_customers = len(customer_data_clv[customer_data_clv['CLV_Categoria'] == 'Premium'])
+                    
+                    test_report["results"]["clv_calculation"] = {
+                        "success": True,
+                        "metrics": {
+                            "processing_time": clv_time,
+                            "customers_processed": len(customer_data_clv)
+                        },
+                        "total_clv_estimated": float(total_clv),
+                        "avg_clv": float(avg_clv),
+                        "premium_customers_count": premium_customers
+                    }
+                    print(f"✅ CLV calculado: R$ {total_clv:,.0f} total, R$ {avg_clv:,.0f} médio, {premium_customers} premium em {clv_time:.3f}s")
+                    
+                except Exception as e:
+                    self._log_customer_test_error(test_report, e, "clv_calculation")
+                    print(f"❌ Erro no cálculo CLV: {str(e)}")
+                    customer_data_clv = customer_data_rfm.copy()
+            else:
+                customer_data_clv = pd.DataFrame()
+
+            # 6. Análise Geográfica
+            test_report["metadata"]["current_stage"] = "geographic_analysis"
+            print("\n=== ETAPA 6: ANÁLISE GEOGRÁFICA ===")
+            
+            if not customer_data_clv.empty:
+                try:
+                    start_time = time.time()
+                    print("🌍 Adicionando análise geográfica e demográfica...")
+                    customer_data_geo = self._add_geographic_analysis(df, customer_data_clv.copy())
+                    geo_time = time.time() - start_time
+                    
+                    # Estatísticas geográficas
+                    state_stats = customer_data_geo['Estado_Estimado'].value_counts()
+                    age_stats = customer_data_geo['Faixa_Etaria_Estimada'].value_counts()
+                    top_state = state_stats.index[0] if len(state_stats) > 0 else 'N/A'
+                    dominant_age = age_stats.index[0] if len(age_stats) > 0 else 'N/A'
+                    
+                    test_report["results"]["geographic_analysis"] = {
+                        "success": True,
+                        "metrics": {
+                            "processing_time": geo_time,
+                            "customers_processed": len(customer_data_geo)
+                        },
+                        "top_state": top_state,
+                        "dominant_age_group": dominant_age,
+                        "state_distribution": state_stats.to_dict(),
+                        "age_distribution": age_stats.to_dict()
+                    }
+                    print(f"✅ Geografia analisada: {top_state} predominante, {dominant_age} dominante em {geo_time:.3f}s")
+                    
+                except Exception as e:
+                    self._log_customer_test_error(test_report, e, "geographic_analysis")
+                    print(f"❌ Erro na análise geográfica: {str(e)}")
+                    customer_data_geo = customer_data_clv.copy()
+            else:
+                customer_data_geo = pd.DataFrame()
+
+            # 7. Insights Comportamentais
+            test_report["metadata"]["current_stage"] = "behavioral_insights"
+            print("\n=== ETAPA 7: INSIGHTS COMPORTAMENTAIS ===")
+            
+            if not customer_data_geo.empty:
+                try:
+                    start_time = time.time()
+                    print("🧠 Gerando insights comportamentais...")
+                    customer_data_behavior = self._add_behavioral_insights(df, customer_data_geo.copy(), 180)
+                    behavior_time = time.time() - start_time
+                    
+                    # Estatísticas comportamentais
+                    churn_risk = customer_data_behavior['Risco_Churn_Flag'].sum()
+                    seasonal_stats = customer_data_behavior['Padrao_Sazonal'].value_counts()
+                    dominant_pattern = seasonal_stats.index[0] if len(seasonal_stats) > 0 else 'N/A'
+                    
+                    test_report["results"]["behavioral_insights"] = {
+                        "success": True,
+                        "metrics": {
+                            "processing_time": behavior_time,
+                            "customers_processed": len(customer_data_behavior)
+                        },
+                        "churn_risk_customers": int(churn_risk),
+                        "dominant_seasonal_pattern": dominant_pattern,
+                        "seasonal_distribution": seasonal_stats.to_dict()
+                    }
+                    print(f"✅ Insights gerados: {churn_risk} em risco churn, padrão {dominant_pattern} em {behavior_time:.3f}s")
+                    
+                except Exception as e:
+                    self._log_customer_test_error(test_report, e, "behavioral_insights")
+                    print(f"❌ Erro nos insights: {str(e)}")
+                    customer_data_behavior = customer_data_geo.copy()
+            else:
+                customer_data_behavior = pd.DataFrame()
+
+            # 8. Estratégias Personalizadas
+            test_report["metadata"]["current_stage"] = "personalized_strategies"
+            print("\n=== ETAPA 8: ESTRATÉGIAS PERSONALIZADAS ===")
+            
+            if not customer_data_behavior.empty:
+                try:
+                    start_time = time.time()
+                    print("🎯 Definindo estratégias personalizadas...")
+                    customer_data_strategies = self._add_personalized_strategies(customer_data_behavior.copy())
+                    strategies_time = time.time() - start_time
+                    
+                    # Estatísticas de estratégias
+                    strategy_stats = customer_data_strategies['Estrategia_Recomendada'].value_counts()
+                    priority_stats = customer_data_strategies['Prioridade_Acao'].value_counts()
+                    urgent_actions = priority_stats.get(1, 0)
+                    
+                    test_report["results"]["personalized_strategies"] = {
+                        "success": True,
+                        "metrics": {
+                            "processing_time": strategies_time,
+                            "customers_processed": len(customer_data_strategies)
+                        },
+                        "strategy_distribution": strategy_stats.to_dict(),
+                        "urgent_actions_needed": int(urgent_actions)
+                    }
+                    print(f"✅ Estratégias definidas: {len(strategy_stats)} tipos, {urgent_actions} urgentes em {strategies_time:.3f}s")
+                    
+                except Exception as e:
+                    self._log_customer_test_error(test_report, e, "personalized_strategies")
+                    print(f"❌ Erro nas estratégias: {str(e)}")
+                    customer_data_strategies = customer_data_behavior.copy()
+            else:
+                customer_data_strategies = pd.DataFrame()
+
+            # 9. Scores de Saúde
+            test_report["metadata"]["current_stage"] = "health_scores"
+            print("\n=== ETAPA 9: SCORES DE SAÚDE ===")
+            
+            if not customer_data_strategies.empty:
+                try:
+                    start_time = time.time()
+                    print("📊 Calculando scores de saúde do cliente...")
+                    customer_data_health = self._add_customer_health_scores(customer_data_strategies.copy())
+                    health_time = time.time() - start_time
+                    
+                    # Estatísticas de saúde
+                    avg_health = customer_data_health['Score_Saude_Cliente'].mean()
+                    healthy_customers = len(customer_data_health[customer_data_health['Score_Saude_Cliente'] > 70])
+                    
+                    test_report["results"]["health_scores"] = {
+                        "success": True,
+                        "metrics": {
+                            "processing_time": health_time,
+                            "customers_processed": len(customer_data_health)
+                        },
+                        "avg_health_score": float(avg_health),
+                        "healthy_customers_count": healthy_customers
+                    }
+                    print(f"✅ Saúde calculada: {avg_health:.1f}/100 médio, {healthy_customers} saudáveis em {health_time:.3f}s")
+                    
+                except Exception as e:
+                    self._log_customer_test_error(test_report, e, "health_scores")
+                    print(f"❌ Erro nos scores: {str(e)}")
+                    customer_data_health = customer_data_strategies.copy()
+            else:
+                customer_data_health = pd.DataFrame()
+
+            # 10. Exportação CSV
+            test_report["metadata"]["current_stage"] = "csv_export"
+            print("\n=== ETAPA 10: EXPORTAÇÃO CSV ===")
+            
+            if not customer_data_health.empty:
+                try:
+                    start_time = time.time()
+                    print("💾 Testando exportação CSV...")
+                    
+                    test_output_dir = "test_results"
+                    os.makedirs(test_output_dir, exist_ok=True)
+                    test_output_path = os.path.join(test_output_dir, "customer_test_export.csv")
+                    
+                    export_success = self._export_to_csv(customer_data_health, test_output_path)
+                    export_time = time.time() - start_time
+                    
+                    if export_success and os.path.exists(test_output_path):
+                        file_size_kb = os.path.getsize(test_output_path) / 1024
+                        
+                        test_report["results"]["csv_export"] = {
+                            "success": True,
+                            "metrics": {
+                                "processing_time": export_time,
+                                "file_size_kb": file_size_kb,
+                                "customers_exported": len(customer_data_health)
+                            },
+                            "output_path": test_output_path
+                        }
+                        print(f"✅ CSV exportado: {file_size_kb:.1f} KB em {export_time:.3f}s")
+                        
+                        test_report["component_tests"]["files_generated"] = [{
+                            "path": test_output_path,
+                            "size_kb": file_size_kb,
+                            "type": "customer_export"
+                        }]
+                    else:
+                        raise Exception("Falha na exportação do arquivo CSV")
+                        
+                except Exception as e:
+                    self._log_customer_test_error(test_report, e, "csv_export")
+                    print(f"❌ Erro na exportação: {str(e)}")
+
+            # 11. Geração de Sumário
+            test_report["metadata"]["current_stage"] = "summary_generation"
+            print("\n=== ETAPA 11: GERAÇÃO DE SUMÁRIO ===")
+            
+            if not customer_data_health.empty:
+                try:
+                    start_time = time.time()
+                    print("📋 Testando geração de sumário...")
+                    
+                    summary = self._generate_export_summary(customer_data_health, test_output_path if 'test_output_path' in locals() else "test_path")
+                    summary_time = time.time() - start_time
+                    
+                    test_report["results"]["summary_generation"] = {
+                        "success": True,
+                        "metrics": {
+                            "processing_time": summary_time,
+                            "summary_length": len(summary)
+                        },
+                        "summary_preview": summary[:500] + "..." if len(summary) > 500 else summary
+                    }
+                    print(f"✅ Sumário gerado: {len(summary)} caracteres em {summary_time:.3f}s")
+                    
+                except Exception as e:
+                    self._log_customer_test_error(test_report, e, "summary_generation")
+                    print(f"❌ Erro na geração de sumário: {str(e)}")
+
+            # 12. Performance Metrics
+            test_report["performance_metrics"] = {
+                "total_execution_time": sum([
+                    result.get('metrics', {}).get('processing_time', 0) 
+                    for result in test_report["results"].values() 
+                    if isinstance(result, dict)
+                ]),
+                "memory_usage_mb": self._get_customer_memory_usage(),
+                "largest_dataset_processed": len(customer_data_health) if not customer_data_health.empty else 0
+            }
+
+            # 13. Análise Final
+            test_report["metadata"]["status"] = "completed" if not test_report["errors"] else "completed_with_errors"
+            print(f"\n✅✅✅ TESTE DE CLIENTES COMPLETO - {len(test_report['errors'])} erros ✅✅✅")
+            
+            return json.dumps(test_report, ensure_ascii=False, indent=2, default=str)
+
+        except Exception as e:
+            test_report["metadata"]["status"] = "failed"
+            self._log_customer_test_error(test_report, e, "global")
+            print(f"❌ TESTE DE CLIENTES FALHOU: {str(e)}")
+            return json.dumps(test_report, ensure_ascii=False, indent=2, default=str)
+
+    def _log_customer_test_error(self, report: dict, error: Exception, context: str) -> None:
+        """Registra erros de teste de clientes de forma estruturada"""
+        import traceback
+        error_entry = {
+            "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "context": context,
+            "error_type": type(error).__name__,
+            "error_message": str(error),
+            "traceback": traceback.format_exc()
+        }
+        report["errors"].append(error_entry)
+
+    def _perform_customer_data_quality_check(self, df: pd.DataFrame) -> dict:
+        """Executa verificações de qualidade específicas para dados de clientes"""
+        checks = {
+            "missing_dates": int(df['Data'].isnull().sum()) if 'Data' in df.columns else 0,
+            "missing_revenue": int(df['Total_Liquido'].isnull().sum()) if 'Total_Liquido' in df.columns else 0,
+            "missing_customer_id": int(df['Codigo_Cliente'].isnull().sum()) if 'Codigo_Cliente' in df.columns else len(df),
+            "duplicate_transactions": int(df.duplicated().sum()),
+            "customers_single_purchase": 0,  # Será calculado após agregação
+            "extreme_values": int((df['Total_Liquido'] > df['Total_Liquido'].quantile(0.99)).sum()) if 'Total_Liquido' in df.columns else 0
+        }
+        return checks
+
+    def _get_customer_memory_usage(self) -> float:
+        """Obtém uso de memória específico para análises de clientes"""
+        try:
+            import psutil
+            import os
+            process = psutil.Process(os.getpid())
+            return process.memory_info().rss / 1024 / 1024  # Em MB
+        except:
+            return 0.0
+
+
+# Exemplo de uso
+if __name__ == "__main__":
+    import json
+    import time
+    import traceback
+    import sys
+    
+    exporter = CustomerDataExporter()
+    
+    print("👥 Iniciando Teste Completo do Sistema de Clientes...")
+    print("📁 Testando especificamente com: data/vendas.csv")
+    
+    # Executar teste usando especificamente data/vendas.csv
+    report = exporter.run_full_customer_test()
+    
+    # Salvar relatório
+    os.makedirs("test_results", exist_ok=True)
+    with open("test_results/customer_test_report.md", "w", encoding="utf-8") as f:
+        f.write(report)
+    
+    print("✅ Relatório de clientes gerado em test_results/customer_test_report.md")
+    print(f"📁 Teste executado com arquivo: data/vendas.csv")
+    print("\n" + "="*80)
+    print(report[:1500])  # Exibir parte do relatório no console 

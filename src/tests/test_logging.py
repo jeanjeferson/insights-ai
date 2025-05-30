@@ -18,7 +18,7 @@ def test_logging_system():
         print("=" * 50)
         
         # Importar e testar a função de logging
-        from insights.crew import setup_crew_file_logging
+        from old.crew import setup_crew_file_logging
         
         # Configurar logging
         crew_logger, log_file_path = setup_crew_file_logging()

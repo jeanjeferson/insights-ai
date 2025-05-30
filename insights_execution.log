@@ -1,0 +1,8 @@
+2025-05-30 10:25:16,120 [INFO] 🚀 INICIANDO INSIGHTS-AI
+2025-05-30 10:25:16,123 [INFO] ==================================================
+2025-05-30 10:25:16,123 [INFO] 📅 Período de análise: 2021-05-31 até 2025-05-30
+2025-05-30 10:25:16,123 [INFO] ⏰ Início: 2025-05-30 10:25:16
+2025-05-30 10:25:16,124 [INFO] ==================================================
+2025-05-30 10:25:16,124 [INFO] 🤖 Inicializando crew com todas as ferramentas...
+2025-05-30 10:25:16,224 [INFO] 📊 Executando análise com inputs: {'data_inicio': '2021-05-31', 'data_fim': '2025-05-30'}
+2025-05-30 10:25:16,315 [ERROR] ❌ Erro durante a execução: Error interpolating expected_output: "Template variable 'timestamp' not found in inputs dictionary"

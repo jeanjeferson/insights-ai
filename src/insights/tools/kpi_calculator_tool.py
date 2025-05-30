@@ -6,11 +6,32 @@ import numpy as np
 from datetime import datetime, timedelta
 import json
 import warnings
+import time
+import os
+import psutil
+import traceback
+
+
 
 # Importar módulos compartilhados consolidados
-from .shared.data_preparation import DataPreparationMixin
-from .shared.report_formatter import ReportFormatterMixin
-from .shared.business_mixins import JewelryRFMAnalysisMixin, JewelryBusinessAnalysisMixin, JewelryBenchmarkMixin
+try:
+    # Imports relativos (quando usado como módulo)
+    from .shared.data_preparation import DataPreparationMixin
+    from .shared.report_formatter import ReportFormatterMixin
+    from .shared.business_mixins import (
+        JewelryRFMAnalysisMixin,
+        JewelryBusinessAnalysisMixin,
+        JewelryBenchmarkMixin
+    )
+except ImportError:
+    # Imports absolutos (quando executado diretamente)
+    from insights.tools.shared.data_preparation import DataPreparationMixin
+    from insights.tools.shared.report_formatter import ReportFormatterMixin
+    from insights.tools.shared.business_mixins import (
+        JewelryRFMAnalysisMixin,
+        JewelryBusinessAnalysisMixin,
+        JewelryBenchmarkMixin
+    )
 
 warnings.filterwarnings('ignore')
 
@@ -229,23 +250,70 @@ class KPICalculatorTool(BaseTool,
             return self._data_cache[cache_key]
         
         try:
-            # Carregar dados brutos
-            df = pd.read_csv(data_csv, sep=';', encoding='utf-8')
-            print(f"📁 Arquivo carregado: {len(df)} registros")
+            print(f"📁 Verificando arquivo: {data_csv}")
             
-            # Preparar dados usando mixin consolidado
-            df_prepared = self.prepare_jewelry_data(df, validation_level="standard")
-            
-            if df_prepared is None:
-                print("❌ Falha na preparação dos dados")
+            # Verificar se arquivo existe
+            if not os.path.exists(data_csv):
+                print(f"❌ Arquivo não encontrado: {data_csv}")
                 return None
             
-            # Armazenar no cache
-            if use_cache and df_prepared is not None:
-                self._data_cache[cache_key] = df_prepared
-                print("💾 Dados salvos no cache")
+            # Verificar tamanho do arquivo
+            file_size = os.path.getsize(data_csv)
+            print(f"📏 Tamanho do arquivo: {file_size} bytes")
             
-            return df_prepared
+            if file_size == 0:
+                print("❌ Arquivo está vazio")
+                return None
+            
+            # Tentar diferentes separadores e encodings
+            separators = [';', ',', '\t']
+            encodings = ['utf-8', 'latin-1', 'cp1252']
+            
+            df = None
+            for sep in separators:
+                for encoding in encodings:
+                    try:
+                        print(f"🔄 Tentando sep='{sep}', encoding='{encoding}'")
+                        df = pd.read_csv(data_csv, sep=sep, encoding=encoding)
+                        print(f"✅ Carregado: {len(df)} linhas, {len(df.columns)} colunas")
+                        print(f"📋 Colunas: {list(df.columns)[:5]}...")  # Primeiras 5 colunas
+                        break
+                    except Exception as e:
+                        print(f"❌ Falha com sep='{sep}', encoding='{encoding}': {str(e)}")
+                        continue
+                if df is not None:
+                    break
+            
+            if df is None or df.empty:
+                print("❌ Não foi possível carregar o arquivo com nenhuma configuração")
+                return None
+            
+            print(f"📁 Arquivo carregado: {len(df)} registros")
+            
+            # Verificar se tem dados preparados (DataPreparationMixin)
+            try:
+                # Preparar dados usando mixin consolidado
+                df_prepared = self.prepare_jewelry_data(df, validation_level="standard")
+                
+                if df_prepared is None:
+                    print("❌ Falha na preparação dos dados")
+                    # Retornar dados brutos se preparação falhar
+                    print("🔄 Usando dados brutos...")
+                    return df
+                
+                print(f"✅ Dados preparados: {len(df_prepared)} registros")
+                
+                # Armazenar no cache
+                if use_cache and df_prepared is not None:
+                    self._data_cache[cache_key] = df_prepared
+                    print("💾 Dados salvos no cache")
+                
+                return df_prepared
+                
+            except Exception as e:
+                print(f"⚠️ Erro na preparação dos dados: {str(e)}")
+                print("🔄 Retornando dados brutos...")
+                return df
             
         except Exception as e:
             print(f"❌ Erro no carregamento de dados: {str(e)}")
@@ -508,7 +576,7 @@ class KPICalculatorTool(BaseTool,
             return {'error': f"Erro nos KPIs financeiros v3.0: {str(e)}"}
     
     def _calculate_operational_kpis_v3(self, df: pd.DataFrame, periodo: str) -> Dict[str, Any]:
-        """KPIs operacionais focados em eficiência e performance."""
+        """KPIs operacionais focados em eficiência - EVITAR TUPLAS."""
         print("⚙️ Calculando KPIs operacionais v3.0...")
         
         try:
@@ -517,56 +585,220 @@ class KPICalculatorTool(BaseTool,
             # Métricas básicas de eficiência
             days_in_period = (df['Data'].max() - df['Data'].min()).days + 1
             kpis['efficiency_metrics'] = {
-                'produtos_ativos': df['Codigo_Produto'].nunique() if 'Codigo_Produto' in df.columns else len(df),
-                'sales_velocity_daily': round(df['Quantidade'].sum() / days_in_period, 2),
-                'revenue_velocity_daily': round(df['Total_Liquido'].sum() / days_in_period, 2),
-                'avg_items_per_transaction': round(df['Quantidade'].mean(), 2),
-                'transactions_per_day': round(len(df) / days_in_period, 2)
+                'produtos_ativos': int(df['Codigo_Produto'].nunique()) if 'Codigo_Produto' in df.columns else len(df),
+                'sales_velocity_daily': round(float(df['Quantidade'].sum() / days_in_period), 2),
+                'revenue_velocity_daily': round(float(df['Total_Liquido'].sum() / days_in_period), 2),
+                'avg_items_per_transaction': round(float(df['Quantidade'].mean()), 2),
+                'transactions_per_day': round(float(len(df) / days_in_period), 2)
             }
             
             # Giro de estoque real (usando dados preparados)
             if 'Estoque_Atual' in df.columns:
-                kpis['inventory_turnover'] = self._calculate_inventory_turnover_v3(df)
+                turnover_result = self._calculate_inventory_turnover_v3(df)
+                if 'error' not in turnover_result:
+                    kpis['inventory_turnover'] = turnover_result
             
-            # Análise de concentração (80/20 rule)
+            # Análise de concentração (80/20 rule) - EVITAR TUPLAS
             if 'Codigo_Produto' in df.columns:
-                product_sales = df.groupby('Codigo_Produto')['Total_Liquido'].sum().sort_values(ascending=False)
-                top_20_pct = int(len(product_sales) * 0.2)
-                concentration_80_20 = (product_sales.head(top_20_pct).sum() / product_sales.sum() * 100)
-                
-                kpis['concentration_analysis'] = {
-                    'concentration_80_20_pct': round(concentration_80_20, 2),
-                    'gini_coefficient': self._calculate_gini_coefficient(product_sales.values),
-                    'top_20_percent_products': top_20_pct,
-                    'concentration_status': 'Alta' if concentration_80_20 > 80 else 'Média' if concentration_80_20 > 60 else 'Baixa'
-                }
+                try:
+                    product_sales = df.groupby('Codigo_Produto')['Total_Liquido'].sum().sort_values(ascending=False)
+                    top_20_pct = int(len(product_sales) * 0.2)
+                    concentration_80_20 = float(product_sales.head(top_20_pct).sum() / product_sales.sum() * 100)
+                    
+                    kpis['concentration_analysis'] = {
+                        'concentration_80_20_pct': round(concentration_80_20, 2),
+                        'gini_coefficient': self._calculate_gini_coefficient(product_sales.values),
+                        'top_20_percent_products': top_20_pct,
+                        'concentration_status': 'Alta' if concentration_80_20 > 80 else 'Média' if concentration_80_20 > 60 else 'Baixa'
+                    }
+                except Exception as e:
+                    print(f"⚠️ Erro na análise de concentração: {str(e)}")
+                    kpis['concentration_analysis'] = {'error': f"Falha na concentração: {str(e)}"}
             
-            # Performance por dia da semana (simplificado)
+            # Performance por dia da semana - SIMPLIFICAR
             if 'Nome_Dia_Semana' in df.columns:
-                weekday_performance = df.groupby('Nome_Dia_Semana')['Total_Liquido'].agg(['sum', 'mean', 'count'])
-                best_day = weekday_performance['sum'].idxmax()
-                worst_day = weekday_performance['sum'].idxmin()
-                
-                kpis['weekday_performance'] = {
-                    'best_day': best_day,
-                    'worst_day': worst_day,
-                    'weekday_variation': round((weekday_performance['sum'].max() / weekday_performance['sum'].min() - 1) * 100, 2)
-                }
+                try:
+                    weekday_performance = df.groupby('Nome_Dia_Semana')['Total_Liquido'].agg(['sum', 'mean', 'count'])
+                    best_day = str(weekday_performance['sum'].idxmax())
+                    worst_day = str(weekday_performance['sum'].idxmin())
+                    
+                    kpis['weekday_performance'] = {
+                        'best_day': best_day,
+                        'worst_day': worst_day,
+                        'weekday_variation': round(float(weekday_performance['sum'].max() / weekday_performance['sum'].min() - 1) * 100, 2)
+                    }
+                except Exception as e:
+                    print(f"⚠️ Erro na performance semanal: {str(e)}")
+                    kpis['weekday_performance'] = {'error': f"Falha na análise semanal: {str(e)}"}
             
-            # Sazonalidade usando dados preparados
+            # Sazonalidade - CONVERTER PARA STRING
             if 'Sazonalidade' in df.columns:
-                seasonal_performance = df.groupby('Sazonalidade')['Total_Liquido'].sum()
-                kpis['seasonality'] = {
-                    'seasonal_revenue': seasonal_performance.to_dict(),
-                    'peak_season': seasonal_performance.idxmax(),
-                    'seasonal_variation': round((seasonal_performance.max() / seasonal_performance.min() - 1) * 100, 2)
-                }
+                try:
+                    seasonal_performance = df.groupby('Sazonalidade')['Total_Liquido'].sum()
+                    # Converter index para string e valores para float
+                    seasonal_dict = {str(k): float(v) for k, v in seasonal_performance.items()}
+                    
+                    kpis['seasonality'] = {
+                        'seasonal_revenue': seasonal_dict,
+                        'peak_season': str(seasonal_performance.idxmax()),
+                        'seasonal_variation': round(float(seasonal_performance.max() / seasonal_performance.min() - 1) * 100, 2)
+                    }
+                except Exception as e:
+                    print(f"⚠️ Erro na análise sazonal: {str(e)}")
+                    kpis['seasonality'] = {'error': f"Falha na sazonalidade: {str(e)}"}
             
             return kpis
             
         except Exception as e:
             return {'error': f"Erro nos KPIs operacionais v3.0: {str(e)}"}
-    
+
+    def _calculate_customer_kpis_v3(self, df: pd.DataFrame, periodo: str) -> Dict[str, Any]:
+        """KPIs de clientes focados em métricas de negócio - EVITAR TUPLAS."""
+        print("👥 Calculando KPIs de clientes v3.0...")
+        
+        try:
+            kpis = {}
+            
+            # Segmentação por valor (mantida) - CONVERTER PARA TIPOS NATIVOS
+            value_segments = {
+                'Premium (>R$5K)': int(len(df[df['Total_Liquido'] > 5000])),
+                'Alto Valor (R$2K-5K)': int(len(df[(df['Total_Liquido'] >= 2000) & (df['Total_Liquido'] <= 5000)])),
+                'Médio (R$1K-2K)': int(len(df[(df['Total_Liquido'] >= 1000) & (df['Total_Liquido'] < 2000)])),
+                'Entry (< R$1K)': int(len(df[df['Total_Liquido'] < 1000]))
+            }
+            
+            total_transactions = sum(value_segments.values())
+            
+            kpis['value_segmentation'] = {
+                'segment_distribution': value_segments,
+                'segment_percentages': {k: round(float(v/total_transactions*100), 1) for k, v in value_segments.items()},
+                'high_value_share': round(float((value_segments['Premium (>R$5K)'] + value_segments['Alto Valor (R$2K-5K)']) / total_transactions * 100), 2)
+            }
+            
+            # RFM Analysis usando mixin consolidado - EVITAR TUPLAS
+            if 'Codigo_Cliente' in df.columns:
+                try:
+                    customer_rfm = self.analyze_customer_rfm(df)
+                    if 'error' not in customer_rfm:
+                        # Limpar possíveis tuplas no resultado RFM
+                        customer_rfm_clean = self._convert_dict_keys_to_strings(customer_rfm)
+                        kpis['rfm_analysis'] = customer_rfm_clean
+                except Exception as e:
+                    print(f"⚠️ Erro na análise RFM: {str(e)}")
+                    kpis['customer_estimates'] = self._estimate_customer_metrics(df)
+            else:
+                # Estimativa de CLV e métricas de cliente (mantida como fallback)
+                kpis['customer_estimates'] = self._estimate_customer_metrics(df)
+            
+            # Análise de retenção simples - CONVERTER TIPOS
+            if 'Codigo_Cliente' in df.columns:
+                try:
+                    customer_frequency = df['Codigo_Cliente'].value_counts()
+                    repeat_customers = int(len(customer_frequency[customer_frequency > 1]))
+                    total_customers = int(len(customer_frequency))
+                    
+                    kpis['retention_metrics'] = {
+                        'total_unique_customers': total_customers,
+                        'repeat_customers': repeat_customers,
+                        'repeat_rate': round(float(repeat_customers / total_customers * 100), 2),
+                        'avg_purchases_per_customer': round(float(customer_frequency.mean()), 2)
+                    }
+                except Exception as e:
+                    print(f"⚠️ Erro na análise de retenção: {str(e)}")
+                    kpis['retention_metrics'] = {'error': f"Falha na retenção: {str(e)}"}
+            
+            return kpis
+            
+        except Exception as e:
+            return {'error': f"Erro nos KPIs de clientes v3.0: {str(e)}"}
+
+    def _calculate_product_kpis_v3(self, df: pd.DataFrame, periodo: str) -> Dict[str, Any]:
+        """KPIs de produtos usando análises consolidadas - EVITAR TUPLAS."""
+        print("💎 Calculando KPIs de produtos v3.0...")
+        
+        try:
+            kpis = {}
+            
+            # Performance por categoria/metal - CONVERTER PARA TIPOS NATIVOS
+            if 'Metal' in df.columns:
+                try:
+                    metal_performance = df.groupby('Metal').agg({
+                        'Total_Liquido': ['sum', 'mean', 'count'],
+                        'Quantidade': 'sum'
+                    })
+                    
+                    # Converter para dicionários simples evitando tuplas
+                    revenue_by_metal = {str(k): float(v) for k, v in metal_performance['Total_Liquido']['sum'].items()}
+                    aov_by_metal = {str(k): float(v) for k, v in metal_performance['Total_Liquido']['mean'].items()}
+                    transactions_by_metal = {str(k): int(v) for k, v in metal_performance['Total_Liquido']['count'].items()}
+                    
+                    kpis['metal_performance'] = {
+                        'revenue_by_metal': revenue_by_metal,
+                        'aov_by_metal': aov_by_metal,
+                        'transactions_by_metal': transactions_by_metal
+                    }
+                    
+                    # Market share por metal
+                    total_revenue = float(df['Total_Liquido'].sum())
+                    metal_market_share = {str(k): round(float(v / total_revenue * 100), 2) for k, v in revenue_by_metal.items()}
+                    kpis['metal_performance']['market_share'] = metal_market_share
+                    
+                except Exception as e:
+                    print(f"⚠️ Erro na performance por metal: {str(e)}")
+                    kpis['metal_performance'] = {'error': f"Falha na análise de metal: {str(e)}"}
+            
+            # Matriz BCG usando mixin consolidado - EVITAR TUPLAS
+            try:
+                bcg_analysis = self.create_product_bcg_matrix(df)
+                if 'error' not in bcg_analysis:
+                    # Limpar possíveis tuplas no resultado BCG
+                    bcg_clean = self._convert_dict_keys_to_strings(bcg_analysis)
+                    kpis['bcg_matrix'] = bcg_clean
+            except Exception as e:
+                print(f"⚠️ Erro na matriz BCG: {str(e)}")
+                kpis['bcg_matrix'] = {'error': f"Falha na matriz BCG: {str(e)}"}
+            
+            # RFM de produtos usando mixin consolidado - EVITAR TUPLAS
+            try:
+                product_rfm = self.analyze_product_rfm(df)
+                if 'error' not in product_rfm:
+                    # Limpar possíveis tuplas no resultado RFM
+                    product_rfm_clean = self._convert_dict_keys_to_strings(product_rfm)
+                    kpis['product_rfm'] = product_rfm_clean
+            except Exception as e:
+                print(f"⚠️ Erro no RFM de produtos: {str(e)}")
+                kpis['product_rfm'] = {'error': f"Falha no RFM de produtos: {str(e)}"}
+            
+            # Top produtos por receita - CONVERTER TIPOS
+            if 'Codigo_Produto' in df.columns:
+                try:
+                    top_products = df.groupby('Codigo_Produto')['Total_Liquido'].sum().nlargest(10)
+                    total_revenue = float(df['Total_Liquido'].sum())
+                    
+                    # Converter para tipos nativos
+                    top_products_dict = {str(k): float(v) for k, v in top_products.items()}
+                    
+                    kpis['top_products'] = {
+                        'by_revenue': top_products_dict,
+                        'top_product_share': round(float(top_products.iloc[0] / total_revenue * 100), 2)
+                    }
+                except Exception as e:
+                    print(f"⚠️ Erro nos top produtos: {str(e)}")
+                    kpis['top_products'] = {'error': f"Falha nos top produtos: {str(e)}"}
+            
+            # Elasticidade de preço usando benchmarks consolidados
+            try:
+                price_elasticity = self.get_jewelry_industry_benchmarks()['price_elasticity']
+                kpis['price_elasticity'] = price_elasticity
+            except Exception as e:
+                print(f"⚠️ Erro na elasticidade de preço: {str(e)}")
+                kpis['price_elasticity'] = {'error': f"Falha na elasticidade: {str(e)}"}
+            
+            return kpis
+            
+        except Exception as e:
+            return {'error': f"Erro nos KPIs de produtos v3.0: {str(e)}"}
+
     def _calculate_inventory_kpis_v3(self, df: pd.DataFrame, periodo: str) -> Dict[str, Any]:
         """KPIs de inventário usando análises consolidadas."""
         print("📦 Calculando KPIs de inventário v3.0...")
@@ -574,168 +806,113 @@ class KPICalculatorTool(BaseTool,
         try:
             kpis = {}
             
-            # Análise ABC usando mixin consolidado
-            abc_analysis = self.perform_abc_analysis(df, dimension='product')
-            if 'error' not in abc_analysis:
-                kpis['abc_analysis'] = abc_analysis
+            # Análise ABC usando mixin consolidado - CORRIGIR TUPLAS
+            try:
+                abc_analysis = self.perform_abc_analysis(df, dimension='product')
+                if 'error' not in abc_analysis:
+                    # Converter possíveis tuplas em chaves para strings
+                    abc_analysis_clean = self._convert_dict_keys_to_strings(abc_analysis)
+                    kpis['abc_analysis'] = abc_analysis_clean
+            except Exception as e:
+                print(f"⚠️ Erro na análise ABC: {str(e)}")
+                kpis['abc_analysis'] = {'error': f"Falha na análise ABC: {str(e)}"}
             
-            # Análise de produtos slow-moving
+            # Análise de produtos slow-moving - CORRIGIR TUPLAS
             if 'Codigo_Produto' in df.columns:
-                last_sale_by_product = df.groupby('Codigo_Produto')['Data'].max()
-                current_date = df['Data'].max()
-                
-                # Produtos sem venda há mais de 60 dias
-                slow_moving_cutoff = current_date - timedelta(days=60)
-                slow_moving = (last_sale_by_product < slow_moving_cutoff).sum()
-                
-                # Produtos sem venda há mais de 90 dias (dead stock)
-                dead_stock_cutoff = current_date - timedelta(days=90)
-                dead_stock = (last_sale_by_product < dead_stock_cutoff).sum()
-                
-                total_products = len(last_sale_by_product)
-                
-                kpis['product_lifecycle'] = {
-                    'slow_moving_products': slow_moving,
-                    'slow_moving_pct': round(slow_moving / total_products * 100, 2),
-                    'dead_stock_products': dead_stock,
-                    'dead_stock_pct': round(dead_stock / total_products * 100, 2),
-                    'active_products': total_products - dead_stock
-                }
+                try:
+                    last_sale_by_product = df.groupby('Codigo_Produto')['Data'].max()
+                    current_date = df['Data'].max()
+                    
+                    # Produtos sem venda há mais de 60 dias
+                    slow_moving_cutoff = current_date - timedelta(days=60)
+                    slow_moving = (last_sale_by_product < slow_moving_cutoff).sum()
+                    
+                    # Produtos sem venda há mais de 90 dias (dead stock)
+                    dead_stock_cutoff = current_date - timedelta(days=90)
+                    dead_stock = (last_sale_by_product < dead_stock_cutoff).sum()
+                    
+                    total_products = len(last_sale_by_product)
+                    
+                    kpis['product_lifecycle'] = {
+                        'slow_moving_products': int(slow_moving),  # Converter para int
+                        'slow_moving_pct': round(float(slow_moving / total_products * 100), 2),
+                        'dead_stock_products': int(dead_stock),
+                        'dead_stock_pct': round(float(dead_stock / total_products * 100), 2),
+                        'active_products': int(total_products - dead_stock)
+                    }
+                except Exception as e:
+                    print(f"⚠️ Erro na análise de ciclo de vida: {str(e)}")
+                    kpis['product_lifecycle'] = {'error': f"Falha na análise de ciclo: {str(e)}"}
             
-            # Turnover estimado (se não há dados reais de estoque)
-            monthly_sales_avg = df.groupby([df['Data'].dt.year, df['Data'].dt.month])['Total_Liquido'].sum().mean()
-            if monthly_sales_avg > 0:
-                estimated_avg_inventory = monthly_sales_avg * 2.5  # Estimativa conservadora
-                inventory_turnover_annual = (monthly_sales_avg * 12) / estimated_avg_inventory
+            # Turnover estimado - SIMPLIFICAR PARA EVITAR TUPLAS
+            try:
+                # Converter datas para datetime se necessário
+                if df['Data'].dtype == 'object':
+                    df['Data'] = pd.to_datetime(df['Data'])
                 
-                kpis['turnover_estimates'] = {
-                    'estimated_inventory_turnover_annual': round(inventory_turnover_annual, 2),
-                    'estimated_days_sales_inventory': round(365 / inventory_turnover_annual, 1),
-                    'monthly_sales_average': round(monthly_sales_avg, 2)
-                }
+                # Agrupamento por ano-mês evitando MultiIndex
+                df['year_month'] = df['Data'].dt.to_period('M').astype(str)
+                monthly_sales = df.groupby('year_month')['Total_Liquido'].sum()
+                monthly_sales_avg = float(monthly_sales.mean())
+                
+                if monthly_sales_avg > 0:
+                    estimated_avg_inventory = monthly_sales_avg * 2.5
+                    inventory_turnover_annual = (monthly_sales_avg * 12) / estimated_avg_inventory
+                    
+                    kpis['turnover_estimates'] = {
+                        'estimated_inventory_turnover_annual': round(float(inventory_turnover_annual), 2),
+                        'estimated_days_sales_inventory': round(float(365 / inventory_turnover_annual), 1),
+                        'monthly_sales_average': round(float(monthly_sales_avg), 2),
+                        'months_analyzed': len(monthly_sales)
+                    }
+            except Exception as e:
+                print(f"⚠️ Erro no cálculo de turnover: {str(e)}")
+                kpis['turnover_estimates'] = {'error': f"Falha no cálculo de turnover: {str(e)}"}
             
             return kpis
             
         except Exception as e:
             return {'error': f"Erro nos KPIs de inventário v3.0: {str(e)}"}
-    
-    def _calculate_customer_kpis_v3(self, df: pd.DataFrame, periodo: str) -> Dict[str, Any]:
-        """KPIs de clientes focados em métricas de negócio (não demográficas)."""
-        print("👥 Calculando KPIs de clientes v3.0...")
-        
-        try:
-            kpis = {}
-            
-            # Segmentação por valor (mantida)
-            value_segments = {
-                'Premium (>R$5K)': len(df[df['Total_Liquido'] > 5000]),
-                'Alto Valor (R$2K-5K)': len(df[(df['Total_Liquido'] >= 2000) & (df['Total_Liquido'] <= 5000)]),
-                'Médio (R$1K-2K)': len(df[(df['Total_Liquido'] >= 1000) & (df['Total_Liquido'] < 2000)]),
-                'Entry (< R$1K)': len(df[df['Total_Liquido'] < 1000])
-            }
-            
-            total_transactions = sum(value_segments.values())
-            
-            kpis['value_segmentation'] = {
-                'segment_distribution': value_segments,
-                'segment_percentages': {k: round(v/total_transactions*100, 1) for k, v in value_segments.items()},
-                'high_value_share': round((value_segments['Premium (>R$5K)'] + value_segments['Alto Valor (R$2K-5K)']) / total_transactions * 100, 2)
-            }
-            
-            # RFM Analysis usando mixin consolidado
-            if 'Codigo_Cliente' in df.columns:
-                customer_rfm = self.analyze_customer_rfm(df)
-                if 'error' not in customer_rfm:
-                    kpis['rfm_analysis'] = customer_rfm
-            else:
-                # Estimativa de CLV e métricas de cliente (mantida como fallback)
-                kpis['customer_estimates'] = self._estimate_customer_metrics(df)
-            
-            # Análise de retenção simples
-            if 'Codigo_Cliente' in df.columns:
-                customer_frequency = df['Codigo_Cliente'].value_counts()
-                repeat_customers = len(customer_frequency[customer_frequency > 1])
-                total_customers = len(customer_frequency)
+
+    def _convert_dict_keys_to_strings(self, obj):
+        """Converte recursivamente chaves de dicionário para strings, especialmente tuplas."""
+        if isinstance(obj, dict):
+            new_dict = {}
+            for key, value in obj.items():
+                # Converter chave para string se for tupla ou outro tipo
+                if isinstance(key, tuple):
+                    str_key = "_".join(str(x) for x in key)
+                elif not isinstance(key, (str, int, float, bool)):
+                    str_key = str(key)
+                else:
+                    str_key = key
                 
-                kpis['retention_metrics'] = {
-                    'total_unique_customers': total_customers,
-                    'repeat_customers': repeat_customers,
-                    'repeat_rate': round(repeat_customers / total_customers * 100, 2),
-                    'avg_purchases_per_customer': round(customer_frequency.mean(), 2)
-                }
-            
-            return kpis
-            
-        except Exception as e:
-            return {'error': f"Erro nos KPIs de clientes v3.0: {str(e)}"}
-    
-    def _calculate_product_kpis_v3(self, df: pd.DataFrame, periodo: str) -> Dict[str, Any]:
-        """KPIs de produtos usando análises consolidadas."""
-        print("💎 Calculando KPIs de produtos v3.0...")
-        
-        try:
-            kpis = {}
-            
-            # Performance por categoria/metal
-            if 'Metal' in df.columns:
-                metal_performance = df.groupby('Metal').agg({
-                    'Total_Liquido': ['sum', 'mean', 'count'],
-                    'Quantidade': 'sum'
-                }).round(2)
-                
-                kpis['metal_performance'] = {
-                    'revenue_by_metal': metal_performance['Total_Liquido']['sum'].to_dict(),
-                    'aov_by_metal': metal_performance['Total_Liquido']['mean'].to_dict(),
-                    'transactions_by_metal': metal_performance['Total_Liquido']['count'].to_dict()
-                }
-                
-                # Market share por metal
-                total_revenue = df['Total_Liquido'].sum()
-                metal_market_share = metal_performance['Total_Liquido']['sum'] / total_revenue * 100
-                kpis['metal_performance']['market_share'] = metal_market_share.round(2).to_dict()
-            
-            # Matriz BCG usando mixin consolidado
-            bcg_analysis = self.create_product_bcg_matrix(df)
-            if 'error' not in bcg_analysis:
-                kpis['bcg_matrix'] = bcg_analysis
-            
-            # RFM de produtos usando mixin consolidado
-            product_rfm = self.analyze_product_rfm(df)
-            if 'error' not in product_rfm:
-                kpis['product_rfm'] = product_rfm
-            
-            # Top produtos por receita
-            if 'Codigo_Produto' in df.columns:
-                top_products = df.groupby('Codigo_Produto')['Total_Liquido'].sum().nlargest(10)
-                kpis['top_products'] = {
-                    'by_revenue': top_products.to_dict(),
-                    'top_product_share': round(top_products.iloc[0] / df['Total_Liquido'].sum() * 100, 2)
-                }
-            
-            # Elasticidade de preço usando benchmarks consolidados
-            price_elasticity = self.get_jewelry_industry_benchmarks()['price_elasticity']
-            kpis['price_elasticity'] = price_elasticity
-            
-            return kpis
-            
-        except Exception as e:
-            return {'error': f"Erro nos KPIs de produtos v3.0: {str(e)}"}
-    
+                # Recursivamente processar o valor
+                new_dict[str_key] = self._convert_dict_keys_to_strings(value)
+            return new_dict
+        elif isinstance(obj, list):
+            return [self._convert_dict_keys_to_strings(item) for item in obj]
+        else:
+            return obj
+
     def _calculate_benchmark_comparison_v3(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Comparação com benchmarks usando mixin consolidado."""
+        """Comparação com benchmarks usando mixin consolidado - EVITAR TUPLAS."""
         print("📈 Comparando com benchmarks do setor...")
         
         try:
-            # Preparar métricas atuais
+            # Preparar métricas atuais com conversões seguras
             current_metrics = {
-                'aov': df['Total_Liquido'].mean(),
-                'gross_margin': df['Margem_Percentual'].mean() if 'Margem_Percentual' in df.columns else 58.0
+                'aov': float(df['Total_Liquido'].mean()),
+                'gross_margin': float(df['Margem_Percentual'].mean()) if 'Margem_Percentual' in df.columns else 58.0
             }
             
             # Usar mixin para comparação
             benchmark_comparison = self.compare_with_benchmarks(current_metrics)
             
-            return benchmark_comparison
+            # Limpar resultado de possíveis tuplas
+            benchmark_clean = self._convert_dict_keys_to_strings(benchmark_comparison)
+            
+            return benchmark_clean
             
         except Exception as e:
             return {'error': f"Erro na comparação com benchmarks: {str(e)}"}
@@ -1179,4 +1356,295 @@ class KPICalculatorTool(BaseTool,
                 'projected_annual_revenue': 0,
                 'confidence': 'nenhuma',
                 'note': f'Erro no cálculo: {str(e)}'
-            } 
+            }
+
+    def generate_visual_report(self, test_data: dict) -> str:
+        """Gera relatório visual completo dos testes em formato markdown."""
+        
+        # Coletar dados com fallbacks
+        metadata = test_data.get('metadata', {})
+        data_metrics = test_data.get('data_metrics', {})
+        results = test_data.get('results', {})
+        component_tests = test_data.get('component_tests', {})
+        
+        report = [
+            "# 📊 Teste Completo de KPIs - Relatório Executivo",
+            f"**Data do Teste:** {metadata.get('test_timestamp', 'N/A')}",
+            f"**Fonte de Dados:** `{metadata.get('data_source', 'desconhecida')}`",
+            f"**Registros Analisados:** {data_metrics.get('total_records', 0):,}",
+            f"**Período:** {data_metrics.get('periodo', 'não especificado')}",
+            "\n## 📈 Performance de Execução",
+            f"```\n{json.dumps(test_data.get('performance_metrics', {}), indent=2)}\n```",
+            "\n## 🚨 Alertas Críticos"
+        ]
+        
+        # Alertas com fallback
+        alerts = results.get('all', {}).get('alertas', [])
+        if alerts:
+            for alert in alerts[:3]:  # Top 3 alertas
+                report.append(f"- **{alert['type']}**: {alert['message']} ({alert['severity']})")
+        else:
+            report.append("- Nenhum alerta crítico detectado ✅")
+        
+        # Saúde do Negócio com verificações
+        health = component_tests.get('health_score', {})
+        report.extend([
+            "\n## 🩺 Saúde do Negócio",
+            f"**Score Geral:** {health.get('overall_score', 'N/A')} {health.get('status', '')}",
+            "### Componentes:",
+            f"- Financeiro: {health.get('component_scores', {}).get('financial_health', 'N/A')}",
+            f"- Operacional: {health.get('component_scores', {}).get('operational_health', 'N/A')}",
+            f"- Estoque: {health.get('component_scores', {}).get('inventory_health', 'N/A')}",
+            f"- Clientes: {health.get('component_scores', {}).get('customer_health', 'N/A')}",
+            f"- Produtos: {health.get('component_scores', {}).get('product_health', 'N/A')}",
+            "\n## 💡 Insights Estratégicos"
+        ])
+        
+        # Insights
+        insights = results.get('all', {}).get('insights', [])
+        for insight in insights[:5]:  # Top 5 insights
+            report.append(f"- {insight['message']} ({insight['impact'].title()})")
+        
+        # Benchmarks
+        benchmarks = component_tests.get('benchmarks', {})
+        if 'industry_benchmarks' in benchmarks:
+            report.append("\n## 📌 Benchmarks do Setor")
+            for metric, value in benchmarks['industry_benchmarks'].items():
+                report.append(f"- **{metric}**: {value}%")
+        
+        # Detalhamento por Categoria
+        report.append("\n## 📋 Detalhamento por Categoria")
+        for category, data in results.items():
+            if 'error' in data:
+                report.append(f"\n### ❌ {category.upper()} - Erro")
+                report.append(f"```\n{data['error']}\n```")
+            else:
+                report.append(f"\n### ✅ {category.upper()} - KPIs Principais")
+                for kpi, value in data.items():
+                    if kpi != 'metadata':
+                        report.append(f"- **{kpi}**: {json.dumps(value, indent=2)[:200]}...")
+        
+        return "\n".join(report)
+
+    def run_full_kpi_test(self) -> str:
+        """Executa teste completo e retorna relatório formatado"""
+        test_result = self.test_all_kpis()
+        parsed = json.loads(test_result)
+        return self.generate_visual_report(parsed)
+
+    def test_all_kpis(self, sample_data: str = "data/vendas.csv") -> str:
+        """
+        Executa teste completo de todas as funções da classe
+        """
+        
+        # Corrigir caminho do arquivo
+        import os
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        project_root = os.path.abspath(os.path.join(current_dir, "..", "..", ".."))
+        data_file_path = os.path.join(project_root, sample_data)
+        
+        # Verificar se arquivo existe
+        if not os.path.exists(data_file_path):
+            return json.dumps({
+                "error": f"Arquivo não encontrado: {data_file_path}",
+                "current_dir": current_dir,
+                "project_root": project_root,
+                "expected_path": data_file_path
+            }, indent=2)
+
+        test_report = {
+            "metadata": {
+                "test_timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "test_version": "KPI Test Suite v3.1",
+                "data_source": data_file_path,
+                "status": "in_progress"
+            },
+            "data_metrics": {
+                "total_records": 0,
+                "columns": [],
+                "date_range": {},
+                "periodo": "monthly", 
+                "data_quality_check": {}
+            },
+            "results": {},
+            "component_tests": {},
+            "performance_metrics": {},
+            "errors": []
+        }
+
+        try:
+            # 1. Fase de Carregamento de Dados
+            test_report["metadata"]["current_stage"] = "data_loading"
+            print("\n=== ETAPA 1: CARREGAMENTO DE DADOS ===")
+            print(f"📁 Tentando carregar: {data_file_path}")
+            
+            # Carregar dados diretamente (sabemos que funciona)
+            import pandas as pd
+            df = pd.read_csv(data_file_path, sep=';', encoding='utf-8')
+            print(f"✅ Dados carregados: {len(df)} registros")
+            
+            # Coletar métricas básicas dos dados
+            test_report["data_metrics"] = {
+                "total_records": int(len(df)),  # Converter para int nativo
+                "columns": list(df.columns),
+                "date_range": {
+                    "start": str(df['Data'].min()),  # Converter para string
+                    "end": str(df['Data'].max())     # Converter para string
+                },
+                "periodo": "monthly",
+                "data_quality_check": self._convert_to_native_types(self._perform_data_quality_check(df))
+            }
+            print(f"✅ Dados validados: {len(df)} registros")
+
+            # 2. Teste de Todas as Categorias de KPIs
+            test_report["metadata"]["current_stage"] = "kpi_testing"
+            print("\n=== ETAPA 2: TESTE DE CATEGORIAS ===")
+            categories = ['revenue', 'operational', 'inventory', 'customer', 'products', 'all']
+            
+            for category in categories:
+                try:
+                    print(f"\n🔍 TESTANDO CATEGORIA: {category.upper()}")
+                    start_time = time.time()
+                    
+                    result = self._run(
+                        data_csv=data_file_path,
+                        categoria=category,
+                        periodo="monthly",
+                        benchmark_mode=True,
+                        include_statistical_insights=True,
+                        cache_data=False
+                    )
+                    
+                    # Análise de resultados
+                    parsed_result = json.loads(result)
+                    test_report["results"][category] = parsed_result  # Salvar resultado completo
+                    
+                    # Verificação básica de integridade
+                    if 'error' in parsed_result:
+                        print(f"❌ {category.upper()} - Erro detectado: {parsed_result['error']}")
+                    else:
+                        kpi_count = len([k for k in parsed_result.keys() if k != 'metadata'])
+                        print(f"✅ {category.upper()} - {kpi_count} grupos de KPIs gerados")
+
+                except Exception as e:
+                    error_id = f"ERR-{category.upper()}-{datetime.now().strftime('%H%M%S')}"
+                    self._log_test_error(test_report, e, category)
+                    print(f"⛔ Erro grave em {category.upper()} - {error_id}: {str(e)}")
+
+            # 3. Teste de Componentes Críticos
+            test_report["metadata"]["current_stage"] = "component_testing"
+            print("\n=== ETAPA 3: TESTE DE COMPONENTES ===")
+            
+            # Só testar health_score se temos resultados da categoria 'all'
+            if 'all' in test_report["results"] and 'error' not in test_report["results"]['all']:
+                try:
+                    print("🔧 Testando componente: health_score")
+                    test_report["component_tests"]["health_score"] = self._calculate_business_health_score(test_report["results"]["all"])
+                    print("✅ health_score - OK")
+                except Exception as e:
+                    self._log_test_error(test_report, e, "health_score")
+                    print(f"❌ health_score - Falha: {str(e)}")
+            
+            try:
+                print("🔧 Testando componente: benchmarks")
+                test_report["component_tests"]["benchmarks"] = self._calculate_benchmark_comparison_v3(df)
+                print("✅ benchmarks - OK")
+            except Exception as e:
+                self._log_test_error(test_report, e, "benchmarks")
+                print(f"❌ benchmarks - Falha: {str(e)}")
+
+            try:
+                print("🔧 Testando componente: statistical_insights")
+                test_report["component_tests"]["statistical_insights"] = self._integrate_statistical_insights(df)
+                print("✅ statistical_insights - OK")
+            except Exception as e:
+                self._log_test_error(test_report, e, "statistical_insights")
+                print(f"❌ statistical_insights - Falha: {str(e)}")
+
+            # 4. Teste de Performance
+            test_report["metadata"]["current_stage"] = "performance_testing"
+            print("\n=== ETAPA 4: TESTE DE PERFORMANCE ===")
+            try:
+                start_time = time.time()
+                large_test = self._run(
+                    data_csv=data_file_path,
+                    categoria="all",
+                    periodo="daily",  # Teste mais intensivo
+                    benchmark_mode=True,
+                    include_statistical_insights=True
+                )
+                test_report["performance_metrics"] = {
+                    "execution_time_seconds": round(time.time() - start_time, 2),
+                    "result_size_kb": round(len(large_test)/1024, 2),
+                    "memory_usage_mb": round(self._get_memory_usage(), 2)
+                }
+                print("✅ Teste de performance concluído")
+            except Exception as e:
+                self._log_test_error(test_report, e, "performance_test")
+                print(f"❌ Teste de performance falhou: {str(e)}")
+
+            # 5. Análise Final - CORRIGIR SERIALIZAÇÃO
+            test_report["metadata"]["status"] = "completed" if not test_report["errors"] else "completed_with_errors"
+            print(f"\n✅✅✅ TESTE COMPLETO - {len(test_report['errors'])} erros ✅✅✅")
+            
+            # Usar default=str para converter tipos não serializáveis
+            return json.dumps(test_report, ensure_ascii=False, indent=2, default=str)
+
+        except Exception as e:
+            test_report["metadata"]["status"] = "failed"
+            self._log_test_error(test_report, e, "global")
+            print(f"❌ TESTE FALHOU: {str(e)}")
+            # Usar default=str aqui também
+            return json.dumps(test_report, ensure_ascii=False, indent=2, default=str)
+
+    def _log_test_error(self, report: dict, error: Exception, context: str) -> None:
+        """Registra erros de teste de forma estruturada"""
+        error_entry = {
+            "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "context": context,
+            "error_type": type(error).__name__,
+            "error_message": str(error),
+            "traceback": traceback.format_exc()
+        }
+        report["errors"].append(error_entry)
+
+    def _convert_to_native_types(self, obj):
+        """Converte tipos numpy para tipos nativos Python."""
+        if isinstance(obj, dict):
+            return {k: self._convert_to_native_types(v) for k, v in obj.items()}
+        elif isinstance(obj, list):
+            return [self._convert_to_native_types(v) for v in obj]
+        elif hasattr(obj, 'item'):  # numpy types
+            return obj.item()
+        elif hasattr(obj, 'tolist'):  # numpy arrays
+            return obj.tolist()
+        else:
+            return obj
+
+    def _perform_data_quality_check(self, df: pd.DataFrame) -> dict:
+        """Executa verificações de qualidade nos dados"""
+        checks = {
+            "missing_dates": int(df['Data'].isnull().sum()),  # Converter para int nativo
+            "negative_prices": int((df['Total_Liquido'] < 0).sum()),
+            "invalid_quantities": int((df['Quantidade'] <= 0).sum()),
+            "duplicate_records": int(df.duplicated().sum())
+        }
+        return checks
+
+    def _get_memory_usage(self) -> float:
+        """Obtém uso de memória do processo (Linux/Windows)"""
+        process = psutil.Process(os.getpid())
+        return process.memory_info().rss / 1024 / 1024  # Em MB
+
+# Exemplo de uso
+if __name__ == "__main__":
+    analyzer = KPICalculatorTool()
+    report = analyzer.run_full_kpi_test()
+    
+    # Salvar e exibir relatório
+    with open("test_results/kpi_test_report.md", "w", encoding="utf-8") as f:
+        f.write(report)
+    
+    print("✅ Relatório gerado em kpi_test_report.md")
+    print("\n" + "="*50)
+    print(report[:2000])  # Exibir parte do relatório no console 

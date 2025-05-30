@@ -8,7 +8,7 @@ import os
 import sys
 sys.path.append('src')
 
-from insights.crew import Insights
+from old.crew import Insights
 
 def test_crew_execution():
     """Testa execução do crew com as novas ferramentas"""

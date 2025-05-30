@@ -352,9 +352,10 @@ class IntelligentContextManager:
 # =============== LLM CONFIGURATION ===============
 
 llm = LLM(
-    model="gpt-4.1-mini", 
+    model=os.getenv("MODEL"),
     api_key=os.getenv("OPENAI_API_KEY")
 )
+
 
 # =============== FUNÇÕES DE VALIDAÇÃO OTIMIZADAS ===============
 
@@ -607,28 +608,28 @@ class OptimizedInsights():
                 # Engenheiro de dados - único com acesso SQL
                 specific_instructions = """
 
-INSTRUÇÕES ESPECÍFICAS PARA ENGENHEIRO DE DADOS:
-- Você é o ÚNICO agente com acesso direto ao SQL Server
-- Use SQL Query Tool para extrair TODOS os dados do período solicitado
-- OBRIGATÓRIO: Exporte os dados para arquivo 'data/vendas.csv' (arquivo padrão)
-- Valide a qualidade e completude dos dados extraídos
-- Documente estatísticas básicas dos dados (número de registros, período, etc.)
-- CRÍTICO: Outros agentes dependem 100% do arquivo CSV que você gerar
-- Formato do CSV: incluir todas as colunas necessárias para análises posteriores
-"""
+                INSTRUÇÕES ESPECÍFICAS PARA ENGENHEIRO DE DADOS:
+                - Você é o ÚNICO agente com acesso direto ao SQL Server
+                - Use SQL Query Tool para extrair TODOS os dados do período solicitado
+                - OBRIGATÓRIO: Exporte os dados para arquivo 'data/vendas.csv' (arquivo padrão)
+                - Valide a qualidade e completude dos dados extraídos
+                - Documente estatísticas básicas dos dados (número de registros, período, etc.)
+                - CRÍTICO: Outros agentes dependem 100% do arquivo CSV que você gerar
+                - Formato do CSV: incluir todas as colunas necessárias para análises posteriores
+                """
             else:
                 # Agentes de análise - trabalham apenas com CSV
                 specific_instructions = """
 
-INSTRUÇÕES ESPECÍFICAS PARA ANÁLISE COM CSV:
-- NÃO faça consultas SQL - você não tem acesso ao banco de dados
-- OBRIGATÓRIO: Use FileReadTool para ler o arquivo 'data/vendas.csv' gerado pelo engenheiro_dados
-- O arquivo data/vendas.csv contém TODOS os dados necessários para sua análise
-- Foque na sua especialização usando os dados do CSV carregado
-- Aplique suas ferramentas de análise nos dados carregados do arquivo
-- Se o arquivo não existir, aguarde o engenheiro_dados completar a extração
-- Documente claramente suas descobertas baseadas nos dados do CSV
-"""
+                INSTRUÇÕES ESPECÍFICAS PARA ANÁLISE COM CSV:
+                - NÃO faça consultas SQL - você não tem acesso ao banco de dados
+                - OBRIGATÓRIO: Use FileReadTool para ler o arquivo 'data/vendas.csv' gerado pelo engenheiro_dados
+                - O arquivo data/vendas.csv contém TODOS os dados necessários para sua análise
+                - Foque na sua especialização usando os dados do CSV carregado
+                - Aplique suas ferramentas de análise nos dados carregados do arquivo
+                - Se o arquivo não existir, aguarde o engenheiro_dados completar a extração
+                - Documente claramente suas descobertas baseadas nos dados do CSV
+                """
             
             task_config['description'] = original_description + specific_instructions
         
@@ -790,35 +791,35 @@ INSTRUÇÕES ESPECÍFICAS PARA ANÁLISE COM CSV:
         
         # Instruções específicas baseadas na arquitetura ETL
         inputs['data_flow_instructions'] = """
-ARQUITETURA DE FLUXO DE DADOS - ETL + CSV:
+                    ARQUITETURA DE FLUXO DE DADOS - ETL + CSV:
 
-🔧 ENGENHEIRO DE DADOS:
-- ÚNICO agente com acesso direto ao SQL Server
-- DEVE extrair dados completos do período usando SQL Query Tool
-- DEVE exportar dados para arquivo 'data/vendas.csv' (arquivo padrão)
-- DEVE validar a qualidade e completude dos dados extraídos
-- Outros agentes dependem 100% do seu trabalho
+                    🔧 ENGENHEIRO DE DADOS:
+                    - ÚNICO agente com acesso direto ao SQL Server
+                    - DEVE extrair dados completos do período usando SQL Query Tool
+                    - DEVE exportar dados para arquivo 'data/vendas.csv' (arquivo padrão)
+                    - DEVE validar a qualidade e completude dos dados extraídos
+                    - Outros agentes dependem 100% do seu trabalho
 
-📊 AGENTES DE ANÁLISE:
-- NÃO fazem consultas SQL diretamente
-- DEVEM ler dados APENAS do arquivo 'data/vendas.csv'
-- Usar FileReadTool para carregar o CSV exportado pelo engenheiro
-- Focar na especialização usando dados do CSV
-- Aplicar ferramentas de análise nos dados carregados
+                    📊 AGENTES DE ANÁLISE:
+                    - NÃO fazem consultas SQL diretamente
+                    - DEVEM ler dados APENAS do arquivo 'data/vendas.csv'
+                    - Usar FileReadTool para carregar o CSV exportado pelo engenheiro
+                    - Focar na especialização usando dados do CSV
+                    - Aplicar ferramentas de análise nos dados carregados
 
-🎯 DIRETOR DE INSIGHTS:
-- Consolida resultados de TODOS os agentes
-- Usa dados do CSV + resultados das análises especializadas
-- Gera dashboard executivo final
+                    🎯 DIRETOR DE INSIGHTS:
+                    - Consolida resultados de TODOS os agentes
+                    - Usa dados do CSV + resultados das análises especializadas
+                    - Gera dashboard executivo final
 
-📁 FLUXO DE ARQUIVOS:
-1. SQL Server → engenheiro_dados → data/vendas.csv
-2. data/vendas.csv → agentes de análise → insights especializadas  
-3. insights especializadas → diretor_insights → dashboard final
+                    📁 FLUXO DE ARQUIVOS:
+                    1. SQL Server → engenheiro_dados → data/vendas.csv
+                    2. data/vendas.csv → agentes de análise → insights especializadas  
+                    3. insights especializadas → diretor_insights → dashboard final
 
-IMPORTANTE: Esta separação garante performance, segurança e organização!
-"""
-        
+                    IMPORTANTE: Esta separação garante performance, segurança e organização!
+                    """
+                            
         # =============== VERIFICAÇÃO DE CONECTIVIDADE BÁSICA ===============
         
         # Verificar conectividade apenas para o engenheiro (que usa SQL)

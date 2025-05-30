@@ -364,7 +364,7 @@ class SQLServerQueryTool(BaseTool):
         
         print("Executando consulta SQL e salvando em arquivo CSV...")
         date_end = datetime.now().strftime('%Y-%m-%d')
-        date_start = (datetime.now() - timedelta(days=730)).strftime('%Y-%m-%d')
+        date_start = (datetime.now() - timedelta(days=1460)).strftime('%Y-%m-%d')
         date_filter = f"AND vendas.datas BETWEEN '{date_start}' AND '{date_end}'"
         
         print("Data inicial:", date_start, "Data final:", date_end)
@@ -391,11 +391,17 @@ class SQLServerQueryTool(BaseTool):
         # Executar a consulta e buscar resultados
         df = pd.read_sql(sql_query, conn)
         
+        print("Consulta executada com sucesso!")
+        
         # Salvar o resultado em um arquivo csv
+        print("Salvando resultado em arquivo CSV...")
         df.to_csv(filename, index=False, sep=';', encoding='utf-8')
+        
+        print(f"Resultado salvo em {filename}")
         
         # Fechar a conexão
         conn.close()
+        print("Conexão fechada com sucesso!")
 
 if __name__ == "__main__":
     sql_tool = SQLServerQueryTool()

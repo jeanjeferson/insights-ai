@@ -12,11 +12,21 @@ from sklearn.metrics import silhouette_score
 import json
 import warnings
 from datetime import datetime
+import time
+import traceback
+import os
 
 # Importar módulos compartilhados consolidados
-from .shared.data_preparation import DataPreparationMixin
-from .shared.report_formatter import ReportFormatterMixin
-from .shared.business_mixins import JewelryRFMAnalysisMixin
+try:
+    # Imports relativos (quando usado como módulo)
+    from .shared.data_preparation import DataPreparationMixin
+    from .shared.report_formatter import ReportFormatterMixin
+    from .shared.business_mixins import JewelryRFMAnalysisMixin
+except ImportError:
+    # Imports absolutos (quando executado diretamente)
+    from insights.tools.shared.data_preparation import DataPreparationMixin
+    from insights.tools.shared.report_formatter import ReportFormatterMixin
+    from insights.tools.shared.business_mixins import JewelryRFMAnalysisMixin
 
 warnings.filterwarnings('ignore')
 
@@ -842,6 +852,12 @@ class StatisticalAnalysisTool(BaseTool,
         try:
             print("📈 Executando análise de tendência temporal...")
             
+            # CORREÇÃO: Inicializar result
+            result = {
+                'analysis_type': 'Temporal Trend Analysis',
+                'target_column': kwargs.get('target_column', 'Total_Liquido')
+            }
+            
             if 'Data' not in df.columns:
                 return {'error': 'Coluna Data não encontrada'}
             
@@ -855,29 +871,27 @@ class StatisticalAnalysisTool(BaseTool,
             x = range(len(monthly_data))
             tau, p_value = kendalltau(x, monthly_data.values)
             
-            result = {
-                'analysis_type': 'Temporal Trend Analysis',
-                'target_column': target_col,
-                'trend_test': {
-                    'kendall_tau': round(tau, 3),
-                    'p_value': round(p_value, 4),
-                    'has_trend': p_value < 0.05,
-                    'trend_direction': 'crescente' if tau > 0 else 'decrescente' if tau < 0 else 'estável'
-                },
-                'monthly_summary': {
-                    'periods': len(monthly_data),
-                    'avg_monthly': round(monthly_data.mean(), 2),
-                    'growth_rate': round(monthly_data.pct_change().mean() * 100, 2)
-                },
-                'insights': [
-                    {
-                        "type": "Tendência Temporal",
-                        "message": f"Tendência {result['trend_test']['trend_direction']} detectada",
-                        "impact": "high" if p_value < 0.05 else "low",
-                        "recommendation": "Ajustar estratégias baseado na tendência identificada"
-                    }
-                ]
+            result['trend_test'] = {
+                'kendall_tau': round(tau, 3),
+                'p_value': round(p_value, 4),
+                'has_trend': p_value < 0.05,
+                'trend_direction': 'crescente' if tau > 0 else 'decrescente' if tau < 0 else 'estável'
             }
+            
+            result['monthly_summary'] = {
+                'periods': len(monthly_data),
+                'avg_monthly': round(monthly_data.mean(), 2),
+                'growth_rate': round(monthly_data.pct_change().mean() * 100, 2)
+            }
+            
+            result['insights'] = [
+                {
+                    "type": "Tendência Temporal",
+                    "message": f"Tendência {result['trend_test']['trend_direction']} detectada",
+                    "impact": "high" if p_value < 0.05 else "low",
+                    "recommendation": "Ajustar estratégias baseado na tendência identificada"
+                }
+            ]
             
             return result
             
@@ -921,8 +935,43 @@ class StatisticalAnalysisTool(BaseTool,
             return {'error': f"Erro na análise demográfica: {str(e)}"}
     
     def _generational_analysis(self, df: pd.DataFrame, **kwargs) -> Dict[str, Any]:
-        """Análise geracional."""
-        return {'message': 'Análise geracional em desenvolvimento', 'status': 'placeholder'}
+        """Análise geracional IMPLEMENTADA."""
+        try:
+            print("👥 Executando análise geracional...")
+            
+            result = {
+                'analysis_type': 'Generational Analysis',
+                'target_column': kwargs.get('target_column', 'Total_Liquido')
+            }
+            
+            if 'Geracao' in df.columns:
+                gen_stats = df.groupby('Geracao')[kwargs.get('target_column', 'Total_Liquido')].agg(['count', 'mean', 'sum']).round(2)
+                result['generational_analysis'] = gen_stats.to_dict()
+                
+                # Geração mais valiosa
+                top_generation = gen_stats['sum'].idxmax()
+                result['insights'] = [
+                    {
+                        "type": "Geração Dominante",
+                        "message": f"Geração {top_generation} é a mais valiosa em receita",
+                        "impact": "medium",
+                        "recommendation": f"Focar estratégias na geração {top_generation}"
+                    }
+                ]
+            else:
+                result['insights'] = [
+                    {
+                        "type": "Dados Insuficientes",
+                        "message": "Campo 'Geracao' não encontrado para análise geracional",
+                        "impact": "low",
+                        "recommendation": "Implementar classificação geracional baseada em idade"
+                    }
+                ]
+            
+            return result
+            
+        except Exception as e:
+            return {'error': f"Erro na análise geracional: {str(e)}"}
     
     def _behavioral_customer_segmentation(self, df: pd.DataFrame, **kwargs) -> Dict[str, Any]:
         """Segmentação comportamental de clientes."""
@@ -950,4 +999,504 @@ class StatisticalAnalysisTool(BaseTool,
     
     def _statistical_product_analysis(self, df: pd.DataFrame, **kwargs) -> Dict[str, Any]:
         """Análise estatística de produtos."""
-        return {'message': 'Análise estatística de produtos em desenvolvimento', 'status': 'placeholder'} 
+        return {'message': 'Análise estatística de produtos em desenvolvimento', 'status': 'placeholder'}
+
+    def generate_statistical_visual_report(self, test_data: dict) -> str:
+        """Gera relatório visual completo dos testes estatísticos em formato markdown."""
+        
+        # Coletar dados com fallbacks
+        metadata = test_data.get('metadata', {})
+        data_metrics = test_data.get('data_metrics', {})
+        results = test_data.get('results', {})
+        component_tests = test_data.get('component_tests', {})
+        
+        report = [
+            "# 🔬 Teste Completo de Análises Estatísticas - Relatório Executivo",
+            f"**Data do Teste:** {metadata.get('test_timestamp', 'N/A')}",
+            f"**Fonte de Dados:** `{metadata.get('data_source', 'desconhecida')}`",
+            f"**Registros Analisados:** {data_metrics.get('total_records', 0):,}",
+            f"**Período de Análise:** {data_metrics.get('date_range', {}).get('start', 'N/A')} até {data_metrics.get('date_range', {}).get('end', 'N/A')}",
+            "\n## 📈 Performance de Execução",
+            f"```\n{json.dumps(test_data.get('performance_metrics', {}), indent=2)}\n```",
+            "\n## 🎯 Resumo dos Testes Executados"
+        ]
+        
+        # Contabilizar sucessos e falhas
+        successful_tests = len([r for r in results.values() if 'error' not in r])
+        failed_tests = len([r for r in results.values() if 'error' in r])
+        total_tests = len(results)
+        
+        report.extend([
+            f"- **Total de Análises:** {total_tests}",
+            f"- **Sucessos:** {successful_tests} ✅",
+            f"- **Falhas:** {failed_tests} ❌",
+            f"- **Taxa de Sucesso:** {(successful_tests/total_tests*100):.1f}%" if total_tests > 0 else "- **Taxa de Sucesso:** N/A"
+        ])
+        
+        # Insights Estatísticos Principais
+        report.append("\n## 🔍 Principais Descobertas Estatísticas")
+        
+        # Correlações significativas
+        if 'correlation' in results and 'error' not in results['correlation']:
+            corr_data = results['correlation']
+            if 'significant_correlations' in corr_data:
+                sig_corr = corr_data['significant_correlations']
+                if sig_corr:
+                    strongest = max(sig_corr.items(), key=lambda x: abs(x[1]))
+                    report.append(f"- **Correlação Mais Forte:** {strongest[0]} ({strongest[1]:.3f})")
+        
+        # Clusters identificados
+        if 'clustering' in results and 'error' not in results['clustering']:
+            cluster_data = results['clustering']
+            if 'cluster_profiles' in cluster_data:
+                n_clusters = len(cluster_data['cluster_profiles'])
+                report.append(f"- **Clusters Identificados:** {n_clusters} segmentos distintos")
+        
+        # Outliers detectados
+        if 'outliers' in results and 'error' not in results['outliers']:
+            outlier_data = results['outliers']
+            if 'iqr_method' in outlier_data:
+                outlier_count = outlier_data['iqr_method'].get('outliers_count', 0)
+                report.append(f"- **Outliers Detectados:** {outlier_count} transações anômalas")
+        
+        # Testes de Normalidade
+        if 'distribution' in results and 'error' not in results['distribution']:
+            dist_data = results['distribution']
+            if 'normality_test' in dist_data:
+                is_normal = dist_data['normality_test'].get('is_normal', False)
+                report.append(f"- **Distribuição dos Dados:** {'Normal' if is_normal else 'Não-Normal'}")
+        
+        # Análise Temporal
+        if 'trend_analysis' in results and 'error' not in results['trend_analysis']:
+            trend_data = results['trend_analysis']
+            if 'trend_test' in trend_data:
+                trend_dir = trend_data['trend_test'].get('trend_direction', 'N/A')
+                report.append(f"- **Tendência Temporal:** {trend_dir.title()}")
+        
+        # Detalhamento por Tipo de Análise
+        report.append("\n## 📊 Detalhamento das Análises")
+        
+        analysis_categories = {
+            'Análises Estatísticas Core': ['correlation', 'clustering', 'outliers', 'distribution', 'trend_analysis'],
+            'Análises Demográficas': ['demographic_patterns', 'generational_analysis', 'customer_segmentation'],
+            'Análises Geográficas': ['geographic_performance', 'regional_patterns'],
+            'Análises Especializadas': ['price_sensitivity', 'profitability_patterns'],
+            'Análises Integradas': ['comprehensive_customer_analysis', 'product_performance_analysis']
+        }
+        
+        for category, analyses in analysis_categories.items():
+            report.append(f"\n### {category}")
+            for analysis in analyses:
+                if analysis in results:
+                    if 'error' in results[analysis]:
+                        report.append(f"- ❌ **{analysis}**: {results[analysis]['error']}")
+                    else:
+                        # Resumir insights principais de cada análise
+                        insights = results[analysis].get('insights', [])
+                        if insights:
+                            report.append(f"- ✅ **{analysis}**: {len(insights)} insights gerados")
+                            for insight in insights[:2]:  # Top 2 insights
+                                report.append(f"  - {insight.get('message', 'N/A')}")
+                        else:
+                            report.append(f"- ✅ **{analysis}**: Concluído")
+                else:
+                    report.append(f"- ⏭️ **{analysis}**: Não testado")
+        
+        # Recomendações Baseadas em Evidências Estatísticas
+        report.append("\n## 💡 Recomendações Baseadas em Evidências")
+        
+        all_insights = []
+        for result in results.values():
+            if 'insights' in result and isinstance(result['insights'], list):
+                all_insights.extend(result['insights'])
+        
+        # Agrupar recomendações por impacto
+        high_impact = [i for i in all_insights if i.get('impact') == 'high']
+        medium_impact = [i for i in all_insights if i.get('impact') == 'medium']
+        
+        if high_impact:
+            report.append("\n### 🔥 Alta Prioridade")
+            for insight in high_impact[:3]:
+                report.append(f"- {insight.get('recommendation', insight.get('message', 'N/A'))}")
+        
+        if medium_impact:
+            report.append("\n### 📈 Média Prioridade")
+            for insight in medium_impact[:3]:
+                report.append(f"- {insight.get('recommendation', insight.get('message', 'N/A'))}")
+        
+        # Qualidade dos Dados e Limitações
+        report.append("\n## ⚠️ Limitações e Considerações")
+        
+        data_quality = data_metrics.get('data_quality_check', {})
+        if data_quality:
+            report.append("### Qualidade dos Dados:")
+            for check, value in data_quality.items():
+                if value > 0:
+                    report.append(f"- **{check}**: {value} ocorrências")
+        
+        # Erros encontrados
+        errors = test_data.get('errors', [])
+        if errors:
+            report.append(f"\n### Erros Detectados ({len(errors)}):")
+            for error in errors[-3:]:  # Últimos 3 erros
+                report.append(f"- **{error['context']}**: {error['error_message']}")
+        
+        return "\n".join(report)
+
+    def run_full_statistical_test(self) -> str:
+        """Executa teste completo e retorna relatório formatado"""
+        test_result = self.test_all_statistical_analyses()
+        parsed = json.loads(test_result)
+        return self.generate_statistical_visual_report(parsed)
+
+    def test_all_statistical_analyses(self, sample_data: str = "data/vendas.csv") -> str:
+        """
+        Executa teste completo de todas as análises estatísticas da classe
+        """
+        
+        # Corrigir caminho do arquivo
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        project_root = os.path.abspath(os.path.join(current_dir, "..", "..", ".."))
+        data_file_path = os.path.join(project_root, sample_data)
+        
+        # Verificar se arquivo existe
+        if not os.path.exists(data_file_path):
+            return json.dumps({
+                "error": f"Arquivo não encontrado: {data_file_path}",
+                "current_dir": current_dir,
+                "project_root": project_root,
+                "expected_path": data_file_path
+            }, indent=2)
+
+        test_report = {
+            "metadata": {
+                "test_timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "test_version": "Statistical Analysis Test Suite v1.0",
+                "data_source": data_file_path,
+                "tool_version": "Statistical Analysis Tool v3.0",
+                "status": "in_progress"
+            },
+            "data_metrics": {
+                "total_records": 0,
+                "columns": [],
+                "date_range": {},
+                "data_quality_check": {}
+            },
+            "results": {},
+            "component_tests": {},
+            "performance_metrics": {},
+            "errors": []
+        }
+
+        try:
+            # 1. Fase de Carregamento de Dados (UMA VEZ SÓ)
+            test_report["metadata"]["current_stage"] = "data_loading"
+            print("\n=== ETAPA 1: CARREGAMENTO DE DADOS ESTATÍSTICOS ===")
+            print(f"📁 Tentando carregar: {data_file_path}")
+            
+            # Carregar dados UMA VEZ e reutilizar
+            df = self._load_and_prepare_statistical_data(data_file_path, use_cache=True)
+            
+            if df is None:
+                raise Exception("Falha no carregamento dos dados estatísticos")
+            
+            print(f"✅ Dados carregados GLOBALMENTE: {len(df)} registros")
+            
+            # Coletar métricas básicas dos dados
+            test_report["data_metrics"] = {
+                "total_records": int(len(df)),
+                "columns": list(df.columns),
+                "date_range": {
+                    "start": str(df['Data'].min()) if 'Data' in df.columns else "N/A",
+                    "end": str(df['Data'].max()) if 'Data' in df.columns else "N/A"
+                },
+                "data_quality_check": self._convert_to_native_types(self._perform_statistical_data_quality_check(df))
+            }
+
+            # 2. Teste de Todas as Análises Estatísticas (REUTILIZANDO DADOS)
+            test_report["metadata"]["current_stage"] = "statistical_testing"
+            print("\n=== ETAPA 2: TESTE DE ANÁLISES ESTATÍSTICAS ===")
+            
+            # Definir todas as análises disponíveis
+            statistical_analyses = [
+                'correlation',
+                'clustering', 
+                'outliers',
+                'distribution',
+                'trend_analysis',
+                'demographic_patterns',
+                'generational_analysis',
+                'customer_segmentation',
+                'geographic_performance',
+                'regional_patterns',
+                'price_sensitivity',
+                'profitability_patterns',
+                'comprehensive_customer_analysis',
+                'product_performance_analysis'
+            ]
+            
+            for analysis_type in statistical_analyses:
+                try:
+                    print(f"\n🔬 TESTANDO ANÁLISE: {analysis_type.upper()}")
+                    start_time = time.time()
+                    
+                    # CORREÇÃO: Usar dados já carregados ao invés de recarregar
+                    result = self._run_analysis_with_prepared_data(
+                        df=df,  # USAR DADOS PREPARADOS
+                        analysis_type=analysis_type,
+                        target_column="Total_Liquido",
+                        significance_level=0.05,
+                        clustering_method="auto",
+                        min_correlation=0.3,
+                        demographic_focus=True,
+                        geographic_focus=True
+                    )
+                    
+                    # Análise de resultados
+                    parsed_result = json.loads(result)
+                    test_report["results"][analysis_type] = parsed_result
+                    
+                    execution_time = time.time() - start_time
+                    
+                    # Verificação básica de integridade
+                    if 'error' in parsed_result:
+                        print(f"❌ {analysis_type.upper()} - Erro: {parsed_result['error']}")
+                    else:
+                        insights_count = len(parsed_result.get('insights', []))
+                        print(f"✅ {analysis_type.upper()} - {insights_count} insights gerados ({execution_time:.2f}s)")
+
+                except Exception as e:
+                    error_id = f"ERR-{analysis_type.upper()}-{datetime.now().strftime('%H%M%S')}"
+                    self._log_statistical_test_error(test_report, e, analysis_type)
+                    print(f"⛔ Erro em {analysis_type.upper()} - {error_id}: {str(e)}")
+
+            # 3. Teste de Componentes de Cache e Otimização
+            test_report["metadata"]["current_stage"] = "optimization_testing"
+            print("\n=== ETAPA 3: TESTE DE OTIMIZAÇÕES ===")
+            
+            try:
+                print("🔧 Testando cache de análises...")
+                # Teste com cache
+                start_time = time.time()
+                result_with_cache = self._run(
+                    analysis_type="correlation",
+                    data_csv=data_file_path,
+                    cache_results=True
+                )
+                cache_time = time.time() - start_time
+                
+                # Teste sem cache
+                start_time = time.time()
+                result_without_cache = self._run(
+                    analysis_type="correlation", 
+                    data_csv=data_file_path,
+                    cache_results=False
+                )
+                no_cache_time = time.time() - start_time
+                
+                test_report["component_tests"]["cache_performance"] = {
+                    "cache_enabled_time": round(cache_time, 3),
+                    "cache_disabled_time": round(no_cache_time, 3),
+                    "cache_efficiency": round((no_cache_time - cache_time) / no_cache_time * 100, 1) if no_cache_time > 0 else 0
+                }
+                print("✅ Cache performance - OK")
+                
+            except Exception as e:
+                self._log_statistical_test_error(test_report, e, "cache_test")
+                print(f"❌ Cache test - Falha: {str(e)}")
+
+            try:
+                print("🔧 Testando amostragem para datasets grandes...")
+                # Simular dataset grande com amostragem
+                result_sampled = self._run(
+                    analysis_type="clustering",
+                    data_csv=data_file_path,
+                    sample_size=1000  # Forçar amostragem
+                )
+                
+                parsed_sampled = json.loads(result_sampled)
+                test_report["component_tests"]["sampling"] = {
+                    "sample_size_used": parsed_sampled.get('metadata', {}).get('total_records', 0),
+                    "sampling_successful": 'error' not in parsed_sampled
+                }
+                print("✅ Sampling test - OK")
+                
+            except Exception as e:
+                self._log_statistical_test_error(test_report, e, "sampling_test")
+                print(f"❌ Sampling test - Falha: {str(e)}")
+
+            # 4. Teste de Performance com Análise Complexa
+            test_report["metadata"]["current_stage"] = "performance_testing"
+            print("\n=== ETAPA 4: TESTE DE PERFORMANCE ===")
+            try:
+                start_time = time.time()
+                
+                # CORREÇÃO: Remover parâmetro inexistente
+                complex_test = self._run(
+                    analysis_type="clustering",
+                    data_csv=data_file_path,
+                    clustering_method="auto",
+                    demographic_focus=True,
+                    geographic_focus=True,
+                    cache_results=True  # SUBSTITUIR include_statistical_insights
+                )
+                
+                test_report["performance_metrics"] = {
+                    "complex_analysis_time_seconds": round(time.time() - start_time, 2),
+                    "result_size_kb": round(len(complex_test)/1024, 2),
+                    "memory_usage_mb": round(self._get_statistical_memory_usage(), 2),
+                    "cache_size": len(self._analysis_cache)
+                }
+                print("✅ Performance test concluído")
+                
+            except Exception as e:
+                self._log_statistical_test_error(test_report, e, "performance_test")
+                print(f"❌ Performance test falhou: {str(e)}")
+
+            # 5. Análise Final
+            test_report["metadata"]["status"] = "completed" if not test_report["errors"] else "completed_with_errors"
+            print(f"\n✅✅✅ TESTE ESTATÍSTICO COMPLETO - {len(test_report['errors'])} erros ✅✅✅")
+            
+            return json.dumps(test_report, ensure_ascii=False, indent=2, default=str)
+
+        except Exception as e:
+            test_report["metadata"]["status"] = "failed"
+            self._log_statistical_test_error(test_report, e, "global")
+            print(f"❌ TESTE ESTATÍSTICO FALHOU: {str(e)}")
+            return json.dumps(test_report, ensure_ascii=False, indent=2, default=str)
+
+    def _get_analysis_specific_params(self, analysis_type: str) -> dict:
+        """Retorna parâmetros específicos para cada tipo de análise"""
+        params_map = {
+            'correlation': {'min_correlation': 0.3, 'significance_level': 0.05},
+            'clustering': {'clustering_method': 'auto'},
+            'outliers': {'target_column': 'Total_Liquido'},
+            'distribution': {'target_column': 'Total_Liquido'},
+            'trend_analysis': {'target_column': 'Total_Liquido'},
+            'demographic_patterns': {'demographic_focus': True},
+            'geographic_performance': {'geographic_focus': True},
+            'price_sensitivity': {'target_column': 'Total_Liquido'},
+        }
+        return params_map.get(analysis_type, {})
+
+    def _log_statistical_test_error(self, report: dict, error: Exception, context: str) -> None:
+        """Registra erros de teste estatístico de forma estruturada"""
+        error_entry = {
+            "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "context": context,
+            "error_type": type(error).__name__,
+            "error_message": str(error),
+            "traceback": traceback.format_exc()
+        }
+        report["errors"].append(error_entry)
+
+    def _convert_to_native_types(self, obj):
+        """Converte tipos numpy/pandas para tipos nativos Python."""
+        if isinstance(obj, dict):
+            return {k: self._convert_to_native_types(v) for k, v in obj.items()}
+        elif isinstance(obj, list):
+            return [self._convert_to_native_types(v) for v in obj]
+        elif hasattr(obj, 'item'):  # numpy types
+            return obj.item()
+        elif hasattr(obj, 'tolist'):  # numpy arrays
+            return obj.tolist()
+        else:
+            return obj
+
+    def _perform_statistical_data_quality_check(self, df: pd.DataFrame) -> dict:
+        """Executa verificações de qualidade específicas para análises estatísticas"""
+        checks = {
+            "missing_values_total": int(df.isnull().sum().sum()),
+            "duplicate_records": int(df.duplicated().sum()),
+            "numerical_columns": len(df.select_dtypes(include=[np.number]).columns),
+            "categorical_columns": len(df.select_dtypes(include=['object']).columns),
+            "zero_variance_columns": int((df.var(numeric_only=True) == 0).sum()),
+            "outliers_iqr_total": self._count_total_outliers_iqr(df)
+        }
+        return checks
+
+    def _count_total_outliers_iqr(self, df: pd.DataFrame) -> int:
+        """Conta outliers totais usando método IQR para todas as colunas numéricas"""
+        try:
+            numeric_cols = df.select_dtypes(include=[np.number]).columns
+            total_outliers = 0
+            
+            for col in numeric_cols:
+                Q1 = df[col].quantile(0.25)
+                Q3 = df[col].quantile(0.75)
+                IQR = Q3 - Q1
+                lower_bound = Q1 - 1.5 * IQR
+                upper_bound = Q3 + 1.5 * IQR
+                outliers = ((df[col] < lower_bound) | (df[col] > upper_bound)).sum()
+                total_outliers += outliers
+                
+            return int(total_outliers)
+        except:
+            return 0
+
+    def _get_statistical_memory_usage(self) -> float:
+        """Obtém uso de memória específico para análises estatísticas"""
+        try:
+            import psutil
+            process = psutil.Process(os.getpid())
+            return process.memory_info().rss / 1024 / 1024  # Em MB
+        except:
+            return 0.0
+
+    def _run_analysis_with_prepared_data(self, df: pd.DataFrame, analysis_type: str, **kwargs) -> str:
+        """Executa análise usando dados já preparados (otimização para testes)."""
+        try:
+            print(f"🚀 Executando {analysis_type} com dados pré-carregados...")
+            
+            # Mapear análises
+            analysis_methods = {
+                'correlation': self._advanced_correlation_analysis,
+                'clustering': self._multidimensional_clustering_analysis,
+                'outliers': self._comprehensive_outlier_analysis,
+                'distribution': self._advanced_distribution_analysis,
+                'trend_analysis': self._temporal_trend_analysis,
+                'demographic_patterns': self._demographic_patterns_analysis,
+                'generational_analysis': self._generational_analysis,
+                'customer_segmentation': self._behavioral_customer_segmentation,
+                'geographic_performance': self._geographic_performance_analysis,
+                'regional_patterns': self._regional_patterns_analysis,
+                'price_sensitivity': self._price_elasticity_analysis,
+                'profitability_patterns': self._profitability_pattern_analysis,
+                'comprehensive_customer_analysis': self._comprehensive_customer_analysis,
+                'product_performance_analysis': self._statistical_product_analysis
+            }
+            
+            if analysis_type not in analysis_methods:
+                return json.dumps({'error': f"Análise '{analysis_type}' não suportada"})
+            
+            # Executar análise diretamente
+            result = analysis_methods[analysis_type](df, **kwargs)
+            
+            # Adicionar metadados
+            result['metadata'] = {
+                'tool': 'Statistical Analysis Tool v3.0',
+                'analysis_type': analysis_type,
+                'total_records': len(df),
+                'generated_at': datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            }
+            
+            return json.dumps(result, ensure_ascii=False, indent=2, default=str)
+            
+        except Exception as e:
+            return json.dumps({'error': f"Erro na análise {analysis_type}: {str(e)}"})
+
+# Exemplo de uso
+if __name__ == "__main__":
+    analyzer = StatisticalAnalysisTool()
+    
+    print("🔬 Iniciando Teste Completo de Análises Estatísticas...")
+    report = analyzer.run_full_statistical_test()
+    
+    # Salvar relatório
+    os.makedirs("test_results", exist_ok=True)
+    with open("test_results/statistical_analysis_test_report.md", "w", encoding="utf-8") as f:
+        f.write(report)
+    
+    print("✅ Relatório estatístico gerado em test_results/statistical_analysis_test_report.md")
+    print("\n" + "="*80)
+    print(report[:1500])  # Exibir parte do relatório no console 

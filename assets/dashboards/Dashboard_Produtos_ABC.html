@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+                <html lang="pt-BR">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Dashboard Produtos ABC</title>
+                    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+                    <style>
+                        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; background: #f5f7fa; }
+                        .header { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 30px; border-radius: 15px; margin-bottom: 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+                        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 25px; }
+                        .card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); }
+                        .abc-card { padding: 15px; margin: 10px 0; border-radius: 10px; border-left: 5px solid; }
+                        .classe-a { background: #ecfdf5; border-color: #059669; }
+                        .classe-b { background: #fef3c7; border-color: #f59e0b; }
+                        .classe-c { background: #fee2e2; border-color: #dc2626; }
+                        .metric { text-align: center; padding: 15px; }
+                        .metric-value { font-size: 2em; font-weight: bold; color: #f5576c; }
+                        .metric-label { color: #64748b; font-size: 1.1em; }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h1>🎯 Dashboard Produtos ABC</h1>
+                        <p>Análise de Classificação e Performance de Produtos</p>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 20px;">
+                            <div class="metric">
+                                <div class="metric-value">5</div>
+                                <div>Categorias Ativas</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">R$ 217,000</div>
+                                <div>Receita Total</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">4</div>
+                                <div>Produtos Classe A</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-grid">
+                        <div class="card">
+                            <h3>📊 Classificação ABC</h3>
+                            <div id="abc-chart" style="height: 400px;"></div>
+                        </div>
+                        
+                        <div class="card">
+                            <h3>🏆 Top 5 Produtos por Receita</h3>
+                            <div class="abc-card classe-c">
+                                <div style="font-weight: bold; font-size: 1.1em;">Produto</div>
+                                <div style="display: flex; justify-content: space-between; margin-top: 5px;">
+                                    <span>R$ 74,400</span>
+                                    <span class="badge">Classe C</span>
+                                </div>
+                                <div style="color: #64748b; font-size: 0.9em;">34.3% da receita total</div>
+                            </div>
+                            <div class="abc-card classe-a">
+                                <div style="font-weight: bold; font-size: 1.1em;">Produto</div>
+                                <div style="display: flex; justify-content: space-between; margin-top: 5px;">
+                                    <span>R$ 52,700</span>
+                                    <span class="badge">Classe A</span>
+                                </div>
+                                <div style="color: #64748b; font-size: 0.9em;">24.3% da receita total</div>
+                            </div>
+                            <div class="abc-card classe-a">
+                                <div style="font-weight: bold; font-size: 1.1em;">Produto</div>
+                                <div style="display: flex; justify-content: space-between; margin-top: 5px;">
+                                    <span>R$ 40,300</span>
+                                    <span class="badge">Classe A</span>
+                                </div>
+                                <div style="color: #64748b; font-size: 0.9em;">18.6% da receita total</div>
+                            </div>
+                            <div class="abc-card classe-a">
+                                <div style="font-weight: bold; font-size: 1.1em;">Produto</div>
+                                <div style="display: flex; justify-content: space-between; margin-top: 5px;">
+                                    <span>R$ 27,900</span>
+                                    <span class="badge">Classe A</span>
+                                </div>
+                                <div style="color: #64748b; font-size: 0.9em;">12.9% da receita total</div>
+                            </div>
+                            <div class="abc-card classe-a">
+                                <div style="font-weight: bold; font-size: 1.1em;">Produto</div>
+                                <div style="display: flex; justify-content: space-between; margin-top: 5px;">
+                                    <span>R$ 21,700</span>
+                                    <span class="badge">Classe A</span>
+                                </div>
+                                <div style="color: #64748b; font-size: 0.9em;">10.0% da receita total</div>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <h3>📈 Distribuição por Classe</h3>
+                            <div id="distribuicao-chart" style="height: 300px;"></div>
+                        </div>
+                        
+                        <div class="card">
+                            <h3>💡 Insights e Recomendações</h3>
+                            <div class="abc-card classe-a">
+                                <div style="font-weight: bold; color: #059669;">🏆 Classe A - Foco Total</div>
+                                <div>Produtos que geram 80% da receita - máxima atenção</div>
+                            </div>
+                            <div class="abc-card classe-b">
+                                <div style="font-weight: bold; color: #f59e0b;">📊 Classe B - Otimização</div>
+                                <div>Potencial de crescimento - estratégias de upsell</div>
+                            </div>
+                            <div class="abc-card classe-c">
+                                <div style="font-weight: bold; color: #dc2626;">⚠️ Classe C - Revisão</div>
+                                <div>Avaliar manutenção ou descontinuação</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <script>
+                        // Gráfico ABC
+                        var abcData = [{
+                            values: [74400.0, 52700.0, 40300.0, 27900.0, 21700.0],
+                            labels: ['Produto', 'Produto', 'Produto', 'Produto', 'Produto'],
+                            type: 'pie',
+                            marker: {
+                                colors: ['#059669', '#34d399', '#f59e0b', '#fbbf24', '#dc2626']
+                            },
+                            textinfo: 'label+percent'
+                        }];
+                        
+                        Plotly.newPlot('abc-chart', abcData, {
+                            showlegend: false,
+                            margin: {t: 20, b: 20, l: 20, r: 20}
+                        }, {responsive: true});
+                        
+                        // Gráfico de Distribuição
+                        var distribData = [{
+                            x: ['Classe A', 'Classe B', 'Classe C'],
+                            y: [4, 0, 1],
+                            type: 'bar',
+                            marker: {
+                                color: ['#059669', '#f59e0b', '#dc2626']
+                            }
+                        }];
+                        
+                        Plotly.newPlot('distribuicao-chart', distribData, {
+                            yaxis: {title: 'Quantidade de Produtos'},
+                            margin: {t: 20, b: 40, l: 50, r: 20}
+                        }, {responsive: true});
+                    </script>
+                </body>
+                </html>

@@ -1,0 +1,6 @@
+Produto,Receita_Total,Frequencia_Vendas,Ticket_Medio,Acao_Recomendada,Prioridade,Estoque_Sugerido_Dias,ROI_Estimado,Confianca_ML
+ALIANCA 416,40300.0,62.0,650.0,Manter Estoque,Normal,30,195.0,95
+ALIANCA 750,52700.0,62.0,850.0,Manter Estoque,Normal,30,255.0,95
+BRINCOS,21700.0,62.0,350.0,Manter Estoque,Normal,30,105.0,95
+COLARES,27900.0,62.0,450.0,Manter Estoque,Normal,30,135.0,95
+CRAVEJADA,74400.0,62.0,1200.0,Manter Estoque,Normal,30,180.0,95

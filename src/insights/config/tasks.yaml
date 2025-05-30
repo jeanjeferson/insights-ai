@@ -1,32 +1,48 @@
-# =============== TASKS ALINHADAS COM OS 8 AGENTES DEFINIDOS ===============
+# =============== TASKS CONFIGURATION ===============
+#
+# Tasks alinhadas com a arquitetura otimizada de 8 agentes:
+# 1. engenheiro_dados - Extração e preparação
+# 2. analista_vendas_tendencias - Vendas + Tendências + Projeções (Consolidado)
+# 3. especialista_produtos - Produtos + Categorias (Consolidado)  
+# 4. analista_estoque - Estoque + Inventário (Consolidado)
+# 5. analista_financeiro - Financeiro + Projeções (Consolidado)
+# 6. especialista_clientes - Clientes + RFV + Demographics (Consolidado)
+# 7. analista_performance - Performance Vendedores (Consolidado)
+# 8. diretor_insights - Síntese Final (Consolidado)
 
 engenheiro_dados_task:
   description: >
     🔧 ENGENHARIA DE DADOS AVANÇADA COM FILTROS TEMPORAIS:
+    **IMPORTANTE: Use os inputs {data_inicio} e {data_fim}**
     
-    **IMPORTANTE: Use os inputs {data_inicio} e {data_fim} fornecidos para filtrar os dados!**
+    **OBJETIVO CONSOLIDADO**: Extração inteligente, limpeza avançada, e preparação completa dos dados com controle de qualidade.
     
-    1. **Extração Multi-Source com Filtro Temporal**:
-       - **OBRIGATÓRIO**: Usar SQL Server Query Tool com os parâmetros:
-         * date_start: {data_inicio} 
-         * date_end: {data_fim}
-         * output_format: "csv"
-       - Exemplo de chamada: SQL Server Query Tool com date_start="{data_inicio}", date_end="{data_fim}", output_format="csv"
-       - Usar File Read Tool para dados complementares se necessário
-       - Validar integridade referencial entre fontes
-    
-    2. **Análise Estatística de Qualidade**:
-       - Usar Statistical Analysis Tool para detectar outliers nos dados filtrados
-       - Aplicar testes de normalidade e consistência no período especificado
-       - Identificar gaps temporais entre {data_inicio} e {data_fim}
-    
-    3. **ETL Avançado**:
-       - Usar Advanced Analytics Engine para limpeza automatizada
-       - Aplicar transformações inteligentes baseadas em padrões
-       - Criar features derivadas (Preco_Unitario, Margem_Estimada, etc.)
-       - Calcular métricas temporais para o período analisado
-    
-    4. **Validação Final**:
+    1. **Extração de Dados Temporais**:
+       - **OBRIGATÓRIO**: Use SQL Query Tool para extrair dados filtrados pelo período {data_inicio} a {data_fim}
+       - Aplicar filtros de qualidade na extração (remover duplicatas, valores nulos críticos)
+       - Capturar metadados de extração (contadores, timestamps, versões)
+       
+    2. **Análise de Qualidade Avançada**:
+       - Usar Statistical Analysis Tool para auditoria completa de qualidade  
+       - Calcular scores de completude, consistência e confiabilidade
+       - Identificar e tratar outliers usando métodos estatísticos
+       - Validar distribuições e detectar anomalias
+
+    3. **Preparação e Transformação**:
+       - Engenharia de features para análises posteriores
+       - Normalização e padronização de campos críticos
+       - Criação de variáveis derivadas (margem, giro, categorização automática)
+       - Agregações inteligentes por período, categoria, vendedor
+
+    4. **Validação Final e GERAÇÃO OBRIGATÓRIA DE ARQUIVOS**:
+       - **OBRIGATÓRIO**: Usar File Generation Tool para criar:
+         * filename: "dados_qualidade_{data_inicio}_{data_fim}.csv"
+         * content_type: "dataset"
+         * output_path: "reports/"
+       - **OBRIGATÓRIO**: Usar File Generation Tool para criar:
+         * filename: "relatorio_engenharia_dados_{data_inicio}_{data_fim}.md"
+         * content_type: "technical_report"
+         * output_path: "reports/"
        - Gerar relatório de qualidade de dados para o período {data_inicio} a {data_fim}
        - Documentar transformações aplicadas
        - Validar estatísticas descritivas por segmento no período
@@ -37,120 +53,141 @@ engenheiro_dados_task:
     
     ## 🔧 RELATÓRIO TÉCNICO DE QUALIDADE DE DADOS
     
+    **ARQUIVOS GERADOS OBRIGATORIAMENTE:**
+    ✅ reports/dados_qualidade_{data_inicio}_{data_fim}.csv - Dados limpos e validados
+    ✅ reports/relatorio_engenharia_dados_{data_inicio}_{data_fim}.md - Relatório técnico
+    
     ### 1. **RESUMO EXECUTIVO DE DADOS**:
-    - ✅ Volume de dados extraídos: XXX registros no período {data_inicio} a {data_fim}
-    - ✅ Qualidade geral dos dados: XX% completude, XX% consistência
-    - ⚠️ Anomalias detectadas e tratadas: XX casos
-    - 📊 Score de confiabilidade dos dados: XX/100
+    - ✅ Volume de dados extraídos: (Número de registros extraídos, conforme SQL Server Query Tool/File Read Tool) registros no período {data_inicio} a {data_fim}
+    - ✅ Qualidade geral dos dados: (Percentual de completude calculado) % completude, (Percentual de consistência calculado) % consistência (conforme Statistical Analysis Tool/Advanced Analytics Engine)
+    - ⚠️ Anomalias detectadas e tratadas: (Número de casos de anomalias identificados e tratados) casos (conforme Statistical Analysis Tool/Advanced Analytics Engine)
+    - 📊 Score de confiabilidade dos dados: (Score calculado)/100 (baseado na análise de qualidade)
     
     ### 2. **KPIs TÉCNICOS**:
-    - **Performance de Extração**: Tempo total, registros/segundo
-    - **Qualidade de Dados**: % completude por campo crítico
-    - **Consistência Temporal**: Gaps identificados, cobertura do período
-    - **Detecção de Anomalias**: Outliers por categoria, tratativas aplicadas
-    - **Features Derivadas**: Campos calculados, validações estatísticas
+    - **Registros Processados**: (Número total de registros) registros
+    - **Duplicatas Removidas**: (Número de duplicatas removidas) casos ((Percentual de duplicatas)% do total)
+    - **Valores Nulos Tratados**: (Número de valores nulos tratados) campos tratados
+    - **Outliers Detectados**: (Número de outliers) valores ((Percentual de outliers)% do dataset)
+    - **Features Criadas**: (Número de features criadas) variáveis derivadas
+    - **Tempo de Processamento**: (Tempo total de processamento) segundos
     
-    ### 3. **VALIDAÇÕES CRÍTICAS**:
-    - Confirmação do range temporal: {data_inicio} a {data_fim}
-    - Integridade referencial entre tabelas
-    - Validação de tipos de dados e formatos
-    - Detecção de duplicatas e inconsistências
+    ### 3. **VALIDAÇÕES ESTATÍSTICAS**:
+    - **Distribuições Validadas**: (Número de distribuições validadas) campos com distribuição normal/esperada
+    - **Correlações Identificadas**: (Número de correlações) correlações estatisticamente significativas
+    - **Consistência Temporal**: (Resultado da validação temporal) para o período {data_inicio} a {data_fim}
+    - **Integridade Referencial**: (Percentual de integridade) % de consistência entre tabelas/campos relacionados
     
-    ### 4. **DATASET FINALIZADO**:
-    - DataFrame limpo e validado pronto para análises
-    - Documentação de transformações aplicadas
-    - Dicionário de dados atualizado
-    - Recomendações para melhorias futuras
+    ### 4. **PREPARAÇÃO PARA ANÁLISES**:
+    - **Agregações Criadas**: por período, categoria, vendedor (especificar quais)
+    - **Variáveis Derivadas**: margem_percentual, giro_estoque, categoria_abc, performance_vendedor
+    - **Segmentações Preparadas**: por faixa de valor, região, perfil de cliente
+    - **Índices Temporais**: dados organizados cronologicamente para análise de tendências
     
-    **FORMATO**: JSON estruturado + relatório markdown técnico para validação pelos demais agentes
-  
+    ### 5. **LIMITAÇÕES E OBSERVAÇÕES TÉCNICAS**:
+    - Período analisado: {data_inicio} a {data_fim} ((Número de dias) dias de dados)
+    - Possíveis limitações para análise sazonal (se período < 365 dias)
+    - Recomendações para ampliação do histórico se necessário
+    - Campos com qualidade limitada que podem afetar análises específicas
+    
+    **FORMATO**: Relatório técnico markdown + dataset CSV limpo + documentação de transformações
+
   agent: engenheiro_dados
 
 analista_vendas_tendencias_task:
   description: >
-    📈 ANÁLISE COMPLETA DE VENDAS, TENDÊNCIAS, SAZONALIDADE E PROJEÇÕES:
+    📈 ANÁLISE DE TENDÊNCIAS COM IA:
     
-    **OBJETIVO CONSOLIDADO**: Unifica análise de tendências, padrões sazonais e forecasting profissional em um único relatório abrangente.
+    **OBJETIVO CONSOLIDADO**: Unifica análise de vendas, detecção de tendências e projeções profissionais com Prophet.
     
-    1. **Análise de Tendências com IA**:
-       - Usar Statistical Analysis Tool para análise de correlação
-       - Aplicar testes de significância estatística
-       - Detectar mudanças de tendência (change point detection)
-       - Calcular elasticidades e sensibilidades
+    1. **Análise Estatística Avançada**:
+       - Usar Statistical Analysis Tool para detectar tendências, correlações e pontos de inflexão
+       - Análise de séries temporais com decomposição (tendência, sazonalidade, ruído)
+       - Correlações entre vendas e variáveis externas
+       - Testes de estacionariedade e estrutura temporal
     
     2. **Modelagem Sazonal Avançada**:
-       - Usar Statistical Analysis Tool para decomposição sazonal STL
-       - Separar tendência, sazonalidade e ruído
-       - Quantificar força sazonal por categoria
-       - Detectar mudanças nos padrões sazonais
-       - Criar índices sazonais por categoria de produto
+       - Usar Statistical Analysis Tool para identificar padrões sazonais robustos
+       - Quantificar amplitude e previsibilidade sazonal
+       - Mapear eventos e feriados com impacto nas vendas  
+       - Criar índices sazonais ajustados por categoria
     
     3. **Forecasting Profissional com Prophet**:
-       - Usar Prophet Forecast Tool para modelagem profissional
-       - Configurar sazonalidades múltiplas (anual, mensal, semanal)
-       - Incorporar feriados brasileiros e eventos especiais
-       - Ajustar capacidade de mercado e pontos de saturação
-       - Criar projeções conservadora, realista e otimista
+       - Usar Prophet Tool para modelagem de séries temporais de vendas
+       - Incluir feriados brasileiros e eventos especiais (Dia das Mães, Natal, etc.)
+       - Gerar previsões com intervalos de confiança por categoria
+       - Validar accuracy com métricas profissionais (MAE, MAPE, RMSE)
     
-    4. **Contexto Externo e Pesquisa**:
-       - Usar DuckDuckGo Search Tool para pesquisar tendências do setor
-       - Correlacionar com eventos econômicos e sociais
-       - Identificar influências externas nas vendas
+    4. **Contexto de Mercado Externo**:
+       - Usar DuckDuckGo Search para pesquisar tendências do setor joalheiro
+       - Correlacionar fatores externos com performance interna
+       - Análise competitiva e movimentação do mercado
+       - Identificar oportunidades baseadas em contexto externo
     
-    5. **Visualizações Inteligentes**:
-       - Usar Advanced Visualization Tool para gráficos de tendência
-       - Criar dashboards interativos de análise temporal
+    5. **Consolidação e Arquivos**:
+       - **OBRIGATÓRIO**: Usar File Generation Tool para criar:
+         * filename: "analise_vendas_tendencias_{data_inicio}_{data_fim}.csv"
+         * content_type: "sales_analysis"
+         * output_path: "reports/"
+       - **OBRIGATÓRIO**: Usar File Generation Tool para criar:
+         * filename: "projecoes_vendas_{data_inicio}_{data_fim}.json"
+         * content_type: "forecast_data"
+         * output_path: "reports/"
+       - Criar relatórios consolidados de análise temporal
        - Gerar mapas de calor de correlação
        - Calendários de calor sazonais
   
   expected_output: >
     📊 RELATÓRIO INTEGRADO DE VENDAS, TENDÊNCIAS E PROJEÇÕES:
     
+    **ARQUIVOS GERADOS OBRIGATORIAMENTE:**
+    ✅ reports/analise_vendas_tendencias_{data_inicio}_{data_fim}.csv - Dados de tendências
+    ✅ reports/projecoes_vendas_{data_inicio}_{data_fim}.json - Projeções Prophet
+    
     ## 📈 ANÁLISE COMPLETA TEMPORAL E FORECASTING
     
     ### 1. **RESUMO EXECUTIVO INTEGRADO**:
-    - 🔥 Top 3 tendências críticas com impacto quantificado
-    - 📊 Score de sazonalidade geral: XX/100 (baixa/média/alta)
-    - 🔮 Projeção para 15 dias: R$ XXX (+/-YY% intervalo de confiança)
-    - ⚠️ Alertas de mudança de tendência ou cenários de risco
-    - 🎯 Confiabilidade geral do modelo: XX/100 score
+    - 🔥 Top 3 tendências críticas com impacto quantificado (Identificadas pelo Statistical Analysis Tool/Prophet Forecast Tool)
+    - 📊 Score de sazonalidade geral: (Score calculado pelo Statistical Analysis Tool)/100 (Interpretação: baixa/média/alta)
+    - 🔮 Projeção para 15 dias: R$ (Valor projetado pelo Prophet Forecast Tool) (+/-(Intervalo de confiança %) intervalo de confiança)
+    - ⚠️ Alertas de mudança de tendência ou cenários de risco (Identificados pela análise)
+    - 🎯 Confiabilidade geral do modelo: (Score de confiabilidade do Prophet Forecast Tool)/100 score
     
     ### 2. **ANÁLISE DE TENDÊNCIAS**:
-    - **Velocidade de Mudança**: Taxa de aceleração/desaceleração por categoria
-    - **Correlações Críticas**: Coeficientes estatisticamente significativos
-    - **Pontos de Inflexão**: Mudanças de direção identificadas
-    - **Produtos em Ascensão**: Top 10 com % crescimento e projeção
-    - **Produtos em Declínio**: Identificação precoce com alertas
+    - **Velocidade de Mudança**: (Taxa de aceleração/desaceleração por categoria, calculada pelo Statistical Analysis Tool)
+    - **Correlações Críticas**: (Coeficientes estatisticamente significativos identificados pelo Statistical Analysis Tool)
+    - **Pontos de Inflexão**: (Datas e descrição das mudanças de direção identificadas)
+    - **Produtos em Ascensão**: Top 10 com (Percentual de crescimento) % crescimento e projeção (Resultados da análise)
+    - **Produtos em Declínio**: Identificação precoce com alertas (Resultados da análise)
     
     ### 3. **ANÁLISE SAZONAL DETALHADA**:
-    - **Índices Sazonais**: Por mês/categoria (base 100 = média anual)
-    - **Amplitude Sazonal**: Diferença entre pico e vale por categoria
-    - **Previsibilidade**: Consistência dos padrões sazonais
-    - **Impacto de Eventos**: Quantificação de Natal, Dia das Mães, etc.
-    - **Calendário Estratégico**: Mapeamento mês a mês com índices
+    - **Índices Sazonais**: Por mês/categoria (base 100 = média anual) (Calculados pelo Statistical Analysis Tool)
+    - **Amplitude Sazonal**: (Diferença entre pico e vale por categoria, calculada pelo Statistical Analysis Tool)
+    - **Previsibilidade**: (Consistência dos padrões sazonais, avaliada pelo Statistical Analysis Tool)
+    - **Impacto de Eventos**: (Quantificação do impacto de Natal, Dia das Mães, etc., se modelado)
+    - **Calendário Estratégico**: Mapeamento mês a mês com índices sazonais
     
     ### 4. **PROJEÇÕES PROFISSIONAIS**:
-    - **Cenário Conservador (P25)**: Projeções base com 75% probabilidade
-    - **Cenário Realista (P50)**: Mediana das previsões
-    - **Cenário Otimista (P75)**: Upside com 25% probabilidade
-    - **Precisão do Modelo**: MAE, MAPE, RMSE com histórico
-    - **Decomposição de Componentes**: % tendência, sazonalidade, eventos
+    - **Cenário Conservador (P25)**: Projeções base com 75% probabilidade (Gerado pelo Prophet Forecast Tool)
+    - **Cenário Realista (P50)**: Mediana das previsões (Gerado pelo Prophet Forecast Tool)
+    - **Cenário Otimista (P75)**: Upside com 25% probabilidade (Gerado pelo Prophet Forecast Tool)
+    - **Precisão do Modelo**: MAE, MAPE, RMSE com histórico (Calculados pelo Prophet Forecast Tool)
+    - **Decomposição de Componentes**: % tendência, sazonalidade, eventos (Fornecido pelo Prophet Forecast Tool)
     
     ### 5. **CONTEXTO EXTERNO CORRELACIONADO**:
-    - Tendências de mercado correlacionadas aos dados
-    - Eventos econômicos/sociais com impacto nas vendas
-    - Análise competitiva de tendências do setor
-    - Influências externas quantificadas
+    - Tendências de mercado correlacionadas aos dados (Resultados da pesquisa com DuckDuckGo e análise)
+    - Eventos econômicos/sociais com impacto nas vendas (Identificados e correlacionados)
+    - Análise competitiva de tendências do setor (Baseada na pesquisa)
+    - Influências externas quantificadas (Se possível, com base na análise)
     
     ### 6. **RECOMENDAÇÕES ESTRATÉGICAS INTEGRADAS**:
-    - **Adaptações de Portfólio**: com prioridade e ROI estimado
-    - **Timing Ótimo**: para lançamentos/descontinuações baseado em sazonalidade
-    - **Estratégias Anti-Cíclicas**: para tendências negativas
-    - **Gestão de Estoque**: Cronograma de reposição sazonal
-    - **Campanhas de Marketing**: Timing ótimo por categoria
+    - **Adaptações de Portfólio**: com prioridade e ROI estimado (Derivadas da análise)
+    - **Timing Ótimo**: para lançamentos/descontinuações baseado em sazonalidade (Derivado da análise)
+    - **Estratégias Anti-Cíclicas**: para tendências negativas (Derivadas da análise)
+    - **Gestão de Estoque**: Cronograma de reposição sazonal (Derivado da análise)
+    - **Campanhas de Marketing**: Timing ótimo por categoria (Derivado da análise)
     
-    **FORMATO**: Relatório markdown estruturado + dashboards interativos + gráficos de projeção
-  
+    **FORMATO**: Relatório markdown estruturado + gráficos de projeção
+
   agent: analista_vendas_tendencias
 
 especialista_produtos_task:
@@ -186,66 +223,78 @@ especialista_produtos_task:
        - Margem média por classificação ABC
     
     5. **Segmentação e Performance Comparativa**:
-       - Usar Business Intelligence Tool para dashboards comparativos
+       - Usar Business Intelligence Tool para análises comparativas
        - Criar matriz BCG avançada (crescimento vs participação)
        - Gerar mapas estratégicos de portfólio com ações recomendadas
+       - **OBRIGATÓRIO**: Usar File Generation Tool para criar:
+         * filename: "analise_produtos_abc_{data_inicio}_{data_fim}.csv"
+         * content_type: "product_analysis"
+         * output_path: "reports/"
+       - **OBRIGATÓRIO**: Usar File Generation Tool para criar:
+         * filename: "market_basket_analysis_{data_inicio}_{data_fim}.csv"
+         * content_type: "cross_sell_data"
+         * output_path: "reports/"
     
   expected_output: >
     🎯 RELATÓRIO COMPLETO DE ANÁLISE DE PRODUTOS E CATEGORIAS:
     
+    **ARQUIVOS GERADOS OBRIGATORIAMENTE:**
+    ✅ reports/analise_produtos_abc_{data_inicio}_{data_fim}.csv - Classificação ABC
+    ✅ reports/market_basket_analysis_{data_inicio}_{data_fim}.csv - Cross-sell
+    
     ## 📊 INTELIGÊNCIA DE PORTFÓLIO E SEGMENTAÇÃO
     
     ### 1. **RESUMO EXECUTIVO DE PRODUTOS**:
-    - 📊 Total de produtos únicos: XXX SKUs ativos
-    - 🏆 Categoria líder: XXX contribui com XX% da receita
-    - ⚠️ Categorias em risco: XX produtos com declínio > 20%
-    - 💎 Oportunidades de cross-sell: R$ XXX potencial identificado
-    - 📈 Score de performance geral: XX/100 vs benchmark
+    - 📊 Total de produtos únicos: (Número de SKUs ativos calculado pelo KPI Calculator Tool/Advanced Analytics Engine) SKUs ativos
+    - 🏆 Categoria líder: (Nome da categoria líder) contribui com (Percentual da receita gerado pela categoria líder)% da receita (Identificado pelo Advanced Analytics Engine/KPI Calculator)
+    - ⚠️ Categorias em risco: (Número de produtos) produtos com declínio > 20% (Identificado pelo Advanced Analytics Engine)
+    - 💎 Oportunidades de cross-sell: R$ (Potencial de receita de cross-sell identificado pelo Recommendation Engine) potencial identificado
+    - 📈 Score de performance geral: (Score calculado)/100 vs benchmark (Definir benchmark se disponível)
     
-    ### 2. **CLASSIFICAÇÃO ABC COMPLETA**:
-    - **Produtos Classe A**: XXX produtos (geram 80% receita)
-    - **Produtos Classe B**: XXX produtos (15% receita)
-    - **Produtos Classe C**: XXX produtos (5% receita)
-    - **Slow Movers identificados**: XXX produtos (< 4 giros/ano)
-    - **Dead Stock**: XXX produtos (sem venda 6+ meses)
-    - **Giro médio geral**: XX vezes/ano
+    ### 2. **CLASSIFICAÇÃO ABC COMPLETA**: (Resultados do Advanced Analytics Engine)
+    - **Produtos Classe A**: (Número de produtos Classe A) produtos (geram (Percentual da receita gerado por Classe A)% receita)
+    - **Produtos Classe B**: (Número de produtos Classe B) produtos ((Percentual da receita gerado por Classe B)% receita)
+    - **Produtos Classe C**: (Número de produtos Classe C) produtos ((Percentual da receita gerado por Classe C)% receita)
+    - **Slow Movers identificados**: (Número de produtos slow movers) produtos (< 4 giros/ano) (Identificados pelo Advanced Analytics Engine/KPI Calculator)
+    - **Dead Stock**: (Número de produtos dead stock) produtos (sem venda 6+ meses) (Identificados pelo Advanced Analytics Engine/KPI Calculator)
+    - **Giro médio geral**: (Valor do giro médio) vezes/ano (Calculado pelo KPI Calculator)
     
-    ### 3. **TOP PERFORMERS POR CATEGORIA**:
+    ### 3. **TOP PERFORMERS POR CATEGORIA**: (Resultados da análise de dados)
     **Por Receita:**
-    1. Produto XXX - R$ XXX - Margem XX% - Giro XX vezes
-    2. Produto XXX - R$ XXX - Margem XX% - Giro XX vezes
+    1. (Nome do Produto 1) - R$ (Receita do Produto 1) - Margem (Margem do Produto 1)% - Giro (Giro do Produto 1) vezes
+    2. (Nome do Produto 2) - R$ (Receita do Produto 2) - Margem (Margem do Produto 2)% - Giro (Giro do Produto 2) vezes
     
     **Por Volume de Vendas:**
-    1. Produto XXX - XXX unidades - Ticket médio R$ XXX
-    2. Produto XXX - XXX unidades - Ticket médio R$ XXX
+    1. (Nome do Produto 1) - (Unidades vendidas do Produto 1) unidades - Ticket médio R$ (Ticket médio do Produto 1)
+    2. (Nome do Produto 2) - (Unidades vendidas do Produto 2) unidades - Ticket médio R$ (Ticket médio do Produto 2)
     
-    ### 4. **ANÁLISE DE MARKET BASKET E CROSS-SELL**:
+    ### 4. **ANÁLISE DE MARKET BASKET E CROSS-SELL**: (Resultados do Recommendation Engine)
     - **Produtos frequentemente comprados juntos**:
-      * Anel + Brincos: XX% das transações
-      * Colar + Pulseira: XX% das transações
-    - **Oportunidades de cross-sell**: R$ XXX potencial não explorado
-    - **Produtos complementares por categoria**
+      * (Produto A) + (Produto B): (Percentual de transações)% das transações
+      * (Produto C) + (Produto D): (Percentual de transações)% das transações
+    - **Oportunidades de cross-sell**: R$ (Potencial não explorado) potencial não explorado
+    - **Produtos complementares por categoria** (Listar exemplos)
     
-    ### 5. **MATRIZ BCG ESTRATÉGICA**:
-    - **Stars (Alto crescimento + Alta participação)**: XX produtos - Investir agressivamente
-    - **Cash Cows (Baixo crescimento + Alta participação)**: XX produtos - Maximizar extração
-    - **Question Marks (Alto crescimento + Baixa participação)**: XX produtos - Decisão estratégica
-    - **Dogs (Baixo crescimento + Baixa participação)**: XX produtos - Descontinuar
+    ### 5. **MATRIZ BCG ESTRATÉGICA**: (Resultados da análise via Business Intelligence Tool/Advanced Analytics Engine)
+    - **Stars (Alto crescimento + Alta participação)**: (Número de produtos) produtos - Investir agressivamente
+    - **Cash Cows (Baixo crescimento + Alta participação)**: (Número de produtos) produtos - Maximizar extração
+    - **Question Marks (Alto crescimento + Baixa participação)**: (Número de produtos) produtos - Decisão estratégica
+    - **Dogs (Baixo crescimento + Baixa participação)**: (Número de produtos) produtos - Descontinuar
     
-    ### 6. **ANÁLISE DE CICLO DE VIDA**:
-    - **Produtos em Introdução**: XX produtos, investimento R$ XXX
-    - **Produtos em Crescimento**: XX produtos, crescimento +XX% anual
-    - **Produtos Maduros**: XX produtos, estabilidade +/-XX%
-    - **Produtos em Declínio**: XX produtos, cronograma liquidação
+    ### 6. **ANÁLISE DE CICLO DE VIDA**: (Resultados do Advanced Analytics Engine)
+    - **Produtos em Introdução**: (Número de produtos) produtos, investimento R$ (Valor do investimento)
+    - **Produtos em Crescimento**: (Número de produtos) produtos, crescimento +(Percentual de crescimento)% anual
+    - **Produtos Maduros**: (Número de produtos) produtos, estabilidade +/-(Percentual de variação)%
+    - **Produtos em Declínio**: (Número de produtos) produtos, cronograma liquidação
     
-    ### 7. **RECOMENDAÇÕES ESTRATÉGICAS**:
-    - **Restock urgente**: XXX produtos com risco de ruptura
-    - **Liquidação recomendada**: XXX produtos slow movers
-    - **Descontinuação sugerida**: XXX produtos dead stock
+    ### 7. **RECOMENDAÇÕES ESTRATÉGICAS**: (Derivadas da análise completa)
+    - **Restock urgente**: (Lista ou número de) produtos com risco de ruptura
+    - **Liquidação recomendada**: (Lista ou número de) produtos slow movers
+    - **Descontinuação sugerida**: (Lista ou número de) produtos dead stock
     - **Novos lançamentos**: Gaps identificados por categoria
     - **Cross-selling direcionado**: Campanhas específicas com ROI estimado
     
-    **FORMATO**: Relatório executivo + dashboards ABC + matrizes de cross-sell
+    **FORMATO**: Relatório executivo + matrizes de cross-sell
   
   agent: especialista_produtos
 
@@ -255,108 +304,480 @@ analista_estoque_task:
     
     **OBJETIVO CONSOLIDADO**: Unifica otimização de estoque, gestão de riscos e recomendações automáticas.
     
-    1. **KPIs Avançados de Inventário**:
-       - Usar KPI Calculator Tool para métricas especializadas
-       - Calcular inventory turnover, DSO, fill rate por categoria
-       - Análise ABC dinâmica com machine learning
-       - Métricas de obsolescência e slow-moving
-       - Capital total investido em estoque
-       - Giro de estoque por categoria (anual/mensal)
-       - DSI (Days Sales Inventory) por produto
+    **FERRAMENTAS OBRIGATÓRIAS A USAR**:
+    1. **KPI Calculator Tool** com categoria='inventory' para métricas de estoque
+    2. **Inventory Data Exporter** para análise ABC e dados detalhados
+    3. **Advanced Analytics Engine** com analysis_type='inventory_optimization'
+    4. **Recommendation Engine** com recommendation_type='inventory_suggestions'
     
-    2. **Sistema de Recomendações ML**:
-       - Usar Recommendation Engine para otimização automática
-       - Identificar produtos para restock, liquidação ou redução
-       - Calcular níveis ótimos de estoque por categoria
-       - Recomendar timing de reposição baseado em sazonalidade
-       - Recomendações de reposição inteligente
-       - ROI de ações de liquidação vs manter estoque
+    **INSTRUÇÕES ESPECÍFICAS**:
+    - SEMPRE calcular valores reais usando as ferramentas
+    - NUNCA deixar placeholders como 'XXX' ou '[CALCULAR]' sem o valor real no relatório final
+    - Usar dados reais do CSV de vendas para todos os cálculos
+    - Gerar arquivos operacionais na pasta reports/
     
-    3. **Avaliação de Riscos Integrada**:
-       - Usar Risk Assessment Tool para análise de riscos de inventário
-       - Quantificar riscos de obsolescência por categoria
-       - Avaliar exposição a mudanças de demanda
-       - Identificar pontos de ruptura críticos
-       - Produtos em risco de obsolescência
-       - Análise de concentração de capital em estoque
-       - Stress test em cenários de baixa demanda
-    
-    4. **Advanced Analytics para Inventário**:
-       - Usar Advanced Analytics Engine para ML de inventário
-       - Clustering de produtos por padrão de demanda
-       - Previsão de demanda por categoria
-       - Otimização de ponto de reposição
-       - Análise ABC dinâmica com machine learning
-    
-    5. **Dashboards Operacionais**:
-       - Usar Advanced Visualization Tool para dashboards de estoque
-       - Criar alertas visuais de reposição
-       - Mapas de calor de performance de inventário
-       - Dashboards de liquidação e oportunidades
-  
   expected_output: >
-    📦 RELATÓRIO COMPLETO DE GESTÃO DE ESTOQUE E INVENTÁRIO:
+    # 📦 ANÁLISE DE INVENTÁRIO COM IA AVANÇADA
+
+    **ARQUIVOS GERADOS OBRIGATORIAMENTE:**
+    ✅ reports/analise_estoque_completa_{data_inicio}_{data_fim}.csv - Dados detalhados do estoque e recomendações
     
-    ## 🎯 OTIMIZAÇÃO INTELIGENTE DE ESTOQUE
+    ## 📊 OTIMIZAÇÃO INTELIGENTE DE ESTOQUE
     
-    ### 1. **RESUMO EXECUTIVO DE INVENTÁRIO**:
-    - 💰 Capital total em estoque: R$ XXX.XXX
-    - 📊 Giro médio geral: XX.X vezes/ano
-    - ⚠️ Produtos em risco de obsolescência: XX itens (R$ XXX valor)
-    - 🚨 Alertas de ruptura: XX produtos com risco em XX dias
-    - 💵 Oportunidade de liberação de caixa: R$ XXX
+    ### 1. **RESUMO EXECUTIVO DE ESTOQUE**:
+    [Usar KPI Calculator Tool e Inventory Data Exporter para preencher os valores abaixo]
+    - 💰 **Valor Total Investido**: R$ (Valor total do estoque) (calculado pelo KPI Calculator Tool)
+    - 🔄 **Giro Médio**: (Valor do giro médio) vezes/ano (calculado pelo KPI Calculator Tool)
+    - ⚡ **Capital Parado**: R$ (Valor do capital parado) em slow movers (calculado)
+    - 📈 **Otimização Estimada**: R$ (Valor da economia potencial) economia potencial (baseado em EOQ e liquidação)
+    - 🎯 **Score de Eficiência**: (Score de eficiência)/100 (baseado em benchmark do setor via Advanced Analytics Engine)
     
-    ### 2. **KPIs CRÍTICOS DE INVENTÁRIO**:
-    - **Inventory Turnover**: Giro por categoria vs benchmark
-    - **DSO (Days Sales Outstanding)**: Dias de venda em estoque
-    - **Fill Rate**: % atendimento sem ruptura por categoria
-    - **Shrinkage**: Perdas e obsolescência como % do total
-    - **Working Capital**: Capital de giro em inventário
-    - **Cobertura de estoque**: XX dias de venda
+    ### 2. **ANÁLISE ABC DE ESTOQUE**: [Resultados do Advanced Analytics Engine]
+    - **Classe A (Fast Movers)**: (Número de produtos Classe A) produtos, R$ (Valor investido Classe A), giro (Giro médio Classe A) vezes/ano
+    - **Classe B (Medium Movers)**: (Número de produtos Classe B) produtos, R$ (Valor investido Classe B), giro (Giro médio Classe B) vezes/ano  
+    - **Classe C (Slow Movers)**: (Número de produtos Classe C) produtos, R$ (Valor investido Classe C), giro (Giro médio Classe C) vezes/ano
+    - **Dead Stock**: (Número de produtos dead stock) produtos, R$ (Valor do dead stock) parados há (Tempo parado) meses
     
-    ### 3. **ANÁLISE ABC+ DE ESTOQUE**:
-    - **Classe A**: XXX produtos - R$ XXX (XX% capital) - gestão intensiva
-    - **Classe B**: XXX produtos - R$ XXX (XX% capital) - gestão balanceada  
-    - **Classe C**: XXX produtos - R$ XXX (XX% capital) - gestão simplificada
-    - **Classe D (Slow-moving)**: XXX produtos - ação imediata
+    ### 3. **OPORTUNIDADES DE OTIMIZAÇÃO**: [Recommendation Engine com inventory_suggestions]
+    - **EOQ Recomendado**: (Número de) produtos com ponto de pedido otimizado (economia R$ (Economia EOQ))
+    - **Liquidação Sugerida**: (Número de) produtos para liquidação (libera R$ (Capital liberado))
+    - **Restock Urgente**: (Número de) produtos com risco de ruptura (impacto R$ (Impacto da ruptura))
+    - **Descontinuação**: (Número de) produtos candidatos (libera R$ (Capital liberado descontinuação))
     
-    ### 4. **RECOMENDAÇÕES AUTOMÁTICAS ML**:
-    **Restock Urgente (ROI >20%):**
-    1. Produto XXX - Reabastecer XXX unidades - ROI estimado XX%
-    2. Produto XXX - Reabastecer XXX unidades - ROI estimado XX%
+    ### 4. **ANÁLISE DE RISCO DE INVENTÁRIO**: [Advanced Analytics Engine]
+    - **Risco de Ruptura**: (Número de) produtos com estoque < 15 dias (risco R$ (Valor do risco))
+    - **Risco de Obsolescência**: (Número de) produtos com giro < 2x/ano (R$ (Valor em risco))
+    - **Concentração de Risco**: (Percentual)% do investimento em top 10 produtos
+    - **Sazonalidade**: (Número de) produtos com padrão sazonal identificado
     
-    **Liquidação Recomendada:**
-    1. Produto XXX - Desconto XX% - Liberação R$ XXX
-    2. Produto XXX - Desconto XX% - Liberação R$ XXX
+    ### 5. **MÉTRICAS OPERACIONAIS**: [KPI Calculator Tool]
+    - **Tempo Médio de Giro**: (Valor em dias) dias por categoria principal
+    - **Cobertura de Estoque**: (Número de dias) dias de vendas em estoque
+    - **Investimento por m²**: R$ (Valor por m²) por metro quadrado de loja
+    - **ROI do Estoque**: (Percentual de ROI)% anual baseado em vendas/investimento
     
-    **Níveis Ótimos Sugeridos:**
-    - Categoria A: Manter XX dias de cobertura
-    - Categoria B: Manter XX dias de cobertura  
-    - Categoria C: Manter XX dias de cobertura
+    ### 6. **PROJEÇÕES E CENÁRIOS**: [Baseado em análise preditiva]
+    - **Necessidade 30 dias**: R$ (Valor necessário) para reposição otimizada
+    - **Liberação de Capital**: R$ (Valor liberado) potencial em 90 dias
+    - **Impacto na Margem**: (Variação da margem)% melhoria com otimização
+    - **Timeline de Implementação**: (Tempo em semanas) semanas para implementação completa
     
-    ### 5. **ANÁLISE DE RISCOS DE INVENTÁRIO**:
-    **Risco de Ruptura (próximos 30 dias):**
-    - XXX produtos com estoque <15 dias
-    - Produtos críticos com impacto na receita
+    ### 7. **RECOMENDAÇÕES PRIORIZADAS**: [Recommendation Engine]
+    **Ações Imediatas (0-30 dias):**
+    1. (Recomendação 1) - ROI: (ROI da recomendação 1)% - Investimento: R$ (Investimento recomendação 1)
+    2. (Recomendação 2) - ROI: (ROI da recomendação 2)% - Investimento: R$ (Investimento recomendação 2)
     
-    **Risco de Obsolescência:**
-    - XXX produtos sem venda há 6+ meses (R$ XXX)
-    - XXX produtos com giro <2 vezes/ano (R$ XXX)
-    - Score de risco por produto (0-100)
+    **Ações Médio Prazo (30-90 dias):**
+    1. (Recomendação médio prazo 1) - Impacto: R$ (Impacto recomendação 1) - Timeline: (Timeline 1) semanas
+    2. (Recomendação médio prazo 2) - Impacto: R$ (Impacto recomendação 2) - Timeline: (Timeline 2) semanas
+
+    ### 8. **ARQUIVOS DE SUPORTE GERADOS**:
+    - **reports/analise_estoque_completa_{data_inicio}_{data_fim}.csv**: Análise detalhada por produto com classificação ABC, giro, recomendações EOQ e sugestões de ação.
+
+    ## 🎯 ANÁLISE ABC INTELIGENTE COM IA
+
+    ### 🏆 **CLASSE A - ESTRELAS INTELIGENTES** ((Percentual da classe A calculado)%)
+
+    [USAR Inventory Data Exporter para análise ABC real e Advanced Analytics Engine/KPI Calculator Tool para preencher os valores abaixo]
+    - **Produtos:** (Contagem de itens da Classe A) itens
+    - **Capital Investido:** R$ (Valor calculado) ((Percentual do capital calculado)%)
+    - **Giro Médio:** (Valor calculado)x/ano
+    - **Cobertura Recomendada:** (Valor calculado) dias
+    - **ROI Dinâmico Médio:** (Percentual calculado)%
+    - **Previsão 30d:** (Unidades previstas calculadas) unidades
+    - **Score Saúde IA:** (Score calculado)/100
+    - **Estratégia IA:** (Estratégia definida baseada nos dados e análises das ferramentas)
+
+    ### 📊 **CLASSE B - ESTÁVEIS OTIMIZADOS** ((Percentual da classe B calculado)%)
+    [USAR Inventory Data Exporter, Advanced Analytics Engine, KPI Calculator Tool para preencher os valores abaixo]
+    - **Produtos:** (Contagem de itens da Classe B) itens
+    - **Capital Investido:** R$ (Valor calculado) ((Percentual do capital calculado)%)
+    - **Giro Médio:** (Valor calculado)x/ano
+    - **Cobertura Recomendada:** (Valor calculado) dias
+    - **Potencial Economia EOQ:** R$ (Valor calculado)
+    - **Forecast Accuracy:** (Percentual calculado)%
+    - **Ação Recomendada IA:** (Ação definida baseada na análise das ferramentas)
+
+    ### ⚠️ **CLASSE C - OTIMIZAÇÃO URGENTE** ((Percentual da classe C calculado)%)
+    [USAR Inventory Data Exporter, Advanced Analytics Engine, KPI Calculator Tool para preencher os valores abaixo]
+    - **Produtos:** (Contagem de itens da Classe C) itens
+    - **Capital em Risco:** R$ (Valor calculado) ((Percentual do capital calculado)%)
+    - **Giro Médio:** (Valor calculado)x/ano
+    - **Cobertura Recomendada:** (Valor calculado) dias
+    - **Liberação Potencial:** R$ (Valor calculado)
+    - **Urgência Score IA:** (Score calculado)/100
+    - **Recomendação ML:** (Recomendação específica definida pelo Recommendation Engine)
+
+    ### 🚨 **SLOW MOVERS - RISCO ALTO**
+    [USAR Inventory Data Exporter, Advanced Analytics Engine, KPI Calculator Tool para preencher os valores abaixo]
+    - **Produtos:** (Contagem de itens slow movers) itens
+    - **Capital em Risco:** R$ (Valor calculado)
+    - **Tempo Médio Parado:** (Tempo médio calculado) meses
+    - **Ação:** Liquidação imediata recomendada (Conforme análise e Recommendation Engine)
+
+    ## 🤖 PREVISÃO DE DEMANDA ML
+    [USAR Advanced Analytics Engine para previsões ML e preencher os valores abaixo]
+    - **Accuracy Média Geral:** (Percentual calculado)%
+    - **Produtos Alta Confiabilidade (>80%):** (Contagem de produtos)
+    - **Produtos Média Confiabilidade (60-80%):** (Contagem de produtos)
+    - **Produtos Baixa Confiabilidade (<60%):** (Contagem de produtos)
+
+    ### 🎯 **PREVISÕES POR CATEGORIA**
+
+    [USAR dados por Grupo_Produto e Advanced Analytics Engine para criar tabela real. Substituir [CATEGORIA X] pelos nomes reais das categorias e preencher os valores calculados]
+    | Categoria | Accuracy (%) | Previsão 30d | Previsão 90d | Volatilidade | Método ML |
+    |-----------|--------------|--------------|--------------|--------------|-----------|
+    | **(Nome Categoria 1)** | (Valor calc.)% | (Valor calc.) | (Valor calc.) | (Valor calc.) | (Prophet/ARIMA) |
+    | **(Nome Categoria 2)** | (Valor calc.)% | (Valor calc.) | (Valor calc.) | (Valor calc.) | (Prophet/ARIMA) |
+    | **(Nome Categoria 3)** | (Valor calc.)% | (Valor calc.) | (Valor calc.) | (Valor calc.) | (Prophet/ARIMA) |
+    | **(Nome Categoria 4)** | (Valor calc.)% | (Valor calc.) | (Valor calc.) | (Valor calc.) | (Prophet/ARIMA) |
+
+    ### 🎯 **TOP 10 PRODUTOS COM MELHOR PREVISIBILIDADE**
+
+    [LISTAR os 10 produtos com maior accuracy de previsão, conforme Advanced Analytics Engine]
+
+    ---
+
+    ## 📊 ANÁLISE DE SAZONALIDADE INTELIGENTE
+
+    ### 🌟 **CLASSIFICAÇÃO SAZONAL**
+
+    [USAR Statistical Analysis Tool para padrões sazonais e preencher os valores abaixo]
+    - **Alta Sazonalidade (>3.0x):** (Contagem de produtos) produtos
+    - **Média Sazonalidade (1.5-3.0x):** (Contagem de produtos) produtos  
+    - **Baixa Sazonalidade (<1.5x):** (Contagem de produtos) produtos
+
+    ### 📅 **SAZONALIDADE POR MÊS DE PICO**
+    [USAR Statistical Analysis Tool e KPI Calculator Tool para preencher a tabela abaixo com dados reais por mês]
+    | Mês Pico | Produtos | Capital (R$) | Índice Médio | Preparação Requerida |
+    |----------|----------|--------------|--------------|---------------------|
+    | **Dezembro** | (Contagem) | R$ (Valor calc.) | (Valor calc.)x | (Definir preparação com base na análise) |
+    | **Maio** | (Contagem) | R$ (Valor calc.) | (Valor calc.)x | (Definir preparação com base na análise) |
+    | **Junho** | (Contagem) | R$ (Valor calc.) | (Valor calc.)x | (Definir preparação com base na análise) |
+    | (Outros meses relevantes) | ... | ... | ... | ... |
+
+
+    ### 📈 **TENDÊNCIAS IDENTIFICADAS**
+    [USAR Statistical Analysis Tool para identificar tendências e preencher os valores abaixo]
+    - **Crescimento Forte (>20%):** (Contagem de produtos) produtos
+    - **Crescimento Moderado (5-20%):** (Contagem de produtos) produtos
+    - **Estáveis (-5% a +5%):** (Contagem de produtos) produtos
+    - **Declínio (>-5%):** (Contagem de produtos) produtos
+
+    ---
+
+    ## ⚖️ OTIMIZAÇÃO EOQ (ECONOMIC ORDER QUANTITY)
+
+    ### 💰 **OPORTUNIDADES DE ECONOMIA IDENTIFICADAS**
+
+    [USAR Advanced Analytics Engine para cálculos de EOQ e preencher os valores abaixo]
+    - **Economia Total Potencial:** R$ (Valor calculado)
+    - **Produtos Muito Ineficientes (>30%):** (Contagem de produtos) (R$ (Valor calculado))
+    - **Produtos Ineficientes (15-30%):** (Contagem de produtos) (R$ (Valor calculado))
+    - **Produtos Eficientes (<5%):** (Contagem de produtos) (R$ (Valor calculado))
+
+    ### 🎯 **EOQ OTIMIZADO POR CATEGORIA**
+    [USAR Advanced Analytics Engine para cálculos de EOQ e preencher a tabela abaixo com dados reais por categoria. Substituir [CATEGORIA X] pelos nomes reais]
+    | Categoria | EOQ Médio | Safety Stock | Lead Time | Economia % | ROI Otimização |
+    |-----------|-----------|--------------|-----------|------------|----------------|
+    | **(Nome Categoria 1)** | (Valor calc.) un | (Valor calc.) un | (Valor calc.) dias | (Valor calc.)% | (Valor calc.)% |
+    | **(Nome Categoria 2)** | (Valor calc.) un | (Valor calc.) un | (Valor calc.) dias | (Valor calc.)% | (Valor calc.)% |
+    | **(Nome Categoria 3)** | (Valor calc.) un | (Valor calc.) un | (Valor calc.) dias | (Valor calc.)% | (Valor calc.)% |
+
+    ### 🏆 **TOP 15 PRODUTOS COM MAIOR POTENCIAL DE ECONOMIA EOQ**
+
+    [LISTAR os 15 produtos com maior potencial de economia EOQ, conforme Advanced Analytics Engine]
+
+    ---
+
+    ## 💎 ANÁLISE DE ROI DINÂMICO AVANÇADO
+
+    ### 📊 **DISTRIBUIÇÃO POR ATRATIVIDADE DE INVESTIMENTO**
+
+    [USAR KPI Calculator Tool para análises de ROI e preencher os valores abaixo]
+    - **Excelente Investimento (80-100):** (Contagem de produtos) produtos (R$ (Valor calculado))
+    - **Bom Investimento (60-79):** (Contagem de produtos) produtos (R$ (Valor calculado))
+    - **Investimento Moderado (40-59):** (Contagem de produtos) produtos (R$ (Valor calculado))
+    - **Investimento Fraco (<40):** (Contagem de produtos) produtos (R$ (Valor calculado))
+
+    ### 💰 **MÉTRICAS FINANCEIRAS AVANÇADAS**
+    [USAR KPI Calculator Tool para calcular e preencher a tabela abaixo. Status determinado pela comparação com benchmark]
+    | Métrica | Valor | Benchmark | Status |
+    |---------|-------|-----------|--------|
+    | **ROI Dinâmico Médio** | (Valor calc.)% | 25.0% | (Determinar status) |
+    | **EVA Total** | R$ (Valor calc.) | R$ 50.000 | (Determinar status) |
+    | **NPV Médio** | R$ (Valor calc.) | R$ 15.000 | (Determinar status) |
+    | **Payback Médio** | (Valor calc.) meses | 8.0 meses | (Determinar status) |
+    | **VaR 5%** | R$ (Valor calc.) | R$ 10.000 | (Determinar status) |
+
+    ### 🏆 **TOP 10 PRODUTOS POR ROI DINÂMICO**
+
+    [LISTAR os 10 produtos com maior ROI dinâmico, conforme KPI Calculator Tool]
+
+    ---
+
+    ## 🚨 ALERTAS INTELIGENTES E RECOMENDAÇÕES ML
+
+    ### 🔥 **AÇÕES URGENTES (Prioridade 1)**
+
+    [USAR Recommendation Engine recommendation_type='inventory_suggestions' para preencher os valores abaixo]
+    - **Restock Urgente:** (Contagem de produtos) produtos (ROI médio: (Valor calc.)%)
+    - **Liquidação Inteligente:** (Contagem de produtos) produtos (liberação: R$ (Valor calc.))
+    - **Over-stock Crítico:** (Contagem de produtos) produtos (risco: R$ (Valor calc.))
+
+    ### 🎯 **RECOMENDAÇÕES ML DETALHADAS**
+    [Baseado nas saídas do Recommendation Engine]
+
+    #### 🚀 **RESTOCK URGENTE ML (ROI >20%)**
+
+    [CRIAR tabela com produtos específicos que precisam de restock urgente e seus respectivos ROIs calculados]
+
+    #### 💸 **LIQUIDAÇÃO INTELIGENTE ML**
+
+    [CRIAR tabela com produtos específicos para liquidação com descontos otimizados e potencial de liberação de capital calculado]
+
+    #### 🎯 **OTIMIZAÇÃO DE ESTOQUE ML**
+
+    [CRIAR tabela com produtos para otimização de níveis de estoque, indicando as ações sugeridas (aumentar/diminuir) e o impacto esperado]
+
+    ---
+
+    ## 📊 SCORES AVANÇADOS DE SAÚDE
+
+    ### 🎯 **DISTRIBUIÇÃO DE SAÚDE GERAL**
+
+    [USAR Advanced Analytics Engine para scores de saúde e preencher os valores abaixo]
+    - **Excelente Saúde (85-100):** (Contagem de produtos) produtos ((Percentual calc.)%)
+    - **Boa Saúde (70-84):** (Contagem de produtos) produtos ((Percentual calc.)%)
+    - **Saúde Moderada (55-69):** (Contagem de produtos) produtos ((Percentual calc.)%)
+    - **Saúde Fraca (40-54):** (Contagem de produtos) produtos ((Percentual calc.)%)
+    - **Saúde Crítica (<40):** (Contagem de produtos) produtos ((Percentual calc.)%)
+
+    ### 📈 **COMPONENTES DO SCORE AVANÇADO**
+    [USAR Advanced Analytics Engine para calcular os scores médios e determinar o status em relação ao benchmark]
+    | Componente | Peso | Score Médio | Benchmark | Status |
+    |------------|------|-------------|-----------|--------|
+    | **Giro Ajustado** | 25% | (Score calc.) | 75.0 | (Determinar status) |
+    | **Previsão Demanda** | 20% | (Score calc.) | 80.0 | (Determinar status) |
+    | **Eficiência Estoque** | 20% | (Score calc.) | 70.0 | (Determinar status) |
+    | **ROI Dinâmico** | 20% | (Score calc.) | 75.0 | (Determinar status) |
+    | **Estabilidade Demanda** | 15% | (Score calc.) | 65.0 | (Determinar status) |
+
+    ---
+
+    ## 💰 IMPACTO FINANCEIRO DAS OTIMIZAÇÕES IA
+
+    ### 🎯 **OPORTUNIDADES IDENTIFICADAS PELA IA**
+
+    [USAR KPI Calculator Tool para calcular impactos financeiros e preencher os valores abaixo]
+    - **Economia EOQ Total:** R$ (Valor calculado)
+    - **Liberação Liquidação Inteligente:** R$ (Valor calculado)
+    - **ROI Restock Otimizado:** R$ (Valor calculado)
+    - **Redução Carrying Cost:** R$ (Valor calculado)/ano
+    - **Total Oportunidade IA:** R$ (Valor calculado)
+
+    ### 📈 **BENEFÍCIOS OPERACIONAIS IA**
+    [Calcular com base nas análises das ferramentas]
+    - **Redução Ruptura:** (Percentual calculado)% (previsão ML)
+    - **Otimização Capital:** (Percentual calculado)% (EOQ inteligente)
+    - **Accuracy Reposição:** (Percentual calculado)% (vs (Percentual anterior/manual)% manual)
+    - **ROI Médio Ações IA:** (Percentual calculado)% em (Número de dias) dias
+    - **Score Saúde Projetado:** (Score projetado)/100 (+(Variação em pontos))
+
+    ### 💰 **INVESTIMENTOS IA NECESSÁRIOS**
+    [Estimar valores com base nas recomendações e necessidades]
+    - **Restock Produtos Críticos IA:** R$ (Valor estimado)
+    - **Campanhas Liquidação Inteligente:** R$ (Valor estimado)
+    - **Implementação Sistema ML:** R$ (Valor estimado, se aplicável)
+    - **Treinamento Equipe IA:** R$ (Valor estimado, se aplicável)
+    - **Total Investimento IA:** R$ (Soma dos valores estimados)
+
+    ---
+
+    ## 📅 CRONOGRAMA OTIMIZADO COM IA
+
+    ### 🚀 **FASE 1 (30 dias) - Implementação IA Urgente**
+    [Preencher com dados das recomendações e análises]
+    - **Restock Urgente ML:** (Contagem de produtos) produtos (R$ (Valor do investimento))
+    - **Liquidação Inteligente:** (Contagem de produtos) produtos (desc. médio (Percentual calc.)%)
+    - **EOQ Implementação:** (Contagem de produtos) produtos críticos
+    - **Alertas Automáticos IA:** Sistema ativo para produtos classe A
+    - **Meta Liberação IA:** R$ (Valor da meta)
+
+    ### 📈 **FASE 2 (60 dias) - Otimização Sistêmica**
+    - **EOQ Total:** Todos os produtos com algoritmo otimizado
+    - **Previsão ML:** Sistema preditivo para produtos classe A e B  
+    - **Dashboard IA:** Métricas avançadas em tempo real
+    - **Políticas Dinâmicas:** Reposição baseada em IA por categoria
+    - **Meta Score Saúde:** (Score meta)/100
+
+    ### 🎯 **FASE 3 (90 dias) - IA Totalmente Autônoma**
+    - **Sistema Auto-Learning:** IA aprende e melhora sozinha
+    - **Alertas Preditivos:** Antecipação de problemas 30-60 dias
+    - **Otimização Contínua:** EOQ e safety stock auto-ajustados
+    - **ROI Tracking IA:** Monitoramento automático de performance
+    - **Meta Efficiency:** Score geral >90/100 com IA
+
+    ---
+
+    ## 🎯 INSIGHTS CRÍTICOS DE IA
+
+    ### 💡 **TOP 3 DESCOBERTAS DA IA**
+
+    #### 🔥 **Insight IA #1 - Padrões Ocultos**
+
+    [Descrever padrões ocultos identificados pelo Advanced Analytics Engine ou outras ferramentas, que não seriam óbvios manualmente]
+
+    #### 📊 **Insight IA #2 - Oportunidades Não Óbvias**
+
+    [Descrever oportunidades que não seriam detectadas manualmente, identificadas pelas ferramentas de IA]
+
+    #### ⚠️ **Insight IA #3 - Riscos Antecipados**
+
+    [Descrever riscos futuros antecipados pelo Risk Assessment Tool ou outras análises preditivas]
+
+    ---
+
+    ## 📊 DASHBOARD IA - MÉTRICAS DE MONITORAMENTO
+
+    ### 🎯 **KPIs IA PARA ACOMPANHAMENTO SEMANAL**
+    [Preencher com as metas definidas e os valores atuais calculados pelas ferramentas]
+    - **Score Saúde Avançado:** Meta (Score meta)/100 (atual: (Score atual)/100)
+    - **Accuracy Previsões:** Meta >(Percentual meta)% (atual: (Percentual atual)%)
+    - **Economia EOQ Realizada:** Meta R$ (Valor meta) (atual: R$ (Valor atual))
+    - **ROI Dinâmico Médio:** Meta (Percentual meta)% (atual: (Percentual atual)%)
+    - **Urgência Score Controlada:** Meta <(Score meta) (atual: (Score atual))
+    - **Confiança ML Média:** Meta >(Percentual meta)% (atual: (Percentual atual)%)
+
+    ### 📈 **ALERTAS AUTOMÁTICOS IA**
+    [Preencher com as contagens reais de alertas gerados pelo sistema de IA]
+    - **🔴 Críticos IA:** (Contagem) alertas ML ativos
+    - **🟡 Oportunidades IA:** (Contagem) otimizações identificadas
+    - **🟢 Performance IA:** (Contagem) produtos batendo metas
+
+    ### 🤖 **PERFORMANCE DO SISTEMA ML**
+    [Preencher com métricas de performance do sistema de ML, se disponíveis e monitoradas]
+    - **Tempo Resposta:** (Valor)s (meta: <2s)
+    - **Uptime Sistema:** (Percentual)% (meta: >99%)
+    - **Previsões Processadas:** (Número)/dia
+    - **Recomendações Geradas:** (Número)/semana
+    - **Accuracy Global:** (Percentual)% (meta: >80%)
+
+    ---
+
+    ## 📚 GUIA PRÁTICO - IA PARA GESTORES
+    [Esta seção é mais explicativa, os valores entre colchetes são exemplos e devem ser mantidos como tal ou adaptados para o contexto específico da joalheria, mas não são placeholders para cálculo direto do agente nesta fase]
+
+    ### 🎯 **COMO INTERPRETAR OS NOVOS KPIs IA**
+
+    **🤖 Score Saúde Avançado (0-100):** "Nota geral com inteligência artificial"
+    - **Cálculo IA:** Combina 5 componentes com pesos otimizados por ML
+    - **Diferencial:** Considera sazonalidade, previsibilidade e volatilidade
+    - **Interpretação:** >85 = excelente, 70-85 = bom, 55-70 = atenção, <55 = crítico
+    - **Como usar:** Foque produtos <70 pontos para ações de melhoria
+
+    **📈 Forecast Accuracy (0-100%):** "Precisão das previsões da IA"
+    - **Cálculo:** Comparação previsão vs vendas reais dos últimos 30 dias
+    - **>80%:** Alta confiabilidade - execute recomendações sem hesitar
+    - **60-80%:** Média confiabilidade - analise antes de executar
+    - **<60%:** Baixa confiabilidade - use como referência apenas
+
+    **⚖️ EOQ Savings Potential (%):** "Quanto você pode economizar otimizando"
+    - **>30%:** Muito ineficiente - ação urgente necessária
+    - **15-30%:** Ineficiente - otimize nos próximos 30 dias
+    - **5-15%:** Levemente ineficiente - revise quando possível
+    - **<5%:** Eficiente - mantenha níveis atuais
+
+    **💎 ROI Dinâmico (%):** "Retorno real considerando todos os riscos"
+    - **Diferencial:** Ajusta ROI tradicional por volatilidade e sazonalidade
+    - **>30%:** Excelente - priorize investimento
+    - **15-30%:** Bom - invista conforme capacidade
+    - **5-15%:** Moderado - avalie outras opções
+    - **<5%:** Fraco - considere descontinuar
+
+    ### 🎯 **AÇÕES PRÁTICAS COM IA**
+
+    **🚀 Se IA recomenda "Restock Urgente" com 85% confiança:**
+    1. ✅ Execute imediatamente (IA processou múltiplas variáveis)
+    2. 📊 Monitore resultado em 30 dias para validar
+    3. 🔄 Use feedback para melhorar algoritmo
+
+    **💸 Se IA sugere "Liquidação Inteligente" com desconto 35%:**
+    1. ✅ Desconto foi calculado para máxima liberação de capital
+    2. ⏰ Prazo estimado pela IA baseado em histórico similar
+    3. 💰 Liberação projetada tem 80%+ precisão
+
+    **⚖️ Se EOQ sugere reduzir estoque em 40%:**
+    1. ✅ Economia foi calculada considerando todos os custos
+    2. 🛡️ Safety stock otimizado mantém fill rate >95%
+    3. 📈 ROI da otimização >100% garantido
+
+    ### 🤖 **CONFIANÇA NAS RECOMENDAÇÕES IA**
+
+    **90-100% Confiança:** Execute sem hesitar
+    **80-89% Confiança:** Execute com monitoramento semanal  
+    **70-79% Confiança:** Analise e execute gradualmente
+    **60-69% Confiança:** Use como referência, valide manualmente
+    **<60% Confiança:** Aguarde mais dados ou refine algoritmo
+
+    ---
+
+    ## 💡 EXEMPLOS PRÁTICOS IA PARA JOALHERIAS
+    [Os valores entre colchetes aqui são para serem preenchidos com exemplos baseados nos cálculos reais feitos anteriormente pela IA para ilustrar os cenários]
+
+    ### 🎯 **CENÁRIOS REAIS COM IA**
+
+    **📊 IA mostra:** "Anéis solitários: Previsão (Unidades previstas pela IA) unidades próximos 30d, accuracy (Accuracy da previsão IA)%"
+    **👉 Ação:** Confie na previsão, garanta (Número de unidades recomendado pela IA)+ unidades em estoque
+
+    **🤖 IA recomenda:** "Colares vintage: Liquidação (Percentual de desconto pela IA)% desconto, liberação R$ (Valor de liberação pela IA)"
+    **👉 Ação:** Execute liquidação, IA calculou desconto ótimo para máxima liberação
+
+    **⚖️ IA sugere:** "Brincos festa: EOQ (Unidades EOQ pela IA) unidades, economia (Percentual de economia pela IA)% vs atual"
+    **👉 Ação:** Ajuste para (Unidades EOQ pela IA) unidades, economize R$ (Valor de economia pela IA)/ano
+
+    **💎 IA detecta:** "Relógios masculinos: ROI dinâmico (ROI dinâmico pela IA)%, tendência declínio"
+    **👉 Ação:** Pare reposição, considere liquidação em 30 dias
+
+    **📈 IA prevê:** "Dezembro pico (Índice sazonal pela IA)x para alianças, prepare estoque setembro"
+    **👉 Ação:** Aumente estoque (Percentual de aumento pela IA)% até setembro para dezembro
+
+    ### 🎯 **INTERPRETAÇÃO ALERTAS IA**
+
+    **🔴 Urgência Score >75:** IA detectou múltiplos riscos convergindo
+    **🟡 Score 50-75:** Situação deteriorando, monitore semanalmente  
+    **🟢 Score <50:** Tudo controlado, monitore mensalmente
+
+    ### 💰 **DECISÕES ORIENTADAS POR IA**
+
+    **🤔 Devo seguir recomendação da IA?**
+    - ✅ Se confiança >80% E histórico IA >75% accuracy
+    - ⚠️ Se confiança 60-80% E produto não estratégico
+    - ❌ Se confiança <60% OU produto muito estratégico
+
+    **🤔 Como validar se IA está funcionando?**
+    - **Accuracy:** Previsões vs vendas reais >80%
+    - **ROI:** Recomendações executadas com ROI >100%
+    - **Economia:** EOQ economias realizadas vs projetadas >90%
+
+    **🤔 Quando questionar a IA?**
+    - **Mudança abrupta:** Recomendação muito diferente do usual
+    - **Contexto não capturado:** Eventos especiais, mudanças mercado
+    - **Histórico baixo:** Produto novo sem dados suficientes
+
+    ---
+
+    ### 📁 CONTEÚDO DOS ARQUIVOS OPERACIONAIS GERADOS
+    [Os arquivos abaixo são os mandatórios. Descrever o tipo de conteúdo esperado em cada um, garantindo que os dados sejam reais e calculados]
+    - **reports/Dashboard_Gestao_Estoque.html**: Painel operacional IA com alertas em tempo real, KPIs visuais, e principais recomendações (gerado pelo File Generation Tool).
+    - **reports/analise_estoque_completa_{data_inicio}_{data_fim}.csv**: Contém dados detalhados da análise de estoque, incluindo classificação ABC, scores de risco por produto com ML, parâmetros EOQ otimizados por produto, previsões ML por produto com accuracy (gerado pelo File Generation Tool).
+    - **reports/recomendacoes_estoque_ml_{data_inicio}_{data_fim}.csv**: Lista de ações ML priorizadas com ROI e confiança, incluindo restock, liquidação e otimização (gerado pelo File Generation Tool).
+
+    **⚡ Próximo Passo IA:** Implementar Fase 1 com recomendações ML para liberar R$ (Valor calculado de liberação) e melhorar Score Saúde em (Pontos calculados de melhoria) pontos nos próximos 30 dias.
+
+    **IMPORTANTE**: Relatório deve conter APENAS valores calculados reais. Nenhum placeholder como 'XXX' ou '[CALCULAR]' deve aparecer no resultado final sem o respectivo valor.
+    **FORMATO**: Relatório executivo markdown + planilhas operacionais
     
-    ### 6. **IMPACTO FINANCEIRO E OPORTUNIDADES**:
-    - **Liberação de Caixa**: R$ XXX através de otimização
-    - **Redução de Carrying Cost**: Economia estimada R$ XXX/mês
-    - **ROI de Liquidações**: Retorno vs manter estoque
-    - **Investimento em Fast Movers**: Oportunidades identificadas
-    
-    ### 7. **CRONOGRAMA DE AÇÕES (30/60/90 dias)**:
-    **30 dias**: Liquidação slow movers + restock críticos
-    **60 dias**: Ajuste níveis ótimos por categoria
-    **90 dias**: Implementação sistema alertas automático
-    
-    **FORMATO**: Relatório executivo + dashboard operacional + listas de ação prioritárias
-  
   agent: analista_estoque
 
 analista_financeiro_task:
@@ -365,156 +786,144 @@ analista_financeiro_task:
 
     **OBJETIVO CONSOLIDADO**: Análise completa da saúde financeira com KPIs executivos, projeções e métricas de liquidez e rentabilidade.
 
-    1. **KPIs Financeiros Executivos EXPANDIDOS**:
-       - Usar KPI Calculator Tool para análise financeira completa  
-       - Calcular KPIs críticos: ROI, EBITDA simulado, margem operacional
-       - Métricas de Liquidez (Capital de Giro, Cycle Cash)
-       - Índices de Rentabilidade (ROA, ROE estimados)
-       - Análise de Break-Even por categoria e período
-       - Métricas de Eficiência Operacional (vendas/funcionário)
-       - Indicadores de Sustentabilidade Financeira
-       - Comparar com benchmarks do setor joalheiro brasileiro
-
-    2. **Análise de Margens DETALHADA**:
-       - Usar Advanced Analytics Engine para análise de margens
-       - Margem Bruta vs Líquida vs Contribuição por produto
-       - Análise de Ponte de Margem (price-mix-volume-cost)
-       - Elasticidade de Margem vs Volume de vendas
-       - Margem por Canal (presencial vs online se aplicável)
-       - Impacto de Descontos na margem real
-       - Identificar produtos com melhor e pior performance de margem
-
-    3. **Projeções e Forecasting AVANÇADO**:
-       - Usar Prophet Tool para projeções financeiras robustas
-       - Projeção de Fluxo de Caixa (30/60/90 dias)
-       - Cenários Financeiros (otimista/realista/pessimista)
-       - Break-Even Analysis por categoria futuro
-       - Impacto de Sazonalidade no cash flow
-       - Projeção de Necessidade de Capital de Giro
-       - Validar projeções com dados históricos
-
-    4. **Análise de Risco Financeiro**:
-       - Usar Risk Assessment Tool para análise de riscos
-       - Stress Testing de cenários adversos
-       - Análise de Concentração de Receita (clientes/produtos)
-       - Volatilidade de Receita e Margem por período
-       - Risco de Liquidez e Necessidades de Funding
-       - Impacto de Mudanças Econômicas (inflação, juros)
-
-    5. **Benchmarking Setorial AMPLIADO**:
-       - Usar Competitive Intelligence Tool para benchmarks
-       - Comparação de Múltiplos Financeiros vs setor
-       - Posicionamento de Margem vs concorrentes
-       - Eficiência Operacional vs players similares
-       - Crescimento vs média do mercado joalheiro
+    **FERRAMENTAS OBRIGATÓRIAS A USAR**:
+    1. **KPI Calculator Tool** com categoria='revenue' para KPIs financeiros
+    2. **Financial Data Exporter** para dados financeiros detalhados  
+    3. **Prophet Tool** para projeções financeiras robustas
+    4. **Risk Assessment Tool** com assessment_type='financial_risk'
+    5. **Competitive Intelligence Tool** para benchmarks setoriais
+    
+    **INSTRUÇÕES ESPECÍFICAS**:
+    - SEMPRE calcular valores reais usando as ferramentas
+    - NUNCA deixar placeholders como 'XXX' ou '[CALCULAR]' sem o valor real no relatório final
+    - Usar dados reais do CSV de vendas para todos os cálculos
+    - Gerar arquivos operacionais na pasta reports/
 
   expected_output: >
     💰 RELATÓRIO FINANCEIRO EXECUTIVO COMPLETO:
 
+    **ARQUIVOS GERADOS OBRIGATORIAMENTE:**
+    ✅ reports/analise_financeira_completa_{data_inicio}_{data_fim}.csv - Dados financeiros detalhados da análise
+    ✅ reports/projecoes_financeiras_90_dias_{data_inicio}_{data_fim}.json - Projeções financeiras detalhadas
     ## 💼 ANÁLISE FINANCEIRA EXECUTIVA E PROJEÇÕES
 
     ### 1. **RESUMO EXECUTIVO FINANCEIRO**:
-    - 📊 **ROI Geral**: XX% (vs XX% benchmark setor)
-    - 💰 **Margem Bruta**: XX% vs **Margem Líquida**: XX%
-    - 🔄 **Capital de Giro**: R$ XXX (XX dias de vendas)
-    - 📈 **Crescimento YoY**: +/-XX% receita, +/-XX% margem
-    - ⚡ **Break-Even**: R$ XXX mensais (atual: R$ XXX)
-    - 🎯 **Score Saúde Financeira**: XX/100 vs XX/100 setor
-    - 💳 **Necessidade Caixa 90d**: R$ XXX (cenário conservador)
+    [USAR KPI Calculator Tool, Prophet Tool, Competitive Intelligence Tool para calcular e preencher todos os valores abaixo]
+    - 📊 **ROI Geral**: (Percentual de ROI calculado)% (vs (Benchmark do setor)% benchmark setor)
+    - 💰 **Margem Bruta**: (Percentual calculado)% vs **Margem Líquida**: (Percentual calculado)%
+    - 🔄 **Capital de Giro**: R$ (Valor calculado) ((Número de dias calculado) dias de vendas)
+    - 📈 **Crescimento YoY**: +/-(Percentual de crescimento da receita calculado)% receita, +/-(Percentual de crescimento da margem calculado)% margem (se dados anuais anteriores disponíveis)
+    - ⚡ **Break-Even**: R$ (Valor de break-even mensal calculado) mensais (atual: R$ (Ponto de equilíbrio atual, se diferente e disponível))
+    - 🎯 **Score Saúde Financeira**: (Score calculado)/100 vs (Benchmark do setor)/100 setor (Score pode ser uma métrica composta criada pelo analista ou uma ferramenta específica, se disponível)
+    - 💳 **Necessidade Caixa 90d**: R$ (Valor da necessidade de caixa projetada pelo Prophet Tool) (cenário conservador)
 
     ### 2. **KPIs EXECUTIVOS CRÍTICOS**:
 
     #### 💰 **Rentabilidade Avançada**:
-    - **ROI Total**: XX% (meta: XX%, vs setor: XX%)
-    - **ROA Estimado**: XX% (retorno sobre ativos)
-    - **ROE Estimado**: XX% (retorno sobre equity)
-    - **EBITDA Simulado**: R$ XXX (XX% margem)
-    - **Margem Operacional**: XX% (vs XX% benchmark)
+    [USAR KPI Calculator Tool categoria='revenue' e Competitive Intelligence Tool para benchmarks]
+    - **ROI Total**: (Percentual calculado)% (meta: (Meta definida)%, vs setor: (Benchmark do setor)%)
+    - **ROA Estimado**: (Percentual calculado)% (retorno sobre ativos)
+    - **ROE Estimado**: (Percentual calculado)% (retorno sobre equity)
+    - **EBITDA Simulado**: R$ (Valor calculado) ((Percentual da margem EBITDA calculado)%)
+    - **Margem Operacional**: (Percentual calculado)% (vs (Benchmark do setor)% benchmark)
 
     #### 🏦 **Liquidez e Capital de Giro**:
-    - **Capital de Giro**: R$ XXX (XX dias vendas)
-    - **Cycle Cash**: XX dias (recebimento - pagamento)
-    - **Necessidade Financiamento**: R$ XXX próximos 90 dias
-    - **Reserva de Segurança**: XX% receita mensal
-    - **Índice Liquidez**: X.X (ideal: >1.5)
+    [USAR KPI Calculator Tool]
+    - **Capital de Giro**: R$ (Valor calculado) ((Número de dias calculado) dias vendas)
+    - **Cycle Cash**: (Número de dias calculado) dias (recebimento - pagamento)
+    - **Necessidade Financiamento**: R$ (Valor calculado com base nas projeções) próximos 90 dias
+    - **Reserva de Segurança**: (Percentual calculado)% receita mensal
+    - **Índice Liquidez**: (Valor calculado) (ideal: >1.5)
 
     #### ⚡ **Eficiência Operacional**:
-    - **Vendas por Funcionário**: R$ XXX/mês (vs benchmark R$ XXX)
-    - **Custo por Transação**: R$ XX (vs ticket médio R$ XXX)
-    - **ROI Marketing**: X:1 (cada R$ 1 gera R$ X vendas)
-    - **Produtividade Vendedor**: R$ XXX/comissão paga
+    [USAR KPI Calculator Tool e Competitive Intelligence Tool para benchmarks]
+    - **Vendas por Funcionário**: R$ (Valor calculado)/mês (vs benchmark R$ (Benchmark do setor))
+    - **Custo por Transação**: R$ (Valor calculado) (vs ticket médio R$ (Ticket médio calculado))
+    - **ROI Marketing**: (Rácio calculado):1 (cada R$ 1 gera R$ (Valor gerado em vendas) vendas)
+    - **Produtividade Vendedor**: R$ (Valor calculado)/comissão paga
 
     ### 3. **ANÁLISE DE MARGENS DETALHADA**:
 
     #### 📊 **Margem por Categoria**:
-    - **Anéis**: Bruta XX% → Líquida XX% (contribuição R$ XXX)
-    - **Colares**: Bruta XX% → Líquida XX% (contribuição R$ XXX)
-    - **Brincos**: Bruta XX% → Líquida XX% (contribuição R$ XXX)
-    - **Pulseiras**: Bruta XX% → Líquida XX% (contribuição R$ XXX)
+    [USAR Advanced Analytics Engine para análise por categoria. Preencher com nomes reais de categorias e valores calculados]
+    - **(Nome Categoria 1)**: Bruta (Percentual calc.)% → Líquida (Percentual calc.)% (contribuição R$ (Valor calc.))
+    - **(Nome Categoria 2)**: Bruta (Percentual calc.)% → Líquida (Percentual calc.)% (contribuição R$ (Valor calc.))
+    - **(Nome Categoria 3)**: Bruta (Percentual calc.)% → Líquida (Percentual calc.)% (contribuição R$ (Valor calc.))
+    - **(Nome Categoria 4)**: Bruta (Percentual calc.)% → Líquida (Percentual calc.)% (contribuição R$ (Valor calc.))
 
-    #### 🔗 **Ponte de Margem (vs período anterior)**:
-    - **Efeito Preço**: +/-XX pp (mudanças de preço)
-    - **Efeito Mix**: +/-XX pp (mudança composição vendas)
-    - **Efeito Volume**: +/-XX pp (escala/diluição custos)
-    - **Efeito Custo**: +/-XX pp (alteração custos diretos)
-    - **Margem Final**: XX% (variação total: +/-XX pp)
+    #### 🔗 **Ponte de Margem (vs período anterior)**: (Requer dados do período anterior para cálculo)
+    [USAR Advanced Analytics Engine ou cálculos manuais com dados exportados]
+    - **Efeito Preço**: +/-(Variação percentual calculada) pp (mudanças de preço)
+    - **Efeito Mix**: +/-(Variação percentual calculada) pp (mudança composição vendas)
+    - **Efeito Volume**: +/-(Variação percentual calculada) pp (escala/diluição custos)
+    - **Efeito Custo**: +/-(Variação percentual calculada) pp (alteração custos diretos)
+    - **Margem Final**: (Percentual calculado)% (variação total: +/-(Variação percentual total calculada) pp)
 
     ### 4. **PROJEÇÕES FINANCEIRAS (90 DIAS)**:
 
     #### 📈 **Cenários de Receita**:
-    - **Pessimista (P25)**: R$ XXX (-XX% vs atual)
-    - **Realista (P50)**: R$ XXX (+/-XX% vs atual)  
-    - **Otimista (P75)**: R$ XXX (+XX% vs atual)
-    - **Confiabilidade**: XX% (baseado em modelo Prophet)
+    [USAR Prophet Tool para projeções reais e preencher os valores abaixo]
+    - **Pessimista (P25)**: R$ (Valor da projeção pessimista) (-(Percentual de variação vs atual)%)
+    - **Realista (P50)**: R$ (Valor da projeção realista) (+/-(Percentual de variação vs atual)%)  
+    - **Otimista (P75)**: R$ (Valor da projeção otimista) (+(Percentual de variação vs atual)%)
+    - **Confiabilidade**: (Percentual de confiabilidade do modelo Prophet)%
 
     #### 💰 **Projeção Fluxo de Caixa**:
-    - **30 dias**: Entrada R$ XXX, Saída R$ XXX, Saldo R$ XXX
-    - **60 dias**: Entrada R$ XXX, Saída R$ XXX, Saldo R$ XXX
-    - **90 dias**: Entrada R$ XXX, Saída R$ XXX, Saldo R$ XXX
-    - **Capital Giro Adicional**: R$ XXX em XX dias
+    [USAR Prophet Tool ou modelagem baseada em suas projeções para preencher os valores abaixo]
+    - **30 dias**: Entrada R$ (Valor projetado), Saída R$ (Valor projetado), Saldo R$ (Valor projetado)
+    - **60 dias**: Entrada R$ (Valor projetado), Saída R$ (Valor projetado), Saldo R$ (Valor projetado)
+    - **90 dias**: Entrada R$ (Valor projetado), Saída R$ (Valor projetado), Saldo R$ (Valor projetado)
+    - **Capital Giro Adicional**: R$ (Valor projetado) em (Número de dias projetado) dias
 
     ### 5. **ANÁLISE DE RISCO FINANCEIRO**:
 
     #### 🎯 **Concentração de Risco**:
-    - **Top 10 Clientes**: XX% da receita (risco: X/10)
-    - **Top 5 Produtos**: XX% da receita (risco: X/10)
-    - **Sazonalidade**: Var. +/-XX% (Natal: +XX%, Julho: -XX%)
-    - **Índice Diversificação**: XX/100 (ideal: >60)
+    [USAR Risk Assessment Tool assessment_type='financial_risk' e KPI Calculator Tool para preencher os valores abaixo]
+    - **Top 10 Clientes**: (Percentual da receita calculado)% da receita (risco: (Score de risco calculado)/10)
+    - **Top 5 Produtos**: (Percentual da receita calculado)% da receita (risco: (Score de risco calculado)/10)
+    - **Sazonalidade**: Var. +/-(Percentual de variação calculado)% (Natal: +(%)%, Julho: -(%)%)
+    - **Índice Diversificação**: (Valor do índice calculado)/100 (ideal: >60)
 
     #### ⚡ **Stress Testing**:
-    - **Cenário Recessão (-20% vendas)**: Impacto R$ XXX margem
-    - **Cenário Inflação (+10% custos)**: Impacto R$ XXX resultado
-    - **Cenário Competição (-15% preços)**: Impacto R$ XXX receita
-    - **Tempo Resistência**: XX meses com reservas atuais
+    [USAR Risk Assessment Tool ou modelagem de cenários para preencher os valores abaixo]
+    - **Cenário Recessão (-20% vendas)**: Impacto R$ (Valor do impacto calculado) margem
+    - **Cenário Inflação (+10% custos)**: Impacto R$ (Valor do impacto calculado) resultado
+    - **Cenário Competição (-15% preços)**: Impacto R$ (Valor do impacto calculado) receita
+    - **Tempo Resistência**: (Número de meses calculado) meses com reservas atuais
 
     ### 6. **BENCHMARKING SETORIAL**:
-    - **Margem Bruta**: Nossa XX% vs Setor XX% (+/-XX pp)
-    - **Giro Estoque**: XX dias vs XX dias setor
-    - **ROI**: Nosso XX% vs XX% benchmark setor
-    - **Crescimento**: +XX% vs +XX% média setor
-    - **Ranking Estimado**: #X de XX players similares
+    [USAR Competitive Intelligence Tool para comparações reais e preencher os valores abaixo]
+    - **Margem Bruta**: Nossa (Percentual calculado)% vs Setor (Benchmark do setor)% (+/-(Diferença em pp) pp)
+    - **Giro Estoque**: (Nosso valor calculado) dias vs (Benchmark do setor) dias setor
+    - **ROI**: Nosso (Percentual calculado)% vs (Benchmark do setor)% benchmark setor
+    - **Crescimento**: +(Nosso percentual de crescimento)% vs +(Média de crescimento do setor)% média setor
+    - **Ranking Estimado**: #(Posição estimada) de (Total de players) players similares (Se a ferramenta fornecer essa estimativa)
 
     ### 7. **RECOMENDAÇÕES ESTRATÉGICAS**:
-
+    [Desenvolver recomendações com base nas análises. Os valores devem ser metas ou sugestões informadas pelos dados]
     #### 💰 **Gestão de Caixa**:
-    - Manter reserva mínima R$ XXX (XX dias vendas)
-    - Negociar prazo fornecedores: +XX dias pagamento
-    - Acelerar recebimentos: desconto XX% pgto à vista
-    - Linha crédito preventiva: R$ XXX aprovação
+    - Manter reserva mínima R$ (Valor calculado com base na análise de risco e projeções) ((Número de dias) dias vendas)
+    - Negociar prazo fornecedores: +(Número de dias sugerido) dias pagamento
+    - Acelerar recebimentos: desconto (Percentual sugerido)% pgto à vista
+    - Linha crédito preventiva: R$ (Valor sugerido) aprovação
 
     #### 📊 **Otimização Margem**:
-    - Aumentar preços XX% categoria de baixa elasticidade
-    - Reduzir desconto médio de XX% para XX%
-    - Focar mix produtos margem >XX%
-    - Renegociar custos categoria com margem <XX%
+    - Aumentar preços (Percentual sugerido)% categoria de baixa elasticidade (Identificada na análise de margens/elasticidade)
+    - Reduzir desconto médio de (Percentual atual)% para (Percentual meta)%
+    - Focar mix produtos margem >(Percentual threshold)%
+    - Renegociar custos categoria com margem <(Percentual threshold)%
 
     #### 🎯 **Crescimento Sustentável**:
-    - Meta crescimento: +XX% anual (vs +XX% setor)
-    - Investimento máximo: XX% receita/mês
-    - ROI mínimo novos projetos: XX%
-    - Alavancagem máxima: XX% do patrimônio
+    - Meta crescimento: +(Percentual meta)% anual (vs +(Benchmark do setor)% setor)
+    - Investimento máximo: (Percentual da receita)% receita/mês
+    - ROI mínimo novos projetos: (Percentual mínimo de ROI)%
+    - Alavancagem máxima: (Percentual máximo)% do patrimônio
 
-    **FORMATO**: Relatório executivo + dashboards financeiros + projeções de cash flow
+    ### 📁 CONTEÚDO DOS ARQUIVOS OPERACIONAIS GERADOS
+    [Os arquivos abaixo são os mandatórios. Descrever o tipo de conteúdo esperado em cada um, garantindo que os dados sejam reais e calculados]    - **reports/analise_financeira_completa_{data_inicio}_{data_fim}.csv**: Arquivo CSV com todos os dados financeiros detalhados utilizados e calculados na análise, incluindo KPIs, análise de margens por categoria, dados de liquidez, rentabilidade, eficiência, e resultados do stress testing.
+    - **reports/projecoes_financeiras_90_dias_{data_inicio}_{data_fim}.json**: Arquivo JSON contendo as projeções financeiras detalhadas para 30, 60 e 90 dias, incluindo cenários pessimista, realista e otimista para receita e fluxo de caixa.
+
+    **IMPORTANTE**: Relatório deve conter APENAS valores calculados reais. Nenhum placeholder como 'XXX' ou '[CALCULAR]' deve aparecer no resultado final sem o respectivo valor.
 
   agent: analista_financeiro
 
@@ -524,130 +933,116 @@ especialista_clientes_task:
 
     **OBJETIVO CONSOLIDADO**: Análise completa de clientes com segmentação RFV, análise demográfica, geográfica e comportamental.
 
-    1. **Análise RFV PROFISSIONAL EXPANDIDA**:
-       - Usar Customer Insights Engine para segmentação RFV automática
-       - Aplicar algoritmos ML para clustering comportamental
-       - Análise Geracional (Gen Z, Millennials, Gen X, Boomers)
-       - Segmentação por Poder de Compra (Premium, Médio, Econômico)
-       - Análise de Jornada do Cliente por perfil demográfico
-       - Customer Lifetime Value (CLV) por segmento demográfico
-       - Identificar padrões de migração entre segmentos RFV
-
-    2. **ANÁLISE DEMOGRÁFICA DETALHADA**:
-       - Usar Statistical Analysis Tool para padrões demográficos
-       - Performance por Faixa Etária (18-25, 26-35, 36-50, 50+)
-       - Análise por Gênero (comportamento, preferências, ticket)
-       - Padrões por Estado Civil (solteiro, casado, divorciado)
-       - Correlação Idade vs Categoria de Produto
-       - Elasticidade de Preço por Perfil Demográfico
-       - Sazonalidade Comportamental por Demografia
-
-    3. **ANÁLISE GEOGRÁFICA AVANÇADA**:
-       - Usar Business Intelligence Tool para mapas interativos
-       - Performance por Estado e Região
-       - Análise Urbano vs Interior (comportamento diferenciado)
-       - Correlação Geografia vs Poder de Compra
-       - Oportunidades de Expansão Geográfica
-       - Sazonalidade Regional (diferenças por estado)
-       - Penetração de Mercado por Região
-
-    4. **KPIs COMPORTAMENTAIS AVANÇADOS**:
-       - Índice de Fidelidade por Segmento (0-100)
-       - Propensão Cross-Sell por Demografia
-       - Sensibilidade a Promoções por Perfil
-       - Tempo Médio entre Compras por Segmento
-       - Taxa de Reativação por Cluster RFV
-       - Score de Engagement (interação/satisfação)
-
-    5. **CHURN PREDICTION E RETENÇÃO**:
-       - Usar Risk Assessment Tool para análise de risco de perda
-       - Score de Risco de Churn por Cliente (0-100)
-       - Fatores de Churn por Segmento Demográfico
-       - Estratégias de Retenção Personalizadas
-       - ROI de Campanhas de Retenção por Perfil
+    **FERRAMENTAS OBRIGATÓRIAS A USAR**:
+    1. **Customer Insights Engine** para segmentação RFV automática e análise comportamental
+    2. **Statistical Analysis Tool** com analysis_type='demographic_patterns' e 'geographic_performance'
+    3. **KPI Calculator Tool** com categoria='customer' para métricas de clientes
+    4. **Risk Assessment Tool** com assessment_type='customer_risk' para churn prediction
+    5. **Customer Data Exporter** para dados estruturados de clientes
+    
+    **INSTRUÇÕES ESPECÍFICAS**:
+    - SEMPRE calcular valores reais usando as ferramentas
+    - NUNCA deixar placeholders como 'XXX' ou '[CALCULAR]' sem o valor real no relatório final
+    - Usar dados reais do CSV de vendas para análise RFV
+    - Gerar arquivos operacionais na pasta reports/
 
   expected_output: >
     👥 RELATÓRIO COMPLETO DE INTELIGÊNCIA DE CLIENTES:
 
+    **ARQUIVOS GERADOS OBRIGATORIAMENTE:**
+    ✅ reports/analise_clientes_rfv_{data_inicio}_{data_fim}.csv - Dados detalhados da análise RFV e comportamental
+    ✅ reports/segmentacao_clientes_{data_inicio}_{data_fim}.csv - Dados da segmentação de clientes, incluindo demografia e geografia
     ## 🎯 ANÁLISE AVANÇADA DE CLIENTES: RFV + DEMOGRAPHICS + GEOGRAFIA
 
     ### 1. **RESUMO EXECUTIVO DE CLIENTES**:
-    - 👥 **Base Total**: XXX clientes ativos (XX% crescimento YoY)
-    - 💎 **Clientes VIP**: XX% da base geram XX% da receita
-    - 🎯 **CLV Médio**: R$ XXX (VIP: R$ XXX, Regular: R$ XXX)
-    - 📊 **Score Fidelidade**: XX/100 médio (VIP: XX, Regular: XX)
-    - ⚠️ **Risco Churn**: XX% da base em risco médio/alto
-    - 🌍 **Cobertura Geográfica**: XX estados, XX cidades ativas
-    - 👫 **Perfil Dominante**: XX% mulheres, XX% faixa 26-40 anos
+    [USAR Customer Insights Engine e KPI Calculator Tool categoria='customer' para calcular e preencher todos os valores abaixo]
+    - 👥 **Base Total**: (Número total calculado) clientes ativos ((Percentual de crescimento YoY calculado)%, se dados anteriores disponíveis)
+    - 💎 **Clientes VIP**: (Percentual calculado)% da base geram (Percentual calculado)% da receita
+    - 🎯 **CLV Médio**: R$ (Valor médio do CLV calculado) (VIP: R$ (CLV VIP calculado), Regular: R$ (CLV Regular calculado))
+    - 📊 **Score Fidelidade**: (Score médio calculado)/100 (VIP: (Score VIP)/100, Regular: (Score Regular)/100) (Score calculado pelo Customer Insights Engine ou métrica composta)
+    - ⚠️ **Risco Churn**: (Percentual da base em risco calculado)% da base em risco médio/alto (Conforme Risk Assessment Tool)
+    - 🌍 **Cobertura Geográfica**: (Número de estados) estados, (Número de cidades) cidades ativas (Conforme Statistical Analysis Tool)
+    - 👫 **Perfil Dominante**: (Percentual calculado)% mulheres, (Percentual calculado)% faixa (Faixa etária dominante) anos (Conforme Statistical Analysis Tool)
 
     ### 2. **SEGMENTAÇÃO RFV EXPANDIDA**:
+    [USAR Customer Insights Engine analysis_type='behavioral_segmentation' para os dados de RFV e CLV. USAR Statistical Analysis Tool para demografia e geografia dos segmentos]
 
-    #### 👑 **Clientes VIP (XX% base, XX% receita)**:
-    - **Recência**: Última compra XX dias (vs XX média)
-    - **Frequência**: XX compras/ano (vs XX média)
-    - **Valor Monetário**: R$ XXX ticket médio (vs R$ XXX)
-    - **CLV**: R$ XXX em XX meses projetados
-    - **Demografia**: XX% mulheres, idade média XX anos
-    - **Geografia**: XX% região Sudeste, XX% capitais
+    #### 👑 **Clientes VIP ((Percentual da base)%, (Percentual da receita)%)**: (Valores calculados pelo Customer Insights Engine)
+    - **Recência**: Última compra há (Número de dias calculado) dias (vs (Média geral de recência) média)
+    - **Frequência**: (Número de compras calculado) compras/ano (vs (Média geral de frequência) média)
+    - **Valor Monetário**: R$ (Ticket médio calculado) (vs R$ (Valor monetário médio geral))
+    - **CLV**: R$ (Valor do CLV calculado) em (Número de meses projetado) meses projetados
+    - **Demografia**: (Percentual)% mulheres, idade média (Idade média calculada) anos
+    - **Geografia**: (Percentual)% região (Principal região), (Percentual)% capitais
 
-    #### 👥 **Clientes Leais (XX% base, XX% receita)**:
-    - **Perfil**: Frequência alta, valor médio
-    - **Oportunidade**: Upsell para VIP (potencial R$ XXX)
-    - **Demografia**: XX% casados, faixa 30-45 anos
-    - **Produtos**: XX% anéis, XX% brincos preferência
+    #### 👥 **Clientes Leais ((Percentual da base)%, (Percentual da receita)%)**: (Valores calculados pelo Customer Insights Engine)
+    - **Perfil**: Frequência alta, valor médio (Descrição baseada nos dados RFV)
+    - **Oportunidade**: Upsell para VIP (potencial R$ (Valor potencial calculado))
+    - **Demografia**: (Percentual)% (Estado civil dominante), faixa (Faixa etária dominante) anos
+    - **Produtos**: (Percentual)% (Produto preferido 1), (Percentual)% (Produto preferido 2) preferência
 
-    #### 🆕 **Clientes Novos (XX% base, XX% receita)**:
-    - **Potencial**: XX% se tornam regulares em XX meses
-    - **Perfil**: XX% millennials, XX% primeira joia
-    - **Conversão**: Produtos entrada → categoria premium
+    #### 🆕 **Clientes Novos ((Percentual da base)%, (Percentual da receita)%)**: (Valores calculados pelo Customer Insights Engine)
+    - **Potencial**: (Percentual calculado)% se tornam regulares em (Número de meses calculado) meses
+    - **Perfil**: (Percentual)% millennials, (Percentual)% primeira joia (Baseado em dados demográficos e de compra)
+    - **Conversão**: Produtos entrada → categoria premium (Analisar jornada de compra)
 
-    #### ⚠️ **Clientes em Risco (XX% base, XX% receita)**:
-    - **Última Compra**: >XXX dias (limite crítico)
-    - **Score Churn**: XX/100 (alto risco)
-    - **Ação**: Campanha reativação R$ XXX investimento
+    #### ⚠️ **Clientes em Risco ((Percentual da base)%, (Percentual da receita)%)**: (Valores calculados pelo Customer Insights Engine e Risk Assessment Tool)
+    - **Última Compra**: >(Número de dias calculado) dias (limite crítico)
+    - **Score Churn**: (Score de churn calculado)/100 (alto risco)
+    - **Ação**: Campanha reativação R$ (Investimento estimado/sugerido) investimento
 
     ### 3. **ANÁLISE DEMOGRÁFICA DETALHADA**:
+    [USAR Statistical Analysis Tool analysis_type='demographic_patterns']
 
     #### 👩 **Análise por Gênero**:
-    - **Mulheres (XX% base)**: Ticket R$ XXX, frequência XX/ano
-      - Preferências: XX% brincos, XX% colares, XX% anéis
-      - Sazonalidade: Pico Dia das Mães (+XX%), Natal (+XX%)
+    - **Mulheres ((Percentual da base)%)**: Ticket R$ (Ticket médio calculado), frequência (Frequência calculada)/ano
+      - Preferências: (Percentual)% (Produto preferido 1), (Percentual)% (Produto preferido 2), (Percentual)% (Produto preferido 3)
+      - Sazonalidade: Pico Dia das Mães (+(Percentual de aumento)%), Natal (+(Percentual de aumento)%)
     
-    #### 👨 **Homens (XX% base)**: Ticket R$ XXX, frequência XX/ano
-      - Preferências: XX% alianças, XX% relógios, XX% anéis
-      - Sazonalidade: Pico Dia dos Namorados (+XX%), Natal (+XX%)
+    #### 👨 **Homens ((Percentual da base)%)**: Ticket R$ (Ticket médio calculado), frequência (Frequência calculada)/ano
+      - Preferências: (Percentual)% (Produto preferido 1), (Percentual)% (Produto preferido 2), (Percentual)% (Produto preferido 3)
+      - Sazonalidade: Pico Dia dos Namorados (+(Percentual de aumento)%), Natal (+(Percentual de aumento)%)
 
-    #### 🎂 **Análise por Faixa Etária**:
-    - **18-25 anos**: Produtos acessíveis, tendência, sustentabilidade
-    - **26-35 anos**: Investimento, qualidade, marcos de vida
-    - **36-50 anos**: Luxo acessível, status, durabilidade
-    - **50+ anos**: Premium, tradição, presentes familiares
+    #### 🎂 **Análise por Faixa Etária**: (Preencher com os insights gerados para cada faixa)
+    - **18-25 anos**: (Principais produtos, comportamento, sensibilidade a preço)
+    - **26-35 anos**: (Principais produtos, comportamento, motivadores de compra)
+    - **36-50 anos**: (Principais produtos, comportamento, valor percebido)
+    - **50+ anos**: (Principais produtos, comportamento, lealdade)
 
     ### 4. **ANÁLISE GEOGRÁFICA**:
-    - **Região Sudeste**: XX% base, ticket médio R$ XXX
-    - **Região Sul**: XX% base, ticket médio R$ XXX
-    - **Região Nordeste**: XX% base, ticket médio R$ XXX
-    - **Capitais vs Interior**: Comportamento diferenciado identificado
-    - **Oportunidades Expansão**: XX cidades com potencial alto
+    [USAR Statistical Analysis Tool analysis_type='geographic_performance']
+    - **Região Sudeste**: (Percentual da base)%, ticket médio R$ (Ticket médio calculado)
+    - **Região Sul**: (Percentual da base)%, ticket médio R$ (Ticket médio calculado)
+    - **Região Nordeste**: (Percentual da base)%, ticket médio R$ (Ticket médio calculado)
+    (Adicionar outras regiões relevantes com seus respectivos dados)
+    - **Capitais vs Interior**: (Descrever o comportamento diferenciado identificado, com exemplos e métricas)
+    - **Oportunidades Expansão**: (Número de cidades) cidades com potencial alto (Listar principais cidades, se possível)
 
     ### 5. **INSIGHTS COMPORTAMENTAIS**:
-    - **Tempo Médio entre Compras**: VIP XX dias, Regular XX dias
-    - **Propensão Cross-Sell**: VIP XX%, Regular XX%
-    - **Sensibilidade Promoção**: Novo XX%, Regular XX%, VIP XX%
-    - **Canais Preferidos**: Online XX%, Físico XX%, Híbrido XX%
+    [USAR Customer Insights Engine analysis_type='lifecycle_analysis' e KPI Calculator Tool]
+    - **Tempo Médio entre Compras**: VIP (Número de dias) dias, Regular (Número de dias) dias
+    - **Propensão Cross-Sell**: VIP (Percentual)%, Regular (Percentual)%
+    - **Sensibilidade Promoção**: Novo (Percentual)%, Regular (Percentual)%, VIP (Percentual)%
+    - **Canais Preferidos**: Online (Percentual)%, Físico (Percentual)%, Híbrido (Percentual)%
 
     ### 6. **CHURN PREDICTION E RETENÇÃO**:
-    - **Fatores de Churn**: Tempo sem compra, redução ticket, concorrência
-    - **Campanhas Retenção**: ROI XX:1 VIP, XX:1 Regular
-    - **Win-back**: XX% taxa sucesso com investimento R$ XXX
+    [USAR Customer Insights Engine analysis_type='churn_prediction' e Risk Assessment Tool]
+    - **Fatores de Churn**: (Listar principais fatores identificados: Tempo sem compra, redução ticket, concorrência, etc.)
+    - **Campanhas Retenção**: ROI (Rácio calculado):1 VIP, (Rácio calculado):1 Regular
+    - **Win-back**: (Percentual de sucesso calculado)% taxa sucesso com investimento R$ (Valor do investimento)
 
     ### 7. **ESTRATÉGIAS PERSONALIZADAS**:
-    - **Campanhas VIP**: Lançamentos exclusivos, atendimento premium
-    - **Campanhas Regulares**: Promoções, programas fidelidade
-    - **Campanhas Novos**: Onboarding, produtos entrada
-    - **Campanhas Reativação**: Ofertas específicas, desconto progressivo
+    [Desenvolver estratégias com base nos segmentos e insights identificados]
+    - **Campanhas VIP**: (Exemplos: Lançamentos exclusivos, atendimento premium, mimos especiais)
+    - **Campanhas Regulares**: (Exemplos: Promoções direcionadas, programas de fidelidade com recompensas atrativas)
+    - **Campanhas Novos**: (Exemplos: Kit de boas-vindas, descontos na primeira compra, conteúdo sobre produtos de entrada)
+    - **Campanhas Reativação**: (Exemplos: Ofertas "sentimos sua falta", desconto progressivo baseado no tempo de inatividade)
 
-    **FORMATO**: Relatório executivo + mapas geográficos + matriz RFV + estratégias personalizadas
+    ### 📁 CONTEÚDO DOS ARQUIVOS OPERACIONAIS GERADOS
+    [Os arquivos abaixo são os mandatórios. Descrever o tipo de conteúdo esperado em cada um, garantindo que os dados sejam reais e calculados]    - **reports/analise_clientes_rfv_{data_inicio}_{data_fim}.csv**: Arquivo CSV contendo dados detalhados da análise RFV (Recência, Frequência, Valor para cada cliente), scores de CLV, scores de risco de churn, e outros indicadores comportamentais por cliente.
+    - **reports/segmentacao_clientes_{data_inicio}_{data_fim}.csv**: Arquivo CSV com a lista de clientes e seus respectivos segmentos (VIP, Leal, Novo, Em Risco, etc.), juntamente com dados demográficos (idade, gênero, etc.) e geográficos (estado, cidade, região) consolidados.
+
+    **IMPORTANTE**: Relatório deve conter APENAS valores calculados reais. Nenhum placeholder como 'XXX' ou '[CALCULAR]' deve aparecer no resultado final sem o respectivo valor.
 
   agent: especialista_clientes
 
@@ -682,97 +1077,113 @@ analista_performance_task:
        - Padrões de comportamento que geram sucesso
        - Análise de timing e produtividade
        - Correlação entre treinamento e performance
-
+       - **OBRIGATÓRIO**: Usar File Generation Tool para criar:
+         * filename: "analise_performance_vendedores_{data_inicio}_{data_fim}.csv"
+         * content_type: "performance_analysis"
+         * output_path: "reports/"
+         
   expected_output: >
     👤 RELATÓRIO DE PERFORMANCE DE VENDEDORES E DESENVOLVIMENTO:
     
+    **ARQUIVOS GERADOS OBRIGATORIAMENTE:**
+    ✅ reports/analise_performance_vendedores_{data_inicio}_{data_fim}.csv - Dados detalhados da performance dos vendedores    
     ## 📊 ANÁLISE COMPLETA DA EQUIPE DE VENDAS
     
     ### 1. **RESUMO EXECUTIVO DA EQUIPE**:
-    - 🏆 **Total de Vendedores**: XX ativos no período
-    - 📊 **Performance Média**: R$ XXX por vendedor
-    - 🎯 **Meta Geral Atingida**: XX% (vs XX% período anterior)
-    - ⚡ **Top Performer**: Vendedor X com R$ XXX (XX% acima média)
-    - ⚠️ **Underperformers**: XX vendedores abaixo de 80% meta
-    - 📈 **Variação Performance**: Coeficiente XX% (dispersão equipe)
+    [Usar Statistical Analysis Tool e KPI Calculator Tool para preencher os valores abaixo]
+    - 🏆 **Total de Vendedores**: (Número de vendedores ativos) ativos no período
+    - 📊 **Performance Média**: R$ (Valor médio de vendas por vendedor) por vendedor
+    - 🎯 **Meta Geral Atingida**: (Percentual da meta geral atingida pela equipe)% (vs (Percentual do período anterior)% período anterior, se aplicável)
+    - ⚡ **Top Performer**: Vendedor (Nome do top performer) com R$ (Valor de vendas do top performer) ((Percentual acima da média) % acima média)
+    - ⚠️ **Underperformers**: (Número de vendedores) vendedores abaixo de 80% meta
+    - 📈 **Variação Performance**: Coeficiente (Valor do coeficiente de variação)% (dispersão equipe)
 
     ### 2. **RANKING DE PERFORMANCE ({data_inicio} a {data_fim})**:
-    1. **Vendedor A**: R$ XXX vendas - XX transações - Ticket R$ XXX - Meta XX%
-    2. **Vendedor B**: R$ XXX vendas - XX transações - Ticket R$ XXX - Meta XX%
-    3. **Vendedor C**: R$ XXX vendas - XX transações - Ticket R$ XXX - Meta XX%
-    4. **Vendedor D**: R$ XXX vendas - XX transações - Ticket R$ XXX - Meta XX%
-    5. **Vendedor E**: R$ XXX vendas - XX transações - Ticket R$ XXX - Meta XX%
+    [Preencher com dados reais dos top 5 vendedores, calculados pelo KPI Calculator Tool e Statistical Analysis Tool]
+    1. **(Nome Vendedor A)**: R$ (Vendas Vendedor A) vendas - (Transações Vendedor A) transações - Ticket R$ (Ticket Médio Vendedor A) - Meta (Meta Atingida Vendedor A)%
+    2. **(Nome Vendedor B)**: R$ (Vendas Vendedor B) vendas - (Transações Vendedor B) transações - Ticket R$ (Ticket Médio Vendedor B) - Meta (Meta Atingida Vendedor B)%
+    3. **(Nome Vendedor C)**: R$ (Vendas Vendedor C) vendas - (Transações Vendedor C) transações - Ticket R$ (Ticket Médio Vendedor C) - Meta (Meta Atingida Vendedor C)%
+    4. **(Nome Vendedor D)**: R$ (Vendas Vendedor D) vendas - (Transações Vendedor D) transações - Ticket R$ (Ticket Médio Vendedor D) - Meta (Meta Atingida Vendedor D)%
+    5. **(Nome Vendedor E)**: R$ (Vendas Vendedor E) vendas - (Transações Vendedor E) transações - Ticket R$ (Ticket Médio Vendedor E) - Meta (Meta Atingida Vendedor E)%
 
     ### 3. **KPIs DA EQUIPE DETALHADOS**:
-    - **Vendas média por vendedor**: R$ XXX
-    - **Ticket médio da equipe**: R$ XXX (variação: R$ XXX - R$ XXX)
-    - **Taxa de conversão média**: XX% (top: XX%, baixa: XX%)
-    - **Transações médias**: XX por vendedor
-    - **Meta média atingida**: XX% (spread: XX% - XX%)
-    - **Comissão média**: R$ XXX por vendedor
+    [Usar KPI Calculator Tool e Statistical Analysis Tool para calcular as médias e variações da equipe]
+    - **Vendas média por vendedor**: R$ (Valor calculado)
+    - **Ticket médio da equipe**: R$ (Valor calculado) (variação: R$ (Mínimo) - R$ (Máximo))
+    - **Taxa de conversão média**: (Percentual calculado)% (top: (Máximo)%, baixa: (Mínimo)%)
+    - **Transações médias**: (Número calculado) por vendedor
+    - **Meta média atingida**: (Percentual calculado)% (spread: (Mínimo)% - (Máximo)%)
+    - **Comissão média**: R$ (Valor calculado) por vendedor
 
     ### 4. **ANÁLISE DE PERFORMANCE POR GRUPOS**:
+    [Identificar grupos com base na análise do Statistical Analysis Tool e KPI Calculator Tool]
 
-    #### 🏆 **Top Performers (>120% meta) - XX vendedores**:
-    - **Características**: [Análise de padrões comuns]
-    - **Produtos preferidos**: XX% anéis, XX% colares
-    - **Timing ótimo**: Picos em XX horário, XX dias semana
-    - **Técnicas identificadas**: [Best practices específicas]
+    #### 🏆 **Top Performers (>120% meta) - (Número de vendedores) vendedores**:
+    - **Características**: (Descrever padrões comuns identificados na análise comportamental e de dados)
+    - **Produtos preferidos**: (Percentual)% (Nome Produto 1), (Percentual)% (Nome Produto 2)
+    - **Timing ótimo**: Picos em (Horário de pico), (Dias da semana de pico)
+    - **Técnicas identificadas**: (Listar best practices específicas observadas)
 
-    #### 📊 **Performance Média (80-120% meta) - XX vendedores**:
-    - **Perfil**: Consistentes, oportunidades específicas
-    - **Potencial**: Upside R$ XXX com melhorias
-    - **Gaps identificados**: [Áreas de melhoria]
+    #### 📊 **Performance Média (80-120% meta) - (Número de vendedores) vendedores**:
+    - **Perfil**: Consistentes, oportunidades específicas (Descrever perfil com base na análise)
+    - **Potencial**: Upside R$ (Valor potencial de melhoria) com melhorias
+    - **Gaps identificados**: (Listar áreas de melhoria observadas)
 
-    #### ⚠️ **Underperformers (<80% meta) - XX vendedores**:
-    - **Análise**: Causas de baixa performance
-    - **Plano de ação**: Treinamento, mentoria, suporte
-    - **Timeline**: XX dias para melhoria mensurada
+    #### ⚠️ **Underperformers (<80% meta) - (Número de vendedores) vendedores**:
+    - **Análise**: (Descrever causas identificadas para a baixa performance)
+    - **Plano de ação**: Treinamento, mentoria, suporte (Sugestões baseadas na análise)
+    - **Timeline**: (Prazo sugerido) dias para melhoria mensurada
 
     ### 5. **BEST PRACTICES IDENTIFICADAS**:
-    - **Técnicas dos Top Performers**: [Estratégias que funcionam]
-    - **Produtos com maior sucesso**: Por vendedor/categoria
-    - **Timing ótimo**: Horários/dias mais produtivos
-    - **Abordagem de Clientes**: Padrões de relacionamento
-    - **Cross-selling**: Técnicas de venda adicional
+    [Sintetizar a partir da análise comportamental e de dados dos top performers]
+    - **Técnicas dos Top Performers**: (Descrever estratégias que funcionam, identificadas na análise)
+    - **Produtos com maior sucesso**: Por vendedor/categoria (Listar exemplos)
+    - **Timing ótimo**: Horários/dias mais produtivos (Identificados na análise)
+    - **Abordagem de Clientes**: Padrões de relacionamento (Observados ou inferidos)
+    - **Cross-selling**: Técnicas de venda adicional (Identificadas)
 
     ### 6. **ANÁLISE POR CATEGORIA DE PRODUTO**:
-    - **Anéis**: Top 3 vendedores, técnicas específicas
-    - **Colares**: Especialistas identificados, abordagem
-    - **Brincos**: Performance por vendedor
-    - **Outros**: Oportunidades não exploradas
+    [Analisar performance de vendas por categoria de produto, cruzando com vendedores]
+    - **Anéis**: Top 3 vendedores (Nomes), técnicas específicas (Se identificadas)
+    - **Colares**: Especialistas identificados (Nomes), abordagem (Se identificada)
+    - **Brincos**: Performance por vendedor (Resumo da performance)
+    - **Outros**: Oportunidades não exploradas (Se identificadas)
 
     ### 7. **DESENVOLVIMENTO INDIVIDUAL**:
 
     #### 📚 **Plano de Treinamento Personalizado**:
+    [Com base nas análises individuais, sugerir focos de treinamento. Os valores de potencial são estimativas]
     **Por Vendedor:**
-    - **Vendedor X**: Foco em ticket médio (+XX% potencial)
-    - **Vendedor Y**: Melhoria conversão (+XX transações)
-    - **Vendedor Z**: Cross-sell training (+R$ XXX potencial)
+    - **(Nome Vendedor X)**: Foco em ticket médio (+(Percentual potencial) % potencial)
+    - **(Nome Vendedor Y)**: Melhoria conversão (+(Número de transações) transações)
+    - **(Nome Vendedor Z)**: Cross-sell training (+R$ (Valor potencial) potencial)
 
     #### 🎯 **Metas Ajustadas Próximo Período**:
-    - **Top Performers**: Meta +XX% (stretch goals)
-    - **Médios**: Meta +XX% (crescimento gradual)
-    - **Desenvolvimento**: Meta personalizada por perfil
+    [Sugerir metas com base na performance atual e potencial de desenvolvimento]
+    - **Top Performers**: Meta +(Percentual de aumento)% (stretch goals)
+    - **Médios**: Meta +(Percentual de aumento)% (crescimento gradual)
+    - **Desenvolvimento**: Meta personalizada por perfil (Descrever critério)
 
     #### 👥 **Programa de Mentoria**:
-    - **Mentores**: Top 3 performers
-    - **Mentorados**: XX vendedores em desenvolvimento
-    - **Timeline**: XX semanas, acompanhamento semanal
+    - **Mentores**: Top 3 performers (Nomes)
+    - **Mentorados**: (Número de vendedores) vendedores em desenvolvimento (Ou listar nomes)
+    - **Timeline**: (Duração em semanas), acompanhamento semanal
 
     ### 8. **RECOMENDAÇÕES GERENCIAIS**:
-    - **Redistribuição de Leads**: Otimizar por perfil vendedor
-    - **Treinamentos Específicos**: Por gap identificado
-    - **Sistema de Incentivos**: Ajustar por performance
-    - **Coaching Individual**: XX horas por vendedor/mês
-    - **Best Practice Sharing**: Sessões mensais equipe
+    [Sugestões baseadas na análise consolidada da equipe]
+    - **Redistribuição de Leads**: Otimizar por perfil vendedor (Se aplicável e dados disponíveis)
+    - **Treinamentos Específicos**: Por gap identificado (Listar temas)
+    - **Sistema de Incentivos**: Ajustar por performance (Sugestões)
+    - **Coaching Individual**: (Número de horas) horas por vendedor/mês (Sugestão)
+    - **Best Practice Sharing**: Sessões mensais equipe (Sugestão)
 
     ### 9. **PROJEÇÕES E METAS**:
-    - **Potencial Equipe**: R$ XXX com melhorias implementadas
-    - **Timeline Melhorias**: 30/60/90 dias
-    - **ROI Treinamento**: R$ XXX investimento → R$ XXX retorno
-    - **Meta Próximo Período**: R$ XXX (+XX% vs atual)
-
+    [Estimativas baseadas no potencial de melhoria identificado]
+    - **Potencial Equipe**: R$ (Valor total projetado) com melhorias implementadas
+    - **Timeline Melhorias**: 30/60/90 dias (Prazos para observar resultados das ações)
+    - **ROI Treinamento**: R$ (Investimento estimado) investimento → R$ (Retorno estimado) retorno
+    - **Meta Próximo Período**: R$ (Valor da meta da equipe) (+(Percentual de aumento)% vs atual)
+    
     **FORMATO**: Relatório executivo + dashboards individuais + planos de desenvolvimento personalizados
 
   agent: analista_performance
@@ -812,104 +1223,119 @@ diretor_insights_task:
        - Incluir cenários de negócio e análise de sensibilidade  
        - Documentar metodologia e limitações
        - Criar sistema de acompanhamento de KPIs
-  
+       - **OBRIGATÓRIO**: Usar File Generation Tool para criar:
+         * filename: "relatorio_executivo_final_{data_inicio}_{data_fim}.md"
+         * content_type: "executive_report"
+         * output_path: "reports/"
+         
   expected_output: >
     📋 RELATÓRIO EXECUTIVO ESTRATÉGICO INTEGRADO:
+    
+    **ARQUIVOS GERADOS OBRIGATORIAMENTE:**
+    ✅ reports/relatorio_executivo_final_{data_inicio}_{data_fim}.md - Relatório executivo final consolidado
     
     ## 🎯 RELATÓRIO FINAL DO DIRETOR DE INSIGHTS - SÍNTESE ESTRATÉGICA COMPLETA
     
     ### 1. **EXECUTIVE SUMMARY (1 página)**:
-    - 🔥 **Top 5 Insights Críticos** com impacto financeiro quantificado
-    - 💰 **ROI Total Estimado**: R$ XXX em oportunidades identificadas
-    - ⚡ **Quick Wins**: R$ XXX liberação imediata de caixa (30-60 dias)
-    - 📊 **Score Geral de Performance**: XX/100 vs benchmark de mercado
-    - 🚨 **Alertas Críticos**: Riscos que demandam ação imediata
+    [Sintetizar os principais achados de todos os relatórios e análises. Os valores devem ser calculados e consolidados]
+    - 🔥 **Top 5 Insights Críticos** com impacto financeiro quantificado (Listar os 5 principais insights e seus impactos financeiros calculados, ex: Insight X gerou R$ Y de oportunidade/risco)
+    - 💰 **ROI Total Estimado**: R$ (Soma dos ROIs estimados das principais recomendações) em oportunidades identificadas
+    - ⚡ **Quick Wins**: R$ (Soma do potencial de liberação de caixa das ações de curto prazo) liberação imediata de caixa (30-60 dias)
+    - 📊 **Score Geral de Performance**: (Score consolidado da empresa, se calculado)/100 vs benchmark de mercado (Benchmark do Competitive Intelligence Tool)
+    - 🚨 **Alertas Críticos**: (Listar os principais riscos que demandam ação imediata, consolidados dos relatórios de risco)
 
     ### 2. **CONSOLIDAÇÃO DOS RELATÓRIOS ESPECIALIZADOS**:
+    [Resumir os principais resultados de cada relatório especializado, garantindo que não haja placeholders e que os valores sejam os finais apresentados por cada agente]
 
     #### 🔧 **Qualidade de Dados** (Engenheiro de Dados):
-    - Volume e qualidade dos dados analisados no período
-    - Confiabilidade das análises baseadas nos dados validados
-    - Limitações e recomendações técnicas
+    - Volume e qualidade dos dados analisados no período: (Resumo do relatório do Engenheiro de Dados)
+    - Confiabilidade das análises baseadas nos dados validados: (Avaliação da confiabilidade)
+    - Limitações e recomendações técnicas: (Principais limitações e recomendações)
 
     #### 📈 **Vendas e Tendências** (Analista Vendas e Tendências):
-    - Tendências críticas identificadas com impacto quantificado
-    - Padrões sazonais e projeções integradas
-    - Oportunidades de timing baseadas em análise temporal
+    - Tendências críticas identificadas com impacto quantificado: (Resumo das tendências e seus impactos)
+    - Padrões sazonais e projeções integradas: (Principais padrões e projeções)
+    - Oportunidades de timing baseadas em análise temporal: (Principais oportunidades de timing)
 
     #### 🎯 **Portfolio de Produtos** (Especialista Produtos):
-    - Performance de categorias e oportunidades de otimização
-    - Análise ABC e recomendações de mix de produtos
-    - Cross-selling e estratégias de pricing por categoria
+    - Performance de categorias e oportunidades de otimização: (Resumo da performance e oportunidades)
+    - Análise ABC e recomendações de mix de produtos: (Principais resultados da análise ABC e recomendações)
+    - Cross-selling e estratégias de pricing por categoria: (Potencial de cross-selling e sugestões de pricing)
 
     #### 📦 **Otimização de Estoque** (Analista Estoque):
-    - Capital liberado através de otimização de inventário
-    - Riscos de ruptura e obsolescência mitigados
-    - Cronograma de ações de reposição e liquidação
+    - Capital liberado através de otimização de inventário: (Valor do capital liberado)
+    - Riscos de ruptura e obsolescência mitigados: (Principais riscos e ações de mitigação)
+    - Cronograma de ações de reposição e liquidação: (Resumo do cronograma)
 
     #### 💰 **Saúde Financeira** (Analista Financeiro):
-    - KPIs financeiros críticos e projeções de cash flow
-    - Análise de margens e oportunidades de otimização
-    - Cenários financeiros e necessidades de capital
+    - KPIs financeiros críticos e projeções de cash flow: (Resumo dos KPIs e projeções)
+    - Análise de margens e oportunidades de otimização: (Principais insights da análise de margens)
+    - Cenários financeiros e necessidades de capital: (Resumo dos cenários e necessidades)
 
     #### 👥 **Inteligência de Clientes** (Especialista Clientes):
-    - Segmentação RFV e estratégias personalizadas
-    - CLV e oportunidades de crescimento por segmento
-    - Programas de retenção e aquisição priorizados
+    - Segmentação RFV e estratégias personalizadas: (Principais segmentos e estratégias)
+    - CLV e oportunidades de crescimento por segmento: (Valores de CLV e oportunidades)
+    - Programas de retenção e aquisição priorizados: (Principais programas e seus ROIs esperados)
 
     #### 👤 **Performance da Equipe** (Analista Performance):
-    - Gaps de performance e planos de desenvolvimento
-    - Best practices identificadas e programas de treinamento
-    - Potencial de crescimento da equipe de vendas
+    - Gaps de performance e planos de desenvolvimento: (Principais gaps e planos)
+    - Best practices identificadas e programas de treinamento: (Resumo das best practices e programas)
+    - Potencial de crescimento da equipe de vendas: (Estimativa do potencial)
 
     ### 3. **ANÁLISE ESTRATÉGICA INTEGRADA**:
-    - **Correlações Cross-Funcionais**: Como cada dimensão impacta as demais
-    - **Sinergias Identificadas**: Ações que potencializam múltiplas áreas
-    - **Trade-offs Estratégicos**: Decisões com impacto múltiplo quantificado
-    - **Cenários Integrados**: Como mudanças em uma área afetam o todo
+    [Desenvolver a análise com base na consolidação dos relatórios]
+    - **Correlações Cross-Funcionais**: (Descrever como cada dimensão impacta as demais, com exemplos baseados nos dados)
+    - **Sinergias Identificadas**: (Listar ações que potencializam múltiplas áreas, com justificativa)
+    - **Trade-offs Estratégicos**: (Apresentar decisões com impacto múltiplo quantificado, ex: reduzir estoque pode impactar vendas)
+    - **Cenários Integrados**: (Descrever como mudanças em uma área afetam o todo, com base nas projeções e análises de sensibilidade)
 
     ### 4. **RECOMENDAÇÕES EXECUTIVAS PRIORIZADAS**:
+    [Utilizar Recommendation Engine e a análise estratégica para definir e priorizar ações. Preencher com informações específicas, incluindo responsáveis, budgets e ROIs calculados/estimados]
 
-    #### 🚀 **AÇÕES IMEDIATAS (30 dias)** - Total ROI: R$ XXX
-    1. [Ação específica com responsável, budget e ROI estimado]
-    2. [Ação específica com responsável, budget e ROI estimado]
-    3. [Ação específica com responsável, budget e ROI estimado]
+    #### 🚀 **AÇÕES IMEDIATAS (30 dias)** - Total ROI Estimado: R$ (Soma dos ROIs das ações imediatas)
+    1. **Ação 1**: (Descrição da ação). Responsável: (Nome/Departamento). Budget: R$ (Valor). ROI Estimado: (Percentual ou Valor).
+    2. **Ação 2**: (Descrição da ação). Responsável: (Nome/Departamento). Budget: R$ (Valor). ROI Estimado: (Percentual ou Valor).
+    3. **Ação 3**: (Descrição da ação). Responsável: (Nome/Departamento). Budget: R$ (Valor). ROI Estimado: (Percentual ou Valor).
 
-    #### 📈 **ESTRATÉGICAS (60-90 dias)** - Total ROI: R$ XXX
-    1. [Iniciativa com investimento, ROI, timeline e interdependências]
-    2. [Iniciativa com investimento, ROI, timeline e interdependências]
-    3. [Iniciativa com investimento, ROI, timeline e interdependências]
+    #### 📈 **ESTRATÉGICAS (60-90 dias)** - Total ROI Estimado: R$ (Soma dos ROIs das ações estratégicas)
+    1. **Iniciativa 1**: (Descrição da iniciativa). Investimento: R$ (Valor). ROI Estimado: (Percentual ou Valor). Timeline: (Duração). Interdependências: (Listar).
+    2. **Iniciativa 2**: (Descrição da iniciativa). Investimento: R$ (Valor). ROI Estimado: (Percentual ou Valor). Timeline: (Duração). Interdependências: (Listar).
+    3. **Iniciativa 3**: (Descrição da iniciativa). Investimento: R$ (Valor). ROI Estimado: (Percentual ou Valor). Timeline: (Duração). Interdependências: (Listar).
 
-    #### 🎯 **TRANSFORMACIONAIS (6-12 meses)** - Total ROI: R$ XXX
-    1. [Projeto estrutural com budget, marcos e ROI de longo prazo]
-    2. [Projeto estrutural com budget, marcos e ROI de longo prazo]
+    #### 🎯 **TRANSFORMACIONAIS (6-12 meses)** - Total ROI Estimado: R$ (Soma dos ROIs das ações transformacionais)
+    1. **Projeto 1**: (Descrição do projeto). Budget Total: R$ (Valor). Marcos: (Listar principais marcos). ROI Longo Prazo: (Percentual ou Valor).
+    2. **Projeto 2**: (Descrição do projeto). Budget Total: R$ (Valor). Marcos: (Listar principais marcos). ROI Longo Prazo: (Percentual ou Valor).
 
     ### 5. **DASHBOARD EXECUTIVO INTEGRADO**:
-    - **Scorecard de KPIs**: Semáforo com metas e benchmarks
-    - **Monitor de Tendências**: Alertas automáticos de mudanças críticas
-    - **Tracking de ROI**: Acompanhamento de iniciativas implementadas
-    - **Sistema de Alertas**: Notificações de desvios vs planejado
+    [Descrever o conteúdo do dashboard que será gerado, que deve refletir os KPIs consolidados e o progresso das recomendações]
+    - **Scorecard de KPIs**: Semáforo com metas e benchmarks para os principais indicadores da empresa (Vendas, Margem, Estoque, Satisfação Cliente, etc.)
+    - **Monitor de Tendências**: Alertas automáticos de mudanças críticas nas principais métricas e projeções.
+    - **Tracking de ROI**: Acompanhamento do ROI das iniciativas estratégicas implementadas.
+    - **Sistema de Alertas**: Notificações de desvios significativos em relação ao planejado ou metas estabelecidas.
 
     ### 6. **ROADMAP ESTRATÉGICO (12 meses)**:
-    - **Q1**: Foco em quick wins e otimizações de caixa
-    - **Q2**: Implementação de estratégias de médio prazo
-    - **Q3-Q4**: Projetos transformacionais e expansão
-    - **Marcos Críticos**: Entregas, reviews e ajustes planejados
+    [Detalhar o roadmap com base nas recomendações priorizadas]
+    - **Q1**: Foco em quick wins e otimizações de caixa (Listar principais ações do Q1).
+    - **Q2**: Implementação de estratégias de médio prazo (Listar principais ações do Q2).
+    - **Q3-Q4**: Projetos transformacionais e expansão (Listar principais ações do Q3-Q4).
+    - **Marcos Críticos**: (Listar entregas chave, datas de revisão e ajustes planejados ao longo do roadmap).
 
     ### 7. **GESTÃO DE RISCOS E CONTINGÊNCIAS**:
-    - **Riscos Identificados**: Top 5 com probabilidade e impacto
-    - **Planos de Contingência**: Ações para cenários adversos
-    - **Sistema de Monitoramento**: KPIs de early warning
-    - **Budget de Contingência**: Recursos reservados para riscos
+    [Consolidar os riscos identificados e propor planos de contingência]
+    - **Riscos Identificados**: Top 5 riscos consolidados com sua probabilidade e impacto financeiro estimado.
+    - **Planos de Contingência**: (Descrever ações específicas para mitigar ou responder a cada um dos top 5 riscos).
+    - **Sistema de Monitoramento**: (Definir KPIs de early warning para monitorar a materialização dos riscos).
+    - **Budget de Contingência**: R$ (Valor sugerido ou alocado) para cobrir imprevistos relacionados aos riscos.
 
     ### 8. **METODOLOGIA E VALIDAÇÕES**:
-    - Metodologia detalhada de cada análise especializada
-    - Validações estatísticas e limitações dos modelos
-    - Dados de suporte e evidências dos insights
-    - Benchmarks de mercado e fontes utilizadas
+    - Metodologia detalhada de cada análise especializada (Breve resumo da abordagem de cada agente).
+    - Validações estatísticas e limitações dos modelos (Principais validações realizadas e limitações reconhecidas).
+    - Dados de suporte e evidências dos insights (Referência à disponibilidade dos dados nos relatórios detalhados e arquivos CSV).
+    - Benchmarks de mercado e fontes utilizadas (Principais fontes de benchmark citadas).
 
     **FORMATO**: Relatório executivo markdown
-    **ENTREGA**: Arquivo único consolidado com todos os insights e ações priorizadas
+    **ENTREGA**: Arquivo único consolidado com todos os insights e ações priorizadas, e o dashboard executivo.
 
   agent: diretor_insights
-  
+
+

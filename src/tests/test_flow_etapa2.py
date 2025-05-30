@@ -176,7 +176,7 @@ class TestEtapa2Integration(unittest.TestCase):
             
             # Testar imports
             from insights.flow_main import InsightsFlow
-            from insights.crew import Insights
+            from old.crew import Insights
             
             print("✅ Test Backward Compatibility: PASSOU")
             

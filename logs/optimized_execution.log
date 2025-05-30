@@ -101,3 +101,310 @@
 16:55:13 [INFO]    📈 Fluxo de dados: SQL_to_CSV_to_Analysis
 16:55:13 [INFO]    💾 Cache habilitado: True
 16:55:13 [INFO]    📝 Nível de log: NORMAL
+10:28:33 [INFO] 🚀 Iniciando Insights-AI com Arquitetura ETL
+10:28:33 [INFO] 🏗️ SQL → CSV → Análises Especializadas → Dashboard
+10:28:33 [INFO] 🚀 Inicializando Insights-AI Otimizado
+10:28:33 [INFO] 🔧 Validando sistema...
+10:28:33 [INFO] ✅ Sistema validado: 17 ferramentas
+10:28:33 [INFO] ✅ Ferramentas críticas: 3/3
+10:28:33 [INFO] 💻 Sistema: Windows_NT
+10:28:33 [INFO] 🔧 Modo: Normal
+10:28:33 [INFO] 🚀 Inicialização concluída: 3 componentes em 0.00s
+10:28:33 [INFO] ⚡ Executando análise com separação SQL/CSV...
+10:28:33 [INFO] 🚀 Iniciando análise Insights-AI com arquitetura ETL
+10:28:33 [INFO] 📅 Período: 2021-06-30 até 2025-05-30
+10:28:33 [INFO] 🏗️ Configurando arquitetura ETL + Análise baseada em CSV...
+10:28:33 [INFO] 🔒 Validando separação de acesso aos dados...
+10:28:33 [INFO] 🔗 Verificando conectividade SQL (apenas para engenheiro_dados)...
+10:28:33 [INFO] ✅ SQL disponível para extração de dados
+10:28:33 [INFO] 🏗️ Arquitetura ETL configurada:
+10:28:33 [INFO]    📤 engenheiro_dados: SQL Server → data/vendas.csv
+10:28:33 [INFO]    📥 Outros agentes: data/vendas.csv → análises especializadas
+10:28:33 [INFO]    🎯 diretor_insights: consolidação final
+10:28:35 [ERROR] ❌ Erro após 2.30s: litellm.AuthenticationError: AuthenticationError: OpenAIException - Incorrect API key provided: sk-proj-********************************************************************************************************************************************************XScA. You can find your API key at https://platform.openai.com/account/api-keys.
+10:30:37 [INFO] 🚀 Iniciando Insights-AI com Arquitetura ETL
+10:30:37 [INFO] 🏗️ SQL → CSV → Análises Especializadas → Dashboard
+10:30:37 [INFO] 🚀 Inicializando Insights-AI Otimizado
+10:30:37 [INFO] 🔧 Validando sistema...
+10:30:37 [INFO] ✅ Sistema validado: 17 ferramentas
+10:30:37 [INFO] ✅ Ferramentas críticas: 3/3
+10:30:37 [INFO] 💻 Sistema: Windows_NT
+10:30:37 [INFO] 🔧 Modo: Normal
+10:30:37 [INFO] 🚀 Inicialização concluída: 3 componentes em 0.00s
+10:30:37 [INFO] ⚡ Executando análise com separação SQL/CSV...
+10:30:37 [INFO] 🚀 Iniciando análise Insights-AI com arquitetura ETL
+10:30:37 [INFO] 📅 Período: 2025-04-30 até 2025-05-30
+10:30:37 [INFO] 🏗️ Configurando arquitetura ETL + Análise baseada em CSV...
+10:30:37 [INFO] 🔒 Validando separação de acesso aos dados...
+10:30:37 [INFO] 🔗 Verificando conectividade SQL (apenas para engenheiro_dados)...
+10:30:37 [INFO] ✅ SQL disponível para extração de dados
+10:30:37 [INFO] 🏗️ Arquitetura ETL configurada:
+10:30:37 [INFO]    📤 engenheiro_dados: SQL Server → data/vendas.csv
+10:30:37 [INFO]    📥 Outros agentes: data/vendas.csv → análises especializadas
+10:30:37 [INFO]    🎯 diretor_insights: consolidação final
+10:30:39 [ERROR] ❌ Erro após 1.72s: litellm.AuthenticationError: AuthenticationError: OpenAIException - Incorrect API key provided: sk-proj-********************************************************************************************************************************************************XScA. You can find your API key at https://platform.openai.com/account/api-keys.
+10:30:59 [INFO] 🚀 Iniciando Insights-AI com Arquitetura ETL
+10:30:59 [INFO] 🏗️ SQL → CSV → Análises Especializadas → Dashboard
+10:30:59 [INFO] 🚀 Inicializando Insights-AI Otimizado
+10:30:59 [INFO] 🔧 Validando sistema...
+10:30:59 [INFO] ✅ Sistema validado: 17 ferramentas
+10:30:59 [INFO] ✅ Ferramentas críticas: 3/3
+10:30:59 [INFO] 💻 Sistema: Windows_NT
+10:30:59 [INFO] 🔧 Modo: Normal
+10:30:59 [INFO] 🚀 Inicialização concluída: 3 componentes em 0.00s
+10:30:59 [INFO] ⚡ Executando análise com separação SQL/CSV...
+10:30:59 [INFO] 🚀 Iniciando análise Insights-AI com arquitetura ETL
+10:30:59 [INFO] 📅 Período: 2021-06-30 até 2025-05-30
+10:30:59 [INFO] 🏗️ Configurando arquitetura ETL + Análise baseada em CSV...
+10:30:59 [INFO] 🔒 Validando separação de acesso aos dados...
+10:30:59 [INFO] 🔗 Verificando conectividade SQL (apenas para engenheiro_dados)...
+10:30:59 [INFO] ✅ SQL disponível para extração de dados
+10:30:59 [INFO] 🏗️ Arquitetura ETL configurada:
+10:30:59 [INFO]    📤 engenheiro_dados: SQL Server → data/vendas.csv
+10:30:59 [INFO]    📥 Outros agentes: data/vendas.csv → análises especializadas
+10:30:59 [INFO]    🎯 diretor_insights: consolidação final
+10:31:01 [ERROR] ❌ Erro após 1.57s: litellm.AuthenticationError: AuthenticationError: OpenAIException - Incorrect API key provided: sk-proj-********************************************************************************************************************************************************XScA. You can find your API key at https://platform.openai.com/account/api-keys.
+10:35:33 [INFO] 🚀 Iniciando Insights-AI com Arquitetura ETL
+10:35:33 [INFO] 🏗️ SQL → CSV → Análises Especializadas → Dashboard
+10:35:33 [INFO] 🚀 Inicializando Insights-AI Otimizado
+10:35:33 [INFO] 🔧 Validando sistema...
+10:35:33 [INFO] ✅ Sistema validado: 17 ferramentas
+10:35:33 [INFO] ✅ Ferramentas críticas: 3/3
+10:35:33 [INFO] 💻 Sistema: Windows_NT
+10:35:33 [INFO] 🔧 Modo: Normal
+10:35:33 [INFO] 🚀 Inicialização concluída: 3 componentes em 0.00s
+10:35:33 [INFO] ⚡ Executando análise com separação SQL/CSV...
+10:35:33 [INFO] 🚀 Iniciando análise Insights-AI com arquitetura ETL
+10:35:33 [INFO] 📅 Período: 2021-06-30 até 2025-05-30
+10:35:33 [INFO] 🏗️ Configurando arquitetura ETL + Análise baseada em CSV...
+10:35:33 [INFO] 🔒 Validando separação de acesso aos dados...
+10:35:33 [INFO] 🔗 Verificando conectividade SQL (apenas para engenheiro_dados)...
+10:35:33 [INFO] ✅ SQL disponível para extração de dados
+10:35:33 [INFO] 🏗️ Arquitetura ETL configurada:
+10:35:33 [INFO]    📤 engenheiro_dados: SQL Server → data/vendas.csv
+10:35:33 [INFO]    📥 Outros agentes: data/vendas.csv → análises especializadas
+10:35:33 [INFO]    🎯 diretor_insights: consolidação final
+10:49:01 [INFO] ✅ Análise ETL concluída em 808.43s
+10:49:01 [INFO] 📊 Resultado gerado: 73 caracteres
+10:49:01 [INFO] 🏗️ Arquitetura ETL executada com sucesso:
+10:49:01 [INFO]    📤 Extração SQL executada pelo engenheiro_dados
+10:49:01 [INFO]    📁 Dados exportados para data/vendas.csv
+10:49:01 [INFO]    📊 Análises especializadas baseadas no CSV
+10:49:01 [INFO]    🎯 Dashboard executivo consolidado
+10:49:01 [INFO] 📊 MÉTRICAS DA ARQUITETURA ETL:
+10:49:01 [INFO]    🏗️ Arquitetura: ETL_CSV_based
+10:49:01 [INFO]    🔐 Modelo de acesso: separated_responsibilities
+10:49:01 [INFO]    🗄️ Acesso SQL restrito a: engenheiro_dados
+10:49:01 [INFO]    📁 Análise baseada em CSV: enabled
+10:49:01 [INFO]    🔧 Validação de acesso: active
+10:49:01 [INFO]    📈 Fluxo de dados: SQL_to_CSV_to_Analysis
+10:49:01 [INFO]    💾 Cache habilitado: True
+10:49:01 [INFO]    📝 Nível de log: NORMAL
+11:52:30 [INFO] 🚀 Iniciando Insights-AI com Arquitetura ETL
+11:52:30 [INFO] 🏗️ SQL → CSV → Análises Especializadas → Dashboard
+11:52:30 [INFO] 🚀 Inicializando Insights-AI Otimizado
+11:52:30 [INFO] 🔧 Validando sistema...
+11:52:30 [INFO] ✅ Sistema validado: 17 ferramentas
+11:52:30 [INFO] ✅ Ferramentas críticas: 3/3
+11:52:30 [INFO] 💻 Sistema: Windows_NT
+11:52:30 [INFO] 🔧 Modo: Normal
+11:52:30 [INFO] 🚀 Inicialização concluída: 3 componentes em 0.00s
+11:52:30 [INFO] ⚡ Executando análise com separação SQL/CSV...
+11:52:30 [INFO] 🚀 Iniciando análise Insights-AI com arquitetura ETL
+11:52:30 [INFO] 📅 Período: 2025-03-01 até 2025-05-30
+11:52:30 [INFO] 🏗️ Configurando arquitetura ETL + Análise baseada em CSV...
+11:52:30 [INFO] 🔒 Validando separação de acesso aos dados...
+11:52:30 [INFO] 🔗 Verificando conectividade SQL (apenas para engenheiro_dados)...
+11:52:30 [INFO] ✅ SQL disponível para extração de dados
+11:52:30 [INFO] 🏗️ Arquitetura ETL configurada:
+11:52:30 [INFO]    📤 engenheiro_dados: SQL Server → data/vendas.csv
+11:52:30 [INFO]    📥 Outros agentes: data/vendas.csv → análises especializadas
+11:52:30 [INFO]    🎯 diretor_insights: consolidação final
+12:00:25 [INFO] ✅ Análise ETL concluída em 475.09s
+12:00:25 [INFO] 📊 Resultado gerado: 7,920 caracteres
+12:00:25 [INFO] 🏗️ Arquitetura ETL executada com sucesso:
+12:00:25 [INFO]    📤 Extração SQL executada pelo engenheiro_dados
+12:00:25 [INFO]    📁 Dados exportados para data/vendas.csv
+12:00:25 [INFO]    📊 Análises especializadas baseadas no CSV
+12:00:25 [INFO]    🎯 Dashboard executivo consolidado
+12:00:25 [INFO] 📊 MÉTRICAS DA ARQUITETURA ETL:
+12:00:25 [INFO]    🏗️ Arquitetura: ETL_CSV_based
+12:00:25 [INFO]    🔐 Modelo de acesso: separated_responsibilities
+12:00:25 [INFO]    🗄️ Acesso SQL restrito a: engenheiro_dados
+12:00:25 [INFO]    📁 Análise baseada em CSV: enabled
+12:00:25 [INFO]    🔧 Validação de acesso: active
+12:00:25 [INFO]    📈 Fluxo de dados: SQL_to_CSV_to_Analysis
+12:00:25 [INFO]    💾 Cache habilitado: True
+12:00:25 [INFO]    📝 Nível de log: NORMAL
+13:31:50 [INFO] 🚀 Iniciando Insights-AI com Arquitetura ETL
+13:31:50 [INFO] 🏗️ SQL → CSV → Análises Especializadas → Dashboard
+13:31:50 [INFO] 🚀 Inicializando Insights-AI Otimizado
+13:31:50 [INFO] 🔧 Validando sistema...
+13:31:50 [INFO] ✅ Sistema validado: 17 ferramentas
+13:31:50 [INFO] ✅ Ferramentas críticas: 3/3
+13:31:50 [INFO] 💻 Sistema: Windows_NT
+13:31:50 [INFO] 🔧 Modo: Normal
+13:31:50 [INFO] 🚀 Inicialização concluída: 3 componentes em 0.00s
+13:31:50 [INFO] ⚡ Executando análise com separação SQL/CSV...
+13:31:50 [INFO] 🚀 Iniciando análise Insights-AI com arquitetura ETL
+13:31:50 [INFO] 📅 Período: 2025-03-01 até 2025-05-30
+13:31:50 [INFO] 🏗️ Configurando arquitetura ETL + Análise baseada em CSV...
+13:31:50 [INFO] 🔒 Validando separação de acesso aos dados...
+13:31:50 [INFO] 🔗 Verificando conectividade SQL (apenas para engenheiro_dados)...
+13:31:50 [INFO] ✅ SQL disponível para extração de dados
+13:31:50 [INFO] 🏗️ Arquitetura ETL configurada:
+13:31:50 [INFO]    📤 engenheiro_dados: SQL Server → data/vendas.csv
+13:31:50 [INFO]    📥 Outros agentes: data/vendas.csv → análises especializadas
+13:31:50 [INFO]    🎯 diretor_insights: consolidação final
+13:43:14 [INFO] ✅ Análise ETL concluída em 684.78s
+13:43:14 [INFO] 📊 Resultado gerado: 5,822 caracteres
+13:43:14 [INFO] 🏗️ Arquitetura ETL executada com sucesso:
+13:43:14 [INFO]    📤 Extração SQL executada pelo engenheiro_dados
+13:43:14 [INFO]    📁 Dados exportados para data/vendas.csv
+13:43:14 [INFO]    📊 Análises especializadas baseadas no CSV
+13:43:14 [INFO]    🎯 Dashboard executivo consolidado
+13:43:14 [INFO] 📊 MÉTRICAS DA ARQUITETURA ETL:
+13:43:14 [INFO]    🏗️ Arquitetura: ETL_CSV_based
+13:43:14 [INFO]    🔐 Modelo de acesso: separated_responsibilities
+13:43:14 [INFO]    🗄️ Acesso SQL restrito a: engenheiro_dados
+13:43:14 [INFO]    📁 Análise baseada em CSV: enabled
+13:43:14 [INFO]    🔧 Validação de acesso: active
+13:43:14 [INFO]    📈 Fluxo de dados: SQL_to_CSV_to_Analysis
+13:43:14 [INFO]    💾 Cache habilitado: True
+13:43:14 [INFO]    📝 Nível de log: NORMAL
+18:31:06 [INFO] 🚀 Iniciando Insights-AI com Arquitetura ETL
+18:41:58 [INFO] 🏗️ SQL → CSV → Análises Especializadas → Dashboard
+18:41:58 [INFO] 🚀 Inicializando Insights-AI Otimizado
+18:41:58 [INFO] 🔧 Validando sistema...
+18:41:58 [INFO] ✅ Sistema validado: 17 ferramentas
+18:41:58 [INFO] ✅ Ferramentas críticas: 3/3
+18:41:58 [INFO] 💻 Sistema: Windows_NT
+18:41:58 [INFO] 🔧 Modo: Normal
+18:41:58 [INFO] 🚀 Inicialização concluída: 3 componentes em 0.00s
+18:41:58 [INFO] ⚡ Executando análise com separação SQL/CSV...
+18:41:58 [INFO] 🚀 Iniciando análise Insights-AI com arquitetura ETL
+18:41:58 [INFO] 📅 Período: 2025-05-29 até 2025-05-30
+18:41:58 [INFO] 🏗️ Configurando arquitetura ETL + Análise baseada em CSV...
+18:41:58 [INFO] 🔒 Validando separação de acesso aos dados...
+18:41:58 [INFO] 🔗 Verificando conectividade SQL (apenas para engenheiro_dados)...
+18:41:58 [INFO] ✅ SQL disponível para extração de dados
+18:41:58 [INFO] 🏗️ Arquitetura ETL configurada:
+18:41:58 [INFO]    📤 engenheiro_dados: SQL Server → data/vendas.csv
+18:41:58 [INFO]    📥 Outros agentes: data/vendas.csv → análises especializadas
+18:41:58 [INFO]    🎯 diretor_insights: consolidação final
+18:41:58 [INFO] ✅ Análise ETL concluída em 651.75s
+18:41:58 [INFO] 📊 Resultado gerado: 6,573 caracteres
+18:41:58 [INFO] 🏗️ Arquitetura ETL executada com sucesso:
+18:41:58 [INFO]    📤 Extração SQL executada pelo engenheiro_dados
+18:41:58 [INFO]    📁 Dados exportados para data/vendas.csv
+18:41:58 [INFO]    📊 Análises especializadas baseadas no CSV
+18:41:58 [INFO]    🎯 Dashboard executivo consolidado
+18:41:58 [INFO] 📊 MÉTRICAS DA ARQUITETURA ETL:
+18:41:58 [INFO]    🏗️ Arquitetura: ETL_CSV_based
+18:41:58 [INFO]    🔐 Modelo de acesso: separated_responsibilities
+18:41:58 [INFO]    🗄️ Acesso SQL restrito a: engenheiro_dados
+18:41:58 [INFO]    📁 Análise baseada em CSV: enabled
+18:41:58 [INFO]    🔧 Validação de acesso: active
+18:41:58 [INFO]    📈 Fluxo de dados: SQL_to_CSV_to_Analysis
+18:41:58 [INFO]    💾 Cache habilitado: True
+18:41:58 [INFO]    📝 Nível de log: NORMAL
+18:43:25 [INFO] 🚀 Iniciando Insights-AI com Arquitetura ETL
+18:53:26 [INFO] 🏗️ SQL → CSV → Análises Especializadas → Dashboard
+18:53:26 [INFO] 🚀 Inicializando Insights-AI Otimizado
+18:53:26 [INFO] 🔧 Validando sistema...
+18:53:26 [INFO] ✅ Sistema validado: 17 ferramentas
+18:53:26 [INFO] ✅ Ferramentas críticas: 3/3
+18:53:26 [INFO] 💻 Sistema: Windows_NT
+18:53:26 [INFO] 🔧 Modo: Normal
+18:53:26 [INFO] 🚀 Inicialização concluída: 3 componentes em 0.00s
+18:53:26 [INFO] ⚡ Executando análise com separação SQL/CSV...
+18:53:26 [INFO] 🚀 Iniciando análise Insights-AI com arquitetura ETL
+18:53:26 [INFO] 📅 Período: 2025-05-29 até 2025-05-30
+18:53:26 [INFO] 🏗️ Configurando arquitetura ETL + Análise baseada em CSV...
+18:53:26 [INFO] 🔒 Validando separação de acesso aos dados...
+18:53:26 [INFO] 🔗 Verificando conectividade SQL (apenas para engenheiro_dados)...
+18:53:26 [INFO] ✅ SQL disponível para extração de dados
+18:53:26 [INFO] 🏗️ Arquitetura ETL configurada:
+18:53:26 [INFO]    📤 engenheiro_dados: SQL Server → data/vendas.csv
+18:53:26 [INFO]    📥 Outros agentes: data/vendas.csv → análises especializadas
+18:53:26 [INFO]    🎯 diretor_insights: consolidação final
+18:53:26 [INFO] ✅ Análise ETL concluída em 600.63s
+18:53:26 [INFO] 📊 Resultado gerado: 743 caracteres
+18:53:26 [INFO] 🏗️ Arquitetura ETL executada com sucesso:
+18:53:26 [INFO]    📤 Extração SQL executada pelo engenheiro_dados
+18:53:26 [INFO]    📁 Dados exportados para data/vendas.csv
+18:53:26 [INFO]    📊 Análises especializadas baseadas no CSV
+18:53:26 [INFO]    🎯 Dashboard executivo consolidado
+18:53:26 [INFO] 📊 MÉTRICAS DA ARQUITETURA ETL:
+18:53:26 [INFO]    🏗️ Arquitetura: ETL_CSV_based
+18:53:26 [INFO]    🔐 Modelo de acesso: separated_responsibilities
+18:53:26 [INFO]    🗄️ Acesso SQL restrito a: engenheiro_dados
+18:53:26 [INFO]    📁 Análise baseada em CSV: enabled
+18:53:26 [INFO]    🔧 Validação de acesso: active
+18:53:26 [INFO]    📈 Fluxo de dados: SQL_to_CSV_to_Analysis
+18:53:26 [INFO]    💾 Cache habilitado: True
+18:53:26 [INFO]    📝 Nível de log: NORMAL
+19:12:55 [INFO] 🚀 Iniciando Insights-AI com Arquitetura ETL
+19:12:55 [INFO] 🏗️ SQL → CSV → Análises Especializadas → Dashboard
+19:12:55 [INFO] 🚀 Inicializando Insights-AI Otimizado
+19:12:55 [INFO] 🔧 Validando sistema...
+19:12:55 [INFO] ✅ Sistema validado: 17 ferramentas
+19:12:55 [INFO] ✅ Ferramentas críticas: 3/3
+19:12:55 [INFO] 💻 Sistema: Windows_NT
+19:12:55 [INFO] 🔧 Modo: Normal
+19:12:55 [INFO] 🚀 Inicialização concluída: 3 componentes em 0.00s
+19:12:55 [INFO] ⚡ Executando análise com separação SQL/CSV...
+19:12:55 [WARNING] 🔄 Tentativa 1 - ajustando otimização...
+19:12:55 [INFO] 📉 Limite reduzido para 280000.0 chars
+19:12:55 [WARNING] 🔄 Tentativa 2 - ajustando otimização...
+19:12:55 [INFO] 📉 Limite reduzido para 196000.0 chars
+19:12:55 [WARNING] 🔄 Tentativa 3 - ajustando otimização...
+19:12:55 [INFO] 📉 Limite reduzido para 137200.0 chars
+19:12:55 [ERROR] ❌ Falha após todas as tentativas de otimização
+19:12:55 [ERROR] ❌ Erro após 0.08s: 1 validation error for Task
+expected_output
+  Field required [type=missing, input_value={'context': [Task(descrip...coaching direcionado.
+)}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+19:13:27 [INFO] 🚀 Iniciando Insights-AI com Arquitetura ETL
+19:13:27 [INFO] 🏗️ SQL → CSV → Análises Especializadas → Dashboard
+19:13:27 [INFO] 🚀 Inicializando Insights-AI Otimizado
+19:13:27 [INFO] 🔧 Validando sistema...
+19:13:27 [INFO] ✅ Sistema validado: 17 ferramentas
+19:13:27 [INFO] ✅ Ferramentas críticas: 3/3
+19:13:27 [INFO] 💻 Sistema: Windows_NT
+19:13:27 [INFO] 🔧 Modo: Normal
+19:13:27 [INFO] 🚀 Inicialização concluída: 3 componentes em 0.00s
+19:13:27 [INFO] ⚡ Executando análise com separação SQL/CSV...
+19:13:27 [WARNING] 🔄 Tentativa 1 - ajustando otimização...
+19:13:27 [INFO] 📉 Limite reduzido para 280000.0 chars
+19:13:27 [WARNING] 🔄 Tentativa 2 - ajustando otimização...
+19:13:27 [INFO] 📉 Limite reduzido para 196000.0 chars
+19:13:27 [WARNING] 🔄 Tentativa 3 - ajustando otimização...
+19:13:27 [INFO] 📉 Limite reduzido para 137200.0 chars
+19:13:27 [ERROR] ❌ Falha após todas as tentativas de otimização
+19:13:27 [ERROR] ❌ Erro após 0.09s: 1 validation error for Task
+expected_output
+  Field required [type=missing, input_value={'context': [Task(descrip...coaching direcionado.
+)}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+19:17:41 [INFO] 🚀 Iniciando Insights-AI com Arquitetura ETL
+19:17:41 [INFO] 🏗️ SQL → CSV → Análises Especializadas → Dashboard
+19:17:41 [INFO] 🚀 Inicializando Insights-AI Otimizado
+19:17:41 [INFO] 🔧 Validando sistema...
+19:17:41 [INFO] ✅ Sistema validado: 17 ferramentas
+19:17:41 [INFO] ✅ Ferramentas críticas: 3/3
+19:17:41 [INFO] 💻 Sistema: Windows_NT
+19:17:41 [INFO] 🔧 Modo: Debug
+19:17:41 [INFO] 🚀 Inicialização concluída: 3 componentes em 0.00s
+19:17:41 [INFO] ⚡ Executando análise com separação SQL/CSV...
+19:17:41 [INFO] 🚀 Iniciando análise Insights-AI com arquitetura ETL
+19:17:41 [INFO] 📅 Período: 2025-04-30 até 2025-05-30
+19:17:41 [INFO] 🏗️ Configurando arquitetura ETL + Análise baseada em CSV...
+19:17:41 [INFO] 🔒 Validando separação de acesso aos dados...
+19:17:41 [INFO] 🔗 Verificando conectividade SQL (apenas para engenheiro_dados)...
+19:17:41 [INFO] ✅ SQL disponível para extração de dados
+19:17:41 [INFO] 🏗️ Arquitetura ETL configurada:
+19:17:41 [INFO]    📤 engenheiro_dados: SQL Server → data/vendas.csv
+19:17:41 [INFO]    📥 Outros agentes: data/vendas.csv → análises especializadas
+19:17:41 [INFO]    🎯 diretor_insights: consolidação final
