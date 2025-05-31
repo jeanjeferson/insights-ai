@@ -1,13 +1,13 @@
-# 🔮 Insights AI - Análise Inteligente para Joalherias
+# 🔮 Insights AI - Sistema de Análise Inteligente para Joalherias
 
 <div align="center">
 
 ![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
-![CrewAI](https://img.shields.io/badge/CrewAI-0.120.0-green)
+![CrewAI](https://img.shields.io/badge/CrewAI-0.121.0-green)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 ![Status](https://img.shields.io/badge/Status-Active-brightgreen)
 
-*Sistema de análise de dados avançado especializado em joalherias, utilizando IA e Machine Learning*
+*Sistema de análise de dados avançado especializado em joalherias, utilizando CrewAI e Machine Learning*
 
 </div>
 
@@ -15,17 +15,18 @@
 
 ## 🎯 Visão Geral
 
-**Insights AI** é uma plataforma completa de análise de dados e business intelligence desenvolvida especificamente para o setor de joalherias. Utilizando tecnologias de ponta como CrewAI, Machine Learning e análise estatística avançada, o sistema oferece insights acionáveis para otimização de vendas, gestão de clientes e tomada de decisões estratégicas.
+**Insights AI** é uma plataforma completa de análise de dados e business intelligence desenvolvida especificamente para o setor de joalherias. Utilizando tecnologias de ponta como **CrewAI multi-agente**, **Machine Learning avançado** e **análise estatística**, o sistema oferece insights acionáveis para otimização de vendas, gestão de clientes e tomada de decisões estratégicas.
 
 ### 🌟 Principais Características
 
-- **🤖 IA Multi-Agente**: Sistema baseado em CrewAI com agentes especializados
-- **📊 13+ Ferramentas Avançadas**: Suite completa de análise de dados
+- **🤖 IA Multi-Agente CrewAI**: 8 agentes especializados com responsabilidades definidas
+- **🛠️ 15+ Ferramentas Avançadas**: Suite completa incluindo ML, estatística e BI
 - **💎 Especialização em Joalherias**: Métricas e KPIs específicos do setor
-- **🔮 Análises Preditivas**: Previsões de vendas e comportamento do cliente
-- **📈 Visualizações Interativas**: Dashboards executivos profissionais
+- **🔮 Análises Preditivas**: Prophet, clustering e modelos ML personalizados
+- **📈 Dashboards Executivos**: Visualizações interativas HTML/JSON
 - **🛡️ Avaliação de Riscos**: Análise completa de riscos empresariais
-- **⚡ Performance Otimizada**: Sistema de logging estruturado e lazy loading
+- **⚡ Performance Otimizada**: 60-80% mais rápido com logging estruturado
+- **🏗️ Arquitetura ETL**: Fluxo organizado SQL → CSV → Análises
 
 ---
 
@@ -33,39 +34,94 @@
 
 ```
 insights-ai/
-├── 📁 src/insights/          # Código principal
-│   ├── 🤖 crew.py           # Orquestração de agentes CrewAI
-│   ├── ⚡ crew_optimized.py # Versão otimizada (60-80% mais rápida)
-│   ├── 🚀 main.py           # Ponto de entrada do sistema
-│   ├── 🛠️ tools/            # Ferramentas de análise
-│   │   ├── 📊 Base Tools    # Ferramentas principais
-│   │   └── 🚀 advanced/     # Ferramentas avançadas
-│   └── ⚙️ config/          # Configurações
-├── 📁 data/                 # Dados de entrada
-├── 📁 output/               # Relatórios gerados
-├── 📁 knowledge/            # Base de conhecimento
-├── ⚡ main_optimized.py     # Interface otimizada principal
-└── 📁 .venv/               # Ambiente virtual
+├── 📁 src/insights/              # Código principal
+│   ├── 🤖 crew_optimized.py     # CrewAI otimizado (8 agentes especializados)
+│   ├── ⚡ main_optimized.py     # Interface principal otimizada
+│   ├── 🛠️ tools/                # 15+ ferramentas de análise
+│   │   ├── 📊 Ferramentas Base  # SQL, KPI, Prophet, Statistical
+│   │   ├── 🚀 advanced/         # Customer Insights, Risk Assessment, BI
+│   │   └── 📁 shared/           # Módulos compartilhados
+│   └── ⚙️ config/              # Configurações YAML e Python
+├── 📁 data/                     # Dados de entrada (vendas.csv)
+├── 📁 output/                   # Relatórios HTML/JSON gerados
+├── 📁 logs/                     # Logs estruturados por execução
+└── 📁 knowledge/               # Base de conhecimento
+```
+
+### 🔄 Fluxo de Arquitetura ETL
+
+```mermaid
+graph TD
+    A[SQL Server] --> B[Engenheiro de Dados]
+    B --> C[data/vendas.csv]
+    C --> D[Analista Vendas & Tendências]
+    C --> E[Especialista Produtos]
+    C --> F[Analista Estoque]
+    C --> G[Analista Financeiro]
+    C --> H[Especialista Clientes]
+    C --> I[Analista Performance]
+    D --> J[Diretor Insights]
+    E --> J
+    F --> J
+    G --> J
+    H --> J
+    I --> J
+    J --> K[Dashboard Executivo Final]
 ```
 
 ---
 
-## 📚 Documentação
+## 🤖 Agentes CrewAI Especializados
 
-### 📋 **Documentação Completa das Ferramentas**
-Consulte [`docs/tools/`](./docs/tools/README.md) para documentação detalhada de todas as ferramentas, incluindo:
-- 🎯 Objetivos e casos de uso
-- 🔧 Parâmetros e configurações
-- 📊 Interpretação de resultados
-- ⚠️ Troubleshooting e soluções
-- 💡 Exemplos práticos
+O sistema utiliza **8 agentes especializados** com separação clara de responsabilidades:
 
-### ⚡ **Guia de Performance**
-Consulte [`docs/PERFORMANCE_GUIDE.md`](./docs/PERFORMANCE_GUIDE.md) para informações detalhadas sobre:
-- Sistema de logging estruturado
-- Lazy loading de ferramentas
-- Cache inteligente de validações
-- Configurações automáticas por ambiente
+### 🔧 Engenheiro de Dados
+- **Função**: Extração de dados do SQL Server
+- **Acesso**: ÚNICO agente com acesso direto ao SQL Server
+- **Responsabilidade**: Gerar `data/vendas.csv` para outros agentes
+- **Ferramentas**: SQL Query Tool, File Generation Tool
+
+### 📈 Analista de Vendas e Tendências
+- **Função**: Análise de vendas e previsões
+- **Especialidade**: Prophet forecasting, análise temporal
+- **Ferramentas**: Prophet Tool, Statistical Analysis, KPI Calculator
+- **Entrega**: Previsões de vendas, análise de tendências
+
+### 🎯 Especialista em Produtos
+- **Função**: Análise de performance de produtos
+- **Especialidade**: Categorização, ABC analysis, BCG matrix
+- **Ferramentas**: Product Data Exporter, Statistical Analysis
+- **Entrega**: Rankings de produtos, análise de portfólio
+
+### 📦 Analista de Estoque
+- **Função**: Gestão e otimização de inventário
+- **Especialidade**: Turnover, sazonalidade, alertas de estoque
+- **Ferramentas**: Inventory Data Exporter, Statistical Analysis
+- **Entrega**: Indicadores de giro, recomendações de reposição
+
+### 💰 Analista Financeiro
+- **Função**: Análise financeira e rentabilidade
+- **Especialidade**: Margens, ROI, análise de custos
+- **Ferramentas**: Financial Data Exporter, KPI Calculator
+- **Entrega**: KPIs financeiros, análise de rentabilidade
+
+### 👥 Especialista em Clientes
+- **Função**: Análise comportamental de clientes
+- **Especialidade**: Segmentação RFM, CLV, churn prediction
+- **Ferramentas**: Customer Insights Engine, Customer Data Exporter
+- **Entrega**: Segmentação, análise de valor, predição de churn
+
+### 📊 Analista de Performance
+- **Função**: Métricas gerais de performance
+- **Especialidade**: KPIs operacionais, benchmarking
+- **Ferramentas**: Business Intelligence Tool, Advanced Analytics
+- **Entrega**: Scorecard de performance, comparações setoriais
+
+### 🎯 Diretor de Insights
+- **Função**: Consolidação executiva final
+- **Responsabilidade**: Dashboard executivo unificado
+- **Ferramentas**: Business Intelligence, File Generation
+- **Entrega**: Relatório executivo consolidado
 
 ---
 
@@ -75,22 +131,30 @@ Consulte [`docs/PERFORMANCE_GUIDE.md`](./docs/PERFORMANCE_GUIDE.md) para informa
 
 | Ferramenta | Descrição | Casos de Uso |
 |------------|-----------|--------------|
-| **SQL Query Tool** | Consultas SQL otimizadas | Extração de dados personalizada |
-| **Prophet Forecast** | Previsões de séries temporais | Planejamento de vendas |
-| **KPI Calculator** | 30+ KPIs especializados | Dashboards executivos |
-| **Statistical Analysis** | Análises estatísticas avançadas | Detecção de padrões |
-| **Advanced Visualization** | Visualizações interativas | Apresentações executivas |
+| **SQL Query Tool** | Consultas SQL otimizadas ao SQL Server | Extração de dados brutos |
+| **Prophet Forecast Tool** | Previsões de séries temporais | Planejamento de vendas e demanda |
+| **KPI Calculator Tool** | 30+ KPIs especializados em joalherias | Dashboards executivos e monitoramento |
+| **Statistical Analysis Tool** | Análises estatísticas avançadas | Detecção de padrões e anomalias |
+| **Business Intelligence Tool** | Dashboards e relatórios executivos | Visualizações para tomada de decisão |
 
 ### 🚀 Ferramentas Avançadas
 
-| Ferramenta | Descrição | Algoritmos |
-|------------|-----------|------------|
-| **Customer Insights Engine** | Análise comportamental de clientes | RFM, K-means, DBSCAN |
-| **Risk Assessment Tool** | Avaliação de riscos empresariais | Matriz de risco, Monte Carlo |
+| Ferramenta | Descrição | Algoritmos Utilizados |
+|------------|-----------|----------------------|
+| **Customer Insights Engine** | Análise comportamental completa | RFM, K-means, DBSCAN, Churn ML |
+| **Risk Assessment Tool** | Avaliação de riscos empresariais | Monte Carlo, Matriz de risco |
 | **Recommendation Engine** | Recomendações inteligentes | Collaborative Filtering, ML |
-| **Advanced Analytics** | Machine Learning avançado | AutoML, Deep Learning |
-| **Business Intelligence** | Dashboards executivos | Real-time analytics |
-| **Competitive Intelligence** | Análise competitiva | Market analysis |
+| **Advanced Analytics Engine** | Machine Learning avançado | AutoML, Ensemble methods |
+| **Competitive Intelligence** | Análise competitiva | Market analysis, Benchmarking |
+
+### 📊 Ferramentas de Exportação Especializada
+
+| Ferramenta | Função | Dados Gerados |
+|------------|---------|---------------|
+| **Financial Data Exporter** | Análise financeira detalhada | Margens, custos, rentabilidade |
+| **Customer Data Exporter** | Dados de clientes estruturados | Segmentação, CLV, comportamento |
+| **Product Data Exporter** | Performance de produtos | Rankings, ABC, lifecycle |
+| **Inventory Data Exporter** | Gestão de estoque | Turnover, sazonalidade, alertas |
 
 ---
 
@@ -98,9 +162,10 @@ Consulte [`docs/PERFORMANCE_GUIDE.md`](./docs/PERFORMANCE_GUIDE.md) para informa
 
 ### Pré-requisitos
 
-- Python 3.10 ou superior
-- UV package manager (recomendado) ou pip
-- Banco de dados SQL Server/PostgreSQL (para dados de vendas)
+- **Python 3.10 ou superior**
+- **UV package manager** (recomendado) ou pip
+- **SQL Server** com dados de vendas da joalheria
+- **8GB RAM mínimo** (16GB recomendado)
 
 ### 1. Clone o Repositório
 
@@ -121,40 +186,54 @@ source .venv/bin/activate  # Linux/Mac
 # Instalar dependências
 uv sync
 
-# Usando pip alternativo
+# Alternativo com pip
 pip install -e .
 ```
 
 ### 3. Configuração das Variáveis de Ambiente
 
-Crie um arquivo `.env` baseado no exemplo:
+Crie um arquivo `.env` na raiz do projeto:
 
 ```bash
-# Configurações de IA
-OPENAI_API_KEY=your_openai_api_key
-ANTHROPIC_API_KEY=your_anthropic_key
+# Configurações de IA (obrigatório)
+OPENAI_API_KEY=your_openai_api_key_here
 
 # Configurações de Banco de Dados
-DATABASE_URL=your_database_connection_string
+DATABASE_URL=mssql+pyodbc://user:password@server/database?driver=ODBC+Driver+17+for+SQL+Server
 SQL_SERVER_DRIVER={ODBC Driver 17 for SQL Server}
 
-# Configurações do Sistema
-ENVIRONMENT=production
-LOG_LEVEL=INFO
+# Configurações de Performance
+INSIGHTS_DEBUG=false                    # true para debug detalhado
+INSIGHTS_LOG_LEVEL=NORMAL              # SILENT, MINIMAL, NORMAL, VERBOSE, DEBUG
+INSIGHTS_DISABLE_CACHE=false           # true para desabilitar cache
+ENVIRONMENT=production                 # development, production
 
-# Configurações de Performance (Novo)
-INSIGHTS_DEBUG=false          # true para debug detalhado
-INSIGHTS_LOG_LEVEL=NORMAL     # SILENT, MINIMAL, NORMAL, VERBOSE, DEBUG
-INSIGHTS_DISABLE_CACHE=false  # true para desabilitar cache
+# Configurações Opcionais
+LOG_LEVEL=INFO
+INSIGHTS_MAX_WORKERS=4                 # Paralelismo para análises
 ```
 
 ### 4. Preparação dos Dados
 
-Coloque seu arquivo de dados em `data/vendas.csv` com a estrutura:
+#### Estrutura Esperada do CSV (`data/vendas.csv`):
 
 ```csv
-Data;Codigo_Cliente;Nome_Cliente;Codigo_Produto;Descricao_Produto;Grupo_Produto;Metal;Quantidade;Total_Liquido;Custo_Produto
+Data;Codigo_Cliente;Nome_Cliente;Codigo_Produto;Descricao_Produto;Grupo_Produto;Metal;Quantidade;Total_Liquido;Custo_Produto;Margem_Real;Desconto_Aplicado
+2024-01-15;001;João Silva;PROD001;Anel Solitário Ouro;Anéis;Ouro 18k;1;2500.00;1200.00;1300.00;0.00
 ```
+
+#### Colunas Obrigatórias:
+- `Data` - Data da venda (YYYY-MM-DD)
+- `Codigo_Cliente` - ID único do cliente  
+- `Total_Liquido` - Valor da venda
+- `Codigo_Produto` - ID do produto
+- `Grupo_Produto` - Categoria do produto
+
+#### Colunas Opcionais (para análises avançadas):
+- `Nome_Cliente`, `Idade`, `Sexo`, `Estado_Civil` - Para análise demográfica
+- `Cidade`, `Estado` - Para análise geográfica
+- `Metal`, `Colecao` - Para análise de produtos
+- `Custo_Produto`, `Margem_Real` - Para análise financeira
 
 ---
 
@@ -162,42 +241,48 @@ Data;Codigo_Cliente;Nome_Cliente;Codigo_Produto;Descricao_Produto;Grupo_Produto;
 
 ### ⚡ **Versão Otimizada (Recomendada)**
 
-A versão otimizada oferece 60-80% mais performance e logging estruturado:
+A versão otimizada oferece **60-80% mais performance** com logging estruturado:
 
 ```bash
-# Uso básico - último mês
-python main_optimized.py
+# Uso básico - últimos 90 dias (padrão otimizado)
+python src/insights/main_optimized.py
 
 # Período específico
-python main_optimized.py --start 2024-01-01 --end 2024-12-31
+python src/insights/main_optimized.py --start 2024-01-01 --end 2024-12-31
 
 # Últimos 60 dias
-python main_optimized.py --days 60
+python src/insights/main_optimized.py --days 60
 
-# Modo produção (otimizado)
-python main_optimized.py --production --minimal
+# Modo produção (logs mínimos, máxima performance)
+python src/insights/main_optimized.py --production --minimal
 
-# Modo debug (troubleshooting)
-python main_optimized.py --debug --days 7
+# Modo debug (troubleshooting detalhado)
+python src/insights/main_optimized.py --debug --days 7
+
+# Com relatório de ferramentas
+python src/insights/main_optimized.py --tools-report
+
+# Validar arquivos gerados
+python src/insights/main_optimized.py --validate-files
 
 # Ver todas as opções
-python main_optimized.py --help
+python src/insights/main_optimized.py --help
 ```
 
-### 📊 **Configurações de Performance**
+### 📊 **Configurações por Ambiente**
 
 ```bash
 # Para Produção (recomendado)
-python main_optimized.py --production --minimal --days 90
+python src/insights/main_optimized.py --production --minimal --days 90
 
-# Para Desenvolvimento
-python main_optimized.py --verbose --days 30
+# Para Desenvolvimento/Testes
+python src/insights/main_optimized.py --verbose --days 30
 
 # Para Debug/Troubleshooting
-python main_optimized.py --debug --no-cache --days 7
+python src/insights/main_optimized.py --debug --no-cache --days 7
 
-# Para Testes Rápidos
-python main_optimized.py --days 7 --minimal
+# Para Análises Rápidas
+python src/insights/main_optimized.py --days 7 --minimal
 ```
 
 ### 🎯 **Vantagens da Versão Otimizada**
@@ -205,270 +290,211 @@ python main_optimized.py --days 7 --minimal
 | Métrica | Original | Otimizada | Melhoria |
 |---------|----------|-----------|----------|
 | Tempo Inicialização | ~2-5s | ~0.5-1s | **60-80%** |
-| Logs durante Setup | ~30 logs | ~5-8 logs | **70-80%** |
+| Logs durante Setup | ~30 logs | ~5-8 logs | **70%** |
 | Uso de Memória | ~500MB | ~300MB | **40%** |
-| Ferramentas por Agente | 17 | 3-8 | **Otimizado** |
-
-### Execução Básica (Versão Original)
-
-```bash
-# Executar análise completa
-python -m insights.main
-
-# Ou usando o comando instalado
-insights
-
-# Executar com parâmetros específicos
-run_crew
-```
-
-### Execução de Ferramentas Específicas
-
-```python
-from insights.tools.kpi_calculator_tool import KPICalculatorTool
-
-# Calcular KPIs
-kpi_tool = KPICalculatorTool()
-result = kpi_tool._run(
-    data_csv="data/vendas.csv",
-    categoria="all",
-    periodo="monthly"
-)
-```
-
-### 🧪 **Demonstração e Benchmarks**
-
-```bash
-# Demonstrar otimizações
-python demo_optimized.py
-
-# Comparar performance entre versões
-python scripts/performance_benchmark.py
-
-# Ver métricas de performance
-python -c "from insights.crew_optimized import get_performance_metrics; print(get_performance_metrics())"
-```
-
-### Treinamento do Sistema
-
-```bash
-# Treinar modelos com dados históricos
-python -m insights.main train 10 training_session_1
-```
-
-### Replay de Análises
-
-```bash
-# Repetir análise específica
-python -m insights.main replay task_id_123
-```
+| Ferramentas por Agente | 15 (todas) | 3-8 (específicas) | **Otimizado** |
+| Cache Inteligente | ❌ | ✅ | **Novo** |
+| Lazy Loading | ❌ | ✅ | **Novo** |
 
 ---
 
-## 📊 Exemplos de Uso
+## 📊 Análises e Outputs Gerados
 
-### 1. Análise de Performance de Vendas
+### 🎯 **KPIs Financeiros**
+- **Revenue Growth** (MoM, YoY, QoQ)
+- **Average Order Value (AOV)** por segmento
+- **Margem Bruta e Líquida** por categoria/produto
+- **ROI** por campanha e canal
+- **Break-even Analysis** por produto
+- **Customer Lifetime Value (CLV)**
 
-```python
-# Análise completa de KPIs
-kpi_results = kpi_calculator.run(
-    categoria="revenue",
-    periodo="monthly",
-    benchmark_mode=True
-)
+### 👥 **Análise de Clientes**
+- **Segmentação RFM** (Recency, Frequency, Monetary)
+- **Análise Comportamental** com clustering ML
+- **Predição de Churn** com score de risco
+- **Customer Journey Mapping**
+- **Análise Demográfica** (idade, gênero, localização)
+- **Preferências de Produtos** por perfil
 
-# Visualização interativa
-visualization = advanced_viz.run(
-    chart_type="executive_dashboard",
-    title="Performance Mensal"
-)
+### 📦 **Gestão de Inventário**
+- **Análise ABC** de produtos
+- **Giro de Estoque** por categoria
+- **Sazonalidade** e tendências temporais
+- **Alertas de Estoque** automáticos
+- **Forecasting de Demanda** com Prophet
+- **Análise de Obsolescência**
+
+### 🔮 **Análises Preditivas**
+- **Previsão de Vendas** (30-365 dias)
+- **Detecção de Anomalias** estatísticas
+- **Análise de Tendências** de mercado
+- **Otimização de Preços** baseada em dados
+- **Predição de Demanda** por produto
+- **Risk Assessment** empresarial
+
+### 📈 **Outputs Estruturados**
+
+#### **1. Dashboard Executivo HTML**
+- Visualizações interativas Plotly
+- KPIs em tempo real
+- Gráficos de tendências
+- Alertas visuais
+
+#### **2. Relatórios JSON Estruturados**
+```json
+{
+  "metadata": {
+    "generated_at": "2024-05-30T18:45:00",
+    "period": "2024-01-01 to 2024-05-30",
+    "total_records": 15847
+  },
+  "financial_kpis": {
+    "total_revenue": 2456789.50,
+    "growth_rate": 15.3,
+    "avg_order_value": 287.45
+  },
+  "customer_insights": {
+    "total_customers": 1247,
+    "churn_risk_customers": 89,
+    "high_value_segment": 156
+  }
+}
 ```
 
-### 2. Segmentação de Clientes
-
-```python
-# Análise comportamental avançada
-customer_insights = customer_engine.run(
-    analysis_type="behavioral_segmentation",
-    segmentation_method="rfm",
-    customer_id_column="Codigo_Cliente"
-)
-
-# Predição de churn
-churn_analysis = customer_engine.run(
-    analysis_type="churn_prediction",
-    prediction_horizon=90
-)
-```
-
-### 3. Previsão de Vendas
-
-```python
-# Previsão com Prophet
-forecast = prophet_tool.run(
-    data_column="Data",
-    target_column="Total_Liquido",
-    periods=30,
-    seasonality_mode="multiplicative"
-)
-```
-
----
-
-## 📈 Análises Disponíveis
-
-### 🎯 KPIs Financeiros
-- Revenue Growth (MoM, YoY)
-- Average Order Value (AOV)
-- Margem por categoria
-- ROI por produto/campanha
-
-### 👥 Análise de Clientes
-- Segmentação RFM
-- Customer Lifetime Value (CLV)
-- Predição de churn
-- Análise de jornada do cliente
-
-### 📦 Gestão de Inventário
-- Análise ABC de produtos
-- Giro de estoque
-- Sazonalidade por categoria
-- Recomendações de reposição
-
-### 🔮 Análises Preditivas
-- Previsão de demanda
-- Tendências de mercado
-- Otimização de preços
-- Detecção de anomalias
+#### **3. Logs Estruturados**
+- Execução detalhada em `logs/optimized/`
+- Métricas de performance
+- Alertas e warnings
+- Troubleshooting automático
 
 ---
 
 ## 🔄 Fluxos de Trabalho
 
-### Análise Completa de Negócio
+### 📊 **Fluxo Completo de Análise de Negócio**
 
 ```mermaid
 graph TD
-    A[Dados de Vendas] --> B[SQL Query Tool]
-    B --> C[KPI Calculator]
-    C --> D[Statistical Analysis]
-    D --> E[Advanced Visualization]
-    E --> F[Risk Assessment]
-    F --> G[Recommendations]
+    A[Dados SQL Server] --> B[Engenheiro de Dados]
+    B --> C[Extração → vendas.csv]
+    C --> D[Análise Financeira]
+    C --> E[Análise de Vendas]
+    C --> F[Análise de Clientes]
+    C --> G[Análise de Produtos]
+    C --> H[Análise de Estoque]
+    D --> I[Diretor Insights]
+    E --> I
+    F --> I
+    G --> I
+    H --> I
+    I --> J[Dashboard Executivo]
+    I --> K[Relatórios HTML]
+    I --> L[Métricas JSON]
 ```
 
-### Análise de Clientes
+### 🎯 **Fluxo de Análise de Clientes**
 
 ```mermaid
 graph TD
-    A[Dados de Clientes] --> B[Customer Insights Engine]
+    A[Dados de Vendas] --> B[Customer Insights Engine]
     B --> C[Segmentação RFM]
-    B --> D[Predição de Churn]
-    B --> E[Análise de Valor]
-    C --> F[Estratégias Personalizadas]
-    D --> F
-    E --> F
+    B --> D[Análise Comportamental]
+    B --> E[Predição de Churn]
+    B --> F[CLV Calculation]
+    C --> G[Estratégias por Segmento]
+    D --> H[Personalização]
+    E --> I[Ações de Retenção]
+    F --> J[Priorização de Clientes]
 ```
-
----
-
-## 🤖 Agentes CrewAI
-
-O sistema utiliza agentes especializados para diferentes análises:
-
-### 📊 Data Analyst Agent
-- **Função**: Análise exploratória e limpeza de dados
-- **Ferramentas**: SQL Query, Statistical Analysis
-- **Especialidade**: Identificação de padrões e anomalias
-
-### 🔮 Business Intelligence Agent
-- **Função**: Criação de insights de negócio
-- **Ferramentas**: KPI Calculator, Advanced Visualization
-- **Especialidade**: Métricas e dashboards executivos
-
-### 👥 Customer Experience Agent
-- **Função**: Análise de comportamento do cliente
-- **Ferramentas**: Customer Insights Engine
-- **Especialidade**: Segmentação e retenção
-
-### 🎯 Strategic Planning Agent
-- **Função**: Recomendações estratégicas
-- **Ferramentas**: Risk Assessment, Recommendation Engine
-- **Especialidade**: Planejamento e otimização
 
 ---
 
 ## 📋 Requisitos Técnicos
 
-### Dependências Principais
+### **Dependências Principais**
 
 ```toml
-crewai[tools] = ">=0.120.0"
-pandas = ">=2.0.0"
-scikit-learn = ">=1.6.1"
-plotly = ">=5.15.0"
-prophet = ">=1.1.6"
-streamlit = ">=1.28.0"
+[project]
+dependencies = [
+    "crewai[tools]>=0.121.0,<1.0.0",
+    "pandas>=2.0.0",
+    "scikit-learn>=1.6.1", 
+    "plotly>=5.15.0",
+    "prophet>=1.1.6",
+    "pyodbc>=5.2.0",
+    "psycopg2-binary",
+    "matplotlib>=3.10.3",
+    "seaborn>=0.12.0",
+    "scipy>=1.11.0",
+    "numpy>=1.24.0"
+]
 ```
 
-### Requisitos de Sistema
+### **Requisitos de Sistema**
 
-- **RAM**: Mínimo 8GB (recomendado 16GB)
-- **CPU**: Multi-core (recomendado 8+ cores)
-- **Armazenamento**: 5GB de espaço livre
-- **Rede**: Conexão estável para APIs de IA
+| Componente | Mínimo | Recomendado |
+|------------|---------|-------------|
+| **RAM** | 8GB | 16GB |
+| **CPU** | 4 cores | 8+ cores |
+| **Armazenamento** | 5GB | 10GB |
+| **Python** | 3.10 | 3.11+ |
+| **Rede** | Estável para APIs | Banda larga |
 
-### Compatibilidade
+### **Compatibilidade**
 
-- ✅ Windows 10/11
-- ✅ macOS 10.15+
-- ✅ Linux (Ubuntu 18.04+)
-- ✅ Docker (planejado)
-
----
-
-## 📊 Performance e Escalabilidade
-
-### Benchmarks
-
-| Dataset Size | Processing Time | Memory Usage |
-|--------------|----------------|--------------|
-| 10K records | ~30 seconds | ~500MB |
-| 100K records | ~3 minutes | ~2GB |
-| 1M records | ~15 minutes | ~8GB |
-
-### Otimizações
-
-- **Processamento em lote** para grandes datasets
-- **Cache inteligente** para consultas repetidas
-- **Paralelização** de análises independentes
-- **Lazy loading** para visualizações
+- ✅ **Windows 10/11** (testado)
+- ✅ **macOS 10.15+** (compatível)
+- ✅ **Linux Ubuntu 18.04+** (compatível)
+- 🔄 **Docker** (planejado v2.0)
 
 ---
 
-## 🛡️ Segurança e Privacidade
+## 📊 Performance e Benchmarks
 
-### Medidas de Segurança
+### **Métricas de Performance**
 
-- 🔐 **Encriptação de dados** em trânsito e repouso
-- 🔑 **Gestão segura de API keys** via variáveis de ambiente
-- 🛡️ **Validação de entrada** para prevenir SQL injection
-- 📝 **Logs de auditoria** para rastreabilidade
+| Dataset Size | Tempo Processamento | Uso de Memória | Agentes Ativos |
+|--------------|-------------------|----------------|----------------|
+| 10K registros | ~30 segundos | ~300MB | 8 |
+| 50K registros | ~2 minutos | ~800MB | 8 |
+| 100K registros | ~5 minutos | ~1.5GB | 8 |
+| 500K registros | ~15 minutos | ~4GB | 8 |
 
-### Conformidade
+### **Otimizações Implementadas**
 
-- **LGPD**: Conformidade com leis de proteção de dados
-- **SOC 2**: Controles de segurança implementados
-- **ISO 27001**: Padrões de segurança da informação
+- **🚀 Lazy Loading**: Ferramentas carregadas sob demanda
+- **🧠 Cache Inteligente**: Validações e dados em cache
+- **📊 Paralelização**: Análises independentes em paralelo
+- **🔧 Logging Estruturado**: Redução de 70% no volume de logs
+- **💾 Gestão de Memória**: Cleanup automático após análises
 
 ---
 
-## 🔧 Desenvolvimento e Contribuição
+## 🛡️ Segurança e Boas Práticas
 
-### Configuração do Ambiente de Desenvolvimento
+### **Medidas de Segurança**
+
+- 🔐 **Encriptação**: Dados em trânsito e repouso
+- 🔑 **API Keys Seguras**: Gestão via variáveis de ambiente
+- 🛡️ **Validação SQL**: Prevenção de injection attacks
+- 📝 **Logs de Auditoria**: Rastreabilidade completa
+- 🚫 **Separação de Acesso**: Apenas engenheiro acessa SQL
+
+### **Privacidade de Dados**
+
+- **LGPD Compliance**: Conformidade com leis brasileiras
+- **Anonimização**: Dados sensíveis mascarados em logs
+- **Retenção**: Logs automáticos com rotação
+- **Backup Seguro**: Dados críticos protegidos
+
+---
+
+## 🧪 Desenvolvimento e Testes
+
+### **Configuração de Desenvolvimento**
 
 ```bash
-# Clone e configuração
+# Clone e setup
 git clone https://github.com/your-org/insights-ai.git
 cd insights-ai
 
@@ -479,102 +505,120 @@ source .venv/bin/activate
 # Dependências de desenvolvimento
 uv add --dev pytest black flake8 mypy pre-commit
 
-# Pre-commit hooks
-pre-commit install
+# Testes
+pytest tests/ -v
+
+# Formatação
+black src/
+flake8 src/
 ```
 
-### Estrutura para Novas Ferramentas
+### **Estrutura de Testes**
+
+```bash
+tests/
+├── test_tools/              # Testes unitários de ferramentas
+├── test_agents/             # Testes de agentes CrewAI
+├── test_integration/        # Testes de integração
+├── test_performance/        # Benchmarks de performance
+└── fixtures/               # Dados de teste
+```
+
+### **Exemplo de Teste de KPI**
 
 ```python
-from crewai.tools import BaseTool
-from pydantic import BaseModel, Field
-from typing import Type
+from insights.tools.kpi_calculator_tool import KPICalculatorTool
 
-class YourToolInput(BaseModel):
-    parameter: str = Field(..., description="Description")
-
-class YourTool(BaseTool):
-    name: str = "Your Tool Name"
-    description: str = "Tool description"
-    args_schema: Type[BaseModel] = YourToolInput
-    
-    def _run(self, parameter: str) -> str:
-        # Implementation
-        return "result"
+def test_kpi_calculation():
+    tool = KPICalculatorTool()
+    result = tool._run(
+        data_csv="tests/fixtures/sample_data.csv",
+        categoria="revenue",
+        periodo="monthly"
+    )
+    assert "financial_kpis" in result
+    assert "total_revenue" in result
 ```
 
-### Guidelines de Contribuição
-
-1. **Fork** o repositório
-2. **Crie** uma branch para sua feature (`git checkout -b feature/nova-funcionalidade`)
-3. **Commit** suas mudanças (`git commit -am 'Add nova funcionalidade'`)
-4. **Push** para a branch (`git push origin feature/nova-funcionalidade`)
-5. **Abra** um Pull Request
-
 ---
 
-## 📚 Documentação Adicional
+## 🎯 Roadmap e Próximos Passos
 
-### Links Úteis
+### 🚀 **Versão 2.0 (Q3 2024)**
+- [ ] **Interface Web Streamlit** completa e interativa
+- [ ] **API REST** para integrações externas
+- [ ] **Notificações Automáticas** (email, Slack, WhatsApp)
+- [ ] **Análise em Tempo Real** com streaming de dados
+- [ ] **Mobile Dashboard** responsivo
 
-- 📖 [Documentação Completa das Ferramentas](docs/FERRAMENTAS.md)
-- 🎓 [Guia de Primeiros Passos](docs/GETTING_STARTED.md)
-- 🔧 [API Reference](docs/API_REFERENCE.md)
-- 💡 [Exemplos Práticos](docs/EXAMPLES.md)
-- ❓ [FAQ](docs/FAQ.md)
-
-### Tutoriais
-
-- [Como Analisar Dados de Vendas](docs/tutorials/sales-analysis.md)
-- [Segmentação de Clientes Avançada](docs/tutorials/customer-segmentation.md)
-- [Criando Dashboards Personalizados](docs/tutorials/custom-dashboards.md)
-- [Implementando Novas Ferramentas](docs/tutorials/custom-tools.md)
-
----
-
-## 🎯 Roadmap
-
-### 🚀 Versão 2.0 (Q1 2025)
-- [ ] **Interface Web Streamlit** completa
-- [ ] **API REST** para integrações
-- [ ] **Notificações automáticas** por email/Slack
-- [ ] **Análise em tempo real** com streaming
-
-### 🎯 Versão 2.1 (Q2 2025)
-- [ ] **Integração com ERPs** (SAP, Oracle)
-- [ ] **Mobile app** para dashboards
-- [ ] **Modelos de ML personalizados**
-- [ ] **Análise de sentimento** em reviews
-
-### 🔮 Futuro (2025+)
+### 🎯 **Versão 2.1 (Q4 2024)**
+- [ ] **Integração ERP** (SAP, Oracle, TOTVS)
 - [ ] **Computer Vision** para análise de produtos
-- [ ] **NLP avançado** para análise de feedback
-- [ ] **Blockchain** para rastreabilidade
-- [ ] **IoT integration** para dados de loja
+- [ ] **NLP Avançado** para análise de feedback
+- [ ] **Blockchain** para rastreabilidade de produtos
+- [ ] **IoT Integration** para dados de loja física
+
+### 🔮 **Futuro (2025+)**
+- [ ] **Multi-tenant SaaS** para múltiplas joalherias
+- [ ] **Marketplace de Insights** com benchmarks setoriais
+- [ ] **AI Generativa** para relatórios automatizados
+- [ ] **Integração Financeira** (bancos, cartões)
+- [ ] **Análise de Concorrência** automatizada
 
 ---
 
-## 🆘 Suporte e Comunidade
+## 🆘 Suporte e Troubleshooting
 
-### Canais de Suporte
+### **Problemas Comuns**
 
-- 💬 **Discord**: [Insights AI Community](https://discord.gg/insights-ai)
+#### ❌ **Erro de Conexão SQL**
+```bash
+# Verificar string de conexão
+echo $DATABASE_URL
+
+# Testar conectividade
+python -c "from insights.tools.sql_query_tool import SQLQueryTool; SQLQueryTool().test_connection()"
+```
+
+#### ❌ **Arquivo CSV não encontrado**
+```bash
+# Verificar estrutura de dados
+ls -la data/
+head -5 data/vendas.csv
+```
+
+#### ❌ **Performance lenta**
+```bash
+# Usar modo otimizado
+python src/insights/main_optimized.py --production --minimal
+
+# Verificar logs
+tail -f logs/optimized/insights_optimized_$(date +%Y%m%d).log
+```
+
+### **Logs de Debug**
+
+```bash
+# Ativar debug completo
+export INSIGHTS_DEBUG=true
+export INSIGHTS_LOG_LEVEL=DEBUG
+
+# Executar com debug
+python src/insights/main_optimized.py --debug --days 7
+```
+
+### **Canais de Suporte**
+
 - 📧 **Email**: support@insights-ai.com
 - 🐛 **Issues**: [GitHub Issues](https://github.com/your-org/insights-ai/issues)
-- 📚 **Documentação**: [docs.insights-ai.com](https://docs.insights-ai.com)
-
-### Comunidade
-
-- 🌟 **Contributors**: 15+ desenvolvedores ativos
-- 🏢 **Empresas usando**: 50+ joalherias
-- 📈 **Growth**: +200% adoção em 2024
-- 🌍 **Países**: Brasil, Argentina, México
+- 📚 **Documentação**: [Wiki do Projeto](https://github.com/your-org/insights-ai/wiki)
+- 💬 **Discussões**: [GitHub Discussions](https://github.com/your-org/insights-ai/discussions)
 
 ---
 
 ## 📄 Licença
 
-Este projeto está licenciado sob a **MIT License** - veja o arquivo [LICENSE](LICENSE) para detalhes.
+Este projeto está licenciado sob a **MIT License**:
 
 ```
 MIT License
@@ -583,27 +627,37 @@ Copyright (c) 2024 Insights AI Team
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction...
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 ```
 
 ---
 
-## 🙏 Agradecimentos
+## 🙏 Tecnologias e Agradecimentos
 
-### Tecnologias Utilizadas
+### **Stack Tecnológico**
 
-- 🤖 **CrewAI** - Framework de IA multi-agente
-- 🐍 **Python** - Linguagem principal
-- 📊 **Plotly** - Visualizações interativas
-- 🔮 **Prophet** - Previsões de séries temporais
-- 🤖 **Scikit-learn** - Machine Learning
-- 📈 **Pandas** - Manipulação de dados
+| Tecnologia | Versão | Uso |
+|------------|---------|-----|
+| **CrewAI** | 0.121.0 | Framework multi-agente |
+| **Python** | 3.10+ | Linguagem principal |
+| **Pandas** | 2.0+ | Manipulação de dados |
+| **Scikit-learn** | 1.6+ | Machine Learning |
+| **Prophet** | 1.1+ | Previsões temporais |
+| **Plotly** | 5.15+ | Visualizações interativas |
+| **SQL Server** | 2019+ | Banco de dados |
 
-### Contribuidores
+### **Contribuidores**
 
-<a href="https://github.com/your-org/insights-ai/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=your-org/insights-ai" />
-</a>
+- **Core Team**: Desenvolvimento e arquitetura
+- **Data Scientists**: Algoritmos ML e estatística
+- **UX/UI Designers**: Interface e dashboards
+- **Domain Experts**: Conhecimento de joalherias
 
 ---
 
@@ -613,16 +667,21 @@ in the Software without restriction...
 ![GitHub forks](https://img.shields.io/github/forks/your-org/insights-ai)
 ![GitHub issues](https://img.shields.io/github/issues/your-org/insights-ai)
 ![GitHub last commit](https://img.shields.io/github/last-commit/your-org/insights-ai)
+![Code size](https://img.shields.io/github/languages/code-size/your-org/insights-ai)
 
 ---
 
 <div align="center">
 
-**🔮 Insights AI - Transformando dados em decisões inteligentes**
+**🔮 Insights AI - Transformando dados em decisões inteligentes para joalherias**
 
-*Desenvolvido com ❤️ pela comunidade de desenvolvedores*
+*Desenvolvido com ❤️ usando CrewAI e tecnologias de ponta*
 
-[⭐ Star](https://github.com/your-org/insights-ai) | [🍴 Fork](https://github.com/your-org/insights-ai/fork) | [📚 Docs](https://docs.insights-ai.com) | [💬 Discord](https://discord.gg/insights-ai)
+[⭐ Star no GitHub](https://github.com/your-org/insights-ai) | [🍴 Fork](https://github.com/your-org/insights-ai/fork) | [📝 Issues](https://github.com/your-org/insights-ai/issues) | [💬 Discussões](https://github.com/your-org/insights-ai/discussions)
+
+---
+
+**Última atualização**: 30 de Maio de 2024 | **Versão**: 1.0.0 | **Status**: Produção Ativa
 
 </div>
 
